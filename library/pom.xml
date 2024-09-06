@@ -10,6 +10,8 @@
     <version>1.0-SNAPSHOT</version>
     <modules>
         <module>temp-root</module>
+        <module>orizon-http</module>
+        <module>orizon-util</module>
     </modules>
 
 
