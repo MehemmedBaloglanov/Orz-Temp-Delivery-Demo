@@ -1,0 +1,33 @@
+package com.intelliacademy.orizonroute.valueobjects.order;
+
+public enum OrderOperationalStatus {
+    DRAFT(OrderStatus.DRAFT),
+    DELETE_BY_CUSTOMER(OrderStatus.DELETED),
+    SEND_TO_APPROVAL(OrderStatus.ON_PROGRESS),
+    PENDING_ON_APPROVAL_BY_COMPANY(OrderStatus.ON_PROGRESS),
+    APPROVED_BY_COMPANY(OrderStatus.ON_PROGRESS),
+    REJECTED_BY_COMPANY(OrderStatus.FAILED),
+    PENDING_ON_ASSIGNMENT(OrderStatus.ON_PROGRESS),
+    COURIER_ASSIGNED(OrderStatus.ON_PROGRESS),
+    REJECTED_BY_COURIER(OrderStatus.ON_PROGRESS),
+    PENDING_ON_PICKUP(OrderStatus.ON_PROGRESS),
+    PICKUP_CONFIRMED(OrderStatus.ON_PROGRESS),
+    REJECTED_BY_PICKUP_FROM_THE_SIDE_OF_COMPANY(OrderStatus.ON_PROGRESS),
+    REJECTED_BY_PICKUP_FROM_THE_SIDE_OF_COURIER(OrderStatus.ON_PROGRESS),
+    ON_THE_WAY_TO_DELIVERY(OrderStatus.ON_PROGRESS),
+    REJECTED_BY_DELIVERY_FROM_THE_SIDE_OF_COMPANY(OrderStatus.ON_PROGRESS),
+    REJECTED_BY_DELIVERY_FROM_THE_SIDE_OF_COURIER(OrderStatus.ON_PROGRESS),
+    ARRIVED_AT_DESTINATION(OrderStatus.ON_PROGRESS),
+    REJECTED_BY_DESTINATION_FROM_THE_SIDE_OF_CUSTOMER(OrderStatus.FAILED),
+    REJECTED_BY_DESTINATION_FROM_THE_SIDE_OF_COURIER(OrderStatus.FAILED),
+
+    DELIVERED(OrderStatus.COMPLETED),
+    ON_THE_WAY_TO_RETURN(OrderStatus.FAILED),
+    RETURNED(OrderStatus.FAILED);
+
+
+    private final OrderStatus orderStatus;
+    OrderOperationalStatus(OrderStatus orderStatus) {
+        this.orderStatus = orderStatus;
+    }
+}
