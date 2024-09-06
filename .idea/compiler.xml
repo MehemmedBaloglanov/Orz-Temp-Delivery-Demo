@@ -7,11 +7,17 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="orizon-http" />
-        <module name="user-service" />
-        <module name="order-service" />
-        <module name="company-service" />
+        <module name="order-domain-shell" />
+        <module name="order-message-publisher" />
         <module name="orizon-util" />
         <module name="temp-root" />
+        <module name="order-rest" />
+        <module name="user-service" />
+        <module name="company-service" />
+        <module name="order-domain-core" />
+        <module name="order-message-listener" />
+        <module name="order-container" />
+        <module name="order-dataaccess" />
       </profile>
     </annotationProcessing>
   </component>

@@ -10,9 +10,10 @@
     <packaging>pom</packaging>
 
     <properties>
-        <maven.compiler.source>17</maven.compiler.source>
-        <maven.compiler.target>17</maven.compiler.target>
+        <spring-web.version>3.3.3</spring-web.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <maven-compiler-plugin.version>3.13.0</maven-compiler-plugin.version>
+        <order-service.version>1.0-SNAPSHOT</order-service.version>
     </properties>
 
     <modules>
@@ -20,5 +21,81 @@
         <module>order-service</module>
         <module>user-service</module>
     </modules>
+
+    <dependencyManagement>
+        <dependencies>
+
+            <!--     Spring web       -->
+
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-web</artifactId>
+                <version>${spring-web.version}</version>
+            </dependency>
+
+            <!--      Order Service      -->
+
+            <dependency>
+                <groupId>com.intellibucket</groupId>
+                <artifactId>order-container</artifactId>
+                <version>${order-service.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.intellibucket</groupId>
+                <artifactId>order-domain-core</artifactId>
+                <version>${order-service.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.intellibucket</groupId>
+                <artifactId>order-domain-shell</artifactId>
+                <version>${order-service.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.intellibucket</groupId>
+                <artifactId>order-message-listener</artifactId>
+                <version>${order-service.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.intellibucket</groupId>
+                <artifactId>order-rest</artifactId>
+                <version>${order-service.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.intellibucket</groupId>
+                <artifactId>order-dataaccess</artifactId>
+                <version>${order-service.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.intellibucket</groupId>
+                <artifactId>order-message-publisher</artifactId>
+                <version>${order-service.version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <dependencies>
+
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <scope>provided</scope>
+            <version>1.18.34</version>
+        </dependency>
+
+    </dependencies>
+
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>${maven-compiler-plugin.version}</version>
+                <configuration>
+                    <release>17</release>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 
 </project>
