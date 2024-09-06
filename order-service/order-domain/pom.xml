@@ -2,21 +2,18 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-
+    <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>com.intellibucket</groupId>
-        <artifactId>orz-temp-delivery</artifactId>
+        <artifactId>order-service</artifactId>
         <version>1.0-SNAPSHOT</version>
     </parent>
+
+    <artifactId>order-domain</artifactId>
     <packaging>pom</packaging>
+
     <modules>
-        <module>order-container</module>
-        <module>order-domain</module>
-        <module>order-primary</module>
-        <module>order-secondary</module>
+        <module>order-domain-core</module>
+        <module>order-domain-shell</module>
     </modules>
-
-    <modelVersion>4.0.0</modelVersion>
-    <artifactId>order-service</artifactId>
-
 </project>
