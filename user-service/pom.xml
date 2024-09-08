@@ -11,6 +11,13 @@
 
     <modelVersion>4.0.0</modelVersion>
     <artifactId>user-service</artifactId>
+    <packaging>pom</packaging>
+    <modules>
+        <module>user-container</module>
+        <module>user-domain</module>
+        <module>user-primary</module>
+        <module>user-secondary</module>
+    </modules>
 
 
 </project>
