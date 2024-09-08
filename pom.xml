@@ -15,6 +15,8 @@
         <maven-compiler-plugin.version>3.13.0</maven-compiler-plugin.version>
         <order-service.version>1.0-SNAPSHOT</order-service.version>
         <cart-service.version>1.0-SNAPSHOT</cart-service.version>
+        <company-service.version>1.0-SNAPSHOT</company-service.version>
+        <lombok.version>1.18.34</lombok.version>
     </properties>
 
     <modules>
@@ -130,6 +132,51 @@
                 <artifactId>user-rest</artifactId>
                 <version>${user-service.version}</version>
             </dependency>
+
+<!--            CompanyService-->
+            <dependency>
+                <groupId>com.intellibucket</groupId>
+                <artifactId>company-container</artifactId>
+                <version>${company-service.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.intellibucket</groupId>
+                <artifactId>company-domain-core</artifactId>
+                <version>${company-service.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.intellibucket</groupId>
+                <artifactId>company-domain-shell</artifactId>
+                <version>${company-service.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.intellibucket</groupId>
+                <artifactId>company-message-listener</artifactId>
+                <version>${company-service.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.intellibucket</groupId>
+                <artifactId>company-rest</artifactId>
+                <version>${company-service.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.intellibucket</groupId>
+                <artifactId>company-message-publisher</artifactId>
+                <version>${company-service.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.intellibucket</groupId>
+                <artifactId>company-repository</artifactId>
+                <version>${company-service.version}</version>
+            </dependency>
+
+
         </dependencies>
     </dependencyManagement>
 
@@ -139,7 +186,7 @@
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <scope>provided</scope>
-            <version>1.18.34</version>
+            <version>${lombok.version}</version>
         </dependency>
 
     </dependencies>
