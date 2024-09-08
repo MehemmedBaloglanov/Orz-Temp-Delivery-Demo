@@ -79,6 +79,43 @@
                 <artifactId>order-message-publisher</artifactId>
                 <version>${order-service.version}</version>
             </dependency>
+
+<!--            User Service-->
+            <dependency>
+                <groupId>com.intellibucket</groupId>
+                <artifactId>user-container</artifactId>
+                <version>${user-service.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.intellibucket</groupId>
+                <artifactId>user-domain-core</artifactId>
+                <version>${user-service.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.intellibucket</groupId>
+                <artifactId>user-domain-shell</artifactId>
+                <version>${user-service.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.intellibucket</groupId>
+                <artifactId>user-dataaccess</artifactId>
+                <version>${user-service.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.intellibucket</groupId>
+                <artifactId>user-message-publisher</artifactId>
+                <version>${user-service.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.intellibucket</groupId>
+                <artifactId>user-message-listener</artifactId>
+                <version>${user-service.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.intellibucket</groupId>
+                <artifactId>user-rest</artifactId>
+                <version>${user-service.version}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 

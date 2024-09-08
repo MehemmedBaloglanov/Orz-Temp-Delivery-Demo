@@ -2,22 +2,13 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-
     <parent>
+        <artifactId>user-primary</artifactId>
         <groupId>com.intellibucket</groupId>
-        <artifactId>orz-temp-delivery</artifactId>
         <version>1.0-SNAPSHOT</version>
     </parent>
-
     <modelVersion>4.0.0</modelVersion>
-    <artifactId>user-service</artifactId>
-    <packaging>pom</packaging>
-    <modules>
-        <module>user-container</module>
-        <module>user-domain</module>
-        <module>user-primary</module>
-        <module>user-secondary</module>
-    </modules>
 
+    <artifactId>user-message-listener</artifactId>
 
 </project>
