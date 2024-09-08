@@ -10,15 +10,152 @@
     <packaging>pom</packaging>
 
     <properties>
-        <maven.compiler.source>17</maven.compiler.source>
-        <maven.compiler.target>17</maven.compiler.target>
+        <spring-web.version>3.3.3</spring-web.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <maven-compiler-plugin.version>3.13.0</maven-compiler-plugin.version>
+        <order-service.version>1.0-SNAPSHOT</order-service.version>
+        <cart-service.version>1.0-SNAPSHOT</cart-service.version>
     </properties>
 
     <modules>
         <module>company-service</module>
         <module>order-service</module>
         <module>user-service</module>
+        <module>library</module>
+        <module>cart-service</module>
+        <module>cart-service/cart-domain</module>
     </modules>
+
+    <dependencyManagement>
+        <dependencies>
+
+            <!--     Spring web       -->
+
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-web</artifactId>
+                <version>${spring-web.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-data-jpa</artifactId>
+                <version>${spring-web.version}</version>
+            </dependency>
+
+            <!--      Library      -->
+
+            <dependency>
+                <groupId>com.intellibucket</groupId>
+                <artifactId>library</artifactId>
+                <version>1.0-SNAPSHOT</version>
+            </dependency>
+
+            <!-- Cart Service -->
+            <dependency>
+                <groupId>com.intellibucket</groupId>
+                <artifactId>cart-container</artifactId>
+                <version>1.0-SNAPSHOT</version>
+            </dependency>
+
+            <!--      Order Service      -->
+            <dependency>
+                <groupId>com.intellibucket</groupId>
+                <artifactId>order-container</artifactId>
+                <version>${order-service.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.intellibucket</groupId>
+                <artifactId>order-domain-core</artifactId>
+                <version>${order-service.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.intellibucket</groupId>
+                <artifactId>order-domain-shell</artifactId>
+                <version>${order-service.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.intellibucket</groupId>
+                <artifactId>order-message-listener</artifactId>
+                <version>${order-service.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.intellibucket</groupId>
+                <artifactId>order-rest</artifactId>
+                <version>${order-service.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.intellibucket</groupId>
+                <artifactId>order-dataaccess</artifactId>
+                <version>${order-service.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.intellibucket</groupId>
+                <artifactId>order-message-publisher</artifactId>
+                <version>${order-service.version}</version>
+            </dependency>
+
+<!--            User Service-->
+            <dependency>
+                <groupId>com.intellibucket</groupId>
+                <artifactId>user-container</artifactId>
+                <version>${user-service.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.intellibucket</groupId>
+                <artifactId>user-domain-core</artifactId>
+                <version>${user-service.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.intellibucket</groupId>
+                <artifactId>user-domain-shell</artifactId>
+                <version>${user-service.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.intellibucket</groupId>
+                <artifactId>user-dataaccess</artifactId>
+                <version>${user-service.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.intellibucket</groupId>
+                <artifactId>user-message-publisher</artifactId>
+                <version>${user-service.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.intellibucket</groupId>
+                <artifactId>user-message-listener</artifactId>
+                <version>${user-service.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.intellibucket</groupId>
+                <artifactId>user-rest</artifactId>
+                <version>${user-service.version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <dependencies>
+
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <scope>provided</scope>
+            <version>1.18.34</version>
+        </dependency>
+
+    </dependencies>
+
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>${maven-compiler-plugin.version}</version>
+                <configuration>
+                    <release>17</release>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 
 </project>

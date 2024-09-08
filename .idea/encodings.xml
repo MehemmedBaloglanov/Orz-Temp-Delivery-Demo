@@ -9,11 +9,51 @@
     <file url="file://$PROJECT_DIR$/library/orizon-util/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/library/temp-root/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/library/temp-root/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/order-service/order-container/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/order-service/order-container/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/order-service/order-domain/order-domain-core/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/order-service/order-domain/order-domain-core/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/order-service/order-domain/order-domain-shell/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/order-service/order-domain/order-domain-shell/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/order-service/order-domain/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/order-service/order-domain/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/order-service/order-primary/order-message-listener/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/order-service/order-primary/order-message-listener/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/order-service/order-primary/order-rest/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/order-service/order-primary/order-rest/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/order-service/order-primary/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/order-service/order-primary/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/order-service/order-secondary/order-dataaccess/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/order-service/order-secondary/order-dataaccess/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/order-service/order-secondary/order-message-publisher/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/order-service/order-secondary/order-message-publisher/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/order-service/order-secondary/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/order-service/order-secondary/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/order-service/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/order-service/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/user-service/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/user-service/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/user-service/user-container/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/user-service/user-container/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/user-service/user-domain/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/user-service/user-domain/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/user-service/user-domain/user-domain-core/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/user-service/user-domain/user-domain-core/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/user-service/user-domain/user-domain-shell/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/user-service/user-domain/user-domain-shell/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/user-service/user-primary/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/user-service/user-primary/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/user-service/user-primary/user-message-listener/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/user-service/user-primary/user-message-listener/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/user-service/user-primary/user-rest/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/user-service/user-primary/user-rest/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/user-service/user-secondary/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/user-service/user-secondary/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/user-service/user-secondary/user-dataaccess/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/user-service/user-secondary/user-dataaccess/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/user-service/user-secondary/user-message-publisher/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/user-service/user-secondary/user-message-publisher/src/main/resources" charset="UTF-8" />
   </component>
 </project>
