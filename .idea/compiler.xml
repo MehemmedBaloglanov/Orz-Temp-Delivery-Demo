@@ -6,18 +6,24 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="orizon-util" />
+        <module name="user-dataaccess" />
+        <module name="order-rest" />
+        <module name="company-service" />
+        <module name="user-rest" />
+        <module name="order-message-listener" />
+        <module name="user-container" />
+        <module name="order-container" />
+        <module name="order-dataaccess" />
         <module name="orizon-http" />
         <module name="order-domain-shell" />
         <module name="order-message-publisher" />
-        <module name="orizon-util" />
         <module name="temp-root" />
-        <module name="order-rest" />
-        <module name="user-service" />
-        <module name="company-service" />
+        <module name="user-domain-shell" />
+        <module name="user-message-publisher" />
+        <module name="user-domain-core" />
         <module name="order-domain-core" />
-        <module name="order-message-listener" />
-        <module name="order-container" />
-        <module name="order-dataaccess" />
+        <module name="user-message-listener" />
       </profile>
     </annotationProcessing>
   </component>
