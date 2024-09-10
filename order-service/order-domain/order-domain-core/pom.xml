@@ -13,4 +13,22 @@
 
     <artifactId>order-domain-core</artifactId>
 
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-validation</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.intelliacademy.orizonroute</groupId>
+            <artifactId>temp-root</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.intellibucket</groupId>
+            <artifactId>domain</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.intellibucket</groupId>
+            <artifactId>domain</artifactId>
+        </dependency>
+    </dependencies>
 </project>
