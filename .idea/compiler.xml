@@ -39,8 +39,5 @@
         <module name="user-domain-core" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
-      <module name="domain" target="17" />
-    </bytecodeTargetLevel>
   </component>
 </project>
