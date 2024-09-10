@@ -11,4 +11,14 @@
 
     <artifactId>user-domain-shell</artifactId>
 
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-validation</artifactId>
+                <version>${spring-web.version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
 </project>

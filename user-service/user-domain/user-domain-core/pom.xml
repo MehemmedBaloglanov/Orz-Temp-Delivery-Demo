@@ -11,4 +11,10 @@
 
     <artifactId>user-domain-core</artifactId>
 
+    <dependencies>
+        <dependency>
+            <groupId>com.intelliacademy.orizonroute</groupId>
+            <artifactId>temp-root</artifactId>
+        </dependency>
+    </dependencies>
 </project>
