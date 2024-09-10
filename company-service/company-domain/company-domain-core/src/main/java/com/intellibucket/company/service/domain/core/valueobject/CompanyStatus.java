@@ -5,5 +5,23 @@ public enum CompanyStatus {
     ACTIVE,
     BANNED,
     DISABLED;
+
+
+
+    public Boolean isDraft() {
+        return this == DRAFT;
+    }
+
+    public Boolean isActive() {
+        return this == ACTIVE;
+    }
+
+    public Boolean isBanned() {
+        return this == BANNED;
+    }
+
+    public Boolean isDisabled() {
+        return this == DISABLED;
+    }
 }
 
