@@ -1,4 +1,4 @@
-package com.intellibucket.order.service.domain.shell.dto.rest.command;
+package com.intellibucket.order.service.domain.shell.dto.command;
 
 import com.intellibucket.order.service.domain.core.valueobject.OrderAddress;
 import lombok.AllArgsConstructor;

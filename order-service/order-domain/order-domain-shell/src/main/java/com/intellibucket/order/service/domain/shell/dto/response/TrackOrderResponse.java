@@ -1,4 +1,4 @@
-package com.intellibucket.order.service.domain.shell.dto.rest.response;
+package com.intellibucket.order.service.domain.shell.dto.response;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.intellibucket.order.service.domain.core.valueobject.OrderStatus;

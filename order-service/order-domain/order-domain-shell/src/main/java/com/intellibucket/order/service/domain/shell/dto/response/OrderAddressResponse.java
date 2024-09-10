@@ -1,4 +1,4 @@
-package com.intellibucket.order.service.domain.shell.dto.rest.response;
+package com.intellibucket.order.service.domain.shell.dto.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

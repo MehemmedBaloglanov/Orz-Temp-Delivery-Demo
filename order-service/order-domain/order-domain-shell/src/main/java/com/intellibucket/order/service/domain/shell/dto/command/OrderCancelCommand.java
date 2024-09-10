@@ -1,4 +1,4 @@
-package com.intellibucket.order.service.domain.shell.dto.rest.command;
+package com.intellibucket.order.service.domain.shell.dto.command;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
