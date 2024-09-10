@@ -26,14 +26,15 @@ public class OrderRoot extends AggregateRoot<OrderID> {
     private OrderStatus status;
 
 
-    public void initializeOrder() {
+    public OrderRoot initializeOrder() {
         setId(OrderID.random());
         orderNumber = OrderNumber.generate();
         status = OrderStatus.CREATED;
+        return this;
     }
 
     public OrderRoot initCancel() throws OrderDomainException {
-        if (status.isDelivering() || status.isCompleted()) {
+        if (status.isDelivering() || status.isCompleted() || status.isCanceled()) {
             throw new OrderDomainException("Order is not in correct state for initCancel operation!");
         }
 
