@@ -6,7 +6,7 @@ import com.intelliacademy.orizonroute.valueobjects.common.ValueObject;
 public enum OrderStatus {
     CREATED,
     CANCELLING,
-    CANCELED,
+    CANCELLED,
     PAID,
     ASSIGNED,
     PREPARING,
@@ -22,8 +22,8 @@ public enum OrderStatus {
         return this == CANCELLING;
     }
 
-    public Boolean isCanceled() {
-        return this == CANCELED;
+    public Boolean isCancelled() {
+        return this == CANCELLED;
     }
 
     public Boolean isPaid() {

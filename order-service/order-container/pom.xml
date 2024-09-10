@@ -18,6 +18,14 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.intellibucket</groupId>
+            <artifactId>order-domain-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.intellibucket</groupId>
+            <artifactId>order-domain-shell</artifactId>
+        </dependency>
     </dependencies>
 
 </project>
