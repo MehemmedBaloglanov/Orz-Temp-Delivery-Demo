@@ -12,6 +12,7 @@
         <module>temp-root</module>
         <module>orizon-http</module>
         <module>orizon-util</module>
+        <module>domain</module>
     </modules>
 
 

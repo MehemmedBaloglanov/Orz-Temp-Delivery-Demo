@@ -33,6 +33,7 @@
         <module name="order-container" />
         <module name="order-message-publisher" />
         <module name="user-domain-shell" />
+        <module name="domain" />
         <module name="user-message-publisher" />
         <module name="cart-domain-shell" />
         <module name="user-domain-core" />
