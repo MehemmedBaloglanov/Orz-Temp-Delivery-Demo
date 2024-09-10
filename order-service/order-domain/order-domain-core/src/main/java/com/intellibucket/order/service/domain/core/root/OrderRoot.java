@@ -34,8 +34,8 @@ public class OrderRoot extends AggregateRoot<OrderID> {
     }
 
     public OrderRoot initCancel() throws OrderDomainException {
-        if (status.isDelivering() || status.isCompleted() || status.isCanceled()) {
-            throw new OrderDomainException("Order is not in correct state for initCancel operation!");
+        if (status.isDelivering() || status.isCompleted() || status.isCancelled()) {
+            throw new OrderDomainException("Order is not in correct state for the initCancel operation!");
         }
 
         this.status = OrderStatus.CANCELLING;
@@ -47,7 +47,7 @@ public class OrderRoot extends AggregateRoot<OrderID> {
         if (status.isCancelling() || status.isCreated()) {
             throw new OrderDomainException("Cannot cancel order");
         }
-        this.status = OrderStatus.CANCELED;
+        this.status = OrderStatus.CANCELLED;
         return this;
     }
 
