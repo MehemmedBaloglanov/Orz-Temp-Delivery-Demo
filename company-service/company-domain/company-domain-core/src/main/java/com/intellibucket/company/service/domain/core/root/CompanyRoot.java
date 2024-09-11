@@ -3,6 +3,8 @@ package com.intellibucket.company.service.domain.core.root;
 import com.intelliacademy.orizonroute.identity.company.CompanyID;
 import com.intelliacademy.orizonroute.identity.user.UserID;
 import com.intelliacademy.orizonroute.root.AggregateRoot;
+import com.intellibucket.company.service.domain.core.exception.CompanyDomainException;
+import com.intellibucket.company.service.domain.core.exception.ValidateException;
 import com.intellibucket.company.service.domain.core.valueobject.CompanyAddress;
 import com.intellibucket.company.service.domain.core.valueobject.CompanyStatus;
 import lombok.Builder;
@@ -20,14 +22,14 @@ public class CompanyRoot extends AggregateRoot<CompanyID> {
 
     private List<ProductRoot> products;
 
-    public CompanyRoot initializeCompany() {
+    public CompanyRoot initializeCompany() throws ValidateException {
         super.setId(CompanyID.random());
         status = CompanyStatus.DRAFT;
         validateCompany();
         return this;
     }
 
-    public void validateCompany() {
+    public void validateCompany() throws ValidateException {
         validateAddress();
         validateName();
         validateDescription();
@@ -49,30 +51,30 @@ public class CompanyRoot extends AggregateRoot<CompanyID> {
         return this;
     }
 
-    public CompanyRoot disable() {
+    public CompanyRoot disable() throws ValidateException {
         if (!status.isActive() || status.isBanned()) {
-            throw new IllegalStateException("Cannot disable Company");
+            throw new ValidateException("Cannot disable Company");
         }
         this.status = CompanyStatus.ACTIVE;
         return this;
     }
 
 
-    private void validateDescription() {
+    private void validateDescription() throws ValidateException {
         if(description == null){
-            throw new IllegalArgumentException("Description cannot be null");
+            throw new ValidateException("Description cannot be null");
         }
     }
 
-    private void validateName() {
+    private void validateName() throws ValidateException {
         if(name == null){
-            throw new IllegalArgumentException("Name cannot be null");
+            throw new ValidateException("Name cannot be null");
         }
     }
 
-    private void validateAddress() {
+    private void validateAddress() throws ValidateException {
         if(address == null && !address.isValid()){
-            throw new IllegalArgumentException("Address cannot be null");
+            throw new ValidateException("Address cannot be null");
         }
     }
 
