@@ -1,0 +1,1 @@
+package com.intellibucket.order.service.repository.model;

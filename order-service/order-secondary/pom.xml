@@ -16,7 +16,7 @@
     <packaging>pom</packaging>
 
     <modules>
-        <module>order-dataaccess</module>
+        <module>order-repository</module>
         <module>order-message-publisher</module>
     </modules>
 

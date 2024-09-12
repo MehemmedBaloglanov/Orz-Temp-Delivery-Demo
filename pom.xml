@@ -97,7 +97,7 @@
             </dependency>
             <dependency>
                 <groupId>com.intellibucket</groupId>
-                <artifactId>order-dataaccess</artifactId>
+                <artifactId>order-repository</artifactId>
                 <version>${order-service.version}</version>
             </dependency>
             <dependency>
