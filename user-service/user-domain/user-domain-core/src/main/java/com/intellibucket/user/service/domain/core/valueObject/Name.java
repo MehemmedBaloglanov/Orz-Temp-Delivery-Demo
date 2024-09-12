@@ -15,4 +15,8 @@ public final class Name {
         return firstName != null && !firstName.isEmpty() &&
                 lastName != null && !lastName.isEmpty();
     }
+
+    public String getNameSurname() {
+        return firstName + " " + lastName;
+    }
 }
