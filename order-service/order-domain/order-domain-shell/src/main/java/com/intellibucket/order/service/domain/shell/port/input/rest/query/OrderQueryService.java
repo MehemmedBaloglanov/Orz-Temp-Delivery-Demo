@@ -15,5 +15,4 @@ public interface OrderQueryService {
     List<OrderResponse> orders(UserID userID);
 
     OrderResponse orderById(OrderID orderId);
-
 }
