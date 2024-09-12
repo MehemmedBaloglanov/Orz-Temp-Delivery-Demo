@@ -4,10 +4,16 @@ import com.intellibucket.order.service.domain.shell.dto.command.OrderCancelComma
 import com.intellibucket.order.service.domain.shell.dto.command.OrderCreateCommand;
 import com.intellibucket.order.service.domain.shell.dto.response.OrderResponse;
 
+import java.util.List;
+import java.util.UUID;
+
 public interface OrderCommandService {
 
     OrderResponse createOrder(OrderCreateCommand orderCreateCommand);
 
     OrderResponse cancelOrder(OrderCancelCommand orderCancelCommand);
 
+    List<OrderCreateCommand> getUnassignedOrders();
+
+    void assignOrder(UUID orderId);
 }
