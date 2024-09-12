@@ -6,12 +6,10 @@ import com.intellibucket.company.service.domain.core.exception.StockInsufficient
 import com.intellibucket.company.service.domain.core.exception.ValidateException;
 
 public class StockRoot extends AggregateRoot<ProductID> {
-
-    private ProductID productID;
     private Integer stockQuantity;
 
     public StockRoot(ProductID productID, Integer stockQuantity) {
-        this.productID = productID;
+         super.setId(ProductID.random());
         this.stockQuantity = stockQuantity;
     }
 
@@ -38,7 +36,8 @@ public class StockRoot extends AggregateRoot<ProductID> {
         }
         this.stockQuantity -= quantityToRemove;
     }
-    private static Integer validateStockQuantity(Integer stockQuantity) throws ValidateException {
+
+    public static Integer validateStockQuantity(Integer stockQuantity) throws ValidateException {
         if(stockQuantity == null || stockQuantity<0){
             throw new ValidateException("Stock quantity cannot be null or negative");
         }
