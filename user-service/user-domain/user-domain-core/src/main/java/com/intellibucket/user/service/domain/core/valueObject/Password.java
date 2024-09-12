@@ -12,7 +12,7 @@ public final class Password {
     private final String value;
 
     public boolean isPasswordValid() {
-        return  value != null &&
+        return value != null &&
                 !value.isEmpty() &&
                 containsUpperCase(value) &&
                 containsLowerCase(value) &&
@@ -34,6 +34,7 @@ public final class Password {
     }
 
     private boolean containsSpecialCharacter(String value) {
-        return value.chars().anyMatch(ch-> !Character.isLetterOrDigit(ch));
+        return value.chars().anyMatch(ch -> !Character.isLetterOrDigit(ch));
     }
+
 }

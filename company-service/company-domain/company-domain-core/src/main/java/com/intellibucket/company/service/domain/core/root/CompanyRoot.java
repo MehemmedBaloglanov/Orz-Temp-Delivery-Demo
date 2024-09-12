@@ -35,17 +35,17 @@ public class CompanyRoot extends AggregateRoot<CompanyID> {
         validateDescription();
     }
 
-    public CompanyRoot ban() {
+    public CompanyRoot ban() throws ValidateException {
         if (status.isBanned()) {
-            throw new IllegalStateException("Company is already banned.");
+            throw new ValidateException("Company is already banned.");
         }
         this.status = CompanyStatus.BANNED;
         return this;
     }
 
-    public CompanyRoot activate() {
+    public CompanyRoot activate() throws ValidateException {
         if (status.isActive()) {
-            throw new IllegalStateException("Already activated");
+            throw new ValidateException("Already activated");
         }
         this.status = CompanyStatus.ACTIVE;
         return this;
