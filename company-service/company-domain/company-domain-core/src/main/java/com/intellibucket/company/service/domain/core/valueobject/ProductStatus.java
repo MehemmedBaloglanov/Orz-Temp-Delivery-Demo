@@ -10,4 +10,19 @@ public enum ProductStatus {
     OUT_OF_STOCK;
 
 
+    public Boolean isDraft(){
+        return this == DRAFT;
+    }
+
+    public Boolean isActive(){
+        return this==ACTIVE;
+    }
+
+    public Boolean isDeleted(){
+        return this==DELETED;
+    }
+
+    public Boolean isOutOfStock(){
+        return this==OUT_OF_STOCK;
+    }
 }
