@@ -2,8 +2,7 @@ package com.intellibucket.order.service.primary.rest.handler;
 
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.orm.ObjectOptimisticLockingFailureException;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.ResponseStatus;
+
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 
