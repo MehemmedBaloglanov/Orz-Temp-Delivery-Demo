@@ -12,7 +12,7 @@ public class ProductDomainServiceImpl implements ProductDomainService {
     }
 
     @Override
-    public ProductDeletedEvent deleteProduct(ProductRoot productRoot, CompanyID companyID) {
+    public ProductDeletedEvent deleteProduct(ProductRoot productRoot) {
         return null;
     }
 
@@ -27,17 +27,17 @@ public class ProductDomainServiceImpl implements ProductDomainService {
     }
 
     @Override
-    public ProductPriceUpdatedEvent priceUpdateProduct(ProductRoot productRoot) {
+    public ProductPriceUpdatedEvent updatePriceProduct(ProductRoot productRoot) {
         return null;
     }
 
     @Override
-    public ProductQuantityUpdatedEvent quantityUpdateProduct(ProductRoot productRoot) {
+    public ProductQuantityUpdatedEvent updateQuantityProduct(ProductRoot productRoot) {
         return null;
     }
 
     @Override
-    public ProductStockUpdatedEvent stockUpdateProduct(ProductRoot productRoot) {
+    public ProductStockUpdatedEvent updateStockProduct(ProductRoot productRoot) {
         return null;
     }
 }

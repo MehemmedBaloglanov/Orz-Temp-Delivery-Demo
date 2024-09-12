@@ -19,17 +19,17 @@ public class CompanyDomainServiceImpl implements CompanyDomainService {
     }
 
     @Override
-    public CompanyActivatedEvent activate(CompanyRoot companyRoot) {
+    public CompanyActivatedEvent activateCompany(CompanyRoot companyRoot) {
         return null;
     }
 
     @Override
-    public CompanyDisabledEvent disable(CompanyRoot companyRoot) {
+    public CompanyDisabledEvent disableCompany(CompanyRoot companyRoot) {
         return null;
     }
 
     @Override
-    public CompanyBannedEvent banned(CompanyRoot companyRoot) {
+    public CompanyBannedEvent bannedCompany(CompanyRoot companyRoot) {
         return null;
     }
 }

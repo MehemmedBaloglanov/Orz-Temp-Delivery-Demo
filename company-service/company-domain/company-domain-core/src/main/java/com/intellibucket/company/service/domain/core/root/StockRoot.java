@@ -13,12 +13,11 @@ public class StockRoot extends AggregateRoot<ProductID> {
         this.stockQuantity = stockQuantity;
     }
 
+    // TODO: 9/12/2024 Məhəmməd
     public static StockRoot initializeStock(ProductID productID,Integer stockQuantity) throws ValidateException {
-        StockRoot stockRoot = new StockRoot(productID,validateStockQuantity(stockQuantity));
-        return stockRoot;
+        return new StockRoot(productID,validateStockQuantity(stockQuantity));
     }
 
-    // Method to increase stock quantity
     public void addStock(Integer quantityToAdd) throws ValidateException {
         if (quantityToAdd == null || quantityToAdd <= 0) {
             throw new ValidateException("Quantity to add must be positive and not null");
@@ -26,7 +25,7 @@ public class StockRoot extends AggregateRoot<ProductID> {
         this.stockQuantity += quantityToAdd;
     }
 
-    // Method to decrease stock quantity
+
     public void removeStock(Integer quantityToRemove) throws ValidateException, StockInsufficientException {
         if (quantityToRemove == null || quantityToRemove <= 0) {
             throw new ValidateException("Quantity to remove must be positive and not null");

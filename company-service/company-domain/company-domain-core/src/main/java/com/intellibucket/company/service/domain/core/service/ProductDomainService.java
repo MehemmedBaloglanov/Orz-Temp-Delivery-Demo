@@ -8,16 +8,16 @@ public interface ProductDomainService {
 
     ProductCreatedEvent createProduct(ProductRoot productRoot, CompanyID companyID);
 
-    ProductDeletedEvent deleteProduct(ProductRoot productRoot,CompanyID companyID);
+    ProductDeletedEvent deleteProduct(ProductRoot productRoot);
 
     ProductActivatedEvent activateProduct(ProductRoot productRoot);
 
     ProductOutOfStockEvent  outOfStockProduct(ProductRoot productRoot);
 
-    ProductPriceUpdatedEvent priceUpdateProduct(ProductRoot productRoot);
+    ProductPriceUpdatedEvent updatePriceProduct(ProductRoot productRoot);
 
-    ProductQuantityUpdatedEvent quantityUpdateProduct(ProductRoot productRoot);
+    ProductQuantityUpdatedEvent updateQuantityProduct(ProductRoot productRoot);
 
-    ProductStockUpdatedEvent stockUpdateProduct(ProductRoot productRoot);
+    ProductStockUpdatedEvent updateStockProduct(ProductRoot productRoot);
 
 }

@@ -10,11 +10,11 @@ public interface CompanyDomainService {
 
     CompanyUpdatedEvent updateCompany(CompanyRoot companyRoot);
 
-    CompanyActivatedEvent activate(CompanyRoot companyRoot);
+    CompanyActivatedEvent activateCompany(CompanyRoot companyRoot);
 
-    CompanyDisabledEvent disable(CompanyRoot companyRoot);
+    CompanyDisabledEvent disableCompany(CompanyRoot companyRoot);
 
-    CompanyBannedEvent banned(CompanyRoot companyRoot);
+    CompanyBannedEvent bannedCompany(CompanyRoot companyRoot);
 
 
 }
