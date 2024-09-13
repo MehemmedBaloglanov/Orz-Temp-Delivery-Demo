@@ -13,6 +13,7 @@ import java.util.List;
 @Builder
 public class CompanyRoot extends AggregateRoot<CompanyID> {
 
+
     private UserID userID;
     private String name;
     private String description;
@@ -23,12 +24,15 @@ public class CompanyRoot extends AggregateRoot<CompanyID> {
 
     public CompanyRoot initializeCompany() throws ValidateException {
         super.setId(CompanyID.random());
+        validateDraft();
         status = CompanyStatus.DRAFT;
         validateCompany();
         return this;
     }
 
     // TODO: 9/13/2024  draftin null olmasini yoxlamaq
+
+
 
     public void validateCompany() throws ValidateException {
         validateAddress();
@@ -79,5 +83,10 @@ public class CompanyRoot extends AggregateRoot<CompanyID> {
         }
     }
 
+    private void validateDraft() throws ValidateException {
+        if(status.isDraft() == null){
+            throw new ValidateException("Draft cannot be null");
+        }
+    }
 
 }

@@ -23,12 +23,10 @@ public class ProductRoot extends AggregateRoot<ProductID> {
     private StockRoot stock;
     private ProductStatus status;
 
-    private ProductRoot(){
-        super.setId(ProductID.random());
-        this.status =ProductStatus.DRAFT;
-    }
+
     public ProductRoot initialize() throws ValidateException {
         super.setId(ProductID.random());
+        validateDraft();
         status = ProductStatus.DRAFT;
         validateProduct();
         return this;
@@ -72,6 +70,11 @@ public class ProductRoot extends AggregateRoot<ProductID> {
         }
     }
 
+    public void validateDraft() throws ValidateException {
+        if(status.isDraft() == null){
+            throw new ValidateException("Draft cannot be null");
+        }
+    }
 
     public ProductRoot active() throws ValidateException {
         if (status.isActive()) {

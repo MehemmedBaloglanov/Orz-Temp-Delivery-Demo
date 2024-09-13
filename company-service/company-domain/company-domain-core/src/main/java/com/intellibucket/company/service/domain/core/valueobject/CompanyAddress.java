@@ -5,7 +5,6 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
 @ValueObject
-@RequiredArgsConstructor
 @Getter
 public record CompanyAddress(String city, String street, String address) {
     public Boolean isValid() {
