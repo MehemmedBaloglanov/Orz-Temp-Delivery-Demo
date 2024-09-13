@@ -3,7 +3,6 @@ package com.intellibucket.company.service.domain.core.root;
 import com.intelliacademy.orizonroute.identity.company.CompanyID;
 import com.intelliacademy.orizonroute.identity.user.UserID;
 import com.intelliacademy.orizonroute.root.AggregateRoot;
-import com.intellibucket.company.service.domain.core.exception.CompanyDomainException;
 import com.intellibucket.company.service.domain.core.exception.ValidateException;
 import com.intellibucket.company.service.domain.core.valueobject.CompanyAddress;
 import com.intellibucket.company.service.domain.core.valueobject.CompanyStatus;

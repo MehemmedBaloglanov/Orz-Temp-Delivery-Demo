@@ -2,42 +2,52 @@ package com.intellibucket.company.service.domain.shell.serviceImpl;
 
 import com.intelliacademy.orizonroute.identity.company.CompanyID;
 import com.intellibucket.company.service.domain.core.event.product.*;
+import com.intellibucket.company.service.domain.core.exception.ValidateException;
 import com.intellibucket.company.service.domain.core.root.ProductRoot;
 import com.intellibucket.company.service.domain.core.service.ProductDomainService;
 
+import java.time.OffsetDateTime;
+
 public class ProductDomainServiceImpl implements ProductDomainService {
     @Override
-    public ProductCreatedEvent createProduct(ProductRoot productRoot, CompanyID companyID) {
-        return null;
+    public ProductCreatedEvent createProduct(ProductRoot productRoot, CompanyID companyID) throws ValidateException {
+        productRoot.initialize();
+        return new ProductCreatedEvent(productRoot, OffsetDateTime.now());
     }
 
     @Override
-    public ProductDeletedEvent deleteProduct(ProductRoot productRoot) {
-        return null;
+    public ProductDeletedEvent deleteProduct(ProductRoot productRoot) throws ValidateException {
+        productRoot.deleted();
+        return new ProductDeletedEvent(productRoot,OffsetDateTime.now());
     }
 
     @Override
-    public ProductActivatedEvent activateProduct(ProductRoot productRoot) {
-        return null;
+    public ProductActivatedEvent activateProduct(ProductRoot productRoot) throws ValidateException {
+        productRoot.active();
+        return new ProductActivatedEvent(productRoot,OffsetDateTime.now());
     }
 
     @Override
-    public ProductOutOfStockEvent outOfStockProduct(ProductRoot productRoot) {
-        return null;
+    public ProductOutOfStockEvent outOfStockProduct(ProductRoot productRoot) throws ValidateException {
+        productRoot.outOfStock();
+        return new ProductOutOfStockEvent(productRoot,OffsetDateTime.now());
     }
 
     @Override
-    public ProductPriceUpdatedEvent updatePriceProduct(ProductRoot productRoot) {
-        return null;
+    public ProductPriceUpdatedEvent updatePriceProduct(ProductRoot productRoot) throws ValidateException {
+        productRoot.validatePrice();
+        return new ProductPriceUpdatedEvent(productRoot,OffsetDateTime.now());
     }
 
     @Override
-    public ProductQuantityUpdatedEvent updateQuantityProduct(ProductRoot productRoot) {
-        return null;
+    public ProductQuantityUpdatedEvent updateQuantityProduct(ProductRoot productRoot) throws ValidateException {
+        productRoot.validateQuantity();
+        return new ProductQuantityUpdatedEvent(productRoot,OffsetDateTime.now());
     }
 
     @Override
-    public ProductStockUpdatedEvent updateStockProduct(ProductRoot productRoot) {
-        return null;
+    public ProductStockUpdatedEvent updateStockProduct(ProductRoot productRoot) throws ValidateException {
+        productRoot.validateStock();
+        return new ProductStockUpdatedEvent(productRoot,OffsetDateTime.now());
     }
 }

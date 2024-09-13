@@ -13,27 +13,32 @@ import java.time.OffsetDateTime;
 
 public class CompanyDomainServiceImpl implements CompanyDomainService {
     @Override
-    public CompanyCreatedEvent createCompany(CompanyRoot companyRoot, CompanyID companyID){
-       return null;
+    public CompanyCreatedEvent createCompany(CompanyRoot companyRoot, CompanyID companyID) throws ValidateException {
+        companyRoot.initializeCompany();
+        return new CompanyCreatedEvent(companyRoot,OffsetDateTime.now());
     }
 
     @Override
-    public CompanyUpdatedEvent updateCompany(CompanyRoot companyRoot) {
-        return null;
+    public CompanyUpdatedEvent updateCompany(CompanyRoot companyRoot) throws ValidateException {
+        companyRoot.validateCompany();
+        return new CompanyUpdatedEvent(companyRoot,OffsetDateTime.now());
     }
 
     @Override
-    public CompanyActivatedEvent activateCompany(CompanyRoot companyRoot) {
-        return null;
+    public CompanyActivatedEvent activateCompany(CompanyRoot companyRoot) throws ValidateException {
+        companyRoot.activate();
+        return new CompanyActivatedEvent(companyRoot,OffsetDateTime.now());
     }
 
     @Override
-    public CompanyDisabledEvent disableCompany(CompanyRoot companyRoot) {
-        return null;
+    public CompanyDisabledEvent disableCompany(CompanyRoot companyRoot) throws ValidateException {
+        companyRoot.disable();
+        return new CompanyDisabledEvent(companyRoot,OffsetDateTime.now());
     }
 
     @Override
-    public CompanyBannedEvent bannedCompany(CompanyRoot companyRoot) {
-        return null;
+    public CompanyBannedEvent bannedCompany(CompanyRoot companyRoot) throws ValidateException {
+        companyRoot.ban();
+        return new CompanyBannedEvent(companyRoot,OffsetDateTime.now());
     }
 }
