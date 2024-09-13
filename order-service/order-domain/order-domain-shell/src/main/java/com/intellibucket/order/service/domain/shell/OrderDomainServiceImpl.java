@@ -14,7 +14,7 @@ public class OrderDomainServiceImpl implements OrderDomainService {
     }
 
     @Override
-    public OrderPaidEvent payOrder(OrderRoot orderRoot) {
+    public PaymentSuccessEvent payOrder(OrderRoot orderRoot) {
         return null;
     }
 
