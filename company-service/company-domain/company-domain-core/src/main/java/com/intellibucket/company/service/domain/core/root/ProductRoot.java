@@ -1,6 +1,5 @@
 package com.intellibucket.company.service.domain.core.root;
 
-import com.intelliacademy.orizonroute.identity.company.CommentID;
 import com.intelliacademy.orizonroute.identity.company.CompanyID;
 import com.intelliacademy.orizonroute.identity.order.product.ProductID;
 import com.intelliacademy.orizonroute.root.AggregateRoot;
@@ -26,8 +25,9 @@ public class ProductRoot extends AggregateRoot<ProductID> {
 
     public ProductRoot initialize() throws ValidateException {
         super.setId(ProductID.random());
-        validateDraft();
-        status = ProductStatus.DRAFT;
+        if(status == null) {
+            status = ProductStatus.DRAFT;
+        }
         validateProduct();
         return this;
     }
@@ -70,13 +70,7 @@ public class ProductRoot extends AggregateRoot<ProductID> {
         }
     }
 
-    public void validateDraft() throws ValidateException {
-        if(status.isDraft() == null){
-            throw new ValidateException("Draft cannot be null");
-        }
-    }
-
-    public ProductRoot active() throws ValidateException {
+    public ProductRoot activate() throws ValidateException {
         if (status.isActive()) {
             throw new ValidateException("The product is already in ACTIVE status.");
         }
@@ -84,9 +78,9 @@ public class ProductRoot extends AggregateRoot<ProductID> {
         return this;
     }
 
-    public ProductRoot deleted() throws ValidateException {
+    public ProductRoot delete() throws ValidateException {
         if(status.isDeleted()){
-            throw new ValidateException("This product is already deleted");
+            throw new ValidateException("This product is already delete");
         }
         this.status=ProductStatus.DELETED;
         return this;

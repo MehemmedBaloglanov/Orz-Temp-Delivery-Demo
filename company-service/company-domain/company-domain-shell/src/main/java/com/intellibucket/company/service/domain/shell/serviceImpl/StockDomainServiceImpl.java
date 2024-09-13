@@ -13,7 +13,7 @@ import java.time.OffsetDateTime;
 public class StockDomainServiceImpl implements StockDomainService {
     @Override
     public StockCreatedEvent createStock(StockRoot stockRoot) throws ValidateException {
-        stockRoot.initializeStock();
+        stockRoot.initialize();
         return new StockCreatedEvent(stockRoot, OffsetDateTime.now());
     }
 

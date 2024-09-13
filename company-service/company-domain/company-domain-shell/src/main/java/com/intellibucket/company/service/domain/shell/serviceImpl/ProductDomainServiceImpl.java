@@ -17,7 +17,7 @@ public class ProductDomainServiceImpl implements ProductDomainService {
 
     @Override
     public ProductDeletedEvent deleteProduct(ProductRoot productRoot) throws ValidateException {
-        productRoot.deleted();
+        productRoot.delete();
         return new ProductDeletedEvent(productRoot,OffsetDateTime.now());
     }
 
