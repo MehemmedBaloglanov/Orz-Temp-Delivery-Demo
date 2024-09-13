@@ -8,15 +8,15 @@ import com.intellibucket.company.service.domain.core.root.CompanyRoot;
 
 public interface CompanyDomainService {
 
-    CompanyCreatedEvent createCompany(CompanyRoot companyRoot, CompanyID companyID);
+    CompanyCreatedEvent createCompany(CompanyRoot companyRoot, CompanyID companyID) throws ValidateException;
 
-    CompanyUpdatedEvent updateCompany(CompanyRoot companyRoot);
+    CompanyUpdatedEvent updateCompany(CompanyRoot companyRoot) throws ValidateException;
 
-    CompanyActivatedEvent activateCompany(CompanyRoot companyRoot);
+    CompanyActivatedEvent activateCompany(CompanyRoot companyRoot) throws ValidateException;
 
-    CompanyDisabledEvent disableCompany(CompanyRoot companyRoot);
+    CompanyDisabledEvent disableCompany(CompanyRoot companyRoot) throws ValidateException;
 
-    CompanyBannedEvent bannedCompany(CompanyRoot companyRoot);
+    CompanyBannedEvent bannedCompany(CompanyRoot companyRoot) throws ValidateException;
 
 
 }
