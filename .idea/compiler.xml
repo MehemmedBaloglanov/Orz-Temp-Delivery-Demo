@@ -40,5 +40,8 @@
         <module name="user-domain-core" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="order-dataaccess" target="17" />
+    </bytecodeTargetLevel>
   </component>
 </project>
