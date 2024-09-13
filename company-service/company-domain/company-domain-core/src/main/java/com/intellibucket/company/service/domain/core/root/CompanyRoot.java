@@ -29,6 +29,8 @@ public class CompanyRoot extends AggregateRoot<CompanyID> {
         return this;
     }
 
+    // TODO: 9/13/2024  draftin null olmasini yoxlamaq
+
     public void validateCompany() throws ValidateException {
         validateAddress();
         validateName();
