@@ -42,45 +42,34 @@ public class ProductRoot extends AggregateRoot<ProductID> {
         validateStock();
     }
 
-    // TODO: 9/12/2024  Məhəmməd
-    public String validateName() throws ValidateException {
+    public void validateName() throws ValidateException {
         if (name == null || name.isBlank()) {
             throw new ValidateException("Name cannot be empty or blank");
         }
-        return name;
     }
 
-    // TODO: 9/12/2024  Məhəmməd
-    public Money validatePrice() throws ValidateException {
+    public void validatePrice() throws ValidateException {
         if (price == null || price.isNil()) {
             throw new ValidateException("Price cannot be null or blank");
         }
-        return price;
     }
 
-    // TODO: 9/12/2024  Məhəmməd
-    public Integer validateQuantity() throws ValidateException {
+    public void validateQuantity() throws ValidateException {
         if (quantity == null || quantity <= 0) {
             throw new ValidateException("Quantity must be greater than zero");
         }
-        return quantity;
     }
 
-    // TODO: 9/12/2024  Məhəmməd
-    public CompanyID validateCompanyID() throws ValidateException {
+    public void validateCompanyID() throws ValidateException {
         if(companyID==null){
             throw new ValidateException("CompanyID cannot be null");
         }
-
-        return companyID;
     }
 
-    // TODO: 9/12/2024  Məhəmməd
-    public StockRoot validateStock() throws ValidateException {
+    public void validateStock() throws ValidateException {
         if(stock==null){
             throw new ValidateException("Stock cannot be null");
         }
-        return stock;
     }
 
 

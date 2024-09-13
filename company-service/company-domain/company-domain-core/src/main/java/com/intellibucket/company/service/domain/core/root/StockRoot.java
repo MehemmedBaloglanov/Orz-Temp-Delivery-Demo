@@ -9,11 +9,10 @@ public class StockRoot extends AggregateRoot<ProductID> {
     private Integer stockQuantity;
 
     public StockRoot(ProductID productID, Integer stockQuantity) {
-         super.setId(ProductID.random());
+        super.setId(ProductID.random());
         this.stockQuantity = stockQuantity;
     }
 
-    // TODO: 9/12/2024 Məhəmməd
     public static StockRoot initializeStock(ProductID productID,Integer stockQuantity) throws ValidateException {
         return new StockRoot(productID,validateStockQuantity(stockQuantity));
     }

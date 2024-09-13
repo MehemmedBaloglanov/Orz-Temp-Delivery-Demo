@@ -51,7 +51,6 @@ public class CompanyRoot extends AggregateRoot<CompanyID> {
         return this;
     }
 
-    // TODO: 9/12/2024  Özləm
     public CompanyRoot disable() throws ValidateException {
         if (!status.isActive() || status.isBanned()) {
             throw new ValidateException("Cannot disable Company");
