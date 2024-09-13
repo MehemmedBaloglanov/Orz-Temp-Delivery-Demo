@@ -17,7 +17,7 @@ public interface OrderDomainService {
 
     OrderCreatedEvent validateAndInitiateOrder(OrderRoot orderRoot, CompanyID companyID);
 
-    OrderPaidEvent  payOrder(OrderRoot orderRoot);
+    PaymentSuccessEvent payOrder(OrderRoot orderRoot);
 
     PaymentCanceledEvent cancelOrderPayment(OrderRoot orderRoot);
 
