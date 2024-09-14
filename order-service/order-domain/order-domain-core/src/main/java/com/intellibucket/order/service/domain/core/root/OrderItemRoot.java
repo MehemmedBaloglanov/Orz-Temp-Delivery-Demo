@@ -27,6 +27,6 @@ public class OrderItemRoot extends AggregateRoot<OrderItemID> {
 
     public boolean isPriceValid() {
         return price.greaterThanZero()
-                && price.multiply(BigDecimal.valueOf(quantity)).greaterThan(subTotal);
+                && price.multiply(BigDecimal.valueOf(quantity)).isEqualTo(subTotal);
     }
 }
