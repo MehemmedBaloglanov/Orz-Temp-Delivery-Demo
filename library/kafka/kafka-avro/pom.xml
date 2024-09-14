@@ -5,20 +5,11 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>com.intellibucket</groupId>
-        <artifactId>orz-temp-delivery</artifactId>
+        <artifactId>kafka</artifactId>
         <version>1.0-SNAPSHOT</version>
+
     </parent>
 
-    <artifactId>library</artifactId>
-    <packaging>pom</packaging>
-
-    <modules>
-        <module>temp-root</module>
-        <module>orizon-http</module>
-        <module>orizon-util</module>
-        <module>domain</module>
-        <module>kafka</module>
-    </modules>
-
+    <artifactId>kafka-avro</artifactId>
 
 </project>
