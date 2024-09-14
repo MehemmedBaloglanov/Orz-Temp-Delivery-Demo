@@ -3,5 +3,5 @@ package com.intellibucket.order.service.domain.shell.port.input.listener.deliver
 import com.intellibucket.order.service.domain.core.event.OrderDeliveredEvent;
 
 public interface DeliveryMessageListener {
-    void orderDelivered(OrderDeliveredEvent order);
+    OrderDeliveredEvent orderDelivered(OrderDeliveredEvent order);
 }

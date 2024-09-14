@@ -5,7 +5,10 @@ import com.intellibucket.order.service.domain.core.event.OrderCancelEvent;
 import com.intellibucket.order.service.domain.core.event.OrderCreatedEvent;
 
 public interface OrderMessageListener {
-    OrderCreatedEvent orderCreated(OrderCreatedEvent orderCreatedEvent);
-    OrderAssignedEvent orderAssign(OrderAssignedEvent orderAssignedEvent);
-    OrderCancelEvent orderCancel(OrderCancelEvent orderCancelEvent);
+    <T> OrderCreatedEvent orderCreated(T orderCreatedEvent);
+
+    <T> OrderAssignedEvent orderAssign(T orderAssignedEvent);
+
+    <T> OrderCancelEvent orderCancel(T orderCancelEvent);
+
 }
