@@ -16,6 +16,7 @@
         <order-service.version>1.0-SNAPSHOT</order-service.version>
         <cart-service.version>1.0-SNAPSHOT</cart-service.version>
         <company-service.version>1.0-SNAPSHOT</company-service.version>
+        <user-service.version>1.0-SNAPSHOT</user-service.version>
         <lombok.version>1.18.34</lombok.version>
     </properties>
 
@@ -129,7 +130,7 @@
             </dependency>
             <dependency>
                 <groupId>com.intellibucket</groupId>
-                <artifactId>user-dataaccess</artifactId>
+                <artifactId>user-repository</artifactId>
                 <version>${user-service.version}</version>
             </dependency>
             <dependency>

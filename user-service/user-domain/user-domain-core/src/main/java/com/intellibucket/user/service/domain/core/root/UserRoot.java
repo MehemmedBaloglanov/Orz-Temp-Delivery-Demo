@@ -3,8 +3,12 @@ package com.intellibucket.user.service.domain.core.root;
 import com.intelliacademy.orizonroute.identity.user.UserID;
 import com.intelliacademy.orizonroute.root.AggregateRoot;
 import com.intelliacademy.orizonroute.valueobjects.common.Email;
+import com.intelliacademy.orizonroute.valueobjects.common.PhoneNumber;
 import com.intellibucket.user.service.domain.core.exception.UserDomainException;
-import com.intellibucket.user.service.domain.core.valueObject.*;
+import com.intellibucket.user.service.domain.core.valueObject.Address;
+import com.intellibucket.user.service.domain.core.valueObject.Password;
+import com.intellibucket.user.service.domain.core.valueObject.RoleAuthorithy;
+import com.intellibucket.user.service.domain.core.valueObject.Status;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -13,13 +17,12 @@ import lombok.Getter;
 public class UserRoot extends AggregateRoot<UserID> {
     private final UserID userID;
     private final Address address;
-    private ContactInfo contactInfo;
-    private final DateOfBirth dateOfBirth;
     private RoleAuthorithy roleAuthorithy;
     private Status status;
     private final Password password;
-    private final Name name;
     private final Email email;
+    private final PhoneNumber phoneNumber;
+
 
     public void initializeUser() {
         setId(UserID.random());
@@ -43,8 +46,8 @@ public class UserRoot extends AggregateRoot<UserID> {
     }
 
     public UserRoot validateUser() throws UserDomainException {
-        validateAddress();
         validatePassword();
+        validateEmail();
         return this;
     }
 
@@ -57,6 +60,12 @@ public class UserRoot extends AggregateRoot<UserID> {
     private void validateEmail() throws UserDomainException {
         if (this.email == null || !email.isValid()) {
             throw new UserDomainException("E-mail is not valid");
+        }
+    }
+
+    private void validatePhoneNumber() throws UserDomainException {
+        if (this.phoneNumber == null || !phoneNumber.isValid()) {
+            throw new UserDomainException("Phone number is not valid");
         }
     }
 
@@ -73,15 +82,4 @@ public class UserRoot extends AggregateRoot<UserID> {
         this.roleAuthorithy = newRole;
         return this;
     }
-
-    public UserRoot updateContactInfo(ContactInfo newContactInfo) throws UserDomainException {
-        if (!status.isUpdate()) {
-            throw new UserDomainException("Cannot update contact info for inactive user");
-        }
-        this.contactInfo = newContactInfo;
-        return this;
-    }
 }
-
-
-
