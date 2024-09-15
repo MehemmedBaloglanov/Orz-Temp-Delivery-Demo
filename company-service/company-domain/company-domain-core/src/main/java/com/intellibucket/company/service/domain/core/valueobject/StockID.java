@@ -23,3 +23,4 @@ public class StockID extends BaseID<UUID> {
     public static StockID random() {
         return new StockID(UUIDv7.randomUUID());
     }
+}

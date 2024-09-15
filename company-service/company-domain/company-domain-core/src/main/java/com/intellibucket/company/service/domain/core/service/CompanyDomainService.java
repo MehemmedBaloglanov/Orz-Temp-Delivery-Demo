@@ -1,7 +1,6 @@
 package com.intellibucket.company.service.domain.core.service;
 
 import com.intelliacademy.orizonroute.identity.company.CompanyID;
-import com.intelliacademy.orizonroute.identity.user.UserID;
 import com.intellibucket.company.service.domain.core.event.company.*;
 import com.intellibucket.company.service.domain.core.exception.ValidateException;
 import com.intellibucket.company.service.domain.core.root.CompanyRoot;

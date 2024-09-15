@@ -23,7 +23,7 @@ public class ProductDomainServiceImpl implements ProductDomainService {
 
     @Override
     public ProductActivatedEvent activateProduct(ProductRoot productRoot) throws ValidateException {
-        productRoot.active();
+        productRoot.activate();
         return new ProductActivatedEvent(productRoot,OffsetDateTime.now());
     }
 

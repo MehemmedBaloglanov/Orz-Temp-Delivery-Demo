@@ -2,7 +2,6 @@ package com.intellibucket.company.service.domain.core.valueobject;
 
 import com.intelliacademy.orizonroute.valueobjects.common.ValueObject;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 
 @ValueObject
 @Getter
