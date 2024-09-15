@@ -12,8 +12,9 @@
     <artifactId>user-secondary</artifactId>
     <packaging>pom</packaging>
     <modules>
-        <module>user-dataaccess</module>
+
         <module>user-message-publisher</module>
+        <module>user-repository</module>
     </modules>
 
 </project>

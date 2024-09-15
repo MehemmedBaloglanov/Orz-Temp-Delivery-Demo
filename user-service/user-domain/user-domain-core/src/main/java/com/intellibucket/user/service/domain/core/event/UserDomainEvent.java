@@ -6,10 +6,10 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
 import java.time.OffsetDateTime;
-@RequiredArgsConstructor
-@Getter
-public class UserDomainEvent implements DomainEvent<UserRoot> {
-        private final UserRoot userRoot;
-        private final OffsetDateTime createdAt;
-    }
 
+@Getter
+@RequiredArgsConstructor
+public class UserDomainEvent implements DomainEvent<UserRoot> {
+    private final UserRoot userRoot;
+    private final OffsetDateTime createdAt;
+}

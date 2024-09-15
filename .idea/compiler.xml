@@ -23,7 +23,6 @@
         <module name="company-rest" />
         <module name="cart-repository" />
         <module name="orizon-util" />
-        <module name="user-dataaccess" />
         <module name="order-rest" />
         <module name="company-message-publisher" />
         <module name="company-domain-core" />
