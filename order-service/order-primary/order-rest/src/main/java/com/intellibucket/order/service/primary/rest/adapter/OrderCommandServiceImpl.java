@@ -44,7 +44,7 @@ public class OrderCommandServiceImpl implements OrderCommandService {
 //        orderEntity.setPrice(orderCreateCommand.getPrice());
 //        orderEntity.setAddress(orderCreateCommand.getAddress());
         orderEntity.setOrderStatus(CREATED);
-
+     //
         // Save the OrderEntity to the repository (database)
         OrderRoot orderRoot = orderDataAccessMapper.orderEntityToOrderRoot(orderEntity);
         OrderRoot savedOrderRoot = orderRepository.save(orderRoot);
