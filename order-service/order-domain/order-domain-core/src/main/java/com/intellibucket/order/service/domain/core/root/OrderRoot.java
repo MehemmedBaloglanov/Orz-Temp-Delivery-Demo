@@ -10,10 +10,11 @@ import com.intellibucket.order.service.domain.core.valueobject.OrderAddress;
 import com.intellibucket.order.service.domain.core.valueobject.OrderStatus;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.experimental.SuperBuilder;
 
 import java.util.List;
 
-@Builder
+@SuperBuilder
 @Getter
 public class OrderRoot extends AggregateRoot<OrderID> {
 
@@ -24,6 +25,7 @@ public class OrderRoot extends AggregateRoot<OrderID> {
     private final Money price;
     private OrderNumber orderNumber;
     private OrderStatus status;
+
 
 
     public OrderRoot initializeOrder() {

@@ -39,7 +39,7 @@ public class OrderDomainServiceImpl implements OrderDomainService {
     }
 
     @Override
-    public OrderPreparingEvent prepareOrder(OrderRoot orderRoot) {
+    public OrderPreparingEvent preparingOrder(OrderRoot orderRoot) {
         return null;
     }
 
