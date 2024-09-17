@@ -27,7 +27,7 @@ public interface OrderDomainService {
 
     OrderPreparedEvent  orderPrepared(OrderRoot orderRoot);
 
-    OrderPreparingEvent prepareOrder(OrderRoot orderRoot);
+    OrderPreparingEvent preparingOrder(OrderRoot orderRoot);
 
     OrderCancelEvent cancelOrder(OrderID orderID);
 
