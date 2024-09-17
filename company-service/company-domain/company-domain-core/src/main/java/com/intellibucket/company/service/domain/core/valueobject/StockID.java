@@ -1,6 +1,5 @@
 package com.intellibucket.company.service.domain.core.valueobject;
 
-import com.intelliacademy.orizonroute.identity.order.product.ProductID;
 import com.intelliacademy.orizonroute.root.BaseID;
 import com.intelliacademy.orizonroute.util.UUIDv7;
 
