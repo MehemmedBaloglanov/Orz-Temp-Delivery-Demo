@@ -19,40 +19,78 @@ public class ProductRoot extends AggregateRoot<ProductID> {
     private Money price;
     private CompanyID companyID;
     private Integer quantity;
-    private ProductStatus product;
+    private StockRoot stock;
+    private ProductStatus status;
 
-    private ProductRoot(){
+
+    public ProductRoot initialize() throws ValidateException {
         super.setId(ProductID.random());
-        this.product=ProductStatus.DRAFT;
-    }
-    public ProductRoot createProduct(String name, Money price, CompanyID companyID, Integer quantity) throws ValidateException {
-        ProductRoot productRoot= new ProductRoot();
-        productRoot.setName(productRoot.validateName(name));
-        productRoot.setPrice(productRoot.validatePrice(price));
-        productRoot.setQuantity(productRoot.validateQuantity(quantity));
-        productRoot.setCompanyID(companyID);
-        return productRoot;
+        if(status == null) {
+            status = ProductStatus.DRAFT;
+        }
+        validateProduct();
+        return this;
     }
 
-    private String validateName(String name) throws ValidateException {
+    private void validateProduct() throws ValidateException {
+        validateName();
+        validatePrice();
+        validateQuantity();
+        validateCompanyID();
+        validateStock();
+    }
+
+    public void validateName() throws ValidateException {
         if (name == null || name.isBlank()) {
             throw new ValidateException("Name cannot be empty or blank");
         }
-        return name;
     }
 
-    private Money validatePrice(Money price) throws ValidateException {
+    public void validatePrice() throws ValidateException {
         if (price == null || price.isNil()) {
             throw new ValidateException("Price cannot be null or blank");
         }
-        return price;
     }
 
-    private Integer validateQuantity(Integer quantity) throws ValidateException {
+    public void validateQuantity() throws ValidateException {
         if (quantity == null || quantity <= 0) {
             throw new ValidateException("Quantity must be greater than zero");
         }
-        return quantity;
     }
 
+    public void validateCompanyID() throws ValidateException {
+        if(companyID==null){
+            throw new ValidateException("CompanyID cannot be null");
+        }
+    }
+
+    public void validateStock() throws ValidateException {
+        if(stock==null){
+            throw new ValidateException("Stock cannot be null");
+        }
+    }
+
+    public ProductRoot activate() throws ValidateException {
+        if (status.isActive()) {
+            throw new ValidateException("The product is already in ACTIVE status.");
+        }
+        this.status = ProductStatus.ACTIVE;
+        return this;
+    }
+
+    public ProductRoot delete() throws ValidateException {
+        if(status.isDeleted()){
+            throw new ValidateException("This product is already delete");
+        }
+        this.status=ProductStatus.DELETED;
+        return this;
+    }
+
+    public ProductRoot outOfStock() throws ValidateException {
+        if (status.isOutOfStock()) {
+            throw new ValidateException("The product is already in OUT_OF_STOCK status.");
+        }
+        this.status = ProductStatus.OUT_OF_STOCK;
+        return this;
+    }
 }

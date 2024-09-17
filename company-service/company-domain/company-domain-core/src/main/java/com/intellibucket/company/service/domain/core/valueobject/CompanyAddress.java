@@ -5,11 +5,7 @@ import lombok.Getter;
 
 @ValueObject
 @Getter
-public class CompanyAddress {
-    private String city;
-    private String street;
-    private String address;
-
+public record CompanyAddress(String city, String street, String address) {
     public Boolean isValid() {
 
         return city != null

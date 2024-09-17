@@ -3,7 +3,6 @@ package com.intellibucket.company.service.domain.core.root;
 import com.intelliacademy.orizonroute.identity.company.CompanyID;
 import com.intelliacademy.orizonroute.identity.user.UserID;
 import com.intelliacademy.orizonroute.root.AggregateRoot;
-import com.intellibucket.company.service.domain.core.exception.CompanyDomainException;
 import com.intellibucket.company.service.domain.core.exception.ValidateException;
 import com.intellibucket.company.service.domain.core.valueobject.CompanyAddress;
 import com.intellibucket.company.service.domain.core.valueobject.CompanyStatus;
@@ -14,7 +13,8 @@ import java.util.List;
 @Builder
 public class CompanyRoot extends AggregateRoot<CompanyID> {
 
-    private UserID userID;
+
+    private final UserID userID;
     private String name;
     private String description;
     private CompanyAddress address;
@@ -22,9 +22,11 @@ public class CompanyRoot extends AggregateRoot<CompanyID> {
 
     private List<ProductRoot> products;
 
-    public CompanyRoot initializeCompany() throws ValidateException {
+    public CompanyRoot initialize() throws ValidateException {
         super.setId(CompanyID.random());
-        status = CompanyStatus.DRAFT;
+        if(status == null){
+            status = CompanyStatus.DRAFT;
+        }
         validateCompany();
         return this;
     }
@@ -73,10 +75,9 @@ public class CompanyRoot extends AggregateRoot<CompanyID> {
     }
 
     private void validateAddress() throws ValidateException {
-        if(address == null && !address.isValid()){
+        if(address == null || !address.isValid()){
             throw new ValidateException("Address cannot be null");
         }
     }
-
 
 }
