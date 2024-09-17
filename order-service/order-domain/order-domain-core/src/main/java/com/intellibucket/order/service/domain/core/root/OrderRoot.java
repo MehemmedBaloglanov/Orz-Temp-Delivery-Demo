@@ -27,6 +27,7 @@ public class OrderRoot extends AggregateRoot<OrderID> {
     private OrderStatus status;
 
 
+
     public OrderRoot initializeOrder() {
         setId(OrderID.random());
         orderNumber = OrderNumber.generate();

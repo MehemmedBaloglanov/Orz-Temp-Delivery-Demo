@@ -39,4 +39,7 @@ public class OrderEntity {
     @Version
     private int version;
 
+    private UUID trackingID;
+
+
 }

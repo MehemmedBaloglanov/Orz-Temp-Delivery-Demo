@@ -1,13 +1,12 @@
 package com.intellibucket.order.service.domain.shell.dto.command;
 
-import com.intellibucket.order.service.domain.core.valueobject.OrderAddress;
+
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
-import org.jetbrains.annotations.NotNull;
 
-import java.math.BigDecimal;
-import java.util.List;
+
 import java.util.UUID;
 
 @Getter
