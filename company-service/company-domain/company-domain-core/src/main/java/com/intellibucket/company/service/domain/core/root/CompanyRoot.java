@@ -3,6 +3,7 @@ package com.intellibucket.company.service.domain.core.root;
 import com.intelliacademy.orizonroute.identity.company.CompanyID;
 import com.intelliacademy.orizonroute.identity.user.UserID;
 import com.intelliacademy.orizonroute.root.AggregateRoot;
+import com.intelliacademy.orizonroute.valueobjects.common.Username;
 import com.intellibucket.company.service.domain.core.exception.ValidateException;
 import com.intellibucket.company.service.domain.core.valueobject.CompanyAddress;
 import com.intellibucket.company.service.domain.core.valueobject.CompanyStatus;
@@ -15,7 +16,7 @@ public class CompanyRoot extends AggregateRoot<CompanyID> {
 
 
     private final UserID userID;
-    private String name;
+    private Username name;
     private String description;
     private CompanyAddress address;
     private CompanyStatus status;
