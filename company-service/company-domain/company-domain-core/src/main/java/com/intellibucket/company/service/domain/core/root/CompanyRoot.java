@@ -19,7 +19,6 @@ public class CompanyRoot extends AggregateRoot<CompanyID> {
     private String description;
     private CompanyAddress address;
     private CompanyStatus status;
-
     private List<ProductRoot> products;
 
     public CompanyRoot initialize() throws ValidateException {
