@@ -1,5 +1,6 @@
 package com.intellibucket.order.service.domain.core.root;
 
+import com.intelliacademy.orizonroute.identity.company.CompanyID;
 import com.intelliacademy.orizonroute.identity.order.ord.OrderID;
 import com.intelliacademy.orizonroute.identity.user.UserID;
 import com.intelliacademy.orizonroute.root.AggregateRoot;
@@ -8,26 +9,29 @@ import com.intelliacademy.orizonroute.valueobjects.order.OrderNumber;
 import com.intellibucket.order.service.domain.core.exception.OrderDomainException;
 import com.intellibucket.order.service.domain.core.valueobject.OrderAddress;
 import com.intellibucket.order.service.domain.core.valueobject.OrderStatus;
-import lombok.Builder;
 import lombok.Getter;
+import lombok.experimental.SuperBuilder;
 
 import java.util.List;
 
-@Builder
+@SuperBuilder
 @Getter
 public class OrderRoot extends AggregateRoot<OrderID> {
 
 
     private final UserID userId;
     private final OrderAddress address;
-    private final List<OrderItemRoot> items;
     private final Money price;
+    private final List<OrderItemRoot> items;
+
     private OrderNumber orderNumber;
     private OrderStatus status;
+    private List<String> errorMessages;
+    public static final String FAILURE_MESSAGE_DELIMITER = ",";
+
 
 
     public OrderRoot initializeOrder() {
-        setId(OrderID.random());
         orderNumber = OrderNumber.generate();
         status = OrderStatus.CREATED;
         return this;
@@ -79,7 +83,7 @@ public class OrderRoot extends AggregateRoot<OrderID> {
         return this;
     }
 
-    public OrderRoot prepare() throws OrderDomainException {
+    public OrderRoot prepared() throws OrderDomainException {
         if (!status.isPreparing()) {
             throw new OrderDomainException("Cannot prepare order");
         }
@@ -87,7 +91,7 @@ public class OrderRoot extends AggregateRoot<OrderID> {
         return this;
     }
 
-    public OrderRoot delivering() throws OrderDomainException {
+    public OrderRoot delivery() throws OrderDomainException {
         if (!status.isPrepared()) {
             throw new OrderDomainException("Cannot deliver order");
         }

@@ -17,6 +17,13 @@
             <groupId>com.intellibucket</groupId>
             <artifactId>order-domain-core</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.intellibucket</groupId>
+            <artifactId>cart-service-connector</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.intellibucket</groupId>
+            <artifactId>company-service-connector</artifactId>
+        </dependency>
     </dependencies>
-
 </project>
