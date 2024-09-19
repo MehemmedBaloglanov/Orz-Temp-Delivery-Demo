@@ -30,6 +30,7 @@ public class OrderRoot extends AggregateRoot<OrderID> {
     public static final String FAILURE_MESSAGE_DELIMITER = ",";
 
 
+
     public OrderRoot initializeOrder() {
         orderNumber = OrderNumber.generate();
         status = OrderStatus.CREATED;

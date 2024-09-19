@@ -1,10 +1,12 @@
 package com.intellibucket.order.service.domain.shell.dto.rest.query;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
-import org.jetbrains.annotations.NotNull;
+
+
 
 import java.util.UUID;
 

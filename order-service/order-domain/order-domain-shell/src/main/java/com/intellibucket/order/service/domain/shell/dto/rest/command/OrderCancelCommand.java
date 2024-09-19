@@ -1,6 +1,7 @@
 package com.intellibucket.order.service.domain.shell.dto.rest.command;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.intelliacademy.orizonroute.identity.order.ord.OrderID;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -10,5 +11,5 @@ import lombok.Getter;
 @AllArgsConstructor
 public class OrderCancelCommand {
     @JsonProperty("order_id")
-    private final String orderId;
+    private final OrderID orderId;
 }
