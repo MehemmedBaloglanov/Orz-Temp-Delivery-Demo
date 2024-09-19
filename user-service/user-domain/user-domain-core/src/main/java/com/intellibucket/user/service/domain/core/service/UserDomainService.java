@@ -4,17 +4,21 @@ import com.intelliacademy.orizonroute.identity.user.UserID;
 import com.intellibucket.user.service.domain.core.event.*;
 import com.intellibucket.user.service.domain.core.root.UserRoot;
 
+import java.util.List;
+
 public interface UserDomainService {
 
-    UserRegisteredEvent companyRegistered(UserRoot userRoot, UserID userID);
+    UserRegisteredEvent companyRegistered(UserRoot userRoot);
 
-    UserRegisteredEvent customerRegistered(UserRoot userRoot, UserID userID);
+    UserRegisteredEvent customerRegistered();
 
-    UserDeletedDomainEvent userDeleted(UserRoot userRoot);
+    UserDeletedDomainEvent userDeleted();
 
-    UserChangePasswordDomainEvent userChangePassword(UserRoot userRoot);
+    UserChangePasswordDomainEvent userChangePassword();
 
-    UserLoggedInDomainEvent userLoggedIn(UserRoot userRoot);
+    UserLoggedInDomainEvent userLoggedIn();
 
-    UserUpdatedDomainEvent userUpdated(UserRoot userRoot);
+    UserUpdatedDomainEvent userUpdated();
+
+    List<UserRoot> findByUserId(UserID userID);
 }

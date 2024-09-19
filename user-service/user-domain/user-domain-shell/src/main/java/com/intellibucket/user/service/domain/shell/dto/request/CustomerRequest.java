@@ -1,23 +1,27 @@
-package com.intellibucket.user.service.domain.shell.dto.request.company;
+package com.intellibucket.user.service.domain.shell.dto.request;
 
-import com.intellibucket.user.service.domain.shell.dto.request.component.UserRegistrationRequestInfo;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.jetbrains.annotations.NotNull;
 
 @Getter
-@Size
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class CompanyRegistrationRequestInfo extends UserRegistrationRequestInfo {
+public  class CustomerRequest extends UserRequest {
     @NotEmpty
     @NotNull
     @Size(min = 4,max = 50)
     @Pattern(regexp = "^[a-zA-Z0-9_]*$")
-    private String name;
-    private String license;
+    private  String firstName;
+    private  String lastName;
+    private String gender;
+    private String birthDate;
+
+
 }

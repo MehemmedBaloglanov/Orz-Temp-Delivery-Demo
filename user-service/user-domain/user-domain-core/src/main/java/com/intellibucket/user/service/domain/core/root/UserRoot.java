@@ -4,6 +4,7 @@ import com.intelliacademy.orizonroute.identity.user.UserID;
 import com.intelliacademy.orizonroute.root.AggregateRoot;
 import com.intelliacademy.orizonroute.valueobjects.common.Email;
 import com.intelliacademy.orizonroute.valueobjects.common.PhoneNumber;
+import com.intelliacademy.orizonroute.valueobjects.common.Username;
 import com.intellibucket.user.service.domain.core.exception.UserDomainException;
 import com.intellibucket.user.service.domain.core.valueObject.Address;
 import com.intellibucket.user.service.domain.core.valueObject.Password;
@@ -11,9 +12,11 @@ import com.intellibucket.user.service.domain.core.valueObject.RoleAuthorithy;
 import com.intellibucket.user.service.domain.core.valueObject.Status;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.Setter;
 
 @Builder
 @Getter
+@Setter
 public class UserRoot extends AggregateRoot<UserID> {
     private final UserID userID;
     private final Address address;
@@ -22,6 +25,7 @@ public class UserRoot extends AggregateRoot<UserID> {
     private final Password password;
     private final Email email;
     private final PhoneNumber phoneNumber;
+    private final Username username;
 
 
     public void initializeUser() {
@@ -73,7 +77,14 @@ public class UserRoot extends AggregateRoot<UserID> {
         if (this.password == null || password.getValue().isEmpty()) {
             throw new UserDomainException("Password is not valid");
         }
+
     }
+//    public UserRoot changePassword(Password newPassword) {
+//        if (newPassword == null || newPassword.isEmpty()) {
+//            throw new IllegalArgumentException("New password cannot be null or empty");
+//        }
+//        this.password = newPassword;
+//    }
 
     public UserRoot changeRole(RoleAuthorithy newRole) throws UserDomainException {
         if (!status.isCreated()) {
@@ -82,4 +93,6 @@ public class UserRoot extends AggregateRoot<UserID> {
         this.roleAuthorithy = newRole;
         return this;
     }
+
+
 }
