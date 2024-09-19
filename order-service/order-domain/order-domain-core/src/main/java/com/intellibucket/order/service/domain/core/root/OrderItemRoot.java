@@ -12,7 +12,7 @@ import lombok.experimental.SuperBuilder;
 
 import java.math.BigDecimal;
 
-@SuperBuilder
+@Builder
 @Getter
 public class OrderItemRoot extends AggregateRoot<OrderItemID> {
     private OrderID orderId;
