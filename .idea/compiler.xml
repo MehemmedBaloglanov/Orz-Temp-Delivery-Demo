@@ -10,6 +10,8 @@
         <module name="company-message-listener" />
         <module name="cart-domain-core" />
         <module name="cart-container" />
+        <module name="kafka-config" />
+        <module name="kafka-consumer" />
         <module name="cart-message-listener" />
         <module name="order-message-listener" />
         <module name="orizon-http" />
@@ -24,8 +26,10 @@
         <module name="cart-repository" />
         <module name="orizon-util" />
         <module name="user-dataaccess" />
+        <module name="company-service-connector" />
         <module name="order-rest" />
         <module name="company-message-publisher" />
+        <module name="kafka-producer" />
         <module name="company-domain-core" />
         <module name="company-repository" />
         <module name="user-rest" />
@@ -37,6 +41,8 @@
         <module name="order-repository" />
         <module name="user-message-publisher" />
         <module name="cart-domain-shell" />
+        <module name="kafka-avro" />
+        <module name="cart-service-connector" />
         <module name="user-domain-core" />
       </profile>
     </annotationProcessing>
