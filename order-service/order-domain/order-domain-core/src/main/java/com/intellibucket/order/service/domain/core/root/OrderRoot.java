@@ -10,10 +10,11 @@ import com.intellibucket.order.service.domain.core.valueobject.OrderAddress;
 import com.intellibucket.order.service.domain.core.valueobject.OrderStatus;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.experimental.SuperBuilder;
 
 import java.util.List;
 
-@Builder
+@SuperBuilder
 @Getter
 public class OrderRoot extends AggregateRoot<OrderID> {
 
@@ -26,15 +27,17 @@ public class OrderRoot extends AggregateRoot<OrderID> {
     private OrderStatus status;
 
 
-    public void initializeOrder() {
+
+    public OrderRoot initializeOrder() {
         setId(OrderID.random());
         orderNumber = OrderNumber.generate();
         status = OrderStatus.CREATED;
+        return this;
     }
 
     public OrderRoot initCancel() throws OrderDomainException {
-        if (status.isDelivering() || status.isCompleted()) {
-            throw new OrderDomainException("Order is not in correct state for initCancel operation!");
+        if (status.isDelivering() || status.isCompleted() || status.isCancelled()) {
+            throw new OrderDomainException("Order is not in correct state for the initCancel operation!");
         }
 
         this.status = OrderStatus.CANCELLING;
@@ -46,7 +49,7 @@ public class OrderRoot extends AggregateRoot<OrderID> {
         if (status.isCancelling() || status.isCreated()) {
             throw new OrderDomainException("Cannot cancel order");
         }
-        this.status = OrderStatus.CANCELED;
+        this.status = OrderStatus.CANCELLED;
         return this;
     }
 

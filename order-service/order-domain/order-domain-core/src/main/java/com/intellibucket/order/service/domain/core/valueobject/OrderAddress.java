@@ -6,9 +6,9 @@ import lombok.Getter;
 @Builder
 @Getter
 public class OrderAddress {
-    private String street;
-    private String city;
-    private String state;
+    private final String street;
+    private final String city;
+    private final String state;
 
     public boolean isAddressValid() {
 

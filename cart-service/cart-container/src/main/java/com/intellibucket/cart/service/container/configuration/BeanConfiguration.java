@@ -6,8 +6,9 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class BeanConfiguration {
 
-    @Bean
-    public CartServiceRepository cartServiceRepository() {
-        return new CartServiceRepositoryImpl();
-    }
+//    @Bean
+//              public CartServiceRepository cartServiceRepository() {
+//        return new CartServiceRepositoryImpl();
+//    }
+//}
 }

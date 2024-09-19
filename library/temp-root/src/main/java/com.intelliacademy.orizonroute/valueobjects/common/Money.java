@@ -47,7 +47,7 @@ public sealed class Money permits Money.Nil {
         return this.amount.compareTo(BigDecimal.ZERO) > 0;
     }
 
-    public Boolean greaterThan(Money money) {
+    public Boolean isEqualTo(Money money) {
         return this.amount.compareTo(money.getAmount()) > 0;
     }
 

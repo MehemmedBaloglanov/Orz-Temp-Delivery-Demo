@@ -81,6 +81,8 @@
     <file url="file://$PROJECT_DIR$/order-service/order-secondary/order-dataaccess/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/order-service/order-secondary/order-message-publisher/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/order-service/order-secondary/order-message-publisher/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/order-service/order-secondary/order-repository/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/order-service/order-secondary/order-repository/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/order-service/order-secondary/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/order-service/order-secondary/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/order-service/src/main/java" charset="UTF-8" />

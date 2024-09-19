@@ -7,10 +7,11 @@ import com.intelliacademy.orizonroute.root.AggregateRoot;
 import com.intelliacademy.orizonroute.valueobjects.common.Money;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.experimental.SuperBuilder;
 
 import java.math.BigDecimal;
 
-@Builder
+@SuperBuilder
 @Getter
 public class OrderItemRoot extends AggregateRoot<OrderItemID> {
     private OrderID orderId;
@@ -27,6 +28,6 @@ public class OrderItemRoot extends AggregateRoot<OrderItemID> {
 
     public boolean isPriceValid() {
         return price.greaterThanZero()
-                && price.multiply(BigDecimal.valueOf(quantity)).greaterThan(subTotal);
+                && price.multiply(BigDecimal.valueOf(quantity)).isEqualTo(subTotal);
     }
 }

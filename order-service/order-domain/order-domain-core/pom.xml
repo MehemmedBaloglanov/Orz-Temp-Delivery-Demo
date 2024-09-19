@@ -26,5 +26,6 @@
             <groupId>com.intellibucket</groupId>
             <artifactId>domain</artifactId>
         </dependency>
+
     </dependencies>
 </project>

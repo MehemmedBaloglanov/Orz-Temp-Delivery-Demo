@@ -51,6 +51,7 @@
             <groupId>com.intellibucket</groupId>
             <artifactId>company-repository</artifactId>
         </dependency>
+
     </dependencies>
 
 

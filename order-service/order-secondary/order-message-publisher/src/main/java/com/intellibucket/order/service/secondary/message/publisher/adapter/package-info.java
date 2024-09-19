@@ -1,0 +1,1 @@
+package com.intellibucket.order.service.secondary.message.publisher.adapter;
