@@ -30,5 +30,4 @@ public enum OrderStatus {
         return this == FAILED;
     }
 
-
 }

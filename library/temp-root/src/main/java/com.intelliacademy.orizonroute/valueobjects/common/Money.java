@@ -43,12 +43,16 @@ public sealed class Money permits Money.Nil {
         return new Money(new BigDecimal(amount));
     }
 
-    public Boolean greaterThanZero() {
+    public Boolean isGreaterThanZero() {
         return this.amount.compareTo(BigDecimal.ZERO) > 0;
     }
 
-    public Boolean greaterThan(Money money) {
+    public Boolean isGreaterThanTo(Money money) {
         return this.amount.compareTo(money.getAmount()) > 0;
+    }
+
+    public Boolean isEqualTo(Money money) {
+        return this.amount.compareTo(money.getAmount()) == 0;
     }
 
     @Override

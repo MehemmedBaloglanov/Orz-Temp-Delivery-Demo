@@ -16,8 +16,10 @@
     <packaging>pom</packaging>
 
     <modules>
-        <module>order-dataaccess</module>
+        <module>order-repository</module>
         <module>order-message-publisher</module>
+        <module>cart-service-connector</module>
+        <module>company-service-connector</module>
     </modules>
 
 </project>
