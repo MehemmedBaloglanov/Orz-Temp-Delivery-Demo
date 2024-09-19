@@ -10,17 +10,21 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
+
 @Builder
 @Setter
 @Getter
 public class ProductRoot extends AggregateRoot<ProductID> {
+    private ProductID productID;
     private String name;
     private String description;
     private Money price;
     private CompanyID companyID;
     private Integer quantity;
-    private StockRoot stock;
+    private Integer stockQuantity;
     private ProductStatus status;
+    private LocalDateTime createdTime;
 
 
     public ProductRoot initialize() throws ValidateException {
@@ -34,10 +38,15 @@ public class ProductRoot extends AggregateRoot<ProductID> {
 
     private void validateProduct() throws ValidateException {
         validateName();
+        validateDescription();
         validatePrice();
         validateQuantity();
+        validateStockQuantity();
         validateCompanyID();
-        validateStock();
+    }
+
+    public void validateDescription()throws ValidateException {
+
     }
 
     public void validateName() throws ValidateException {
@@ -64,8 +73,8 @@ public class ProductRoot extends AggregateRoot<ProductID> {
         }
     }
 
-    public void validateStock() throws ValidateException {
-        if(stock==null){
+    public void validateStockQuantity() throws ValidateException {
+        if(stockQuantity==null){
             throw new ValidateException("Stock cannot be null");
         }
     }

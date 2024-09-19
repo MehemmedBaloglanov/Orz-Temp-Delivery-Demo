@@ -14,7 +14,6 @@ import java.util.List;
 @Builder
 public class CompanyRoot extends AggregateRoot<CompanyID> {
 
-
     private final UserID userID;
     private Username name;
     private String description;
