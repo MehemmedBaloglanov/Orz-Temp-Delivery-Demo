@@ -139,6 +139,21 @@
                 <version>${order-service.version}</version>
             </dependency>
 
+
+            <dependency>
+                <groupId>com.intellibucket</groupId>
+                <artifactId>cart-service-connector</artifactId>
+                <version>1.0-SNAPSHOT</version>
+                <scope>compile</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>com.intellibucket</groupId>
+                <artifactId>company-service-connector</artifactId>
+                <version>1.0-SNAPSHOT</version>
+                <scope>compile</scope>
+            </dependency>
+
 <!--            User Service-->
             <dependency>
                 <groupId>com.intellibucket</groupId>
