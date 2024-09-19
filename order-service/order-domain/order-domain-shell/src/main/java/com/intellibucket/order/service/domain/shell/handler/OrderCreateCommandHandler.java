@@ -4,7 +4,6 @@ import com.intelliacademy.orizonroute.identity.order.ord.OrderID;
 import com.intelliacademy.orizonroute.identity.order.product.ProductID;
 import com.intelliacademy.orizonroute.identity.user.UserID;
 import com.intelliacademy.orizonroute.valueobjects.common.Money;
-import com.intelliacademy.orizonroute.valueobjects.order.OrderNumber;
 import com.intellibucket.cart.service.connector.dto.CartResponse;
 import com.intellibucket.company.service.connector.dto.ProductResponse;
 import com.intellibucket.order.service.domain.core.event.OrderCreatedEvent;
@@ -12,7 +11,6 @@ import com.intellibucket.order.service.domain.core.exception.OrderDomainExceptio
 import com.intellibucket.order.service.domain.core.root.OrderItemRoot;
 import com.intellibucket.order.service.domain.core.root.OrderRoot;
 import com.intellibucket.order.service.domain.core.service.OrderDomainService;
-import com.intellibucket.order.service.domain.core.service.OrderDomainServiceImpl;
 import com.intellibucket.order.service.domain.shell.dto.rest.response.OrderResponse;
 import com.intellibucket.order.service.domain.shell.mapper.OrderShellMapper;
 import com.intellibucket.order.service.domain.shell.port.output.repository.OrderRepositoryAdapter;
