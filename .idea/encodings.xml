@@ -77,6 +77,10 @@
     <file url="file://$PROJECT_DIR$/order-service/order-primary/order-rest/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/order-service/order-primary/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/order-service/order-primary/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/order-service/order-secondary/cart-service-connector/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/order-service/order-secondary/cart-service-connector/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/order-service/order-secondary/company-service-connector/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/order-service/order-secondary/company-service-connector/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/order-service/order-secondary/order-dataaccess/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/order-service/order-secondary/order-dataaccess/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/order-service/order-secondary/order-message-publisher/src/main/java" charset="UTF-8" />
