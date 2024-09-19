@@ -40,5 +40,14 @@
         <module name="user-domain-core" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="kafka" target="17" />
+      <module name="kafka-avro" target="17" />
+      <module name="kafka-config" target="17" />
+      <module name="kafka-consumer" target="17" />
+      <module name="kafka-producer" target="17" />
+      <module name="order-repository" target="17" />
+      <module name="user-repository" target="17" />
+    </bytecodeTargetLevel>
   </component>
 </project>

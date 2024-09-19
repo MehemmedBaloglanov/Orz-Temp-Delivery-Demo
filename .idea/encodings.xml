@@ -45,10 +45,22 @@
     <file url="file://$PROJECT_DIR$/company-service/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/library/domain/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/library/domain/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/library/kafka/kafka-avro/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/library/kafka/kafka-avro/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/library/kafka/kafka-config/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/library/kafka/kafka-config/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/library/kafka/kafka-consumer/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/library/kafka/kafka-consumer/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/library/kafka/kafka-producer/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/library/kafka/kafka-producer/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/library/kafka/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/library/kafka/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/library/orizon-http/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/library/orizon-http/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/library/orizon-util/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/library/orizon-util/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/library/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/library/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/library/temp-root/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/library/temp-root/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/order-service/order-container/src/main/java" charset="UTF-8" />
@@ -97,5 +109,7 @@
     <file url="file://$PROJECT_DIR$/user-service/user-secondary/user-dataaccess/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/user-service/user-secondary/user-message-publisher/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/user-service/user-secondary/user-message-publisher/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/user-service/user-secondary/user-repository/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/user-service/user-secondary/user-repository/src/main/resources" charset="UTF-8" />
   </component>
 </project>
