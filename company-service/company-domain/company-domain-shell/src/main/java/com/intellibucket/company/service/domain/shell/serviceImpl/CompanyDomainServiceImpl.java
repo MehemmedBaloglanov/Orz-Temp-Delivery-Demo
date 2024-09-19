@@ -30,13 +30,13 @@ public class CompanyDomainServiceImpl implements CompanyDomainService {
 
     @Override
     public CompanyDisabledEvent disableCompany(CompanyRoot companyRoot) throws ValidateException {
-        companyRoot.disable();
+        companyRoot.suspend();
         return new CompanyDisabledEvent(companyRoot,OffsetDateTime.now());
     }
 
     @Override
     public CompanyBannedEvent bannedCompany(CompanyRoot companyRoot) throws ValidateException {
-        companyRoot.ban();
+        companyRoot.deleted();
         return new CompanyBannedEvent(companyRoot,OffsetDateTime.now());
     }
 }
