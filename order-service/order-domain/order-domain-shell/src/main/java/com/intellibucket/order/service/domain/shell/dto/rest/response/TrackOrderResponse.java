@@ -5,9 +5,6 @@ import com.intellibucket.order.service.domain.core.valueobject.OrderStatus;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
-import org.jetbrains.annotations.NotNull;
-
-import java.util.List;
 import java.util.UUID;
 
 @Getter

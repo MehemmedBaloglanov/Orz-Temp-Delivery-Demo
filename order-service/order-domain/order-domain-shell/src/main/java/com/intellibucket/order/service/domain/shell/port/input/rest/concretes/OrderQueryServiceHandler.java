@@ -24,4 +24,9 @@ public class OrderQueryServiceHandler implements OrderQueryServiceAdapter {
     public OrderResponse orderById(OrderID orderId) {
         return null;
     }
+
+    @Override
+    public List<OrderResponse> getUnassignOrders() {
+        return List.of();
+    }
 }

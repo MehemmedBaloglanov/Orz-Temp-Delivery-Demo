@@ -1,11 +1,6 @@
 package com.intellibucket.order.service.domain.core.service;
 
-import com.intelliacademy.orizonroute.identity.company.CompanyID;
-import com.intelliacademy.orizonroute.valueobjects.order.OrderNumber;
-import com.intellibucket.order.service.domain.core.event.OrderCancelledEvent;
-import com.intellibucket.order.service.domain.core.event.OrderCreatedEvent;
-import com.intellibucket.order.service.domain.core.event.OrderDeliveryEvent;
-import com.intellibucket.order.service.domain.core.event.OrderPaidEvent;
+import com.intellibucket.order.service.domain.core.event.*;
 import com.intellibucket.order.service.domain.core.exception.OrderDomainException;
 import com.intellibucket.order.service.domain.core.root.OrderRoot;
 
@@ -19,6 +14,8 @@ import com.intellibucket.order.service.domain.core.root.OrderRoot;
 public interface OrderDomainService {
 
     OrderCreatedEvent validateAndInitiateOrder(OrderRoot orderRoot) throws OrderDomainException;
+
+    OrderCancelEvent initCancel(OrderRoot orderRoot) throws OrderDomainException;
 
     OrderPaidEvent payOrder(OrderRoot orderRoot) throws OrderDomainException;
 

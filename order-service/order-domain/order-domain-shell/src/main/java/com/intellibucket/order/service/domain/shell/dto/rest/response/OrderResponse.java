@@ -24,10 +24,10 @@ public class OrderResponse {
 
     private final OrderStatus status;
 
- private final List<OrderItemRoot> items;
+    private final List<OrderItemRoot> items;
 
     @JsonProperty("shipping_address")
-   private final OrderAddress shippingAddress;
+    private final OrderAddress shippingAddress;
 
     private final OffsetDateTime createdAt;
 

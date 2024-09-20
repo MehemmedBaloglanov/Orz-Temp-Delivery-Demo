@@ -15,4 +15,7 @@ public interface OrderQueryServiceAdapter {
     List<OrderResponse> orders(UserID userID);
 
     OrderResponse orderById(OrderID orderId);
+
+    List<OrderResponse> getUnassignOrders();
+
 }

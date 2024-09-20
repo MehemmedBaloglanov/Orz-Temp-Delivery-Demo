@@ -16,5 +16,5 @@ import java.util.UUID;
 public class OrderTrackingQuery {
     @NotNull
     @JsonProperty("tracking_id")
-    private final UUID trackingId;
+    private final String trackingId;
 }
