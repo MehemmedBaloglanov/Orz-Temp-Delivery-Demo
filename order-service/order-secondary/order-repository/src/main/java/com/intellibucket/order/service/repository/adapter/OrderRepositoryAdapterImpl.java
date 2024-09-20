@@ -1,6 +1,7 @@
 package com.intellibucket.order.service.repository.adapter;
 
 import com.intelliacademy.orizonroute.identity.order.ord.OrderID;
+import com.intelliacademy.orizonroute.identity.user.UserID;
 import com.intelliacademy.orizonroute.valueobjects.order.OrderNumber;
 import com.intellibucket.order.service.domain.core.root.OrderRoot;
 import com.intellibucket.order.service.domain.shell.port.output.repository.OrderRepositoryAdapter;
@@ -10,6 +11,7 @@ import com.intellibucket.order.service.repository.repository.OrderJpaRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
 import java.util.Optional;
 
 @Component
@@ -47,4 +49,7 @@ public class OrderRepositoryAdapterImpl implements OrderRepositoryAdapter {
             return Optional.of(orderDataAccessMapper.orderEntityToOrderRoot(orderEntity));
         }
     }
+
+
+
 }
