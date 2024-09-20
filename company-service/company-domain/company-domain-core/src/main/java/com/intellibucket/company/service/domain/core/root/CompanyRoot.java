@@ -8,7 +8,6 @@ import com.intellibucket.company.service.domain.core.valueobject.CompanyAddress;
 import com.intellibucket.company.service.domain.core.valueobject.CompanyStatus;
 import lombok.Builder;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Builder
@@ -102,7 +101,7 @@ public class CompanyRoot extends AggregateRoot<CompanyID> {
         if (!status.isActive() || status.isDeleted()) {
             throw new ValidateException("Only active companies can be suspended, and deleted companies cannot be suspended.");
         }
-        this.status = CompanyStatus.SUSPENDED;  // Şirkəti dayandırırıq
+        this.status = CompanyStatus.SUSPENDED;
         return this;
     }
 
