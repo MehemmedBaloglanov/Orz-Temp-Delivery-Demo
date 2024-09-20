@@ -2,6 +2,7 @@ package com.intellibucket.order.service.primary.rest.query;
 
 import com.intelliacademy.orizonroute.identity.order.ord.OrderID;
 import com.intelliacademy.orizonroute.identity.user.UserID;
+import com.intellibucket.order.service.domain.core.exception.OrderNotFoundException;
 import com.intellibucket.order.service.domain.shell.dto.rest.query.OrderTrackingQuery;
 import com.intellibucket.order.service.domain.shell.dto.rest.response.OrderResponse;
 import com.intellibucket.order.service.domain.shell.dto.rest.response.TrackOrderResponse;
@@ -34,11 +35,13 @@ public class OrderQueryController {
     }
 
     @GetMapping("/track")
-    public ResponseEntity<TrackOrderResponse> trackOrder(OrderTrackingQuery orderTrackingQuery) {
+    public ResponseEntity<TrackOrderResponse> trackOrder(OrderTrackingQuery orderTrackingQuery) throws OrderNotFoundException {
         TrackOrderResponse response = orderQueryServiceAdapter.trackOrder(orderTrackingQuery);
         return ResponseEntity.ok(response);
     }
-    @GetMapping("/unassign")
+
+    //TODO company- aid controller
+    @GetMapping("/unassigned")
     public ResponseEntity<List<OrderResponse>> getUnassignOrder() {
         List<OrderResponse> response = orderQueryServiceAdapter.getUnassignOrders();
         return ResponseEntity.ok(response);
