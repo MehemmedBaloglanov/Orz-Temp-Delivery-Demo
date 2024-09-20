@@ -10,7 +10,7 @@ import java.util.Optional;
 public interface OrderRepositoryAdapter {
     OrderRoot save(OrderRoot orderRoot);
 
-    Optional<OrderRoot> findById(OrderID orderId) throws OrderNotFoundException;
+    Optional<OrderRoot> findById(OrderID orderId) ;
 
     Optional<OrderRoot> findByOrderNumber(OrderNumber orderNumber);
 

@@ -1,10 +1,7 @@
 package com.intellibucket.order.service.domain.core.service;
 
 import com.intelliacademy.orizonroute.identity.company.CompanyID;
-import com.intellibucket.order.service.domain.core.event.OrderCancelledEvent;
-import com.intellibucket.order.service.domain.core.event.OrderCreatedEvent;
-import com.intellibucket.order.service.domain.core.event.OrderDeliveryEvent;
-import com.intellibucket.order.service.domain.core.event.OrderPaidEvent;
+import com.intellibucket.order.service.domain.core.event.*;
 import com.intellibucket.order.service.domain.core.exception.OrderDomainException;
 import com.intellibucket.order.service.domain.core.root.OrderRoot;
 import lombok.RequiredArgsConstructor;
@@ -22,6 +19,12 @@ public class OrderDomainServiceImpl implements OrderDomainService {
         orderRoot.initializeOrder();
         return new OrderCreatedEvent(orderRoot, OffsetDateTime.now(ZONE_ID));
 
+    }
+
+    @Override
+    public OrderCancelEvent initCancel(OrderRoot orderRoot) throws OrderDomainException {
+        orderRoot.initCancel();
+        return new OrderCancelEvent(orderRoot, OffsetDateTime.now(ZONE_ID));
     }
 
     @Override

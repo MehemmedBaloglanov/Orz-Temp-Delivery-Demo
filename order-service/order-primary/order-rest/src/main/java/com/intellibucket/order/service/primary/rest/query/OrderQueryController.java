@@ -38,6 +38,10 @@ public class OrderQueryController {
         TrackOrderResponse response = orderQueryServiceAdapter.trackOrder(orderTrackingQuery);
         return ResponseEntity.ok(response);
     }
-
+    @GetMapping("/unassign")
+    public ResponseEntity<List<OrderResponse>> getUnassignOrder() {
+        List<OrderResponse> response = orderQueryServiceAdapter.getUnassignOrders();
+        return ResponseEntity.ok(response);
+    }
 
 }
