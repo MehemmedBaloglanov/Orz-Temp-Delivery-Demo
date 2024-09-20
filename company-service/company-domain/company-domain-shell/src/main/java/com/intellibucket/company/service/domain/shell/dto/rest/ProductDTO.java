@@ -1,4 +1,4 @@
-package com.intellibucket.company.service.domain.shell.dto;
+package com.intellibucket.company.service.domain.shell.dto.rest;
 
 import com.intelliacademy.orizonroute.identity.company.CompanyID;
 import com.intelliacademy.orizonroute.identity.order.product.ProductID;
