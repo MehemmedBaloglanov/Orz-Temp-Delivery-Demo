@@ -7,7 +7,9 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-    @Data
+import java.util.UUID;
+
+@Data
     @Builder
     @NoArgsConstructor
     @AllArgsConstructor
@@ -16,7 +18,7 @@ import lombok.NoArgsConstructor;
     public class ProductEntity {
         @Id
         @GeneratedValue(strategy = GenerationType.AUTO)
-        private String id;
+        private UUID productId;
 
         @Column(nullable = false)
         private String name;
