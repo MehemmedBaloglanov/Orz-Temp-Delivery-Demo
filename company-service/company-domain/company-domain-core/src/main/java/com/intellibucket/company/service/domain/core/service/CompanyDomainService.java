@@ -15,9 +15,9 @@ public interface CompanyDomainService {
 
     CompanySuspendedEvent suspendCompany(CompanyRoot companyRoot) throws ValidateException;
 
-    ProductAddedEvent productAdded(ProductRoot productRoot) throws ValidateException;
+    ProductAddedEvent productAdded(CompanyRoot companyRoot, ProductRoot productRoot) throws ValidateException;
 
-    ProductRemovedEvent productRemoved(ProductRoot productRoot) throws ValidateException;
+    ProductRemovedEvent productRemoved(CompanyRoot companyRoot,ProductRoot productRoot) throws ValidateException;
 
 
 

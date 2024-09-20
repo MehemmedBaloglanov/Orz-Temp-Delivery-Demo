@@ -6,14 +6,7 @@ import java.time.OffsetDateTime;
 
 public class ProductQuantityIncreasedEvent extends ProductEvent{
 
-    private final Integer increasedAmount;
-
-    public ProductQuantityIncreasedEvent(ProductRoot productRoot, Integer increasedAmount) {
-        super(productRoot, OffsetDateTime.now());
-        this.increasedAmount = increasedAmount;
-    }
-
-    public Integer getIncreasedAmount() {
-        return increasedAmount;
+    public ProductQuantityIncreasedEvent(ProductRoot productRoot, OffsetDateTime createTime) {
+        super(productRoot, createTime);
     }
 }
