@@ -4,32 +4,26 @@ import com.intelliacademy.orizonroute.identity.user.UserID;
 import com.intellibucket.mapper.UserDataAccessMapper;
 import com.intellibucket.model.UserEntity;
 import com.intellibucket.repository.UserJpaRepository;
-import com.intellibucket.service.UserRepository;
 import com.intellibucket.user.service.domain.core.root.UserRoot;
+import com.intellibucket.user.service.domain.shell.port.output.repository.UserRepository;
+import lombok.RequiredArgsConstructor;
 
 import java.util.Optional;
-
+@RequiredArgsConstructor
 public class UserRepositoryImpl implements UserRepository {
 
+private final UserDataAccessMapper userDataAccessMapper;
+private final UserJpaRepository userJpaRepository;
     @Override
-    public Optional<UserEntity> findByUserId(UserID userId) {
+    public Optional<UserRoot> findByUserId(UserID userId) {
+
 return null;
 
     }
-    @Override
-    public void registerAsCompany(UserRoot userRoot) {
-
-
-}
 
     @Override
-    public void registerAsCustomer(UserRoot userRoot) {
-
-    }
-
-    @Override
-    public void update(UserRoot userRoot) {
-
+    public UserRoot update(UserRoot userRoot) {
+        return null;
     }
 
     @Override
@@ -38,12 +32,15 @@ return null;
     }
 
     @Override
-    public void changePassword(UserRoot userRoot) {
-//        // Assuming UserEntity has a password field and UserDataAccessMapper maps password correctly
-//        UserEntity userEntity = UserJpaRepository.findById(userRoot.getUserID())
-//                .orElseThrow(() -> new IllegalArgumentException("User not found"));
-//        userEntity.setPassword(userRoot.getPassword().getValue());
-//        UserJpaRepository.save(userEntity);
+    public Optional<UserRoot> save(UserRoot userRoot) {
 
+        Optional<UserEntity> user = userJpaRepository.findById(userRoot.getUserID().value());
+
+        if (!user.isEmpty()) {
+            return Optional.empty();
+        }else {
+            UserEntity userEntity = user.get();
+            return Optional.of(userDataAccessMapper.userEntityToUserRoot(userEntity));
+        }
     }
 }

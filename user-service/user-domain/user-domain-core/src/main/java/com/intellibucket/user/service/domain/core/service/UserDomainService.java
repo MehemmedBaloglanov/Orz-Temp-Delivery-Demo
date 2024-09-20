@@ -10,15 +10,15 @@ public interface UserDomainService {
 
     UserRegisteredEvent companyRegistered(UserRoot userRoot);
 
-    UserRegisteredEvent customerRegistered();
+    UserRegisteredEvent customerRegistered(UserRoot userRoot);
 
-    UserDeletedDomainEvent userDeleted();
+    UserDeletedDomainEvent userDeleted(UserRoot userRoot);
 
-    UserChangePasswordDomainEvent userChangePassword();
+    UserChangePasswordDomainEvent userChangePassword(UserRoot userRoot);
 
-    UserLoggedInDomainEvent userLoggedIn();
+    UserLoggedInDomainEvent userLoggedIn(UserRoot userRoot);
 
-    UserUpdatedDomainEvent userUpdated();
+    UserUpdatedDomainEvent userUpdated(UserRoot userRoot);
 
     List<UserRoot> findByUserId(UserID userID);
 }

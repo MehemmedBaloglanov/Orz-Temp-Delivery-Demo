@@ -1,17 +1,14 @@
 package com.intellibucket.user.service.domain.shell.dto.response;
 
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Getter
-@AllArgsConstructor
-@Builder
+@Setter
 @NoArgsConstructor
-public class CustomerResponse {
-private String lastName;
-private String firstName;
-
-
+@AllArgsConstructor
+public class UserDeleteResponse {
+    private String userId;
 }

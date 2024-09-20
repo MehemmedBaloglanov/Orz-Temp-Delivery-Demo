@@ -1,4 +1,4 @@
-package com.intellibucket.user.service.domain.shell.dto.request;
+package com.intellibucket.user.service.domain.shell.dto.command.abstracts;
 
 import com.intellibucket.user.service.domain.core.valueObject.Password;
 import jakarta.validation.Valid;
@@ -14,7 +14,7 @@ import org.jetbrains.annotations.NotNull;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserRequest {
+public abstract class AbstractUserCreateCommand {
 
 
     @NotNull
@@ -33,26 +33,10 @@ public class UserRequest {
     private String phoneNumber;
 
     @NotNull
-    @Valid
     private String address;
-    //    @NotNull
-//    private String birthDate;
 
-
-//    @NotNull
-//    private String gender;
-
-    //    @NotNull
-//    @NotEmpty
-//    @Size(min = 3, max = 25)
-//    @Pattern(regexp = "^[a-zA-Z]+$")
-//    private String firstName;
-//
-//    @NotNull
-//    @NotEmpty
-//    @Size(min = 3, max = 25)
-//    @Pattern(regexp = "^[a-zA-Z]+$")
-//    private String lastName;
+    @NotNull
+    private String username;
 
 
 }

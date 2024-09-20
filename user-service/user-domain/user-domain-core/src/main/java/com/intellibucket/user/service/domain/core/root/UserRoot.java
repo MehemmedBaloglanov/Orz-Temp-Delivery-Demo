@@ -22,7 +22,7 @@ public class UserRoot extends AggregateRoot<UserID> {
     private final Address address;
     private RoleAuthorithy roleAuthorithy;
     private Status status;
-    private final Password password;
+    private Password password;
     private final Email email;
     private final PhoneNumber phoneNumber;
     private final Username username;
@@ -78,13 +78,8 @@ public class UserRoot extends AggregateRoot<UserID> {
             throw new UserDomainException("Password is not valid");
         }
 
+
     }
-//    public UserRoot changePassword(Password newPassword) {
-//        if (newPassword == null || newPassword.isEmpty()) {
-//            throw new IllegalArgumentException("New password cannot be null or empty");
-//        }
-//        this.password = newPassword;
-//    }
 
     public UserRoot changeRole(RoleAuthorithy newRole) throws UserDomainException {
         if (!status.isCreated()) {

@@ -1,16 +1,14 @@
 package com.intellibucket.user.service.domain.shell;
 
 import com.intelliacademy.orizonroute.identity.user.UserID;
-import com.intellibucket.adapter.UserRepositoryImpl;
-import com.intellibucket.service.UserRepository;
+import com.intellibucket.constants.DomainConstants;
+import com.intellibucket.user.service.domain.core.service.UserDomainService;
+import com.intellibucket.user.service.domain.shell.port.output.repository.UserRepository;
 import com.intellibucket.user.service.domain.core.event.*;
 import com.intellibucket.user.service.domain.core.root.UserRoot;
-import com.intellibucket.user.service.domain.core.service.UserDomainService;
 import lombok.Builder;
 
-import java.time.LocalDate;
 import java.time.OffsetDateTime;
-import java.time.ZonedDateTime;
 import java.util.List;
 @Builder
 
@@ -19,36 +17,38 @@ public class UserDomainServiceImpl implements UserDomainService {
     private  final UserRepository userRepository;
     @Override
     public UserRegisteredEvent companyRegistered(UserRoot userRoot) {
-        userRepository.registerAsCompany(userRoot);
-        return new UserRegisteredEvent(userRoot.getEmail().getValue(), OffsetDateTime.of(DomainConstants.ZONE_ID);
-    }
-
-
-    @Override
-    public UserRegisteredEvent customerRegistered() {
-        return null;
-    }
-
-    @Override
-    public UserDeletedDomainEvent userDeleted() {
-        return null;
-    }
-
-    @Override
-    public UserChangePasswordDomainEvent userChangePassword() {
         return null;
     }
 
 
     @Override
-    public UserLoggedInDomainEvent userLoggedIn() {
+    public UserRegisteredEvent customerRegistered(UserRoot userRoot) {
+       return null;
+    }
+
+    @Override
+    public UserDeletedDomainEvent userDeleted(UserRoot userRoot) {
+            userRepository.delete(userRoot);
+        return new UserDeletedDomainEvent(userRoot, OffsetDateTime.now(DomainConstants.ZONE_ID));
+    }
+
+
+    @Override
+    public UserChangePasswordDomainEvent userChangePassword(UserRoot userRoot) {
+        return null;
+    }
+
+
+    @Override
+    public UserLoggedInDomainEvent userLoggedIn(UserRoot userRoot) {
         return null;
 
     }
 
     @Override
-    public UserUpdatedDomainEvent userUpdated() {
-        return null;
+    public UserUpdatedDomainEvent userUpdated(UserRoot userRoot) {
+        userRepository.update(userRoot);
+    return new UserUpdatedDomainEvent(userRoot, OffsetDateTime.now(DomainConstants.ZONE_ID));
     }
 
     @Override

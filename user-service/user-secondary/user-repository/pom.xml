@@ -37,6 +37,10 @@
             <version>3.3.3</version>
             <scope>compile</scope>
         </dependency>
+        <dependency>
+            <groupId>com.intellibucket</groupId>
+            <artifactId>user-domain-shell</artifactId>
+        </dependency>
     </dependencies>
 
 </project>

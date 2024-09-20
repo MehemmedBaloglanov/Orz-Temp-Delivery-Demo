@@ -17,22 +17,17 @@ import java.util.UUID;
 @AllArgsConstructor
 
 public class UserResponse {
-    @Id
-    private final UUID id;
-
-//    @JsonProperty("password")
-//    private final Password password;
 
     @JsonProperty("email")
-    private final Email email;
+    private final String email;
 
     @JsonProperty("roleAuthority")
-    private final RoleAuthorithy roleAuthorithy;
+    private final String roleAuthorithy;
 
     @JsonProperty("address")
-    private final Address address;
+    private final String address;
 
-    @JsonProperty("phoneNmber")
+    @JsonProperty("phoneNumber")
     private final String phoneNumber;
 
     @JsonProperty("is_active")

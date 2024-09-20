@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @Builder
 @AllArgsConstructor
+@NoArgsConstructor
 public class CompanyResponse {
     private String companyName;
     private String licenceNumber;

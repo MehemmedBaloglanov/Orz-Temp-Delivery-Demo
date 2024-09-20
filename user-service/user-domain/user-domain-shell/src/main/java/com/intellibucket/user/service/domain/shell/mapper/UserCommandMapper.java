@@ -1,45 +1,53 @@
 package com.intellibucket.user.service.domain.shell.mapper;
 
+import com.intelliacademy.orizonroute.identity.user.UserID;
 import com.intelliacademy.orizonroute.valueobjects.common.Email;
+import com.intelliacademy.orizonroute.valueobjects.common.Username;
+import com.intelliacademy.orizonroute.valueobjects.user.EmailType;
 import com.intellibucket.user.service.domain.core.root.UserRoot;
+import com.intellibucket.user.service.domain.core.valueObject.Password;
 import com.intellibucket.user.service.domain.core.valueObject.RoleAuthorithy;
-import com.intellibucket.user.service.domain.shell.dto.command.CompanyRegisterCommand;
-import com.intellibucket.user.service.domain.shell.dto.command.CustomerRegisterCommand;
-import com.intellibucket.user.service.domain.shell.dto.command.UserChangePasswordCommand;
-import com.intellibucket.user.service.domain.shell.dto.command.UserLoginCommand;
+import com.intellibucket.user.service.domain.shell.dto.request.*;
 
 public class UserCommandMapper {
 
     // CompanyRegisterCommand to UserRoot mapping
-    public static UserRoot toUserRoot(CompanyRegisterCommand command) {
+    public static UserRoot companyCreateCommandToUserRoot(CompanyCreateCommand command) {
         return UserRoot.builder()
-                .email(command.getEmail())
-                .password(command.getPassword())
+                .email(Email.of(EmailType.NONE,command.getEmail()))
+                .password(Password.builder().value(command.getPassword()).build())
                 .roleAuthorithy(RoleAuthorithy.COMPANY)
-                .username(command.getCompanyName())
+                .username(Username.of(command.getUsername()))
                 .build();
     }
 
     // CustomerRegisterCommand to UserRoot mapping
-    public static UserRoot toUserRoot(CustomerRegisterCommand command) {
+    public static UserRoot customerCreateCommandToUserRoot(CustomerCreateCommand command) {
         return UserRoot.builder()
-                .email(command.getEmail())
-                .password(command.getPassword())
+                .email(Email.of(EmailType.NONE, command.getEmail()))
+                .password(Password.builder().value(command.getPassword()).build())
                 .roleAuthorithy(RoleAuthorithy.CUSTOMER)
-                .username(command.getCustomerName())
+                .username(Username.of(command.getUsername()))
                 .build();
     }
     //UserLoginCommand
-    public static UserRoot toUserRoot(UserLoginCommand command) {
+    public static UserRoot userLoginCommandToUserRoot(UserLoginCommand command) {
        return UserRoot.builder()
                 .email(command.getEmail())
                 .password(command.getPassword())
                 .build();
     }
-    //UserchangePasswordCommand
-    public static UserRoot toUserRoot(UserChangePasswordCommand command) {
+    //UserChangePasswordCommand
+    public static UserRoot userChangePasswordComandToUserRoot(UserChangePasswordCommand command) {
         return UserRoot.builder()
-                .password(command.getNewPassword())
+                .password(Password.builder().value(command.getNewPassword()).build())
                 .build();
     }
+    //UserDeleteCommand
+    public static UserRoot userDeleteCommandToUserRoot(UserDeleteCommand command) {
+        return UserRoot.builder()
+                .userID(UserID.of(command.getUserid()))
+                .build();
+    }
+
 }

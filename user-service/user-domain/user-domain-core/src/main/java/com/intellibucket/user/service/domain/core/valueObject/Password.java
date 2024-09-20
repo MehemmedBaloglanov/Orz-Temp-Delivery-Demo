@@ -4,6 +4,8 @@ import com.intelliacademy.orizonroute.valueobjects.common.ValueObject;
 import lombok.Builder;
 import lombok.Data;
 
+import java.util.Objects;
+
 @Data
 @Builder
 @ValueObject
@@ -37,4 +39,20 @@ public final class Password {
         return value.chars().anyMatch(ch -> !Character.isLetterOrDigit(ch));
     }
 
+    public boolean isEmpty() {
+        return value == null;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Password password = (Password) o;
+        return Objects.equals(value, password.value);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(value);
+    }
 }

@@ -2,16 +2,12 @@ package com.intellibucket.user.service.domain.shell.dto.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-@Getter
-@AllArgsConstructor
 @Builder
+@AllArgsConstructor
 @NoArgsConstructor
-public class CustomerResponse {
-private String lastName;
-private String firstName;
-
-
+public class EmptyResponse{
+    private String message;
+    private boolean success;
 }
