@@ -4,8 +4,9 @@ import com.intellibucket.company.service.domain.core.root.CompanyRoot;
 
 import java.time.OffsetDateTime;
 
-public class CompanyUpdatedEvent extends  CompanyEvent{
-    public CompanyUpdatedEvent(CompanyRoot companyRoot, OffsetDateTime createdTime) {
+public class CompanySuspendedEvent extends CompanyEvent{
+
+    public CompanySuspendedEvent(CompanyRoot companyRoot, OffsetDateTime createdTime) {
         super(companyRoot, createdTime);
     }
 }
