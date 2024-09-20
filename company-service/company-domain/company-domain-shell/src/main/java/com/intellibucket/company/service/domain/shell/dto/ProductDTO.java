@@ -1,5 +1,8 @@
 package com.intellibucket.company.service.domain.shell.dto;
 
+import com.intelliacademy.orizonroute.identity.company.CompanyID;
+import com.intelliacademy.orizonroute.identity.order.product.ProductID;
+import com.intelliacademy.orizonroute.valueobjects.common.Money;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -10,12 +13,12 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ProductDTO {
-    private String id;
+    private ProductID id;
     private String name;
     private String description;
-    private String price;
+    private Money price;
     private Integer quantity;
     private String status;
-    private String companyId;
+    private CompanyID companyId;
 }
 
