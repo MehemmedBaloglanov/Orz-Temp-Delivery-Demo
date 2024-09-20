@@ -11,8 +11,6 @@ import com.intellibucket.order.service.domain.shell.handler.OrderCreateCommandHa
 import com.intellibucket.order.service.domain.shell.port.input.rest.abstracts.command.OrderCommandServiceAdapter;
 import lombok.RequiredArgsConstructor;
 
-import java.util.List;
-import java.util.UUID;
 //TODO FIX add orderItemRoot companyId
 @RequiredArgsConstructor
 public class OrderCommandServiceHandler implements OrderCommandServiceAdapter {
@@ -38,8 +36,9 @@ public class OrderCommandServiceHandler implements OrderCommandServiceAdapter {
     }
 
     @Override
-    public void rejectOrder(OrderRejectCommand orderRejectCommand) throws OrderDomainException {
+    public OrderResponse rejectOrder(OrderRejectCommand orderRejectCommand) throws OrderDomainException {
 
+        return null;
     }
 
 

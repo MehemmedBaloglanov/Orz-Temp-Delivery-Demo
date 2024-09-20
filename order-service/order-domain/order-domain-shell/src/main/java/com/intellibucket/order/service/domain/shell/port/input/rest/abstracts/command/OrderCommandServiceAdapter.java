@@ -6,8 +6,6 @@ import com.intellibucket.order.service.domain.shell.dto.rest.command.OrderCancel
 import com.intellibucket.order.service.domain.shell.dto.rest.command.OrderRejectCommand;
 import com.intellibucket.order.service.domain.shell.dto.rest.response.OrderResponse;
 
-import java.util.List;
-
 public interface OrderCommandServiceAdapter {
 
     OrderResponse createOrder() throws OrderDomainException;
