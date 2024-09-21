@@ -1,9 +1,7 @@
 package com.intellibucket.order.service.domain.core.service;
 
-import com.intelliacademy.orizonroute.identity.company.CompanyID;
-import com.intelliacademy.orizonroute.identity.order.ord.OrderID;
-import com.intelliacademy.orizonroute.valueobjects.order.OrderNumber;
 import com.intellibucket.order.service.domain.core.event.*;
+import com.intellibucket.order.service.domain.core.exception.OrderDomainException;
 import com.intellibucket.order.service.domain.core.root.OrderRoot;
 
 /**
@@ -15,23 +13,21 @@ import com.intellibucket.order.service.domain.core.root.OrderRoot;
 
 public interface OrderDomainService {
 
-    OrderCreatedEvent validateAndInitiateOrder(OrderRoot orderRoot, CompanyID companyID);
+    OrderCreatedEvent validateAndInitiateOrder(OrderRoot orderRoot) throws OrderDomainException;
 
-    PaymentSuccessEvent payOrder(OrderRoot orderRoot);
+    OrderCancelEvent initCancel(OrderRoot orderRoot) throws OrderDomainException;
 
-    PaymentCanceledEvent cancelOrderPayment(OrderRoot orderRoot);
+    OrderPaidEvent payOrder(OrderRoot orderRoot) throws OrderDomainException;
 
-    OrderAssignedEvent assignOrder(OrderRoot orderRoot);
+    void orderAssign(OrderRoot orderRoot) throws OrderDomainException;
 
-    OrderDeliveredEvent deliverOrder(OrderRoot orderRoot);
+    OrderDeliveryEvent orderDelivered(OrderRoot orderRoot) throws OrderDomainException;
 
-    OrderPreparedEvent  orderPrepared(OrderRoot orderRoot);
+    OrderCancelledEvent orderPaymentCancel(OrderRoot orderRoot) throws OrderDomainException;
 
-    OrderPreparingEvent prepareOrder(OrderRoot orderRoot);
+    void prepareOrder(OrderRoot orderRoot) throws OrderDomainException;
 
-    OrderCancelEvent cancelOrder(OrderID orderID);
+    void orderCancel(OrderRoot orderRoot) throws OrderDomainException;
 
-    OrderRoot traceOrder(OrderNumber orderNumber);
-
-
+    OrderCancelledEvent orderUnAssign(OrderRoot orderRoot) throws OrderDomainException;
 }

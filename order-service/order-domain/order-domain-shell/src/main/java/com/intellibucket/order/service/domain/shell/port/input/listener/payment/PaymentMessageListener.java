@@ -1,12 +1,11 @@
 package com.intellibucket.order.service.domain.shell.port.input.listener.payment;
 
-import com.intelliacademy.orizonroute.identity.order.ord.OrderID;
-import com.intellibucket.order.service.domain.shell.dto.response.PaymentResponse;
+import com.intellibucket.order.service.domain.shell.dto.rest.response.PaymentResponse;
 
 public interface PaymentMessageListener {
 
-    OrderID paymentCompleted(PaymentResponse paymentResponse);
+    void paymentCompleted(PaymentResponse paymentResponse);
 
-    OrderID paymentCancelled(PaymentResponse paymentResponse);
+    void paymentCancelled(PaymentResponse paymentResponse);
 
 }
