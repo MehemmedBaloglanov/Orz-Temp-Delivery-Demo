@@ -1,6 +1,6 @@
 package com.intellibucket.order.service.domain.shell.port.input.listener.payment;
 
-import com.intellibucket.order.service.domain.shell.dto.response.PaymentResponse;
+import com.intellibucket.order.service.domain.shell.dto.rest.response.PaymentResponse;
 
 public interface PaymentMessageListener {
 
