@@ -1,8 +1,7 @@
-package com.intellibucket.user.service.domain.shell;
+package com.intellibucket.user.service.domain.core.service;
 
 import com.intelliacademy.orizonroute.identity.user.UserID;
 import com.intellibucket.constants.DomainConstants;
-import com.intellibucket.user.service.domain.core.service.UserDomainService;
 import com.intellibucket.user.service.domain.shell.port.output.repository.UserRepository;
 import com.intellibucket.user.service.domain.core.event.*;
 import com.intellibucket.user.service.domain.core.root.UserRoot;
