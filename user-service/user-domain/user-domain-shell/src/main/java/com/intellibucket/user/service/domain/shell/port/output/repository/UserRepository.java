@@ -9,9 +9,9 @@ import java.util.Optional;
 public interface UserRepository {
     Optional<UserRoot> findByUserId(UserID userId);
 
-    UserRoot update(UserRoot userRoot);
+    Optional<UserRoot> update(UserRoot userRoot);
 
-    void delete(UserRoot userRoot);
+    Optional<UserRoot> delete(UserRoot userRoot);
 
     Optional<UserRoot> save(UserRoot userRoot);
 }

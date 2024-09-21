@@ -8,4 +8,5 @@ import lombok.*;
 @NoArgsConstructor
 public class UserDeleteCommand {
     private String userid;
+
 }

@@ -16,19 +16,41 @@ private final UserDataAccessMapper userDataAccessMapper;
 private final UserJpaRepository userJpaRepository;
     @Override
     public Optional<UserRoot> findByUserId(UserID userId) {
+        Optional<UserEntity> userEntity = userJpaRepository.findById(userId.value());
 
-return null;
+        if (userEntity.isEmpty()) {
+            return Optional.empty();
+        }
+        return Optional.of(userDataAccessMapper.userEntityToUserRoot(userEntity.get()));
+    }
 
+
+    @Override
+    public Optional<UserRoot> update(UserRoot userRoot) {
+
+        Optional<UserEntity> user = userJpaRepository.findById(userRoot.getUserID().value());
+
+        if (user.isEmpty()) {
+            return Optional.empty();
+        } else {
+            UserEntity userEntity = user.get();
+            userJpaRepository.updateBy(userEntity);
+            return Optional.of(userDataAccessMapper.userEntityToUserRoot(userEntity));
+        }
     }
 
     @Override
-    public UserRoot update(UserRoot userRoot) {
-        return null;
-    }
+    public Optional<UserRoot> delete(UserRoot userRoot) {
 
-    @Override
-    public void delete(UserRoot userRoot) {
+        Optional<UserEntity> user = userJpaRepository.findById(userRoot.getUserID().value());
 
+        if (user.isEmpty()) {
+            return Optional.empty();
+        } else {
+            UserEntity userEntity = user.get();
+            userJpaRepository.delete(userEntity);
+            return Optional.of(userDataAccessMapper.userEntityToUserRoot(userEntity));
+        }
     }
 
     @Override
