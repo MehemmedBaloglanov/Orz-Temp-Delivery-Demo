@@ -38,7 +38,7 @@ public class OrderCreateCommandHandler {
         OrderID orderID = OrderID.random();
 
         Money total = Money.ZERO;
-
+        //FIXME multi request problemini hellet
         List<OrderItemRoot> orderItemRootList = cartItems.stream().map(product -> {
 
             ProductID productID = product.getProductID();
