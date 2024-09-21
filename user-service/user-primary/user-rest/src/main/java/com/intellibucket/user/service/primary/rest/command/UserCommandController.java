@@ -1,13 +1,13 @@
 package com.intellibucket.user.service.primary.rest.command;
 
-import com.intelliacademy.orizonroute.identity.user.UserID;
 import com.intellibucket.user.service.domain.core.exception.UserDomainException;
+import com.intellibucket.user.service.domain.core.exception.password.PasswordValidationException;
 import com.intellibucket.user.service.domain.core.exception.user.UserNotFoundException;
 import com.intellibucket.user.service.domain.shell.dto.request.*;
-import com.intellibucket.user.service.domain.shell.dto.response.*;
+import com.intellibucket.user.service.domain.shell.dto.response.EmptyResponse;
+import com.intellibucket.user.service.domain.shell.dto.response.UserLoginResponse;
 import com.intellibucket.user.service.domain.shell.port.input.rest.abstracts.AbstractUserCommandService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,25 +19,27 @@ public class UserCommandController {
     private final AbstractUserCommandService abstractUserCommandService;
 
     @PostMapping("/register/company")
-    public ResponseEntity<CompanyResponse> registerCompany(@RequestBody CompanyCreateCommand command) {
-        CompanyResponse companyResponse = abstractUserCommandService.companyRegistered(command);
-        return new ResponseEntity<>(companyResponse, HttpStatus.CREATED);
+    public ResponseEntity<EmptyResponse> registerCompany(@RequestBody CompanyCreateCommand command) throws UserDomainException {
+        abstractUserCommandService.companyRegistered(command);
+        EmptyResponse response = EmptyResponse.builder().message("User registered successfully").success(true).build();
+        return ResponseEntity.ok(response);
     }
 
     @PostMapping("/register/customer")
-    public ResponseEntity<CustomerResponse> registerCustomer(@RequestBody CustomerCreateCommand command) {
+    public ResponseEntity<EmptyResponse> registerCustomer(@RequestBody CustomerCreateCommand command) throws UserDomainException {
         abstractUserCommandService.customerRegistered(command);
-        return new ResponseEntity<>(HttpStatus.CREATED);
+        EmptyResponse response = EmptyResponse.builder().message("User registered successfully").success(true).build();
+        return ResponseEntity.ok(response);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<EmptyResponse> userDeleted(@PathVariable UserID id) throws UserDomainException {
-        abstractUserCommandService.userDeleted(id);
+    public ResponseEntity<EmptyResponse> userDeleted(@PathVariable UserDeleteCommand command) throws UserDomainException {
+        abstractUserCommandService.deleteUser(command);
         return ResponseEntity.ok(EmptyResponse.builder().message("User deleted successfully").success(true).build());
     }
 
     @PostMapping("/{id}/change-password")
-    public ResponseEntity<EmptyResponse> changePassword(@RequestBody UserChangePasswordCommand command) {
+    public ResponseEntity<EmptyResponse> changePassword(@RequestBody UserChangePasswordCommand command) throws UserNotFoundException, PasswordValidationException {
 //        UserID userID = UserID.of(id); //FIXME abstractSecurity holderdan al.
         abstractUserCommandService.changePassword(command);
         EmptyResponse response = EmptyResponse.builder().message("User deleted successfully").success(true).build();
@@ -47,11 +49,11 @@ public class UserCommandController {
     @PostMapping("/login")
     public ResponseEntity<UserLoginResponse> loginUser(@RequestBody UserLoginCommand command) {
         abstractUserCommandService.userLoggedIn(command);
-        UserLoginResponse userLoginResponse = new UserLoginResponse();
-        return ResponseEntity.ok(userLoginResponse);
+        UserLoginResponse response = new UserLoginResponse();
+        return ResponseEntity.ok(response);
     }
     @PostMapping("/update")
-    public ResponseEntity<EmptyResponse> userLogin(@RequestBody UserUpdateCommand command) throws UserNotFoundException {
+    public ResponseEntity<EmptyResponse> updateUser(@RequestBody UserUpdateCommand command) throws UserNotFoundException {
         abstractUserCommandService.updateUser(command);
         EmptyResponse response = EmptyResponse.builder().message("User updated successfully").success(true).build();
     return ResponseEntity.ok(response);

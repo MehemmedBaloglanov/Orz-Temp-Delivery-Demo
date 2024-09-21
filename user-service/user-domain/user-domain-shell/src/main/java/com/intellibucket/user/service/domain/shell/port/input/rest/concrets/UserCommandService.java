@@ -2,6 +2,7 @@ package com.intellibucket.user.service.domain.shell.port.input.rest.concrets;
 
 import com.intelliacademy.orizonroute.identity.user.UserID;
 import com.intellibucket.user.service.domain.core.exception.UserDomainException;
+import com.intellibucket.user.service.domain.core.exception.password.PasswordValidationException;
 import com.intellibucket.user.service.domain.core.exception.user.UserNotFoundException;
 import com.intellibucket.user.service.domain.core.root.UserRoot;
 import com.intellibucket.user.service.domain.shell.dto.request.*;
@@ -20,26 +21,27 @@ public class UserCommandService implements AbstractUserCommandService {
     private final CustomerRegisterCommandHandler customerRegisterCommandHandler;
     private final UserDeleteCommandHandler userDeleteCommandHandler;
     private final UserUpdateCommandHandler userUpdateCommandHandler;
+    private final UserLoginCommandHandler userLoginCommandHandler;
+    private final UserChangePasswordCommandHandler userChangePasswordCommandHandler;
 
     @Override
-    public CompanyResponse companyRegistered(CompanyCreateCommand companyCreateCommand) {
-        return companyRegisterCommandHandler.handle(companyCreateCommand);
+    public void companyRegistered(CompanyCreateCommand command) throws UserDomainException {
+        companyRegisterCommandHandler.handle(command);
     }
 
     @Override
-    public CustomerResponse customerRegistered(CustomerCreateCommand customerCreateCommand) {
-        return customerRegisterCommandHandler.handle(customerCreateCommand);
+    public void customerRegistered(CustomerCreateCommand command) throws UserDomainException {
+         customerRegisterCommandHandler.handle(command);
     }
 
     @Override
-    public void userDeleted(UserID userID) throws UserDomainException {
-        userDeleteCommandHandler.handle(userID);
+    public void deleteUser(UserDeleteCommand command) throws UserDomainException {
+        userDeleteCommandHandler.handle(command);
     }
 
     @Override
     public UserLoginResponse userLoggedIn(UserLoginCommand userLoginCommand) {
-        return null;
-    }
+    return null;}
 
     @Override
     public Optional<UserRoot> findByUserId(UserID userID) {
@@ -47,8 +49,9 @@ public class UserCommandService implements AbstractUserCommandService {
     }
 
     @Override
-    public EmptyResponse changePassword(UserChangePasswordCommand userChangePasswordCommand) {
-        return null;
+    public void changePassword(UserChangePasswordCommand command) throws UserNotFoundException, PasswordValidationException {
+      userChangePasswordCommandHandler.handle(command);
+
     }
 
     @Override

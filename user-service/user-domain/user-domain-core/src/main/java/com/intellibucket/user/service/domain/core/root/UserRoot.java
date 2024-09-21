@@ -14,6 +14,8 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.Optional;
+
 @Builder
 @Getter
 @Setter
@@ -41,12 +43,12 @@ public class UserRoot extends AggregateRoot<UserID> {
         return this;
     }
 
-    public UserRoot deactivate() throws UserDomainException {
+    public Optional<UserRoot> delete() throws UserDomainException {
         if (!status.isDeleted()) {
             throw new UserDomainException("Cannot deactivate user");
         }
         this.status = Status.DELETED;
-        return this;
+        return Optional.of(this);
     }
 
     public UserRoot validateUser() throws UserDomainException {

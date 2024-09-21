@@ -1,9 +1,9 @@
 package com.intellibucket.user.service.domain.shell.handler;
 
 import com.intelliacademy.orizonroute.identity.user.UserID;
-import com.intellibucket.model.UserEntity;
 import com.intellibucket.user.service.domain.core.exception.user.UserNotFoundException;
 import com.intellibucket.user.service.domain.core.root.UserRoot;
+import com.intellibucket.user.service.domain.shell.dto.request.UserDeleteCommand;
 import com.intellibucket.user.service.domain.shell.dto.request.UserUpdateCommand;
 import com.intellibucket.user.service.domain.shell.port.input.rest.abstracts.AbstractUserCommandService;
 import com.intellibucket.user.service.domain.shell.port.output.repository.UserRepository;
