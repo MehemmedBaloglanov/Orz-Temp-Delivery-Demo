@@ -44,11 +44,11 @@
         <module name="kafka-avro" />
         <module name="cart-service-connector" />
         <module name="user-domain-core" />
+        <module name="user-repository" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="order-dataaccess" target="17" />
-      <module name="user-repository" target="17" />
     </bytecodeTargetLevel>
   </component>
 </project>

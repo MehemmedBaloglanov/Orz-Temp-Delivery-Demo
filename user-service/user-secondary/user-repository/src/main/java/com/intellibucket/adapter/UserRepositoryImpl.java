@@ -15,13 +15,16 @@ public class UserRepositoryImpl implements UserRepository {
 private final UserDataAccessMapper userDataAccessMapper;
 private final UserJpaRepository userJpaRepository;
     @Override
-    public Optional<UserRoot> findByUserId(UserID userId) {
-        Optional<UserEntity> userEntity = userJpaRepository.findById(userId.value());
 
-        if (userEntity.isEmpty()) {
+    public Optional<UserRoot> findByUserId(UserID userId) {
+        Optional<UserEntity> user = userJpaRepository.findById(userId.value());
+
+        if (user.isEmpty()) {
             return Optional.empty();
+        } else {
+            UserEntity userEntity = user.get();
+            return Optional.of(userDataAccessMapper.userEntityToUserRoot(userEntity));
         }
-        return Optional.of(userDataAccessMapper.userEntityToUserRoot(userEntity.get()));
     }
 
 
@@ -54,15 +57,11 @@ private final UserJpaRepository userJpaRepository;
     }
 
     @Override
-    public Optional<UserRoot> save(UserRoot userRoot) {
+    public Optional <UserRoot> save(UserRoot userRoot) {
 
-        Optional<UserEntity> user = userJpaRepository.findById(userRoot.getUserID().value());
-
-        if (!user.isEmpty()) {
-            return Optional.empty();
-        }else {
-            UserEntity userEntity = user.get();
-            return Optional.of(userDataAccessMapper.userEntityToUserRoot(userEntity));
-        }
+        UserEntity userEntity = userDataAccessMapper.userRootToUserEntity(userRoot);
+        UserEntity savedUserEntity = userJpaRepository.save(userEntity);
+        return Optional.ofNullable(userDataAccessMapper.userEntityToUserRoot(savedUserEntity));
     }
+
 }
