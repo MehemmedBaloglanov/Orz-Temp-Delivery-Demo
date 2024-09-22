@@ -11,7 +11,6 @@ import org.jetbrains.annotations.NotNull;
 @Getter
 @Setter
 @AllArgsConstructor
-@NoArgsConstructor
 public final class CustomerRegistrationRequestInfo extends UserRegistrationRequestInfo {
 
 }

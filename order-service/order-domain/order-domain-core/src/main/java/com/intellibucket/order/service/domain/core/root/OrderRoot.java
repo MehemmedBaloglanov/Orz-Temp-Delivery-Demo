@@ -1,6 +1,5 @@
 package com.intellibucket.order.service.domain.core.root;
 
-import com.intelliacademy.orizonroute.identity.company.CompanyID;
 import com.intelliacademy.orizonroute.identity.order.ord.OrderID;
 import com.intelliacademy.orizonroute.identity.user.UserID;
 import com.intelliacademy.orizonroute.root.AggregateRoot;
@@ -67,16 +66,16 @@ public class OrderRoot extends AggregateRoot<OrderID> {
     }
 
     //when stock is ended return initCancel
-    public OrderRoot assign() throws OrderDomainException {
+    public OrderRoot approve() throws OrderDomainException {
         if (!status.isPaid()) {
-            throw new OrderDomainException("Cannot assign order");
+            throw new OrderDomainException("Cannot approve order");
         }
-        this.status = OrderStatus.ASSIGNED;
+        this.status = OrderStatus.APPROVED;
         return this;
     }
 
     public OrderRoot initPrepare() throws OrderDomainException {
-        if (!status.isAssigned()) {
+        if (!status.isApproved()) {
             throw new OrderDomainException("Cannot prepare order");
         }
         this.status = OrderStatus.PREPARING;
@@ -91,7 +90,7 @@ public class OrderRoot extends AggregateRoot<OrderID> {
         return this;
     }
 
-    public OrderRoot delivery() throws OrderDomainException {
+    public OrderRoot startDelivery() throws OrderDomainException {
         if (!status.isPrepared()) {
             throw new OrderDomainException("Cannot deliver order");
         }
