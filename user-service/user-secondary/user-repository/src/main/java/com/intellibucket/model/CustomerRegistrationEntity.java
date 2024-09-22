@@ -1,7 +1,9 @@
 package com.intellibucket.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.intelliacademy.orizonroute.valueobjects.user.EmailType;
 import com.intellibucket.user.service.domain.core.valueObject.Password;
+import com.intellibucket.user.service.domain.core.valueObject.RoleAuthorithy;
 import com.intellibucket.user.service.domain.core.valueObject.Status;
 import jakarta.persistence.*;
 import jakarta.validation.Valid;
@@ -25,20 +27,13 @@ import java.util.UUID;
 public class CustomerRegistrationEntity {
     @Id
     @JsonProperty("id")
-    @GeneratedValue(strategy = GenerationType.AUTO)
+//    @GeneratedValue(strategy = GenerationType.AUTO)
     UUID customerEntityId;
 
     @NotNull
     @NotEmpty
     @Size(min = 3, max = 25)
-    @Pattern(regexp = "^[a-zA-Z]+$")
-    String userFirstName;
-
-    @NotNull
-    @NotEmpty
-    @Size(min = 3, max = 25)
-    @Pattern(regexp = "^[a-zA-Z]+$")
-    String userLastName;
+    private String username;
 
     @NotNull
     @Email
@@ -62,4 +57,18 @@ public class CustomerRegistrationEntity {
 
     @Enumerated(EnumType.STRING)
     Status status;
+
+    @Enumerated(EnumType.STRING)
+    RoleAuthorithy roleAuthority;
+
+    @Enumerated(EnumType.STRING)
+    EmailType type;
+
+    @OneToOne
+    @JoinColumn(name = "user_address_id") // foreign key
+    UserAddressEntity address;
+
+    @OneToOne
+    @JoinColumn(name = "phone_number_id") // foreign key
+    PhoneNumberEntity phoneNumberEntity;
 }

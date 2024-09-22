@@ -21,8 +21,10 @@ public class UserAddressEntity {
     @Id
     @JsonProperty("id")
     @GeneratedValue(strategy = GenerationType.AUTO)
-    UUID userAddressId;
+    String userAddressId;
     String street;
     String city;
     String state;
+    String postalCode;
+    String country;
 }

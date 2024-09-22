@@ -8,6 +8,7 @@ import java.util.Random;
 public final class Username {
     private static final Random RANDOM = new Random();
     private final String value;
+
     public Username(String value) {
         this.value = value;
     }
@@ -37,7 +38,7 @@ public final class Username {
     }
 
     private static Integer generateRandomNumber() {
-        return RANDOM.nextInt(10000,100000);
+        return RANDOM.nextInt(10000, 100000);
     }
 
     public String value() {
