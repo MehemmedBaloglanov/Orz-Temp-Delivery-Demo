@@ -24,15 +24,43 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class CustomerRegistrationEntity extends UserRegistrationEntity{
-    @NotNull
-    @NotEmpty
-    @Size(min = 3, max = 25)
-    private String username;
+public class UserRegistrationEntity {
+    @Id
+    @JsonProperty("id")
+    UUID userEntityId;
 
-//    @NotNull
-//    String birthDate;
-//
-//    @NotNull
-//    String gender;
+    @NotNull
+    @Email
+    String email;
+
+    @NotEmpty
+    @NotNull
+    @Size(min = 8, max = 25)
+    @Pattern(regexp = Password.PATTERN)
+    String password;
+
+    @NotEmpty
+    @NotNull
+    private String oldPassword;
+
+    @NotNull
+    @Valid
+    String phoneNumber;
+
+    @Enumerated(EnumType.STRING)
+    Status status;
+
+    @Enumerated(EnumType.STRING)
+    RoleAuthorithy roleAuthority;
+
+    @Enumerated(EnumType.STRING)
+    EmailType emailType;
+
+    @OneToOne
+    @JoinColumn(name = "user_address_id") // foreign key
+    UserAddressEntity address;
+
+    @OneToOne
+    @JoinColumn(name = "phone_number_id") // foreign key
+    PhoneNumberEntity phoneNumberEntity;
 }

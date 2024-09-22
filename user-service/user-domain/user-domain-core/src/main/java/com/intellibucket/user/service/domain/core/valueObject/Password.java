@@ -47,6 +47,17 @@ public final class Password {
         return value == null;
     }
 
+    public boolean isEqual(Password otherPassword) {
+        return this.value.equals(otherPassword.getValue());
+    }
+
+    public static Password changePassword(Password oldPassword, String newPassword) {
+        if (oldPassword.isEqual(Password.of(newPassword))) {
+            throw new IllegalArgumentException("New password cannot be the same as the old password");
+        }
+        return new Password(newPassword);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

@@ -8,7 +8,6 @@ import java.util.Random;
 public final class Username {
     private static final Random RANDOM = new Random();
     private final String value;
-
     public Username(String value) {
         this.value = value;
     }
