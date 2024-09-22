@@ -16,6 +16,13 @@
             <groupId>com.intellibucket</groupId>
             <artifactId>company-domain-core</artifactId>
         </dependency>
+
+        <dependency>
+            <groupId>com.intellibucket</groupId>
+            <artifactId>company-repository</artifactId>
+        </dependency>
     </dependencies>
+
+
 
 </project>
