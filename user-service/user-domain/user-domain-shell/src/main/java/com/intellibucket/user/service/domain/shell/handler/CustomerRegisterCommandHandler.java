@@ -1,10 +1,11 @@
 package com.intellibucket.user.service.domain.shell.handler;
 
-import com.intelliacademy.orizonroute.identity.user.UserID;
 import com.intellibucket.user.service.domain.core.exception.UserDomainException;
 import com.intellibucket.user.service.domain.core.exception.user.UserNotFoundException;
+import com.intellibucket.user.service.domain.core.exception.user.UserValidationException;
 import com.intellibucket.user.service.domain.core.root.UserRoot;
 import com.intellibucket.user.service.domain.shell.dto.request.CustomerCreateCommand;
+import com.intellibucket.user.service.domain.shell.mapper.UserCommandMapper;
 import com.intellibucket.user.service.domain.shell.port.input.rest.abstracts.AbstractUserCommandService;
 import com.intellibucket.user.service.domain.shell.port.output.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -19,14 +20,17 @@ public class CustomerRegisterCommandHandler {
     private final AbstractUserCommandService commandService;
 
     public void handle(CustomerCreateCommand command) throws UserDomainException {
-        UserID userID = UserID.random();
-        Optional<UserRoot> optionalUserRoot = userRepository.findByUserId(userID);
+        UserRoot newUser = UserCommandMapper.customerCreateCommandToUserRoot(command);
 
-        if (optionalUserRoot.isEmpty()) {
-            throw new UserNotFoundException("User already exist: " + userID.value());
+        Optional<UserRoot> optionalUserRoot = userRepository.findByEmail(newUser.getEmail());
+
+        if (optionalUserRoot.isPresent()) {
+            throw new UserValidationException("User already exist with email..: " + command.getEmail());
         }
+
+
+        userRepository.save(newUser);
         commandService.customerRegistered(command);
-        userRepository.save(optionalUserRoot.get());
 
     }
 
