@@ -1,12 +1,14 @@
 package com.intellibucket.adapter;
 
 import com.intelliacademy.orizonroute.identity.user.UserID;
+import com.intelliacademy.orizonroute.valueobjects.common.Email;
 import com.intellibucket.mapper.UserDataAccessMapper;
 import com.intellibucket.model.UserEntity;
 import com.intellibucket.repository.UserJpaRepository;
 import com.intellibucket.user.service.domain.core.root.UserRoot;
 import com.intellibucket.user.service.domain.shell.port.output.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Optional;
 @RequiredArgsConstructor
@@ -63,5 +65,18 @@ private final UserJpaRepository userJpaRepository;
         UserEntity savedUserEntity = userJpaRepository.save(userEntity);
         return Optional.ofNullable(userDataAccessMapper.userEntityToUserRoot(savedUserEntity));
     }
+
+    @Override
+    public Optional<UserRoot> findByEmail(Email email) {
+        Optional<UserEntity> userEntityOptional = userJpaRepository.findByEmail(email.getValue());
+
+        if (userEntityOptional.isEmpty()) {
+            return Optional.empty();
+        } else {
+            UserEntity userEntity = userEntityOptional.get();
+            return Optional.of(userDataAccessMapper.userEntityToUserRoot(userEntity));
+        }
+    }
+
 
 }
