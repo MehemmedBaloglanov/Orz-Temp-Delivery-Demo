@@ -17,7 +17,7 @@
     </option>
     <option name="ignoredFiles">
       <set>
-        <option value="$PROJECT_DIR$/user-service/user-secondary/user-dataaccess/pom.xml" />
+        <option value="$PROJECT_DIR$/library/orizon-http/pom.xml" />
       </set>
     </option>
   </component>
