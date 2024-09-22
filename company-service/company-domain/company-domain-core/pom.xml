@@ -12,8 +12,9 @@
     <artifactId>company-domain-core</artifactId>
     <dependencies>
         <dependency>
-            <groupId>com.intelliacademy.orizonroute</groupId>
+            <groupId>com.intellibucket</groupId>
             <artifactId>temp-root</artifactId>
+            <version>1.0-SNAPSHOT</version>
             <scope>compile</scope>
         </dependency>
 
