@@ -20,6 +20,8 @@ public class CompanyRoot extends AggregateRoot<CompanyID> {
     private List<ProductRoot> products;
     private Money balance;
 
+
+
     public CompanyRoot initialize() throws ValidateException {
         super.setId(CompanyID.random());
 
