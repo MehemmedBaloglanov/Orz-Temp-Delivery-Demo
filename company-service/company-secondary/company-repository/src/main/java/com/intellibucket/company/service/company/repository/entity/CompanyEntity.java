@@ -8,6 +8,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.UUID;
+
 @Data
 @Builder
 @NoArgsConstructor
@@ -17,7 +19,7 @@ import lombok.NoArgsConstructor;
 public class CompanyEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private String id;
+    private UUID companyId;
 
     @Column(nullable = false)
     private String name;
@@ -30,5 +32,5 @@ public class CompanyEntity {
     private CompanyStatus status;
 
     @Embedded
-    private CompanyAddress companyAddress;
+    private CompanyJpaAddress companyAddress;
 }
