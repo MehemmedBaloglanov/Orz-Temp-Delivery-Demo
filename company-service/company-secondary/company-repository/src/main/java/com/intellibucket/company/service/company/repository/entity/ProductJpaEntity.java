@@ -15,7 +15,7 @@ import java.util.UUID;
     @AllArgsConstructor
     @Entity
     @Table(name = "products")
-    public class ProductEntity {
+    public class ProductJpaEntity {
         @Id
         @GeneratedValue(strategy = GenerationType.AUTO)
         private UUID productId;
@@ -38,6 +38,6 @@ import java.util.UUID;
 
         @ManyToOne
         @JoinColumn(name = "company_id", nullable = false)
-        private CompanyEntity company;
+        private CompanyJpaEntity company;
 
 }

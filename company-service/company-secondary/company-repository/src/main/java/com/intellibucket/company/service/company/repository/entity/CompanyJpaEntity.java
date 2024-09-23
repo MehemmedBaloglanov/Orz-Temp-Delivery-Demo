@@ -1,6 +1,5 @@
 package com.intellibucket.company.service.company.repository.entity;
 
-import com.intellibucket.company.service.domain.core.valueobject.CompanyAddress;
 import com.intellibucket.company.service.domain.core.valueobject.CompanyStatus;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -16,7 +15,7 @@ import java.util.UUID;
 @AllArgsConstructor
 @Entity
 @Table(name = "companies")
-public class CompanyEntity {
+public class CompanyJpaEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID companyId;

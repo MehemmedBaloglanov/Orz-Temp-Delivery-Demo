@@ -13,7 +13,7 @@ import java.util.UUID;
 @AllArgsConstructor
 @Entity
 @Table(name = "stocks")
-public class StockEntity {
+public class StockJpaEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID stockId;
@@ -23,5 +23,5 @@ public class StockEntity {
 
     @ManyToOne
     @JoinColumn(name = "product_id", nullable = false)
-    private ProductEntity product;
+    private ProductJpaEntity product;
 }
