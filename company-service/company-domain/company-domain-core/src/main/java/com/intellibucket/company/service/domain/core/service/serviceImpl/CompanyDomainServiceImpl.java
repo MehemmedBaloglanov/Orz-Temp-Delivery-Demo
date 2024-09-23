@@ -5,13 +5,14 @@ import com.intellibucket.company.service.domain.core.exception.ValidateException
 import com.intellibucket.company.service.domain.core.root.CompanyRoot;
 import com.intellibucket.company.service.domain.core.root.ProductRoot;
 import com.intellibucket.company.service.domain.core.service.CompanyDomainService;
-
 import java.time.OffsetDateTime;
 
 import static com.intellibucket.constants.DomainConstants.ZONE_ID;
 
 
 public class CompanyDomainServiceImpl implements CompanyDomainService {
+
+
 
     @Override
     public CompanyCreatedEvent createCompany(CompanyRoot companyRoot) throws ValidateException {
