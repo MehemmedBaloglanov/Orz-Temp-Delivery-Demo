@@ -2,6 +2,7 @@ package com.intellibucket.user.service.domain.core.service;
 
 import com.intelliacademy.orizonroute.identity.user.UserID;
 import com.intellibucket.constants.DomainConstants;
+import com.intellibucket.user.service.domain.core.exception.UserDomainException;
 import com.intellibucket.user.service.domain.shell.port.output.repository.UserRepository;
 import com.intellibucket.user.service.domain.core.event.*;
 import com.intellibucket.user.service.domain.core.root.UserRoot;
@@ -14,6 +15,7 @@ import java.util.List;
 public class UserDomainServiceImpl implements UserDomainService {
 
     private  final UserRepository userRepository;
+    private final UserRoot userRoot;
     @Override
     public UserRegisteredEvent companyRegistered(UserRoot userRoot) {
         return null;
@@ -26,8 +28,9 @@ public class UserDomainServiceImpl implements UserDomainService {
     }
 
     @Override
-    public UserDeletedDomainEvent userDeleted(UserRoot userRoot) {
-            userRepository.delete(userRoot);
+    public UserDeletedDomainEvent userDeleted(UserRoot userRoot) throws UserDomainException {
+        userRoot.delete();
+        userRepository.delete(userRoot);
         return new UserDeletedDomainEvent(userRoot, OffsetDateTime.now(DomainConstants.ZONE_ID));
     }
 
