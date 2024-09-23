@@ -5,5 +5,4 @@ import com.intellibucket.company.service.connector.dto.ProductResponse;
 
 public interface CompanyServiceConnectorAdapter {
     ProductResponse getProductInformation(ProductID productID);
-
 }
