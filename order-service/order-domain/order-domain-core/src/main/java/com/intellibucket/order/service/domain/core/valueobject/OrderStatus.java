@@ -8,7 +8,7 @@ public enum OrderStatus {
     CANCELLING,
     CANCELLED,
     PAID,
-    ASSIGNED,
+    APPROVED,
     PREPARING,
     PREPARED,
     DELIVERING,
@@ -30,8 +30,8 @@ public enum OrderStatus {
         return this == PAID;
     }
 
-    public Boolean isAssigned() {
-        return this == ASSIGNED;
+    public Boolean isApproved() {
+        return this == APPROVED;
     }
 
     public Boolean isCompleted() {

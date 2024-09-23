@@ -13,7 +13,7 @@
 
     <dependencies>
         <dependency>
-            <groupId>com.intelliacademy.orizonroute</groupId>
+            <groupId>com.intellibucket</groupId>
             <artifactId>temp-root</artifactId>
         </dependency>
         <dependency>

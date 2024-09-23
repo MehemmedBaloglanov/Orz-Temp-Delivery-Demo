@@ -7,10 +7,11 @@ import com.intellibucket.company.service.domain.core.exception.ValidateException
 import com.intellibucket.company.service.domain.core.valueobject.CompanyAddress;
 import com.intellibucket.company.service.domain.core.valueobject.CompanyStatus;
 import lombok.Builder;
+import lombok.experimental.SuperBuilder;
 
 import java.util.List;
 
-@Builder
+@SuperBuilder
 public class CompanyRoot extends AggregateRoot<CompanyID> {
 
     private String name;
@@ -19,6 +20,8 @@ public class CompanyRoot extends AggregateRoot<CompanyID> {
     private CompanyStatus status;
     private List<ProductRoot> products;
     private Money balance;
+
+
 
     public CompanyRoot initialize() throws ValidateException {
         super.setId(CompanyID.random());

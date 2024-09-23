@@ -6,7 +6,7 @@ import lombok.Builder;
 
 import java.time.OffsetDateTime;
 
-@Builder
+
 public class CompanyCreatedEvent extends CompanyEvent {
 
     public CompanyCreatedEvent(CompanyRoot companyRoot, OffsetDateTime createdTime) {
