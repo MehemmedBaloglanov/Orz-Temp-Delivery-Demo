@@ -9,5 +9,5 @@ public interface ProductCommandServiceAdapter {
     void deleteProduct(Long id) throws CompanyDomainException;
 
     ProductResponse updateProduct(Long id) throws CompanyDomainException;
-            ;
+
 }

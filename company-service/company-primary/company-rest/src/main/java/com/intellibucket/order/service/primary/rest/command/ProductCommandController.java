@@ -15,22 +15,28 @@ public class ProductCommandController {
 
     private final ProductCommandServiceAdapter productCommandServiceAdapter;
 
+    //PRODUCT CREATE
     @PostMapping
     public ResponseEntity<ProductResponse> createProduct() throws CompanyDomainException {
         ProductResponse productResponse = productCommandServiceAdapter.createProduct();
         return new ResponseEntity<>(productResponse, HttpStatus.CREATED);
     }
 
-    @DeleteMapping("/{id}")
-    public void deleteProduct(@PathVariable Long id) throws CompanyDomainException {
-        productCommandServiceAdapter.deleteProduct(id);
-    }
-
+    //PRODUCT UPDATE
     @PutMapping("/{id}")
     public ResponseEntity<ProductResponse> updateProduct(@PathVariable Long id) throws CompanyDomainException {
         ProductResponse productResponse = productCommandServiceAdapter.updateProduct(id);
         return new ResponseEntity<>(productResponse, HttpStatus.OK);
     }
+
+    //PRODUCT DELETE
+    @DeleteMapping("/{id}")
+    public void deleteProduct(@PathVariable Long id) throws CompanyDomainException {
+        productCommandServiceAdapter.deleteProduct(id);
+    }
+
+
+
 
     //todo 1)changeDelete 2)changeActive 3)changeOutOfStock
 }

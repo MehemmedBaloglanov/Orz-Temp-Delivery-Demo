@@ -17,31 +17,12 @@ public class CompanyCommandController {
 
     private final CompanyCommandServiceAdapter companyCommandServiceAdapter;
 
-
-    //todo silinecek
-    @PostMapping
-    public ResponseEntity<CompanyResponse> createCompany() throws CompanyDomainException {
-        CompanyResponse companyResponse =  companyCommandServiceAdapter.createCompany();
-        return new ResponseEntity<>(companyResponse, HttpStatus.CREATED);
-    }
-
-    //todo silinecek
-    @DeleteMapping("/{id}")
-    public void deleteCompany(@RequestBody CompanyDeleteCommand command) throws CompanyDomainException {
-        companyCommandServiceAdapter.deleteCompany(command);
-    }
-
+    //SUSPENDED
     @PatchMapping()
     public void changeStatusToSuspended(@PathVariable CompanyDeleteCommand command) throws CompanyDomainException {
         companyCommandServiceAdapter.changeStatusToSuspend(command);
     }
 
-    //todo silinecek
-    @PutMapping("/{id}")
-    public ResponseEntity<CompanyResponse> updateCompany(@PathVariable Long id) throws CompanyDomainException {
-        CompanyResponse companyResponse = companyCommandServiceAdapter.updateCompany(id);
-        return new ResponseEntity<>(companyResponse, HttpStatus.OK);
-    }
 
 
 

@@ -18,6 +18,7 @@ public class CompanyQueryController {
 
     private final CompanyQueryServiceAdapter companyQueryServiceAdapter;
 
+    //GET COMPANY WITH ID
     @GetMapping("/{id}")
     public ResponseEntity<CompanyResponse> getCompanyById(@PathVariable Long id) throws CompanyDomainException {
         CompanyResponse companyResponse = companyQueryServiceAdapter.getCompanyById(id);

@@ -1,22 +1,43 @@
 package com.intellibucket.company.service.company.repository.adapter;
 
 import com.intelliacademy.orizonroute.identity.order.product.ProductID;
+import com.intellibucket.company.service.company.repository.entity.ProductJpaEntity;
+import com.intellibucket.company.service.company.repository.mapper.CompanyDataAccessMapper;
+import com.intellibucket.company.service.company.repository.repository.ProductJpaRepository;
 import com.intellibucket.company.service.domain.core.root.ProductRoot;
 import com.intellibucket.company.service.domain.shell.port.output.repository.ProductRepositoryAdapter;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Component;
 
+import java.util.Optional;
+
+@Component
+@RequiredArgsConstructor
 public class ProductRepositoryAdapterImpl implements ProductRepositoryAdapter {
+
+    private final ProductJpaRepository productJpaRepository;
+    private final CompanyDataAccessMapper companyDataAccessMapper;
+
     @Override
     public ProductRoot save(ProductRoot productRoot) {
-        return null;
+        ProductJpaEntity productJpaEntity =companyDataAccessMapper.mapProductRootToProductJpaEntity(productRoot);
+        ProductJpaEntity save = productJpaRepository.save(productJpaEntity);
+        return companyDataAccessMapper.mapProductJpaEntityToProductRoot(save);
     }
 
     @Override
-    public ProductRoot findById(ProductID productId) {
-        return null;
+    public Optional<ProductRoot> findById(ProductID productId) {
+        Optional<ProductJpaEntity> product= productJpaRepository.findById(productId.value());
+        if(product.isEmpty()){
+            return Optional.empty();
+        }else{
+            ProductJpaEntity productJpaEntity = product.get();
+            return Optional.of(companyDataAccessMapper.mapProductJpaEntityToProductRoot(productJpaEntity));
+        }
     }
 
     @Override
-    public void deleteById(ProductRoot productRoot) {
-
+    public void deleteById(ProductID productID) {
+        productJpaRepository.deleteById(productID.value());
     }
 }

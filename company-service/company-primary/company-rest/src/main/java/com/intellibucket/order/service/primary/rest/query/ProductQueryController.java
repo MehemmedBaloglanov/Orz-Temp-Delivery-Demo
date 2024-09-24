@@ -20,6 +20,7 @@ public class ProductQueryController {
 
     private final ProductQueryServiceAdapter productQueryServiceAdapter;
 
+    //GET PRODUCT WITH ID
     @GetMapping("/{id}")
     public ResponseEntity<ProductResponse> getProductById(@PathVariable UUID id) throws CompanyDomainException {
         ProductResponse productResponse = productQueryServiceAdapter.getProductById(id);

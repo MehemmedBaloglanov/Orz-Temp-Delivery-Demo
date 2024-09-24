@@ -7,14 +7,16 @@ import com.intellibucket.company.service.domain.core.exception.ValidateException
 import com.intellibucket.company.service.domain.core.valueobject.CompanyAddress;
 import com.intellibucket.company.service.domain.core.valueobject.CompanyStatus;
 import lombok.Builder;
+import lombok.Getter;
 
 import java.util.List;
 
 @Builder
+@Getter
 public class CompanyRoot extends AggregateRoot<CompanyID> {
 
-    private String name;
-    private String description;
+//    private String name;
+//    private String description;
     private CompanyAddress address;
     private CompanyStatus status;
     private List<ProductRoot> products;
@@ -40,23 +42,23 @@ public class CompanyRoot extends AggregateRoot<CompanyID> {
 
     public void validateCompany() throws ValidateException {
         validateAddress();
-        validateName();
-        validateDescription();
+//        validateName();
+//        validateDescription();
         validateProducts();
         validateBalance();
     }
 
-    private void validateDescription() throws ValidateException {
-        if (description == null || description.trim().isEmpty()) {
-            throw new ValidateException("Description cannot be null or empty");
-        }
-    }
-
-    private void validateName() throws ValidateException {
-        if (name == null || name.trim().isEmpty()) {
-            throw new ValidateException("Name cannot be null or empty");
-        }
-    }
+//    private void validateDescription() throws ValidateException {
+//        if (description == null || description.trim().isEmpty()) {
+//            throw new ValidateException("Description cannot be null or empty");
+//        }
+//    }
+//
+//    private void validateName() throws ValidateException {
+//        if (name == null || name.trim().isEmpty()) {
+//            throw new ValidateException("Name cannot be null or empty");
+//        }
+//    }
 
     private void validateAddress() throws ValidateException {
         if (address == null || !address.isValid()) {
@@ -111,13 +113,13 @@ public class CompanyRoot extends AggregateRoot<CompanyID> {
 
     //------------------------------------->UPDATE OTHER FIELDS
 
-    public CompanyRoot changeDescription(String newDescription) throws ValidateException {
-        if (newDescription == null || newDescription.trim().isEmpty()) {
-            throw new ValidateException("New description cannot be null or empty");
-        }
-        this.description = newDescription;
-        return this;
-    }
+//    public CompanyRoot changeDescription(String newDescription) throws ValidateException {
+//        if (newDescription == null || newDescription.trim().isEmpty()) {
+//            throw new ValidateException("New description cannot be null or empty");
+//        }
+//        this.description = newDescription;
+//        return this;
+//    }
 
     public CompanyRoot changeAddress(CompanyAddress newAddress) throws ValidateException {
         if (newAddress == null || !newAddress.isValid()) {

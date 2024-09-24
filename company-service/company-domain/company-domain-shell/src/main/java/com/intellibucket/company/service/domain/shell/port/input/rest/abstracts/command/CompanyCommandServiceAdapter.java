@@ -6,11 +6,5 @@ import com.intellibucket.company.service.domain.shell.dto.rest.response.CompanyR
 
 public interface CompanyCommandServiceAdapter {
 
-    CompanyResponse createCompany() throws CompanyDomainException;
-
-    void deleteCompany(CompanyDeleteCommand command) throws CompanyDomainException;
-
-    CompanyResponse updateCompany(Long id) throws CompanyDomainException;
-
     void changeStatusToSuspend(CompanyDeleteCommand command) throws CompanyDomainException;
 }

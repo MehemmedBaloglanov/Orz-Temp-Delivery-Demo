@@ -10,9 +10,7 @@ import lombok.*;
 @Embeddable
 @Builder
 public class CompanyJpaAddress {
-    private String street;
-
+    private String address;
     private String city;
-
-    private String state;
+    private String street;
 }

@@ -14,9 +14,10 @@ import lombok.Setter;
 @Setter
 @Getter
 public class ProductRoot extends AggregateRoot<ProductID> {
+
     private ProductID productID;
-    private String name;
-    private String description;
+//    private String name;
+//    private String description;
     private Money price;
     private CompanyID companyID;
     private Integer quantity;
@@ -37,25 +38,25 @@ public class ProductRoot extends AggregateRoot<ProductID> {
     //----------------------------------->VALIDATE FIELDS
 
     private void validateProduct() throws ValidateException {
-        validateName();
-        validateDescription();
+//        validateName();
+//        validateDescription();
         validatePrice();
         validateQuantity();
         validateStockQuantity();
         validateCompanyID();
     }
 
-    private void validateName() throws ValidateException {
-        if (name == null || name.isEmpty()) {
-            throw new ValidateException("Name cannot be empty or blank.");
-        }
-    }
-
-    private void validateDescription() throws ValidateException {
-        if (description == null || description.isBlank()) {
-            throw new ValidateException("Description cannot be empty or blank.");
-        }
-    }
+//    private void validateName() throws ValidateException {
+//        if (name == null || name.isEmpty()) {
+//            throw new ValidateException("Name cannot be empty or blank.");
+//        }
+//    }
+//
+//    private void validateDescription() throws ValidateException {
+//        if (description == null || description.isBlank()) {
+//            throw new ValidateException("Description cannot be empty or blank.");
+//        }
+//    }
 
     private void validatePrice() throws ValidateException {
         if (price == null || price.isNil()) {
@@ -110,21 +111,21 @@ public class ProductRoot extends AggregateRoot<ProductID> {
 
     //--------------------------------->UPDATE OTHER FIELDS
 
-    public ProductRoot updateName(String newName) throws ValidateException {
-        if (newName == null || newName.isBlank()) {
-            throw new ValidateException("New name cannot be empty or blank.");
-        }
-        this.name = newName;
-        return this;
-    }
-
-    public ProductRoot updateDescription(String newDescription) throws ValidateException {
-        if (newDescription == null || newDescription.isBlank()) {
-            throw new ValidateException("New description cannot be empty or blank.");
-        }
-        this.description = newDescription;
-        return this;
-    }
+//    public ProductRoot updateName(String newName) throws ValidateException {
+//        if (newName == null || newName.isBlank()) {
+//            throw new ValidateException("New name cannot be empty or blank.");
+//        }
+//        this.name = newName;
+//        return this;
+//    }
+//
+//    public ProductRoot updateDescription(String newDescription) throws ValidateException {
+//        if (newDescription == null || newDescription.isBlank()) {
+//            throw new ValidateException("New description cannot be empty or blank.");
+//        }
+//        this.description = newDescription;
+//        return this;
+//    }
 
     //todo: isNil methodu ile yoxlamaq duzgundurmu?
     public ProductRoot updatePrice(Money newPrice) throws ValidateException {
