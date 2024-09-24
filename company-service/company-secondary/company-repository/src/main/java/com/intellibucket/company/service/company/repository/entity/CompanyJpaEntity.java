@@ -7,6 +7,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.math.BigDecimal;
 import java.util.UUID;
 
 @Data
@@ -29,6 +30,8 @@ public class CompanyJpaEntity {
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private CompanyStatus status;
+    @Column(nullable = false)
+    private BigDecimal amount ;
 
     @Embedded
     private CompanyJpaAddress companyAddress;
