@@ -31,4 +31,6 @@ public class ProductCommandController {
         ProductResponse productResponse = productCommandServiceAdapter.updateProduct(id);
         return new ResponseEntity<>(productResponse, HttpStatus.OK);
     }
+
+    //todo 1)changeDelete 2)changeActive 3)changeOutOfStock
 }

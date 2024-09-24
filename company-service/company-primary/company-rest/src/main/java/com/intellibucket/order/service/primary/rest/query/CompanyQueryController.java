@@ -23,4 +23,6 @@ public class CompanyQueryController {
         CompanyResponse companyResponse = companyQueryServiceAdapter.getCompanyById(id);
         return new ResponseEntity<>(companyResponse, HttpStatus.OK);
     }
+
+
 }
