@@ -1,5 +1,6 @@
 package com.intellibucket.company.service.domain.shell.dto.rest.response;
 
+import com.intelliacademy.orizonroute.identity.company.CompanyID;
 import com.intelliacademy.orizonroute.valueobjects.common.Money;
 import com.intellibucket.company.service.domain.core.root.ProductRoot;
 import com.intellibucket.company.service.domain.core.valueobject.CompanyAddress;
@@ -15,15 +16,15 @@ import java.util.List;
 @Getter
 @AllArgsConstructor
 public class CompanyResponse {
-        private final String id;
+//        private final CompanyID id;
 
         private final CompanyAddress address;
 
-        private final CompanyStatus status;
+//        private final CompanyStatus status;
 
         private final List<ProductRoot> products;
 
-        private final Money balance;
+//        private final Money balance;
 
         private final OffsetDateTime createdAt;
 }

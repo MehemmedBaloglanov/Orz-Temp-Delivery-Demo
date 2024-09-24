@@ -5,6 +5,8 @@ import com.intellibucket.company.service.domain.core.root.CompanyRoot;
 import com.intellibucket.company.service.domain.shell.port.output.repository.CompanyRepositoryAdapter;
 import org.springframework.stereotype.Component;
 
+import java.util.Optional;
+
 @Component
 public class CompanyRepositoryAdapterImpl implements CompanyRepositoryAdapter {
     @Override
@@ -13,7 +15,7 @@ public class CompanyRepositoryAdapterImpl implements CompanyRepositoryAdapter {
     }
 
     @Override
-    public CompanyRoot findById(CompanyID companyId) {
+    public Optional<CompanyRoot> findById(CompanyID companyId) {
         return null;
     }
 

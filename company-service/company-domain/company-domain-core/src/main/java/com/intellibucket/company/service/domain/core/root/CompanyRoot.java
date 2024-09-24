@@ -98,7 +98,7 @@ public class CompanyRoot extends AggregateRoot<CompanyID> {
         return this;
     }
 
-    //todo: burda diable methodunu suspended olaraq deyisdirdim duzgundurmu?
+    //todo: burda disable methodunu suspended olaraq deyisdirdim duzgundurmu?
     public CompanyRoot suspend() throws ValidateException {
         if (!status.isActive() || status.isDeleted()) {
             throw new ValidateException("Only active companies can be suspended, and deleted companies cannot be suspended.");

@@ -2,6 +2,7 @@ package com.intellibucket.order.service.primary.rest.command;
 
 
 import com.intellibucket.company.service.domain.core.exception.CompanyDomainException;
+import com.intellibucket.company.service.domain.shell.dto.rest.command.CompanyDeleteCommand;
 import com.intellibucket.company.service.domain.shell.dto.rest.response.CompanyResponse;
 import com.intellibucket.company.service.domain.shell.port.input.rest.abstracts.command.CompanyCommandServiceAdapter;
 import lombok.RequiredArgsConstructor;
@@ -24,8 +25,12 @@ public class CompanyCommandController {
     }
 
     @DeleteMapping("/{id}")
-    public void deleteCompany(@PathVariable Long id) throws CompanyDomainException {
-        companyCommandServiceAdapter.deleteCompany(id);
+    public void deleteCompany(@RequestBody CompanyDeleteCommand command) throws CompanyDomainException {
+        companyCommandServiceAdapter.deleteCompany(command);
+    }
+    @PatchMapping()
+    public void changeStatusToSuspended(@PathVariable CompanyDeleteCommand command) throws CompanyDomainException {
+        companyCommandServiceAdapter.changeStatusToSuspend(command);
     }
 
     @PutMapping("/{id}")
@@ -33,4 +38,5 @@ public class CompanyCommandController {
         CompanyResponse companyResponse = companyCommandServiceAdapter.updateCompany(id);
         return new ResponseEntity<>(companyResponse, HttpStatus.OK);
     }
+
 }

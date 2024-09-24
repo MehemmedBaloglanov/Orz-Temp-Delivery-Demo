@@ -1,6 +1,7 @@
 package com.intellibucket.company.service.domain.shell.port.input.rest.concretes;
 
 import com.intellibucket.company.service.domain.core.exception.CompanyDomainException;
+import com.intellibucket.company.service.domain.shell.dto.rest.command.CompanyDeleteCommand;
 import com.intellibucket.company.service.domain.shell.dto.rest.response.CompanyResponse;
 import com.intellibucket.company.service.domain.shell.handler.CompanyCreateCommandHandler;
 import com.intellibucket.company.service.domain.shell.handler.CompanyDeleteCommandHandler;
@@ -21,12 +22,17 @@ public class CompanyCommandServiceHandler implements CompanyCommandServiceAdapte
     }
 
     @Override
-    public void deleteCompany(Long id) throws CompanyDomainException {
-        companyDeleteCommandHandler.handle();
+    public void deleteCompany(CompanyDeleteCommand command) throws CompanyDomainException {
+        companyDeleteCommandHandler.handle(command);
     }
 
     @Override
     public CompanyResponse updateCompany(Long id) throws CompanyDomainException {
         return companyUpdateCommandHandler.handle();
+    }
+
+    @Override
+    public void changeStatusToSuspend(CompanyDeleteCommand command) throws CompanyDomainException {
+        return ;
     }
 }
