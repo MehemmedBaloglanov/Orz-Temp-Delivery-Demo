@@ -3,7 +3,9 @@ package com.intellibucket.order.service.primary.message.listener.kafka;
 import com.intellibucket.kafka.config.consumer.KafkaConsumer;
 import com.intellibucket.kafka.order.avro.model.PaymentResponseAvroModel;
 import com.intellibucket.kafka.order.avro.model.PaymentStatus;
-import com.intellibucket.order.service.domain.shell.port.input.listener.payment.abstracts.AbstractPaymentResponseMessageListener;
+import com.intellibucket.order.service.domain.core.exception.OrderDomainException;
+import com.intellibucket.order.service.domain.core.exception.OrderNotFoundException;
+import com.intellibucket.order.service.domain.shell.port.input.listener.abstracts.AbstractPaymentResponseMessageListener;
 import com.intellibucket.order.service.primary.message.listener.mapper.OrderMessageDataMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -52,11 +54,12 @@ public class PaymentResponseKafkaListener implements KafkaConsumer<PaymentRespon
             } catch (OptimisticLockingFailureException e) {
                 //NO-OP for optimistic lock. This means another thread finished the work, do not throw error to prevent reading the data from kafka again!
                 log.error("Caught optimistic locking exception in PaymentResponseKafkaListener for order id: {}", paymentResponseAvroModel.getOrderId());
+            } catch (OrderNotFoundException e) {
+                //NO-OP for OrderNotFoundException
+                log.error("No order found for order id: {}", paymentResponseAvroModel.getOrderId());
+            } catch (OrderDomainException e) {
+                log.error("Ops order unknown exception for order id: {}", paymentResponseAvroModel.getOrderId());
             }
-//            catch (OrderNotFoundException e) {
-//                //NO-OP for OrderNotFoundException
-//                log.error("No order found for order id: {}", paymentResponseAvroModel.getOrderId());
-//            }
         });
     }
 }

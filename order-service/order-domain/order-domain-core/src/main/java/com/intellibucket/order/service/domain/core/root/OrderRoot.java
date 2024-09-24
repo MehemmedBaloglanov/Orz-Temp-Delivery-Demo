@@ -7,6 +7,7 @@ import com.intelliacademy.orizonroute.valueobjects.common.Money;
 import com.intelliacademy.orizonroute.valueobjects.order.OrderNumber;
 import com.intellibucket.order.service.domain.core.exception.OrderDomainException;
 import com.intellibucket.order.service.domain.core.valueobject.OrderAddress;
+import com.intellibucket.order.service.domain.core.valueobject.OrderCancelType;
 import com.intellibucket.order.service.domain.core.valueobject.OrderStatus;
 import lombok.Getter;
 import lombok.experimental.SuperBuilder;
@@ -26,8 +27,8 @@ public class OrderRoot extends AggregateRoot<OrderID> {
     private OrderNumber orderNumber;
     private OrderStatus status;
     private List<String> errorMessages;
+    private OrderCancelType cancelType;
     public static final String FAILURE_MESSAGE_DELIMITER = ",";
-
 
 
     public OrderRoot initializeOrder() {
@@ -36,20 +37,21 @@ public class OrderRoot extends AggregateRoot<OrderID> {
         return this;
     }
 
-    public OrderRoot initCancel() throws OrderDomainException {
+    public OrderRoot initCancel(List<String> failureMessages) throws OrderDomainException {
         if (status.isDelivering() || status.isCompleted() || status.isCancelled()) {
             throw new OrderDomainException("Order is not in correct state for the initCancel operation!");
         }
 
         this.status = OrderStatus.CANCELLING;
-
         return this;
     }
 
-    public OrderRoot cancel() throws OrderDomainException {
+    public OrderRoot cancel(List<String> failureMessages, OrderCancelType orderCancelType) throws OrderDomainException {
         if (status.isCancelling() || status.isCreated()) {
             throw new OrderDomainException("Cannot cancel order");
         }
+
+        this.cancelType = orderCancelType;
         this.status = OrderStatus.CANCELLED;
         return this;
     }
@@ -74,16 +76,8 @@ public class OrderRoot extends AggregateRoot<OrderID> {
         return this;
     }
 
-    public OrderRoot initPrepare() throws OrderDomainException {
-        if (!status.isApproved()) {
-            throw new OrderDomainException("Cannot prepare order");
-        }
-        this.status = OrderStatus.PREPARING;
-        return this;
-    }
-
     public OrderRoot prepared() throws OrderDomainException {
-        if (!status.isPreparing()) {
+        if (!status.isApproved()) {
             throw new OrderDomainException("Cannot prepare order");
         }
         this.status = OrderStatus.PREPARED;
@@ -109,23 +103,18 @@ public class OrderRoot extends AggregateRoot<OrderID> {
     public OrderRoot validateOrder() throws OrderDomainException {
         validateAddress();
         validatePrice();
-
         return this;
     }
 
     private void validatePrice() throws OrderDomainException {
-        Money total = items.stream()
-                .peek(orderItem -> {
-                    if (!orderItem.isPriceValid()) {
-                        try {
-                            throw new OrderDomainException("Invalid order item: " + orderItem);
-                        } catch (OrderDomainException e) {
-                            throw new RuntimeException(e);
-                        }
-                    }
-                })
-                .map(OrderItemRoot::getPrice)
-                .reduce(Money.ZERO, Money::add);
+        Money total = Money.ZERO;
+        for (OrderItemRoot orderItem : items) {
+            if (!orderItem.isPriceValid()) {
+                throw new OrderDomainException("Invalid order item: " + orderItem);
+            }
+            Money orderItemRootPrice = orderItem.getPrice();
+            total = total.add(orderItemRootPrice);
+        }
 
         if (price.getAmount().compareTo(total.getAmount()) != 0) {
             throw new OrderDomainException("Order price is greater than total price");

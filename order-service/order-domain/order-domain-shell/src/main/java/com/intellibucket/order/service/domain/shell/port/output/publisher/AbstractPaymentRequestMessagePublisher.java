@@ -1,11 +1,7 @@
 package com.intellibucket.order.service.domain.shell.port.output.publisher;
 
-import com.food.ordering.system.outbox.OutboxStatus;
-import com.intellibucket.order.service.domain.shell.outbox.model.payment.OrderPaymentOutboxMessage;
+import com.intellibucket.message.publisher.BaseMessagePublisher;
+import com.intellibucket.order.service.domain.shell.outbox.model.message.OrderPaymentOutboxMessage;
 
-import java.util.function.BiConsumer;
-
-public interface AbstractPaymentRequestMessagePublisher {
-    void publish(OrderPaymentOutboxMessage orderPaymentOutboxMessage,
-                 BiConsumer<OrderPaymentOutboxMessage, OutboxStatus> outboxCallback);
+public interface AbstractPaymentRequestMessagePublisher extends BaseMessagePublisher<OrderPaymentOutboxMessage> {
 }
