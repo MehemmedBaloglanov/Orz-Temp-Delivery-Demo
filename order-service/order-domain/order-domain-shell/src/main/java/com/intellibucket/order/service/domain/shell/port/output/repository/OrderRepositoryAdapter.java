@@ -17,4 +17,5 @@ public interface OrderRepositoryAdapter {
     Optional<OrderRoot> findByOrderNumber(OrderNumber orderNumber);
 
 
+    List<OrderRoot> findByUserId(UserID userID);
 }
