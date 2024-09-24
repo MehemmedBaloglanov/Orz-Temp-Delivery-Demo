@@ -9,8 +9,9 @@ import com.intellibucket.company.service.domain.core.valueobject.ProductStatus;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.experimental.SuperBuilder;
 
-@Builder
+@SuperBuilder
 @Setter
 @Getter
 public class ProductRoot extends AggregateRoot<ProductID> {

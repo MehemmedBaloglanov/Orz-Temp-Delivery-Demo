@@ -14,13 +14,13 @@
         <module name="kafka-consumer" />
         <module name="cart-message-listener" />
         <module name="order-message-listener" />
-        <module name="orizon-http" />
         <module name="company-container" />
         <module name="company-domain-shell" />
         <module name="order-domain-shell" />
         <module name="cart-rest" />
         <module name="temp-root" />
         <module name="order-domain-core" />
+        <module name="saga" />
         <module name="user-message-listener" />
         <module name="company-rest" />
         <module name="cart-repository" />
@@ -32,6 +32,7 @@
         <module name="company-domain-core" />
         <module name="company-repository" />
         <module name="user-rest" />
+        <module name="outbox" />
         <module name="user-container" />
         <module name="order-container" />
         <module name="order-message-publisher" />
@@ -48,6 +49,7 @@
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="order-dataaccess" target="17" />
+      <module name="orizon-http" target="17" />
       <module name="user-dataaccess" target="17" />
     </bytecodeTargetLevel>
   </component>

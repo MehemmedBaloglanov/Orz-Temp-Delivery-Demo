@@ -4,7 +4,6 @@ import com.intelliacademy.orizonroute.valueobjects.common.ValueObject;
 import lombok.Getter;
 
 @ValueObject
-@Getter
 public record CompanyAddress(String city, String street, String address) {
     public Boolean isValid() {
 

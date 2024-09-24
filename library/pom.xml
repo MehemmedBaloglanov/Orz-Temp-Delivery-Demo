@@ -14,10 +14,11 @@
 
     <modules>
         <module>temp-root</module>
-        <module>orizon-http</module>
         <module>orizon-util</module>
         <module>domain</module>
         <module>kafka</module>
+        <module>outbox</module>
+        <module>saga</module>
     </modules>
 
 
