@@ -1,11 +1,10 @@
-package com.intellibucket.user.service.domain.core.service;
+package com.intellibucket.user.service.domain.core.service.port;
 
 import com.intelliacademy.orizonroute.identity.user.UserID;
 import com.intellibucket.user.service.domain.core.event.*;
 import com.intellibucket.user.service.domain.core.exception.UserDomainException;
 import com.intellibucket.user.service.domain.core.root.UserRoot;
 import com.intellibucket.user.service.domain.core.valueObject.Password;
-import com.intellibucket.user.service.domain.core.valueObject.Status;
 
 import java.util.List;
 

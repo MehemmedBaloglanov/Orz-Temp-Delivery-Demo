@@ -4,7 +4,7 @@ import com.intellibucket.user.service.domain.core.exception.UserDomainException;
 import com.intellibucket.user.service.domain.core.exception.password.PasswordValidationException;
 import com.intellibucket.user.service.domain.core.exception.user.UserNotFoundException;
 import com.intellibucket.user.service.domain.core.root.UserRoot;
-import com.intellibucket.user.service.domain.core.service.UserDomainService;
+import com.intellibucket.user.service.domain.core.service.port.UserDomainService;
 import com.intellibucket.user.service.domain.core.valueObject.Password;
 import com.intellibucket.user.service.domain.shell.dto.request.UserLoginCommand;
 import com.intellibucket.user.service.domain.shell.mapper.UserCommandMapper;
