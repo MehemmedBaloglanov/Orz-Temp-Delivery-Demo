@@ -50,6 +50,7 @@
     <bytecodeTargetLevel>
       <module name="order-dataaccess" target="17" />
       <module name="orizon-http" target="17" />
+      <module name="user-repository" target="17" />
     </bytecodeTargetLevel>
   </component>
 </project>
