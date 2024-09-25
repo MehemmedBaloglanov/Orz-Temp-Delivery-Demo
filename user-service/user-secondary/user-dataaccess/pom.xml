@@ -9,7 +9,9 @@
         <version>1.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>user-repository</artifactId>
+
+
+    <artifactId>user-dataaccess</artifactId>
 
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
@@ -21,10 +23,7 @@
             <groupId>com.intellibucket</groupId>
             <artifactId>temp-root</artifactId>
         </dependency>
-        <dependency>
-            <groupId>com.intellibucket</groupId>
-            <artifactId>user-domain-core</artifactId>
-        </dependency>
+        
         <dependency>
             <groupId>jakarta.persistence</groupId>
             <artifactId>jakarta.persistence-api</artifactId>

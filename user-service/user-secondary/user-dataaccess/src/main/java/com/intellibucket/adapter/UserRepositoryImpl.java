@@ -8,7 +8,6 @@ import com.intellibucket.repository.UserJpaRepository;
 import com.intellibucket.user.service.domain.core.root.UserRoot;
 import com.intellibucket.user.service.domain.shell.port.output.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
-import org.jetbrains.annotations.NotNull;
 
 import java.util.Optional;
 @RequiredArgsConstructor

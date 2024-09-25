@@ -119,7 +119,6 @@
     <file url="file://$PROJECT_DIR$/user-service/user-secondary/user-dataaccess/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/user-service/user-secondary/user-message-publisher/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/user-service/user-secondary/user-message-publisher/src/main/resources" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/user-service/user-secondary/user-repository/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/user-service/user-secondary/user-repository/src/main/resources" charset="UTF-8" />
   </component>
 </project>

@@ -1,7 +1,5 @@
 package com.intellibucket.user.service.primary.rest.command;
-
 import com.intellibucket.user.service.domain.core.exception.UserDomainException;
-import com.intellibucket.user.service.domain.core.exception.password.PasswordValidationException;
 import com.intellibucket.user.service.domain.core.exception.user.UserNotFoundException;
 import com.intellibucket.user.service.domain.shell.dto.request.*;
 import com.intellibucket.user.service.domain.shell.dto.response.EmptyResponse;
@@ -39,7 +37,7 @@ public class UserCommandController {
     }
 
     @PostMapping("/{id}/change-password")
-    public ResponseEntity<EmptyResponse> changePassword(@RequestBody UserChangePasswordCommand command) throws UserNotFoundException, PasswordValidationException {
+    public ResponseEntity<EmptyResponse> changePassword(@RequestBody UserChangePasswordCommand command) throws UserDomainException {
 //        UserID userID = UserID.of(id); //FIXME abstractSecurity holderdan al.
         abstractUserCommandService.changePassword(command);
         EmptyResponse response = EmptyResponse.builder().message("User deleted successfully").success(true).build();

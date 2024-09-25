@@ -172,7 +172,7 @@
             </dependency>
             <dependency>
                 <groupId>com.intellibucket</groupId>
-                <artifactId>user-repository</artifactId>
+                <artifactId>user-dataaccess</artifactId>
                 <version>${user-service.version}</version>
             </dependency>
             <dependency>
