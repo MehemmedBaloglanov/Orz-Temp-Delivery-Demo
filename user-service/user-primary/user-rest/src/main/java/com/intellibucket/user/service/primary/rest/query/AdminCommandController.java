@@ -1,7 +1,8 @@
 package com.intellibucket.user.service.primary.rest.query;
 
-import com.intellibucket.model.CompanyRegistrationEntity;
-import com.intellibucket.model.CustomerRegistrationEntity;
+import com.intellibucket.user.service.domain.core.valueObject.RoleAuthorithy;
+import com.intellibucket.user.service.domain.core.valueObject.Status;
+import com.intellibucket.user.service.domain.shell.port.input.rest.concrets.AdminCommandService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,13 +14,25 @@ import java.util.List;
 @RequiredArgsConstructor
 @RequestMapping("/api/admin")
 public class AdminCommandController {
+    private final AdminCommandService adminCommandService;
+
     @GetMapping("/allCustomers")
-    public List<CustomerRegistrationEntity> getAllCustomers() {
-        return null;
+    public List<RoleAuthorithy> getAllCustomers() {
+        return adminCommandService.getAllCustomers();
     }
 
     @GetMapping("/allCompanies")
-    public List<CompanyRegistrationEntity> getAllCompany() {
-        return null;
+    public List<RoleAuthorithy> getAllCompanies() {
+        return adminCommandService.getAllCompanies();
+    }
+
+    @GetMapping("/allActiveCustomers")
+    public List<Status> getAllActiveCustomers() {
+        return adminCommandService.getAllActiveCustomers();
+    }
+
+    @GetMapping("/getActiveCompanies")
+    public List<Status> getAllActiveCompanies() {
+        return adminCommandService.getAllActiveCompanies();
     }
 }
