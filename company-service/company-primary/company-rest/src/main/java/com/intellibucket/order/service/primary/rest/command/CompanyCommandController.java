@@ -2,12 +2,10 @@ package com.intellibucket.order.service.primary.rest.command;
 
 
 import com.intellibucket.company.service.domain.core.exception.CompanyDomainException;
-import com.intellibucket.company.service.domain.shell.dto.rest.command.CompanyDeleteCommand;
-import com.intellibucket.company.service.domain.shell.dto.rest.response.CompanyResponse;
+import com.intellibucket.company.service.domain.shell.dto.rest.command.CompanyActiveCommand;
+import com.intellibucket.company.service.domain.shell.dto.rest.command.CompanySuspendedCommand;
 import com.intellibucket.company.service.domain.shell.port.input.rest.abstracts.command.CompanyCommandServiceAdapter;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -19,13 +17,14 @@ public class CompanyCommandController {
 
     //SUSPENDED
     @PatchMapping()
-    public void changeStatusToSuspended(@PathVariable CompanyDeleteCommand command) throws CompanyDomainException {
+    public void changeStatusToSuspended(@RequestBody CompanySuspendedCommand command) throws CompanyDomainException {
         companyCommandServiceAdapter.changeStatusToSuspend(command);
     }
 
-
-
-
-   //todo 1)changeSuspended 2)changeActive 3)updateBalance
+    //ACTIVE
+    @PatchMapping()
+    public void changeCompanyStatusToActive(@RequestBody CompanyActiveCommand command) throws CompanyDomainException {
+        companyCommandServiceAdapter.changeStatusToActive(command);
+    }
 
 }

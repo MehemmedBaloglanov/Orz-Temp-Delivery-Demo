@@ -7,7 +7,6 @@ import lombok.Getter;
 @Getter
 @Builder
 @AllArgsConstructor
-public class CompanyDeleteCommand {
-
+public class CompanyActiveCommand {
     private final String companyId;
 }

@@ -14,11 +14,11 @@ public class CompanyDomainServiceImpl implements CompanyDomainService {
 
 
 
-    @Override
-    public CompanyCreatedEvent createCompany(CompanyRoot companyRoot) throws ValidateException {
-        companyRoot.initialize();
-        return new CompanyCreatedEvent(companyRoot, OffsetDateTime.now(ZONE_ID));
-    }
+//    @Override
+//    public CompanyCreatedEvent createCompany(CompanyRoot companyRoot) throws ValidateException {
+//        companyRoot.initialize();
+//        return new CompanyCreatedEvent(companyRoot, OffsetDateTime.now(ZONE_ID));
+//    }
 
     @Override
     public CompanyActivatedEvent activateCompany(CompanyRoot companyRoot) throws ValidateException {
@@ -26,11 +26,11 @@ public class CompanyDomainServiceImpl implements CompanyDomainService {
         return new CompanyActivatedEvent(companyRoot, OffsetDateTime.now(ZONE_ID));
     }
 
-    @Override
-    public CompanyDeletedEvent deleteCompany(CompanyRoot companyRoot) throws ValidateException {
-        companyRoot.deleted();
-        return new CompanyDeletedEvent(companyRoot, OffsetDateTime.now(ZONE_ID));
-    }
+//    @Override
+//    public CompanyDeletedEvent deleteCompany(CompanyRoot companyRoot) throws ValidateException {
+//        companyRoot.deleted();
+//        return new CompanyDeletedEvent(companyRoot, OffsetDateTime.now(ZONE_ID));
+//    }
 
     @Override
     public CompanySuspendedEvent suspendCompany(CompanyRoot companyRoot) throws ValidateException {
@@ -44,9 +44,9 @@ public class CompanyDomainServiceImpl implements CompanyDomainService {
         return new ProductAddedEvent(companyRoot, OffsetDateTime.now(ZONE_ID), productRoot);
     }
 
-    @Override
-    public ProductRemovedEvent productRemoved(CompanyRoot companyRoot,ProductRoot productRoot) throws ValidateException {
-        companyRoot.removeProduct(productRoot);
-        return new ProductRemovedEvent(companyRoot, OffsetDateTime.now(ZONE_ID), productRoot);
-    }
+//    @Override
+//    public ProductRemovedEvent productRemoved(CompanyRoot companyRoot,ProductRoot productRoot) throws ValidateException {
+//        companyRoot.removeProduct(productRoot);
+//        return new ProductRemovedEvent(companyRoot, OffsetDateTime.now(ZONE_ID), productRoot);
+//    }
 }
