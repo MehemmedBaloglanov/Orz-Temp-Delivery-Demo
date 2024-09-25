@@ -24,7 +24,7 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class CustomerRegistrationEntity extends UserRegistrationEntity{
+public class CustomerRegistrationEntity extends BaseUserEntity{
     @NotNull
     @NotEmpty
     @Size(min = 3, max = 25)

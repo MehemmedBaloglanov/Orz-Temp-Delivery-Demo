@@ -1,4 +1,4 @@
-package com.intellibucket.user.service.domain.shell.dto.response;
+package com.intellibucket.user.service.domain.shell.dto.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class CompanyResponse{
+public class CompanyUpdateCommand {
+    private String userId;
     private String companyName;
 }
