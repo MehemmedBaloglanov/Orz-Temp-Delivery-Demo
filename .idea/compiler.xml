@@ -25,6 +25,7 @@
         <module name="company-rest" />
         <module name="cart-repository" />
         <module name="orizon-util" />
+        <module name="user-dataaccess" />
         <module name="company-service-connector" />
         <module name="order-rest" />
         <module name="company-message-publisher" />
@@ -50,7 +51,6 @@
     <bytecodeTargetLevel>
       <module name="order-dataaccess" target="17" />
       <module name="orizon-http" target="17" />
-      <module name="user-dataaccess" target="17" />
     </bytecodeTargetLevel>
   </component>
 </project>
