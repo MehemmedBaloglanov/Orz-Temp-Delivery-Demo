@@ -6,7 +6,6 @@ import com.intellibucket.user.service.domain.core.exception.password.PasswordVal
 import com.intellibucket.user.service.domain.core.exception.user.UserNotFoundException;
 import com.intellibucket.user.service.domain.core.root.UserRoot;
 import com.intellibucket.user.service.domain.shell.dto.request.*;
-import com.intellibucket.user.service.domain.shell.dto.response.UserLoginResponse;
 
 import java.util.Optional;
 
@@ -17,11 +16,13 @@ public interface AbstractUserCommandService {
 
     void deleteUser(UserDeleteCommand command) throws UserDomainException;
 
-    UserLoginResponse userLoggedIn(UserLoginCommand userLoginCommand);
+   void userLoggedIn(UserLoginCommand userLoginCommand) throws UserDomainException;
 
     Optional<UserRoot> findByUserId(UserID userID);
 
-    void changePassword(UserChangePasswordCommand userChangePasswordCommand) throws UserNotFoundException, PasswordValidationException;
+    void changePassword(UserChangePasswordCommand userChangePasswordCommand) throws UserDomainException;
 
-    void updateUser(UserUpdateCommand command) throws UserNotFoundException;
+    void updateCustomer(CustomerUpdateCommand command ) throws UserNotFoundException;
+
+    void updateCompany(CompanyUpdateCommand command ) throws UserNotFoundException;
 }

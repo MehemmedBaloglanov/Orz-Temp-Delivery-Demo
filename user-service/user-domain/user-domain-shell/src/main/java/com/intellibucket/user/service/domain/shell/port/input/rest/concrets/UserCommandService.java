@@ -6,7 +6,6 @@ import com.intellibucket.user.service.domain.core.exception.password.PasswordVal
 import com.intellibucket.user.service.domain.core.exception.user.UserNotFoundException;
 import com.intellibucket.user.service.domain.core.root.UserRoot;
 import com.intellibucket.user.service.domain.shell.dto.request.*;
-import com.intellibucket.user.service.domain.shell.dto.response.*;
 import com.intellibucket.user.service.domain.shell.handler.*;
 import com.intellibucket.user.service.domain.shell.port.input.rest.abstracts.AbstractUserCommandService;
 import lombok.RequiredArgsConstructor;
@@ -20,9 +19,10 @@ public class UserCommandService implements AbstractUserCommandService {
     private final CompanyRegisterCommandHandler companyRegisterCommandHandler;
     private final CustomerRegisterCommandHandler customerRegisterCommandHandler;
     private final UserDeleteCommandHandler userDeleteCommandHandler;
-    private final UserUpdateCommandHandler userUpdateCommandHandler;
+    private final CustomerUpdateCommandHandler customerUpdateCommandHandler;
     private final UserLoginCommandHandler userLoginCommandHandler;
     private final UserChangePasswordCommandHandler userChangePasswordCommandHandler;
+    private final CompanyUpdateCommandHandler companyUpdateCommandHandler;
 
     @Override
     public void companyRegistered(CompanyCreateCommand command) throws UserDomainException {
@@ -40,8 +40,11 @@ public class UserCommandService implements AbstractUserCommandService {
     }
 
     @Override
-    public UserLoginResponse userLoggedIn(UserLoginCommand userLoginCommand) {
-    return null;}
+    public void userLoggedIn(UserLoginCommand command) throws UserDomainException {
+        userLoginCommandHandler.handle(command);
+
+
+    }
 
     @Override
     public Optional<UserRoot> findByUserId(UserID userID) {
@@ -49,15 +52,20 @@ public class UserCommandService implements AbstractUserCommandService {
     }
 
     @Override
-    public void changePassword(UserChangePasswordCommand command) throws UserNotFoundException, PasswordValidationException {
+    public void changePassword(UserChangePasswordCommand command) throws UserDomainException {
       userChangePasswordCommandHandler.handle(command);
 
     }
 
     @Override
-    public void updateUser(UserUpdateCommand command) throws UserNotFoundException {
-      userUpdateCommandHandler.handle(command);
+    public void updateCustomer(CustomerUpdateCommand command) throws UserNotFoundException {
+        customerUpdateCommandHandler.handle(command);
 
+    }
+
+    @Override
+    public void updateCompany(CompanyUpdateCommand command) throws UserNotFoundException {
+        companyUpdateCommandHandler.handle(command);
     }
 
 

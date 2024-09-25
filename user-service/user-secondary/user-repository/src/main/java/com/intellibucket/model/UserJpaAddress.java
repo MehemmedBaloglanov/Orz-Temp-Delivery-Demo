@@ -8,7 +8,9 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
+@Embeddable
 public class UserJpaAddress {
+
     private String street;
     private String city;
     private String state;

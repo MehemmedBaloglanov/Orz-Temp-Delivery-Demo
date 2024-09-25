@@ -15,7 +15,7 @@ import org.jetbrains.annotations.NotNull;
 @NoArgsConstructor
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class CompanyRegistrationEntity extends UserRegistrationEntity {
+public class CompanyRegistrationEntity extends BaseUserEntity {
     @NotNull
     @NotEmpty
     @Size(min = 4, max = 50)

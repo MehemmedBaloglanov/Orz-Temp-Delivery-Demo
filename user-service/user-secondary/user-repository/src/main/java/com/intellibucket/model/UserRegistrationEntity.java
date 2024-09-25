@@ -1,6 +1,5 @@
 package com.intellibucket.model;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.intelliacademy.orizonroute.valueobjects.user.EmailType;
 import com.intellibucket.user.service.domain.core.valueObject.Password;
 import com.intellibucket.user.service.domain.core.valueObject.RoleAuthorithy;
@@ -26,7 +25,7 @@ import java.util.UUID;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class UserRegistrationEntity {
     @Id
-    @JsonProperty("id")
+    @Column(name = "id")
     UUID userEntityId;
 
     @NotNull

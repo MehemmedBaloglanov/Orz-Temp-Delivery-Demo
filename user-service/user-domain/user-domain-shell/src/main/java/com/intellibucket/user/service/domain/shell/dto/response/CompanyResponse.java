@@ -11,5 +11,4 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class CompanyResponse{
     private String companyName;
-    private String licenceNumber;
 }

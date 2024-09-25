@@ -3,6 +3,7 @@ package com.intellibucket.user.service.domain.shell.handler;
 import com.intellibucket.user.service.domain.core.exception.UserDomainException;
 import com.intellibucket.user.service.domain.core.exception.user.UserValidationException;
 import com.intellibucket.user.service.domain.core.root.UserRoot;
+import com.intellibucket.user.service.domain.core.service.UserDomainService;
 import com.intellibucket.user.service.domain.shell.dto.request.CompanyCreateCommand;
 import com.intellibucket.user.service.domain.shell.mapper.UserCommandMapper;
 import com.intellibucket.user.service.domain.shell.port.input.rest.abstracts.AbstractUserCommandService;
@@ -18,6 +19,7 @@ import java.util.Optional;
 public class CompanyRegisterCommandHandler {
     private final UserRepository userRepository;
     private final AbstractUserCommandService commandService;
+    private final UserDomainService userDomainService;
 
     public void handle(CompanyCreateCommand command) throws UserDomainException {
         UserRoot newUser = UserCommandMapper.companyCreateCommandToUserRoot(command);
@@ -27,10 +29,9 @@ public class CompanyRegisterCommandHandler {
             throw new UserValidationException ("User already exist with email..: " + command.getEmail());
         }
 
-        userRepository.save(newUser);
-
+        userDomainService.companyRegistered(newUser);
         commandService.companyRegistered(command);
-
+        userRepository.save(newUser);
     }
 
 

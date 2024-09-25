@@ -6,6 +6,7 @@ import com.intellibucket.user.service.domain.core.valueObject.Password;
 import com.intellibucket.user.service.domain.core.valueObject.RoleAuthorithy;
 import com.intellibucket.user.service.domain.core.valueObject.Status;
 import jakarta.persistence.Embedded;
+import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import lombok.*;
 
@@ -16,22 +17,8 @@ import java.util.UUID;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserEntity {
-    @Id
-    private UUID uuid;
-    @Embedded
-    private UserJpaAddress address;
-
-    private RoleAuthorithy role;
-
-    private PhoneNumber phoneNumber;
-
-    private Email email;
-
-    private Password password;
-
-    private Status status;
-
+@Entity
+public class UserEntity extends BaseUserEntity {
 
 }
 

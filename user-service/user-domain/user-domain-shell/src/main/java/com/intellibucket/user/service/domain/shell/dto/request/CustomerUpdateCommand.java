@@ -9,10 +9,9 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserUpdateCommand {
+public class CustomerUpdateCommand {
     private String userId;
     private String lastName;
     private String firstName;
     private String email;
-    private String phoneNumber;
 }
