@@ -13,6 +13,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.util.Optional;
+import java.util.UUID;
 
 @Component
 @RequiredArgsConstructor
@@ -22,8 +23,8 @@ public class CustomerUpdateCommandHandler {
 
     public void handle(CustomerUpdateCommand command) throws UserNotFoundException {
         UserRoot userUpdate = UserCommandMapper.customerUpdateCommandToUserRoot(command);
-
-        UserID userID = UserID.of(command.getUserId());
+//FIXME nezer et
+        UserID userID = UserID.of(command.getCustomerId());
         Optional<UserRoot> userRoot= userRepository.findByUserId(userID);
        if (userRoot.isEmpty()) {
            throw new UserNotFoundException("User not found with ID" + userID.value());

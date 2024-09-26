@@ -1,5 +1,6 @@
 package com.intellibucket.user.service.domain.shell.mapper;
 
+import com.intelliacademy.orizonroute.identity.user.UserID;
 import com.intelliacademy.orizonroute.valueobjects.common.Email;
 import com.intelliacademy.orizonroute.valueobjects.common.PhoneNumber;
 import com.intelliacademy.orizonroute.valueobjects.common.Username;

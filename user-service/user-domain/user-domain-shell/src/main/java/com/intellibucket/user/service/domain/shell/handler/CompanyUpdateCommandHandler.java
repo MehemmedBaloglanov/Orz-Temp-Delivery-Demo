@@ -22,7 +22,8 @@ public class CompanyUpdateCommandHandler {
 
     public void handle(CompanyUpdateCommand command) throws UserNotFoundException {
         UserRoot userUpdate = UserCommandMapper.companyUpdateCommandToUserRoot(command);
-        UserID userID = UserID.of(command.getUserId());
+        //FIXME nezer et
+        UserID userID = UserID.of(command.getCompanyIdl());
         Optional<UserRoot> userRoot = userRepository.findByUserId(userID);
         if (userRoot.isEmpty()) {
             throw new UserNotFoundException("User not found with ID" + userID.value());
