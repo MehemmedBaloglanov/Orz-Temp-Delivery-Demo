@@ -7,7 +7,7 @@ import com.intellibucket.user.service.domain.core.exception.UserDomainException;
 import com.intellibucket.user.service.domain.core.root.UserRoot;
 import com.intellibucket.user.service.domain.core.service.port.UserDomainService;
 import com.intellibucket.user.service.domain.core.valueObject.Password;
-import com.intellibucket.user.service.domain.shell.port.output.repository.UserRepository;
+
 import lombok.Builder;
 
 import java.time.OffsetDateTime;
@@ -15,7 +15,6 @@ import java.util.List;
 @Builder
 public class UserDomainServiceImpl implements UserDomainService {
 
-    private  final UserRepository userRepository;
     private final UserRoot userRoot;
     @Override
     public UserRegisteredEvent companyRegistered(UserRoot userRoot) {

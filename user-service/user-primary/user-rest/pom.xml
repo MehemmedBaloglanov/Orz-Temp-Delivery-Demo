@@ -16,12 +16,10 @@
         </dependency>
         <dependency>
             <groupId>com.intellibucket</groupId>
-            <artifactId>user-domain-core</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.intellibucket</groupId>
             <artifactId>user-domain-shell</artifactId>
         </dependency>
+
+
     </dependencies>
     <modelVersion>4.0.0</modelVersion>
 

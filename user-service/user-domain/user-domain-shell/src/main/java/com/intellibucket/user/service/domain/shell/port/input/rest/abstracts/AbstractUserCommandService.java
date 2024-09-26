@@ -2,7 +2,6 @@ package com.intellibucket.user.service.domain.shell.port.input.rest.abstracts;
 
 import com.intelliacademy.orizonroute.identity.user.UserID;
 import com.intellibucket.user.service.domain.core.exception.UserDomainException;
-import com.intellibucket.user.service.domain.core.exception.password.PasswordValidationException;
 import com.intellibucket.user.service.domain.core.exception.user.UserNotFoundException;
 import com.intellibucket.user.service.domain.core.root.UserRoot;
 import com.intellibucket.user.service.domain.shell.dto.request.*;
