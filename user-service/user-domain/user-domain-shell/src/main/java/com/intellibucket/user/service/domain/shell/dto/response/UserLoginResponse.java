@@ -11,5 +11,4 @@ import lombok.*;
 public class UserLoginResponse {
     private String email;
     private String username;
-    private String userId;
 }

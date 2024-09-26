@@ -1,42 +1,35 @@
 package com.intellibucket.user.service.domain.shell.dto.command.abstracts;
 
-import com.intellibucket.user.service.domain.core.valueObject.Password;
-import jakarta.validation.Valid;
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.Pattern;
-import jakarta.validation.constraints.Size;
+import com.intelliacademy.orizonroute.valueobjects.user.EmailType;
+import com.intelliacademy.orizonroute.valueobjects.user.PhoneNumberType;
+import com.intellibucket.user.service.domain.core.valueObject.RoleAuthorithy;
 import lombok.*;
-import org.jetbrains.annotations.NotNull;
+import lombok.experimental.FieldDefaults;
 
 @ToString
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public abstract class AbstractUserCreateCommand {
+    String email;
 
+    String password;
 
-    @NotNull
-    @Email
-    private String email;
+    RoleAuthorithy roleAuthorithy;
 
-    @NotEmpty
-    @NotNull
-    @Size(min = 8, max = 25)
-    @Pattern(regexp = Password.PATTERN)
-    private String password;
+    EmailType emailType;
 
+    String countryCode;
 
-    @NotNull
-    @Valid
-    private String phoneNumber;
+    PhoneNumberType phoneNumberType;
 
-    @NotNull
-    private String address;
-
-    @NotNull
-    private String username;
-
-
+    String phoneNumber;
+    // USER ADDRESS
+    String street;
+    String city;
+    String state;
+    String postalCode;
+    String country;
 }

@@ -29,10 +29,4 @@ public class CustomerRegistrationEntity extends BaseUserEntity{
     @NotEmpty
     @Size(min = 3, max = 25)
     private String username;
-
-//    @NotNull
-//    String birthDate;
-//
-//    @NotNull
-//    String gender;
 }

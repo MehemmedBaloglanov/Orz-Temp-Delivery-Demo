@@ -1,5 +1,6 @@
 package com.intellibucket.user.service.domain.shell.dto.request;
 
+import com.intellibucket.user.service.domain.shell.dto.command.abstracts.AbstractUserCreateCommand;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -9,9 +10,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class CustomerUpdateCommand {
-    private String userId;
-    private String lastName;
+public class CustomerUpdateCommand extends AbstractUserCreateCommand {
     private String firstName;
-    private String email;
+    private String lastName;
 }

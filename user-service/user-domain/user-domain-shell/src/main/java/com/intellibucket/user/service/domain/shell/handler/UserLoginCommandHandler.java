@@ -9,7 +9,6 @@ import com.intellibucket.user.service.domain.core.service.port.UserDomainService
 import com.intellibucket.user.service.domain.core.valueObject.Password;
 import com.intellibucket.user.service.domain.shell.dto.request.UserLoginCommand;
 import com.intellibucket.user.service.domain.shell.mapper.UserCommandMapper;
-import com.intellibucket.user.service.domain.shell.port.input.rest.abstracts.AbstractUserCommandService;
 import com.intellibucket.user.service.domain.shell.port.output.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -33,12 +32,11 @@ public class UserLoginCommandHandler {
 
         UserRoot user = userRootOptional.get();
 
-        if (!user.getPassword().equals(Password.builder().value(command.getPassword()).build())) {
+        Password inputPassword = Password.of(command.getPassword());
+        if (!user.getPassword().equals(inputPassword)) {
             throw new PasswordValidationException("Invalid credentials!");
         }
 
         UserLoggedInDomainEvent userLoggedInDomainEvent = userDomainService.userLoggedIn(userFromCommand);
-
-
     }
 }

@@ -25,45 +25,38 @@ import java.util.UUID;
 @NoArgsConstructor
 @Entity
 @Getter
-public abstract class BaseUserEntity{
+public abstract class BaseUserEntity {
+    @Id
+    @Column(name = "id")
+    UUID userEntityId;
 
-        @Id
-        @Column(name = "id")
-        UUID userEntityId;
+    @NotNull
+    @Email
+    String email;
 
-        @NotNull
-        @Email
-        String email;
+    @NotEmpty
+    @NotNull
+    @Size(min = 8, max = 25)
+    @Pattern(regexp = Password.PATTERN)
+    String password;
 
-        @NotEmpty
-        @NotNull
-        @Size(min = 8, max = 25)
-        @Pattern(regexp = Password.PATTERN)
-        String password;
+    @Enumerated(EnumType.STRING)
+    Status status;
 
-        @NotEmpty
-        @NotNull
-        private String oldPassword;
+    @Enumerated(EnumType.STRING)
+    RoleAuthorithy roleAuthority;
 
-        @Enumerated(EnumType.STRING)
-        Status status;
+    @Enumerated(EnumType.STRING)
+    EmailType emailType;
 
-        @Enumerated(EnumType.STRING)
-        RoleAuthorithy roleAuthority;
+    @Enumerated(EnumType.STRING)
+    PhoneNumberType phoneNumberType;
 
-        @Enumerated(EnumType.STRING)
-        EmailType emailType;
+    @OneToOne
+    @JoinColumn(name = "user_address_id") // foreign key
+    UserAddressEntity address;
 
-        @Enumerated(EnumType.STRING)
-        PhoneNumberType phoneNumberType;
-
-        @OneToOne
-        @JoinColumn(name = "user_address_id") // foreign key
-        UserAddressEntity address;
-
-        @OneToOne
-        @JoinColumn(name = "phone_number_id") // foreign key
-        PhoneNumberEntity phoneNumberEntity;
-
-
+    @OneToOne
+    @JoinColumn(name = "phone_number_id") // foreign key
+    PhoneNumberEntity phoneNumberEntity;
 }
