@@ -13,4 +13,21 @@
 
     <artifactId>order-message-publisher</artifactId>
 
+    <dependencies>
+
+        <dependency>
+            <groupId>com.intellibucket</groupId>
+            <artifactId>order-domain-shell</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.intellibucket</groupId>
+            <artifactId>kafka-producer</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>com.intellibucket</groupId>
+            <artifactId>kafka-avro</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+    </dependencies>
 </project>

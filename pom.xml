@@ -233,6 +233,11 @@
                 <artifactId>company-repository</artifactId>
                 <version>${company-service.version}</version>
             </dependency>
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-starter-openfeign</artifactId>
+            </dependency>
+
 
         </dependencies>
     </dependencyManagement>
