@@ -41,8 +41,11 @@ public class OrderRejectCommandHandler {
         if (!orderRoot.getUserId().equals(securityContextHolder.currentCompanyID())) {
             throw new OrderDomainException("User is not authorized to order reject");
         }
-        OrderCancelledEvent orderCancelledEvent = orderDomainService.orderPaymentCancel(orderRoot, OrderCancelType.COMPANY, List.of("order cancelled by company "));
+        orderDomainService.rejectedOrder(orderRoot);
 
+        // Optionally, save the updated order back to the repository if rejection modifies its state
+        orderRepository.save(orderRoot);
+       
     }
 
 }
