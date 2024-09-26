@@ -126,5 +126,21 @@ public class OrderRoot extends AggregateRoot<OrderID> {
             throw new OrderDomainException("Address is not valid");
         }
     }
+    public void reject() throws OrderDomainException {
+
+        if (!canReject()) {
+            throw new OrderDomainException("Order cannot be rejected in its current state");
+        }
+
+
+        this.status = OrderStatus.REJECTED;
+
+
+    }
+
+    public boolean canReject() {
+
+        return this.status == OrderStatus.CANCELLED || this.status == OrderStatus.CANCELLING;
+    }
 
 }

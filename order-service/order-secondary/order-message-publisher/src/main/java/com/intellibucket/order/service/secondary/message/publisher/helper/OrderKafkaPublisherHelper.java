@@ -1,8 +1,6 @@
 package com.intellibucket.order.service.secondary.message.publisher.helper;
 
-import com.intellibucket.kafka.order.avro.model.OrderCompletedRequestAvroModel;
 import com.intellibucket.message.model.BaseMessageModel;
-import com.intellibucket.order.service.domain.shell.outbox.model.message.OrderCompletedEventOutboxMessage;
 import com.intellibucket.order.service.domain.shell.outbox.model.payload.BaseEventPayload;
 import com.intellibucket.order.service.domain.shell.outbox.model.payload.OrderCompletedEventPayload;
 import lombok.extern.slf4j.Slf4j;
@@ -18,7 +16,7 @@ import java.util.function.BiConsumer;
 public class OrderKafkaPublisherHelper {
 
 
-    public <T extends SpecificRecordBase, M extends BaseMessageModel, P extends BaseEventPayload> BiConsumer<SendResult<String, T>, Throwable> getCallback(T avroModel, M message, OrderCompletedEventPayload orderCompletedEventPayload) {
+    public <T extends SpecificRecordBase, M extends BaseMessageModel, P extends BaseEventPayload> BiConsumer<SendResult<String, T>, Throwable> getCallback(T avroModel, M message, P payload) {
         return (result, ex) -> {
             if (ex != null) {
                 log.error("Error while sending {} with message: {}, exception: {}",
@@ -28,7 +26,7 @@ public class OrderKafkaPublisherHelper {
             } else {
                 RecordMetadata recordMetadata = result.getRecordMetadata();
                 log.info("Received successful response from Kafka for order id: {} Topic: {} Partition: {} Offset: {} Timestamp: {}",
-                        orderCompletedEventPayload.getOrderId(),
+                        payload.getOrderId(),
                         recordMetadata.offset(),
                         recordMetadata.partition(),
                         recordMetadata.topic(),
