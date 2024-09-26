@@ -27,10 +27,25 @@ public class OrderCompletedEventPublisher implements AbstractOrderCompletedEvent
     private final String TOPIC_NAME = "order-completed";
 
     @Override
-    public void publish(OrderCompletedEventOutboxMessage message, BiConsumer<OrderCompletedEventOutboxMessage, OutboxStatus> callback) throws OrderDomainException {
+    public void publish(OrderCompletedEventOutboxMessage message, BiConsumer<OrderCompletedEventOutboxMessage, OutboxStatus> outboxCallback) throws OrderDomainException {
         OrderCompletedEventPayload payload = kafkaMessageHelper.getOrderEventPayload(message.getPayload(), OrderCompletedEventPayload.class);
         String sagaId = message.getSagaId().toString();
-        OrderCompletedRequestAvroModel orderCompletedRequestAvroModel = orderMessagePublisherDataMapper.orderCompetedEventToOrderCompletedRequestAvroModel(sagaId, payload);
-        kafkaProducer.send(TOPIC_NAME, sagaId, orderCompletedRequestAvroModel, orderKafkaPublisherHelper.getCallback(orderCompletedRequestAvroModel, message, payload));
+
+        log.info("Received OrderCompletedEventPublisher for order id: {} and saga id: {}", payload.getOrderId(), sagaId);
+
+        try {
+            OrderCompletedRequestAvroModel orderCompletedRequestAvroModel = orderMessagePublisherDataMapper.orderCompetedEventToOrderCompletedRequestAvroModel(sagaId, payload);
+            kafkaProducer.send(
+                    TOPIC_NAME,
+                    sagaId,
+                    orderCompletedRequestAvroModel,
+                    orderKafkaPublisherHelper.getCallback(orderCompletedRequestAvroModel, message, payload, outboxCallback));
+
+            log.info("OrderCompletedEventPublisher sent to Kafka for order id: {} and saga id: {}", payload.getOrderId(), sagaId);
+
+        } catch (Exception e) {
+
+            log.error("Error while sending OrderCompletedEventPublisher to kafka with order id: {} and saga id: {}, error: {}", payload.getOrderId(), sagaId, e.getMessage());
+        }
     }
 }
