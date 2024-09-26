@@ -30,8 +30,7 @@ public class CompanyCommandController {
     /*
     1)deleteStatus
     2)updateAddress
-    3)updateCompany name ve description
-
+    3)updateCompany name
      */
 
 }

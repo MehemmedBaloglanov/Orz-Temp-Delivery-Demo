@@ -4,20 +4,21 @@ import com.intelliacademy.orizonroute.identity.company.CompanyID;
 import com.intelliacademy.orizonroute.identity.order.product.ProductID;
 import com.intelliacademy.orizonroute.root.AggregateRoot;
 import com.intelliacademy.orizonroute.valueobjects.common.Money;
+import com.intelliacademy.orizonroute.valueobjects.common.Username;
 import com.intellibucket.company.service.domain.core.exception.ValidateException;
 import com.intellibucket.company.service.domain.core.valueobject.ProductStatus;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.experimental.SuperBuilder;
 
-@Builder
+@SuperBuilder
 @Setter
 @Getter
 public class ProductRoot extends AggregateRoot<ProductID> {
 
     private ProductID productID;
-//    private String name;
-//    private String description;
+    private String name;
     private Money price;
     private CompanyID companyID;
     private Integer quantity;
@@ -26,37 +27,27 @@ public class ProductRoot extends AggregateRoot<ProductID> {
 
     public ProductRoot initialize() throws ValidateException {
         super.setId(ProductID.random());
-        if (status == null) {
-            status = ProductStatus.DRAFT;  // İlkin status DRAFT olaraq təyin edilir
-        }
+        status = ProductStatus.DRAFT;
         validateProduct();
         return this;
     }
 
 
-
     //----------------------------------->VALIDATE FIELDS
 
     private void validateProduct() throws ValidateException {
-//        validateName();
-//        validateDescription();
+        validateName();
         validatePrice();
         validateQuantity();
         validateStockQuantity();
         validateCompanyID();
     }
 
-//    private void validateName() throws ValidateException {
-//        if (name == null || name.isEmpty()) {
-//            throw new ValidateException("Name cannot be empty or blank.");
-//        }
-//    }
-//
-//    private void validateDescription() throws ValidateException {
-//        if (description == null || description.isBlank()) {
-//            throw new ValidateException("Description cannot be empty or blank.");
-//        }
-//    }
+    private void validateName() throws ValidateException {
+        if (name == null || name.isEmpty()) {
+            throw new ValidateException("Name cannot be empty or blank.");
+        }
+    }
 
     private void validatePrice() throws ValidateException {
         if (price == null || price.isNil()) {
@@ -66,7 +57,7 @@ public class ProductRoot extends AggregateRoot<ProductID> {
 
     private void validateQuantity() throws ValidateException {
         if (quantity == null || quantity < 0) {
-            throw new ValidateException("Quantity must be greater than zero.");
+            throw new ValidateException("Quantity cannot be null or negative.");
         }
     }
 
@@ -111,23 +102,14 @@ public class ProductRoot extends AggregateRoot<ProductID> {
 
     //--------------------------------->UPDATE OTHER FIELDS
 
-//    public ProductRoot updateName(String newName) throws ValidateException {
-//        if (newName == null || newName.isBlank()) {
-//            throw new ValidateException("New name cannot be empty or blank.");
-//        }
-//        this.name = newName;
-//        return this;
-//    }
-//
-//    public ProductRoot updateDescription(String newDescription) throws ValidateException {
-//        if (newDescription == null || newDescription.isBlank()) {
-//            throw new ValidateException("New description cannot be empty or blank.");
-//        }
-//        this.description = newDescription;
-//        return this;
-//    }
+    public ProductRoot updateName(String newName) throws ValidateException {
+        if (newName == null || newName.isBlank()) {
+            throw new ValidateException("New name cannot be empty or blank.");
+        }
+        this.name = newName;
+        return this;
+    }
 
-    //todo: isNil methodu ile yoxlamaq duzgundurmu?
     public ProductRoot updatePrice(Money newPrice) throws ValidateException {
         if (newPrice == null || newPrice.isNil()) {
             throw new ValidateException("New price cannot be null or zero.");
