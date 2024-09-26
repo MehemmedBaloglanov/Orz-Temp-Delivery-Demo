@@ -8,8 +8,11 @@ import com.intellibucket.repository.UserJpaRepository;
 import com.intellibucket.user.service.domain.core.root.UserRoot;
 import com.intellibucket.user.service.domain.shell.port.output.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Component;
 
 import java.util.Optional;
+
+@Component
 @RequiredArgsConstructor
 public class UserRepositoryImpl implements UserRepository {
 

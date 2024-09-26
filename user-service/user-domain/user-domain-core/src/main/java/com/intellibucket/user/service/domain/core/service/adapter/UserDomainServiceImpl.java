@@ -6,8 +6,6 @@ import com.intellibucket.user.service.domain.core.event.*;
 import com.intellibucket.user.service.domain.core.exception.UserDomainException;
 import com.intellibucket.user.service.domain.core.root.UserRoot;
 import com.intellibucket.user.service.domain.core.service.port.UserDomainService;
-import com.intellibucket.user.service.domain.core.valueObject.Password;
-
 import lombok.Builder;
 
 import java.time.OffsetDateTime;
@@ -15,7 +13,6 @@ import java.util.List;
 @Builder
 public class UserDomainServiceImpl implements UserDomainService {
 
-    private final UserRoot userRoot;
     @Override
     public UserRegisteredEvent companyRegistered(UserRoot userRoot) {
 
@@ -39,7 +36,7 @@ public class UserDomainServiceImpl implements UserDomainService {
 
 
     @Override
-    public UserChangePasswordDomainEvent userChangePassword(UserRoot userRoot ,Password oldPassword, Password newPassword) throws UserDomainException {
+    public UserChangePasswordDomainEvent userChangePassword(UserRoot userRoot) throws UserDomainException {
         userRoot.userChangePassword(oldPassword,newPassword);
         return new UserChangePasswordDomainEvent(userRoot, OffsetDateTime.now(DomainConstants.ZONE_ID));
     }

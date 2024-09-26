@@ -27,12 +27,7 @@ public class AdminCommandService implements AbstractAdminCommandService {
     }
 
     @Override
-    public List<Status> getAllActiveCustomers() {
-        return statusRepository.findByStatusAndRoleAuthority(Status.ACTIVE, RoleAuthorithy.CUSTOMER);
-    }
-
-    @Override
-    public List<Status> getAllActiveCompanies() {
-        return statusRepository.findByStatusAndRoleAuthority(Status.ACTIVE, RoleAuthorithy.COMPANY);
+    public List<Status> getUsersByStatusAndByRole(Status status, RoleAuthorithy role) {
+        return statusRepository.findByStatusAndRoleAuthority(status, role);
     }
 }

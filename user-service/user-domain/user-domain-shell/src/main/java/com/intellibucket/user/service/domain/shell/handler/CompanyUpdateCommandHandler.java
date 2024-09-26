@@ -1,6 +1,7 @@
 package com.intellibucket.user.service.domain.shell.handler;
 
 import com.intelliacademy.orizonroute.identity.user.UserID;
+import com.intellibucket.user.service.domain.core.event.UserUpdatedDomainEvent;
 import com.intellibucket.user.service.domain.core.exception.user.UserNotFoundException;
 import com.intellibucket.user.service.domain.core.root.UserRoot;
 import com.intellibucket.user.service.domain.core.service.port.UserDomainService;
@@ -17,7 +18,6 @@ import java.util.Optional;
 @Component
 public class CompanyUpdateCommandHandler {
     private final UserRepository userRepository;
-    private final AbstractUserCommandService commandService;
     private final UserDomainService userDomainService;
 
     public void handle(CompanyUpdateCommand command) throws UserNotFoundException {
@@ -27,8 +27,7 @@ public class CompanyUpdateCommandHandler {
         if (userRoot.isEmpty()) {
             throw new UserNotFoundException("User not found with ID" + userID.value());
         }
-       userDomainService.userUpdated(userUpdate);
-        commandService.updateCompany(command);
+        UserUpdatedDomainEvent userUpdatedDomainEvent = userDomainService.userUpdated(userUpdate);
         userRepository.update(userUpdate);
         userRepository.save(userRoot.get());
     }

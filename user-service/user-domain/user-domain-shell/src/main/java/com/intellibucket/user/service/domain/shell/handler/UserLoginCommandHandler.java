@@ -1,5 +1,6 @@
 package com.intellibucket.user.service.domain.shell.handler;
 
+import com.intellibucket.user.service.domain.core.event.UserLoggedInDomainEvent;
 import com.intellibucket.user.service.domain.core.exception.UserDomainException;
 import com.intellibucket.user.service.domain.core.exception.password.PasswordValidationException;
 import com.intellibucket.user.service.domain.core.exception.user.UserNotFoundException;
@@ -19,7 +20,6 @@ import java.util.Optional;
 @Component
 public class UserLoginCommandHandler {
     private final UserRepository userRepository;
-    private final AbstractUserCommandService commandService;
     private final UserDomainService userDomainService;
 
     public void handle(UserLoginCommand command) throws UserDomainException {
@@ -37,9 +37,8 @@ public class UserLoginCommandHandler {
             throw new PasswordValidationException("Invalid credentials!");
         }
 
-        userDomainService.userLoggedIn(userFromCommand);
+        UserLoggedInDomainEvent userLoggedInDomainEvent = userDomainService.userLoggedIn(userFromCommand);
 
-        commandService.userLoggedIn(command);
 
     }
 }
