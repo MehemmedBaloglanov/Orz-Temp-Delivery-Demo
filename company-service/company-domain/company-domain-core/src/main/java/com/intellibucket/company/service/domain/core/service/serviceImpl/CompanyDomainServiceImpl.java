@@ -12,8 +12,6 @@ import static com.intellibucket.constants.DomainConstants.ZONE_ID;
 
 public class CompanyDomainServiceImpl implements CompanyDomainService {
 
-
-
     @Override
     public CompanyCreatedEvent createCompany(CompanyRoot companyRoot) throws ValidateException {
         companyRoot.initialize();

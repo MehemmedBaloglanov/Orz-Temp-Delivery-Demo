@@ -18,6 +18,7 @@ import java.util.UUID;
 @RequestMapping("/api/1.0/orders")
 @RequiredArgsConstructor
 public class OrderQueryController {
+
     private final OrderQueryServiceAdapter orderQueryServiceAdapter;
 
     @GetMapping("/{orderId}")
