@@ -29,4 +29,7 @@ public interface OrderDomainService {
     StartDeliveryOrderEvent prepareOrder(OrderRoot orderRoot) throws OrderDomainException;
 
     OrderCompletedEvent orderComplete(OrderRoot orderRoot) throws OrderDomainException;
+    public void rejectedOrder(OrderRoot orderRoot) throws OrderDomainException;
+
+
 }

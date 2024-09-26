@@ -7,6 +7,7 @@ import java.time.OffsetDateTime;
 public class OrderRejectedEvent extends OrderEvent{
 
     public OrderRejectedEvent(OrderRoot orderRoot, OffsetDateTime createdAt) {
+
         super(orderRoot, createdAt);
     }
 }
