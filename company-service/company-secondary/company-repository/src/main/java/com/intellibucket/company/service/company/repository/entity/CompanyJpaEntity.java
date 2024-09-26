@@ -21,22 +21,19 @@ public class CompanyJpaEntity {
     @Id
     private UUID companyId;
 
-//    @Column(nullable = false)
-//    private String name;
+    @Column(nullable = false)
+    private String companyName;
 
-//    @Column(nullable = false)
-//    private String description;
+    @Embedded
+    private CompanyJpaAddress address;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private CompanyStatus status;
 
-    @Column(nullable = false)
-    private BigDecimal amount;
-
-    @Embedded
-    private CompanyJpaAddress companyAddress;
-
     @OneToMany(mappedBy = "company", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     private List<ProductJpaEntity> products;
+
+    @Column(nullable = false)
+    private BigDecimal balance;
 }

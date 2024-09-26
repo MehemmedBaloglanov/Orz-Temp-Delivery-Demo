@@ -2,6 +2,7 @@ package com.intellibucket.company.service.domain.shell.port.output.repository;
 
 import com.intelliacademy.orizonroute.identity.company.CompanyID;
 import com.intellibucket.company.service.company.repository.entity.CompanyJpaEntity;
+import com.intellibucket.company.service.domain.core.exception.CompanyDomainException;
 import com.intellibucket.company.service.domain.core.root.CompanyRoot;
 
 import java.util.Optional;
@@ -11,6 +12,6 @@ public interface CompanyRepositoryAdapter  {
 
     Optional<CompanyRoot> findById(CompanyID companyId);
 
-    void delete(CompanyID companyID);
+    void delete(CompanyID companyID) throws CompanyDomainException;
 
 }

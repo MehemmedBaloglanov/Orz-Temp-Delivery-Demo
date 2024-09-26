@@ -89,7 +89,6 @@ public class CompanyRoot extends AggregateRoot<CompanyID> {
         return this;
     }
 
-    //todo: burda disable methodunu suspended olaraq deyisdirdim duzgundurmu?
     public CompanyRoot suspend() throws ValidateException {
         if (!status.isActive() || status.isDeleted()) {
             throw new ValidateException("Only active companies can be suspended, and deleted companies cannot be suspended.");
@@ -101,6 +100,14 @@ public class CompanyRoot extends AggregateRoot<CompanyID> {
 
 
     //------------------------------------->UPDATE OTHER FIELDS
+
+    public CompanyRoot changeName(Username newName) throws ValidateException {
+        if(newName.value() == null || newName.value().isEmpty()) {
+            throw new ValidateException("Name cannot be null or empty");
+        }
+        this.companyName = newName;
+        return this;
+    }
 
     public CompanyRoot changeAddress(CompanyAddress newAddress) throws ValidateException {
         if (newAddress == null || !newAddress.isValid()) {

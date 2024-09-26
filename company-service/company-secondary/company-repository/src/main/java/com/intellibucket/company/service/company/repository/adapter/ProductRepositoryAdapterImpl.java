@@ -4,6 +4,7 @@ import com.intelliacademy.orizonroute.identity.order.product.ProductID;
 import com.intellibucket.company.service.company.repository.entity.ProductJpaEntity;
 import com.intellibucket.company.service.company.repository.mapper.CompanyDataAccessMapper;
 import com.intellibucket.company.service.company.repository.repository.ProductJpaRepository;
+import com.intellibucket.company.service.domain.core.exception.CompanyDomainException;
 import com.intellibucket.company.service.domain.core.root.ProductRoot;
 import com.intellibucket.company.service.domain.shell.port.output.repository.ProductRepositoryAdapter;
 import lombok.RequiredArgsConstructor;
@@ -37,7 +38,15 @@ public class ProductRepositoryAdapterImpl implements ProductRepositoryAdapter {
     }
 
     @Override
-    public void deleteById(ProductID productID) {
-        productJpaRepository.deleteById(productID.value());
+    public void deleteById(ProductID productID) throws CompanyDomainException {
+        Optional<ProductJpaEntity> product= productJpaRepository.findById(productID.value());
+        if(product.isEmpty()){
+            throw new CompanyDomainException("Company does not found with id: " + productID.value());
+        }else {
+            ProductRoot productRoot = companyDataAccessMapper.mapProductJpaEntityToProductRoot(product.get());
+            ProductRoot delete = productRoot.delete();
+            ProductJpaEntity productJpaEntity =  companyDataAccessMapper.mapProductRootToProductJpaEntity(delete);
+            productJpaRepository.save(productJpaEntity);
+        }
     }
 }

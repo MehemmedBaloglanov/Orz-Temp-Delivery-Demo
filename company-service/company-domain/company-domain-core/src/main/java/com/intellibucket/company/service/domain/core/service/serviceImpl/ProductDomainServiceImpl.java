@@ -47,4 +47,10 @@ public class ProductDomainServiceImpl implements ProductDomainService {
         productRoot.increaseQuantity(newQuantity);
         return new ProductQuantityIncreasedEvent(productRoot,OffsetDateTime.now(ZONE_ID));
     }
+
+    @Override
+    public ProductStockQuantityIncreasedEvent increaseProductStockQuantity(ProductRoot productRoot, Integer newQuantity) throws ValidateException {
+        productRoot.increaseStockQuantity(newQuantity);
+        return new ProductStockQuantityIncreasedEvent(productRoot,OffsetDateTime.now(ZONE_ID));
+    }
 }

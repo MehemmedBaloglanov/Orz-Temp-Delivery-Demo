@@ -21,10 +21,12 @@
         <module name="cart-rest" />
         <module name="temp-root" />
         <module name="order-domain-core" />
+        <module name="saga" />
         <module name="user-message-listener" />
         <module name="company-rest" />
         <module name="cart-repository" />
         <module name="orizon-util" />
+        <module name="user-dataaccess" />
         <module name="company-service-connector" />
         <module name="order-rest" />
         <module name="company-message-publisher" />
@@ -32,6 +34,7 @@
         <module name="company-domain-core" />
         <module name="company-repository" />
         <module name="user-rest" />
+        <module name="outbox" />
         <module name="user-container" />
         <module name="order-container" />
         <module name="order-message-publisher" />
@@ -47,8 +50,11 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="library" target="17" />
       <module name="order-dataaccess" target="17" />
-      <module name="user-dataaccess" target="17" />
+      <module name="orizon-http" target="17" />
+      <module name="user-repository" target="17" />
+      <module name="user-secondary" target="17" />
     </bytecodeTargetLevel>
   </component>
 </project>

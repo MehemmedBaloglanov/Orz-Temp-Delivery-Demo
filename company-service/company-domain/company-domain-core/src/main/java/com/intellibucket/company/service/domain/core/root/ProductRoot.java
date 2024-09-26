@@ -154,4 +154,15 @@ public class ProductRoot extends AggregateRoot<ProductID> {
         this.quantity -= amount;
         return this;
     }
+
+    public ProductRoot increaseStockQuantity(Integer amount) throws ValidateException {
+        if (amount == null || amount <= 0) {
+            throw new ValidateException("Increase stock quantity must be greater than zero.");
+        }
+        if (this.stockQuantity + amount < 0) {
+            throw new ValidateException("StockQuantity cannot be less than zero.");
+        }
+        this.stockQuantity += amount;
+        return this;
+    }
 }

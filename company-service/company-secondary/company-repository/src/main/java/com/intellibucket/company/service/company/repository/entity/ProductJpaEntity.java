@@ -23,23 +23,20 @@ public class ProductJpaEntity {
     @Id
     private UUID productId;
 
-//    @Column(nullable = false)
-//    private String name;
-//
-//    @Column(nullable = false)
-//    private String description;
+    @Column(nullable = false)
+    private String name;
 
     private BigDecimal price;
+
+    private UUID companyId;
 
     @Column(nullable = false)
     private Integer quantity;
 
-    private Integer stock;
+    private Integer stockQuantity;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private ProductStatus status;
-
-    private UUID companyId;
 
 }
