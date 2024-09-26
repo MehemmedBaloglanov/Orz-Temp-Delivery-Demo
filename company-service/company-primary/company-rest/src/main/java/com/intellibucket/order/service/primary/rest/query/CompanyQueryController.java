@@ -25,4 +25,5 @@ public class CompanyQueryController {
         return new ResponseEntity<>(companyResponse, HttpStatus.OK);
     }
 
+    //All company
 }

@@ -16,15 +16,22 @@ public class CompanyCommandController {
     private final CompanyCommandServiceAdapter companyCommandServiceAdapter;
 
     //SUSPENDED
-    @PatchMapping()
+    @PutMapping()
     public void changeStatusToSuspended(@RequestBody CompanySuspendedCommand command) throws CompanyDomainException {
         companyCommandServiceAdapter.changeStatusToSuspend(command);
     }
 
     //ACTIVE
-    @PatchMapping()
+    @PutMapping()
     public void changeCompanyStatusToActive(@RequestBody CompanyActiveCommand command) throws CompanyDomainException {
         companyCommandServiceAdapter.changeStatusToActive(command);
     }
+
+    /*
+    1)deleteStatus
+    2)updateAddress
+    3)updateCompany name ve description
+
+     */
 
 }

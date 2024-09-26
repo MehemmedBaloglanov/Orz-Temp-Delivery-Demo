@@ -39,4 +39,7 @@ public class ProductCommandController {
 
 
     //todo 1)changeDelete 2)changeActive 3)changeOutOfStock
+    //updatePrice
+    //update stockQuantity
+
 }

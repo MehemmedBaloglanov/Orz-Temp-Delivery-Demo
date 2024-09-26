@@ -26,13 +26,8 @@ public class CompanyRoot extends AggregateRoot<CompanyID> {
 
     public CompanyRoot initialize() throws ValidateException {
         super.setId(CompanyID.random());
-
-        if (status == null) {
-            status = CompanyStatus.DRAFT;
-        }
-        if (balance == null) {
-            balance = Money.of(0);
-        }
+        status = CompanyStatus.DRAFT;
+        balance=Money.ZERO;
         validateCompany();
         return this;
     }
