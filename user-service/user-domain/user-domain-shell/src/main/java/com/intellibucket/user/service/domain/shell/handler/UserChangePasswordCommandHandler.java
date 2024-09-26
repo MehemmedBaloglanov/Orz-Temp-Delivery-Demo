@@ -1,6 +1,7 @@
 package com.intellibucket.user.service.domain.shell.handler;
 
 import com.intelliacademy.orizonroute.identity.user.UserID;
+import com.intellibucket.user.service.domain.core.event.UserChangePasswordDomainEvent;
 import com.intellibucket.user.service.domain.core.exception.UserDomainException;
 import com.intellibucket.user.service.domain.core.exception.password.PasswordValidationException;
 import com.intellibucket.user.service.domain.core.exception.user.UserNotFoundException;
@@ -18,14 +19,14 @@ import java.util.Optional;
 @Component
 @RequiredArgsConstructor
 public class UserChangePasswordCommandHandler {
-    private final AbstractUserCommandService commandService;
+
     private final UserRepository userRepository;
     private final UserDomainService userDomainService;
     public void handle(UserChangePasswordCommand command) throws UserDomainException {
         UserID userID = UserID.random(); // FIXME userID securityContextHolder'dan alinacaq
        // id= SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
-        Optional<UserRoot> byUserId = commandService.findByUserId(userID);
+        Optional<UserRoot> byUserId = userRepository.findByUserId(userID);
 
         if (byUserId.isEmpty()) {
             throw new UserNotFoundException("user not found with id:" + userID);
@@ -37,9 +38,8 @@ public class UserChangePasswordCommandHandler {
         }
 
         Password newPassword = Password.builder().value(command.getNewPassword()).build();
-        user.setPassword(newPassword);
-        userDomainService.userChangePassword(user,Password.builder().value(command.getOldPassword()).build(), newPassword);
-        commandService.changePassword(command);
+      //  user.userChangePassword(newPassword);
+        UserChangePasswordDomainEvent userChangePasswordDomainEvent = userDomainService.userChangePassword(user);
         userRepository.save(user);
     }
 }

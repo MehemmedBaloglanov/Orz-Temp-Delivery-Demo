@@ -6,11 +6,9 @@ import com.intellibucket.user.service.domain.core.valueObject.Status;
 import java.util.List;
 
 public interface AbstractAdminCommandService {
-    public List<RoleAuthorithy> getAllCustomers();
+    List<RoleAuthorithy> getAllCustomers();
 
-    public List<RoleAuthorithy> getAllCompanies();
+    List<RoleAuthorithy> getAllCompanies();
 
-    public List<Status> getAllActiveCustomers();
-
-    public List<Status> getAllActiveCompanies();
+    List<Status> getUsersByStatusAndByRole(Status status, RoleAuthorithy role);
 }

@@ -1,6 +1,7 @@
 package com.intellibucket.user.service.domain.shell.handler;
 
 import com.intelliacademy.orizonroute.identity.user.UserID;
+import com.intellibucket.user.service.domain.core.event.UserDeletedDomainEvent;
 import com.intellibucket.user.service.domain.core.exception.UserDomainException;
 import com.intellibucket.user.service.domain.core.exception.user.UserNotFoundException;
 import com.intellibucket.user.service.domain.core.root.UserRoot;
@@ -17,7 +18,6 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class UserDeleteCommandHandler {
     private final UserRepository userRepository;
-    private final AbstractUserCommandService commandService;
     private final UserDomainServiceImpl userDomainService;
 
     public void handle(UserDeleteCommand command) throws UserDomainException {
@@ -28,8 +28,8 @@ public class UserDeleteCommandHandler {
             throw new UserNotFoundException("User not found with id: " + userID.value());
         }
 
-        userDomainService.userDeleted(userRoot.get());
-        commandService.deleteUser(command);
+        UserDeletedDomainEvent userDeletedDomainEvent = userDomainService.userDeleted(userRoot.get());
+
         userRepository.save(userRoot.get());
     }
 }
