@@ -20,9 +20,6 @@
             <groupId>com.intellibucket</groupId>
             <artifactId>domain</artifactId>
         </dependency>
-        <dependency>
-            <groupId>com.intellibucket</groupId>
-            <artifactId>user-domain-shell</artifactId>
-        </dependency>
+
     </dependencies>
 </project>
