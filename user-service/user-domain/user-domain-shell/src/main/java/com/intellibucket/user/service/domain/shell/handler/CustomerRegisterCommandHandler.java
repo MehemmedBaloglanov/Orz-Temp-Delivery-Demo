@@ -1,5 +1,6 @@
 package com.intellibucket.user.service.domain.shell.handler;
 
+import com.intellibucket.user.service.domain.core.event.UserRegisteredEvent;
 import com.intellibucket.user.service.domain.core.exception.UserDomainException;
 import com.intellibucket.user.service.domain.core.exception.user.UserValidationException;
 import com.intellibucket.user.service.domain.core.root.UserRoot;
@@ -29,9 +30,8 @@ public class CustomerRegisterCommandHandler {
             throw new UserValidationException("User already exist with email..: " + command.getEmail());
         }
 
-        userDomainService.customerRegistered(newUser);
+        UserRegisteredEvent userRegisteredEvent = userDomainService.customerRegistered(newUser);
 
-        commandService.customerRegistered(command);
 
         userRepository.save(newUser);
 
