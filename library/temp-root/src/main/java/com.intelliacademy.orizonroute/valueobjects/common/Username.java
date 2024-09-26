@@ -37,7 +37,7 @@ public final class Username {
     }
 
     private static Integer generateRandomNumber() {
-        return RANDOM.nextInt(10000,100000);
+        return RANDOM.nextInt(10000, 100000);
     }
 
     public String value() {
