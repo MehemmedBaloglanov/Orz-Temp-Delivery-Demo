@@ -1,0 +1,33 @@
+logging:
+  level:
+    root: error
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/delivery
+    username: root
+    password: qwerty1212
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQLDialect
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    open-in-view: false
+
+#spring:
+#  datasource:
+#    url: jdbc:postgresql://localhost:5432/delivery
+#    username: postgres
+#    password: qwerty1212
+#    driver-class-name: org.postgresql.Driver
+#  jpa:
+#    hibernate:
+#      ddl-auto: update # Use 'create' for fresh schema, 'update' for updating schema, 'validate' for checking schema validity
+#    database-platform: org.hibernate.dialect.PostgreSQLDialect
+#    show-sql: true # To show SQL queries in logs
+#    properties:
+#      hibernate:
+#        format_sql: true # To format SQL queries nicely in the logs
+
+#        open-in-view: false
