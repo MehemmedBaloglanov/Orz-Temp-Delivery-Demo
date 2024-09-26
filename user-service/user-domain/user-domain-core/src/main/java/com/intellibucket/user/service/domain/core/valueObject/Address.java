@@ -8,11 +8,15 @@ import lombok.Data;
 @Builder
 @ValueObject
 public final class Address {
-    private final String street;
-    private final String city;
     private final String state;
-    private final String postalCode;
     private final String country;
+    private final String city;
+    private final String street;
+    private final String postalCode;
+
+    public static Address of(String state, String country, String city, String street, String postalCode) {
+        return new Address(state, country, city, street, postalCode);
+    }
 
     public boolean isAddressValid() {
         return (street != null && !street.isEmpty() &&

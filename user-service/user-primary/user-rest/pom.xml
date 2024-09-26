@@ -7,6 +7,20 @@
         <groupId>com.intellibucket</groupId>
         <version>1.0-SNAPSHOT</version>
     </parent>
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-web</artifactId>
+            <version>6.1.12</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.intellibucket</groupId>
+            <artifactId>user-domain-shell</artifactId>
+        </dependency>
+
+
+    </dependencies>
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>user-rest</artifactId>

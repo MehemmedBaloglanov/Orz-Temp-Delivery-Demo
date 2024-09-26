@@ -4,12 +4,18 @@ import com.intelliacademy.orizonroute.valueobjects.common.ValueObject;
 import lombok.Builder;
 import lombok.Data;
 
+import java.util.Objects;
+
 @Data
 @Builder
 @ValueObject
 public final class Password {
     public static final String PATTERN = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d).*$";
     private final String value;
+
+    public static Password of(String value) {
+        return new Password(value);
+    }
 
     public boolean isPasswordValid() {
         return value != null &&
@@ -37,4 +43,31 @@ public final class Password {
         return value.chars().anyMatch(ch -> !Character.isLetterOrDigit(ch));
     }
 
+    public boolean isEmpty() {
+        return value == null;
+    }
+
+    public boolean isEqual(Password otherPassword) {
+        return this.value.equals(otherPassword.getValue());
+    }
+
+    public static Password changePassword(Password oldPassword, String newPassword) {
+        if (oldPassword.isEqual(Password.of(newPassword))) {
+            throw new IllegalArgumentException("New password cannot be the same as the old password");
+        }
+        return new Password(newPassword);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Password password = (Password) o;
+        return Objects.equals(value, password.value);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(value);
+    }
 }

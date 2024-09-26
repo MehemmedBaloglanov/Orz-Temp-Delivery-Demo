@@ -4,6 +4,7 @@ import com.intelliacademy.orizonroute.identity.user.UserID;
 import com.intelliacademy.orizonroute.root.AggregateRoot;
 import com.intelliacademy.orizonroute.valueobjects.common.Email;
 import com.intelliacademy.orizonroute.valueobjects.common.PhoneNumber;
+import com.intelliacademy.orizonroute.valueobjects.common.Username;
 import com.intellibucket.user.service.domain.core.exception.UserDomainException;
 import com.intellibucket.user.service.domain.core.valueObject.Address;
 import com.intellibucket.user.service.domain.core.valueObject.Password;
@@ -11,18 +12,20 @@ import com.intellibucket.user.service.domain.core.valueObject.RoleAuthorithy;
 import com.intellibucket.user.service.domain.core.valueObject.Status;
 import lombok.Builder;
 import lombok.Getter;
-import lombok.experimental.SuperBuilder;
+import lombok.Setter;
 
-@SuperBuilder
+@Builder
 @Getter
+@Setter
 public class UserRoot extends AggregateRoot<UserID> {
     private final UserID userID;
     private final Address address;
     private RoleAuthorithy roleAuthorithy;
     private Status status;
-    private final Password password;
+    private Password password;
     private final Email email;
     private final PhoneNumber phoneNumber;
+    private final Username username;
 
 
     public void initializeUser() {
@@ -30,33 +33,20 @@ public class UserRoot extends AggregateRoot<UserID> {
         status = Status.ACTIVE;
     }
 
-    public UserRoot activate() throws UserDomainException {
-        if (!status.isCreated()) {
-            throw new UserDomainException("Cannot activate user");
-        }
-        this.status = Status.ACTIVE;
-        return this;
-    }
 
-    public UserRoot deactivate() throws UserDomainException {
-        if (!status.isDeleted()) {
-            throw new UserDomainException("Cannot deactivate user");
-        }
+    public void delete() {
         this.status = Status.DELETED;
-        return this;
     }
 
-    public UserRoot validateUser() throws UserDomainException {
+    public void update() {
+        this.status = Status.UPDATE;
+    }
+
+    public void validateUser() throws UserDomainException {
         validatePassword();
         validateEmail();
-        return this;
     }
 
-    private void validateAddress() throws UserDomainException {
-        if (this.address == null || !address.isAddressValid()) {
-            throw new UserDomainException("Address is not valid");
-        }
-    }
 
     private void validateEmail() throws UserDomainException {
         if (this.email == null || !email.isValid()) {
@@ -64,6 +54,11 @@ public class UserRoot extends AggregateRoot<UserID> {
         }
     }
 
+    private void validateAddress() throws UserDomainException {
+        if (this.address == null || !address.isAddressValid()) {
+            throw new UserDomainException("Address is not valid");
+        }
+    }
     private void validatePhoneNumber() throws UserDomainException {
         if (this.phoneNumber == null || !phoneNumber.isValid()) {
             throw new UserDomainException("Phone number is not valid");
@@ -74,13 +69,20 @@ public class UserRoot extends AggregateRoot<UserID> {
         if (this.password == null || password.getValue().isEmpty()) {
             throw new UserDomainException("Password is not valid");
         }
+
+
+    }
+    //FIXME nezer etmek lazimdir
+    public void userChangePassword(Password oldPassword, Password newPassword) throws UserDomainException {
+        if (!this.password.isEqual(oldPassword)) {
+            throw new UserDomainException("Old password is invalid!");
+        }
+
+        if (oldPassword.isEqual(newPassword)) {
+            throw new UserDomainException("New password cannot be the same as the old password!");
+        }
+
+        this.password = newPassword;
     }
 
-    public UserRoot changeRole(RoleAuthorithy newRole) throws UserDomainException {
-        if (!status.isCreated()) {
-            throw new UserDomainException("Cannot change role for inactive user");
-        }
-        this.roleAuthorithy = newRole;
-        return this;
-    }
 }
