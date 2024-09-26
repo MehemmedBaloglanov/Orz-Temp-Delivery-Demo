@@ -13,6 +13,10 @@ public final class Password {
     public static final String PATTERN = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d).*$";
     private final String value;
 
+    public static Password of(String value) {
+        return new Password(value);
+    }
+
     public boolean isPasswordValid() {
         return value != null &&
                 !value.isEmpty() &&
@@ -41,6 +45,17 @@ public final class Password {
 
     public boolean isEmpty() {
         return value == null;
+    }
+
+    public boolean isEqual(Password otherPassword) {
+        return this.value.equals(otherPassword.getValue());
+    }
+
+    public static Password changePassword(Password oldPassword, String newPassword) {
+        if (oldPassword.isEqual(Password.of(newPassword))) {
+            throw new IllegalArgumentException("New password cannot be the same as the old password");
+        }
+        return new Password(newPassword);
     }
 
     @Override

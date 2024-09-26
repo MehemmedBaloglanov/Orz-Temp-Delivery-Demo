@@ -14,7 +14,7 @@
     <modules>
 
         <module>user-message-publisher</module>
-        <module>user-repository</module>
+        <module>user-dataaccess</module>
     </modules>
 
 </project>

@@ -5,9 +5,9 @@ import com.intellibucket.order.service.domain.shell.dto.rest.command.OrderAssign
 import com.intellibucket.order.service.domain.shell.dto.rest.command.OrderCancelCommand;
 import com.intellibucket.order.service.domain.shell.dto.rest.command.OrderRejectCommand;
 import com.intellibucket.order.service.domain.shell.dto.rest.response.OrderResponse;
-import com.intellibucket.order.service.domain.shell.handler.OrderAssignCommandHandler;
-import com.intellibucket.order.service.domain.shell.handler.OrderCancelCommandHandler;
-import com.intellibucket.order.service.domain.shell.handler.OrderCreateCommandHandler;
+import com.intellibucket.order.service.domain.shell.handler.command.OrderAssignCommandHandler;
+import com.intellibucket.order.service.domain.shell.handler.command.OrderCancelCommandHandler;
+import com.intellibucket.order.service.domain.shell.handler.command.OrderCreateCommandHandler;
 import com.intellibucket.order.service.domain.shell.port.input.rest.abstracts.command.OrderCommandServiceAdapter;
 import lombok.RequiredArgsConstructor;
 
@@ -36,9 +36,8 @@ public class OrderCommandServiceHandler implements OrderCommandServiceAdapter {
     }
 
     @Override
-    public OrderResponse rejectOrder(OrderRejectCommand orderRejectCommand) throws OrderDomainException {
+    public void rejectOrder(OrderRejectCommand orderRejectCommand) throws OrderDomainException {
 
-        return null;
     }
 
 

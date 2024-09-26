@@ -10,5 +10,15 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>company-rest</artifactId>
+<dependencies>
+    <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-web</artifactId>
+    </dependency>
+    <dependency>
+        <groupId>com.intellibucket</groupId>
+        <artifactId>company-domain-shell</artifactId>
+    </dependency>
+</dependencies>
 
 </project>

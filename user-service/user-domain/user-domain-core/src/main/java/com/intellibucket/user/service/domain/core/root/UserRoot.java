@@ -14,8 +14,6 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.Optional;
-
 @Builder
 @Getter
 @Setter
@@ -35,33 +33,20 @@ public class UserRoot extends AggregateRoot<UserID> {
         status = Status.ACTIVE;
     }
 
-    public UserRoot activate() throws UserDomainException {
-        if (!status.isCreated()) {
-            throw new UserDomainException("Cannot activate user");
-        }
-        this.status = Status.ACTIVE;
-        return this;
-    }
 
-    public Optional<UserRoot> delete() throws UserDomainException {
-        if (!status.isDeleted()) {
-            throw new UserDomainException("Cannot deactivate user");
-        }
+    public void delete() {
         this.status = Status.DELETED;
-        return Optional.of(this);
     }
 
-    public UserRoot validateUser() throws UserDomainException {
+    public void update() {
+        this.status = Status.UPDATE;
+    }
+
+    public void validateUser() throws UserDomainException {
         validatePassword();
         validateEmail();
-        return this;
     }
 
-    private void validateAddress() throws UserDomainException {
-        if (this.address == null || !address.isAddressValid()) {
-            throw new UserDomainException("Address is not valid");
-        }
-    }
 
     private void validateEmail() throws UserDomainException {
         if (this.email == null || !email.isValid()) {
@@ -69,6 +54,11 @@ public class UserRoot extends AggregateRoot<UserID> {
         }
     }
 
+    private void validateAddress() throws UserDomainException {
+        if (this.address == null || !address.isAddressValid()) {
+            throw new UserDomainException("Address is not valid");
+        }
+    }
     private void validatePhoneNumber() throws UserDomainException {
         if (this.phoneNumber == null || !phoneNumber.isValid()) {
             throw new UserDomainException("Phone number is not valid");
@@ -82,14 +72,17 @@ public class UserRoot extends AggregateRoot<UserID> {
 
 
     }
-
-    public UserRoot changeRole(RoleAuthorithy newRole) throws UserDomainException {
-        if (!status.isCreated()) {
-            throw new UserDomainException("Cannot change role for inactive user");
+    //FIXME nezer etmek lazimdir
+    public void userChangePassword(Password oldPassword, Password newPassword) throws UserDomainException {
+        if (!this.password.isEqual(oldPassword)) {
+            throw new UserDomainException("Old password is invalid!");
         }
-        this.roleAuthorithy = newRole;
-        return this;
-    }
 
+        if (oldPassword.isEqual(newPassword)) {
+            throw new UserDomainException("New password cannot be the same as the old password!");
+        }
+
+        this.password = newPassword;
+    }
 
 }

@@ -10,8 +10,8 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 public class CustomerResponse {
-private String lastName;
-private String firstName;
+private String userName;
+
 
 
 }

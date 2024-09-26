@@ -6,10 +6,8 @@ import com.intelliacademy.orizonroute.valueobjects.user.EmailType;
 import com.intellibucket.user.service.domain.core.root.UserRoot;
 import com.intellibucket.user.service.domain.core.valueObject.Password;
 import com.intellibucket.user.service.domain.core.valueObject.RoleAuthorithy;
-import com.intellibucket.user.service.domain.shell.dto.request.CompanyCreateCommand;
-import com.intellibucket.user.service.domain.shell.dto.request.CustomerCreateCommand;
-import com.intellibucket.user.service.domain.shell.dto.request.UserLoginCommand;
-import com.intellibucket.user.service.domain.shell.dto.request.UserUpdateCommand;
+import com.intellibucket.user.service.domain.core.valueObject.Status;
+import com.intellibucket.user.service.domain.shell.dto.request.*;
 
 public class UserCommandMapper {
 
@@ -20,6 +18,7 @@ public class UserCommandMapper {
                 .password(Password.builder().value(command.getPassword()).build())
                 .roleAuthorithy(RoleAuthorithy.COMPANY)
                 .username(Username.of(command.getUsername()))
+                .status(Status.ACTIVE)
                 .build();
     }
 
@@ -30,6 +29,7 @@ public class UserCommandMapper {
                 .password(Password.builder().value(command.getPassword()).build())
                 .roleAuthorithy(RoleAuthorithy.CUSTOMER)
                 .username(Username.of(command.getUsername()))
+                .status(Status.ACTIVE)
                 .build();
     }
     //UserLoginCommand
@@ -40,13 +40,17 @@ public class UserCommandMapper {
                 .build();
     }
 
-    public static UserRoot userUpdateCommandToUserRoot(UserUpdateCommand command) {
+    public static UserRoot customerUpdateCommandToUserRoot(CustomerUpdateCommand command) {
         return UserRoot.builder()
                 .email(Email.of(EmailType.NONE, command.getEmail()))
-//                .firstName(command.getFirstName())
-//                .lastName(command.getLastName())
-//                .phoneNumber(command.getPhoneNumber())
+                .username(Username.generate(command.getFirstName()))
+                .username(Username.generate(command.getLastName()))
                 .build();
 
 }
+    public static UserRoot companyUpdateCommandToUserRoot(CompanyUpdateCommand command) {
+        return UserRoot.builder()
+                .username(Username.generate(command.getCompanyName()))
+                .build();
+    }
 }

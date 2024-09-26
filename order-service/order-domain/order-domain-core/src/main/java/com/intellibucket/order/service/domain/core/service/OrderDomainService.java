@@ -15,19 +15,17 @@ public interface OrderDomainService {
 
     OrderCreatedEvent validateAndInitiateOrder(OrderRoot orderRoot) throws OrderDomainException;
 
-    OrderCancelEvent initCancel(OrderRoot orderRoot) throws OrderDomainException;
-
-    OrderPaidEvent payOrder(OrderRoot orderRoot) throws OrderDomainException;
-
-    void orderAssign(OrderRoot orderRoot) throws OrderDomainException;
-
-    OrderDeliveryEvent orderDelivered(OrderRoot orderRoot) throws OrderDomainException;
+    OrderPaidEvent orderPay(OrderRoot orderRoot) throws OrderDomainException;
 
     OrderCancelledEvent orderPaymentCancel(OrderRoot orderRoot) throws OrderDomainException;
 
-    void prepareOrder(OrderRoot orderRoot) throws OrderDomainException;
-
     void orderCancel(OrderRoot orderRoot) throws OrderDomainException;
 
-    OrderCancelledEvent orderUnAssign(OrderRoot orderRoot) throws OrderDomainException;
+    void approveOrder(OrderRoot orderRoot) throws OrderDomainException;
+
+    OrderCancelledEvent initCancel(OrderRoot orderRoot) throws OrderDomainException;
+
+    StartDeliveryOrderEvent prepareOrder(OrderRoot orderRoot) throws OrderDomainException;
+
+    void orderComplete(OrderRoot orderRoot) throws OrderDomainException;
 }
