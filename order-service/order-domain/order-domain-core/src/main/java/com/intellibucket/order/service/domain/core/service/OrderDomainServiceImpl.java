@@ -6,6 +6,7 @@ import com.intellibucket.order.service.domain.core.root.OrderRoot;
 import com.intellibucket.order.service.domain.core.valueobject.OrderCancelType;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Service;
 
 import java.time.OffsetDateTime;
 import java.util.List;
@@ -14,6 +15,8 @@ import static com.intellibucket.constants.DomainConstants.ZONE_ID;
 
 @Slf4j
 @RequiredArgsConstructor
+@Service
+
 public class OrderDomainServiceImpl implements OrderDomainService {
 
     @Override
@@ -64,5 +67,11 @@ public class OrderDomainServiceImpl implements OrderDomainService {
         orderRoot.startDelivery();
         log.info("Order with id: {} is completed", orderRoot.getRootID().value());
         return new OrderCompletedEvent(orderRoot, OffsetDateTime.now(ZONE_ID));
+    }
+
+    @Override
+    public void rejectedOrder(OrderRoot orderRoot) throws OrderDomainException {
+        // Logic to reject the order
+        orderRoot.reject();
     }
 }
