@@ -8,15 +8,16 @@ import com.intellibucket.order.service.domain.shell.dto.rest.response.OrderRespo
 import com.intellibucket.order.service.domain.shell.handler.command.OrderAssignCommandHandler;
 import com.intellibucket.order.service.domain.shell.handler.command.OrderCancelCommandHandler;
 import com.intellibucket.order.service.domain.shell.handler.command.OrderCreateCommandHandler;
+import com.intellibucket.order.service.domain.shell.handler.command.OrderRejectCommandHandler;
 import com.intellibucket.order.service.domain.shell.port.input.rest.abstracts.command.OrderCommandServiceAdapter;
 import lombok.RequiredArgsConstructor;
 
-//TODO FIX add orderItemRoot companyId
 @RequiredArgsConstructor
 public class OrderCommandServiceHandler implements OrderCommandServiceAdapter {
     private final OrderCreateCommandHandler orderCreateCommandHandler;
     private final OrderCancelCommandHandler orderCancelCommandHandler;
     private final OrderAssignCommandHandler orderAssignCommandHandler;
+    private final OrderRejectCommandHandler orderRejectCommandHandler;
 
 
     @Override
@@ -37,7 +38,7 @@ public class OrderCommandServiceHandler implements OrderCommandServiceAdapter {
 
     @Override
     public void rejectOrder(OrderRejectCommand orderRejectCommand) throws OrderDomainException {
-
+        orderRejectCommandHandler.handle(orderRejectCommand);
     }
 
 
