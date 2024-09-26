@@ -6,7 +6,6 @@ import com.intellibucket.user.service.domain.core.valueObject.Password;
 import com.intellibucket.user.service.domain.core.valueObject.RoleAuthorithy;
 import com.intellibucket.user.service.domain.core.valueObject.Status;
 import jakarta.persistence.*;
-import jakarta.validation.Valid;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Pattern;
@@ -56,7 +55,7 @@ public abstract class BaseUserEntity {
     @JoinColumn(name = "user_address_id") // foreign key
     UserAddressEntity address;
 
-    @OneToOne
+    @OneToOne // FIX IT TO OneToMany
     @JoinColumn(name = "phone_number_id") // foreign key
     PhoneNumberEntity phoneNumberEntity;
 }

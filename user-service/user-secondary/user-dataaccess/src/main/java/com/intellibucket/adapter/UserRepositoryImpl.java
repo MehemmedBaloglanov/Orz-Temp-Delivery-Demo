@@ -79,6 +79,4 @@ private final UserJpaRepository userJpaRepository;
             return Optional.of(userDataAccessMapper.userEntityToUserRoot(userEntity));
         }
     }
-
-
 }
