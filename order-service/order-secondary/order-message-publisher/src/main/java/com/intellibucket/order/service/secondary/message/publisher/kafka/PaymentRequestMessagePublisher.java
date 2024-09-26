@@ -4,6 +4,7 @@ import com.intellibucket.kafka.config.producer.KafkaMessageHelper;
 import com.intellibucket.kafka.config.producer.KafkaProducer;
 import com.intellibucket.kafka.order.avro.model.PaymentRequestAvroModel;
 import com.intellibucket.order.service.domain.core.exception.OrderDomainException;
+import com.intellibucket.order.service.domain.shell.config.OrderServiceConfigData;
 import com.intellibucket.order.service.domain.shell.outbox.model.message.OrderPaymentOutboxMessage;
 import com.intellibucket.order.service.domain.shell.outbox.model.payload.OrderPaymentEventPayload;
 import com.intellibucket.order.service.domain.shell.port.output.publisher.AbstractPaymentRequestMessagePublisher;
@@ -23,29 +24,28 @@ public class PaymentRequestMessagePublisher implements AbstractPaymentRequestMes
 
     private final KafkaMessageHelper kafkaMessageHelper;
     private final OrderKafkaPublisherHelper orderKafkaPublisherHelper;
-    private final KafkaProducer<String, PaymentRequestAvroModel> kafkaTemplate; //FIXME add kafka template generic types
+    private final KafkaProducer<String, PaymentRequestAvroModel> kafkaProducer;
     private final OrderMessagePublisherDataMapper orderMessagePublisherDataMapper;
+    private final OrderServiceConfigData orderServiceConfigData;
 
     @Override
-    public void publish(OrderPaymentOutboxMessage message, BiConsumer<OrderPaymentOutboxMessage, OutboxStatus> callback) throws OrderDomainException {
-        OrderPaymentEventPayload orderPaymentEventPayload = kafkaMessageHelper.getOrderEventPayload(message.getPayload(), OrderPaymentEventPayload.class);
-
+    public void publish(OrderPaymentOutboxMessage message, BiConsumer<OrderPaymentOutboxMessage, OutboxStatus> outboxCallback) throws OrderDomainException {
+        OrderPaymentEventPayload payload = kafkaMessageHelper.getOrderEventPayload(message.getPayload(), OrderPaymentEventPayload.class);
         String sagaId = message.getSagaId().toString();
+        log.info("Received PaymentRequestMessagePublisher for order id: {} and saga id: {}", payload.getOrderId(), sagaId);
+        try {
+            PaymentRequestAvroModel paymentRequestAvroModel = orderMessagePublisherDataMapper.orderPaymentEventToPaymentRequestAvroModel(sagaId, payload);
 
-        PaymentRequestAvroModel paymentRequestAvroModel = orderMessagePublisherDataMapper.orderPaymentEventToPaymentRequestAvroModel(sagaId, orderPaymentEventPayload);
+            kafkaProducer.send(
+                    orderServiceConfigData.getPaymentRequestTopicName(),
+                    sagaId,
+                    paymentRequestAvroModel,
+                    orderKafkaPublisherHelper.getCallback(paymentRequestAvroModel, message, payload, outboxCallback));
 
-        orderKafkaPublisherHelper.getCallback(
-                paymentRequestAvroModel,
-                message,
-                orderPaymentEventPayload);
-
-        kafkaTemplate.send(
-                "myTopic",
-                sagaId,
-                paymentRequestAvroModel,
-                kafkaMessageHelper.getOrderEventPayload(
-                        paymentRequestAvroModel,
-                        ));
+            log.info("PaymentRequestMessagePublisher sent to Kafka for order id: {} and saga id: {}", payload.getOrderId(), sagaId);
+        } catch (Exception e) {
+            log.error("Error while sending PaymentRequestMessagePublisher to kafka with order id: {} and saga id: {}, error: {}", payload.getOrderId(), sagaId, e.getMessage());
+        }
 
 
     }

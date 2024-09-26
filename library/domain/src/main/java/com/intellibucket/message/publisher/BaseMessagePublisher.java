@@ -7,5 +7,5 @@ import com.intellibucket.outbox.OutboxStatus;
 import java.util.function.BiConsumer;
 
 public interface BaseMessagePublisher<T extends BaseMessageModel> {
-    void publish(T message, BiConsumer<T, OutboxStatus> callback) throws OrderDomainException;
+    void publish(T message, BiConsumer<T, OutboxStatus> outboxCallback) throws OrderDomainException;
 }

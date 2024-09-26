@@ -15,6 +15,7 @@ import java.util.UUID;
 @AllArgsConstructor
 public class OrderStartDeliveryEventOutboxMessage implements BaseMessageModel {
     private UUID id;
+    private UUID sagaId;
     private OffsetDateTime createdAt;
     private String type;
     private String payload;

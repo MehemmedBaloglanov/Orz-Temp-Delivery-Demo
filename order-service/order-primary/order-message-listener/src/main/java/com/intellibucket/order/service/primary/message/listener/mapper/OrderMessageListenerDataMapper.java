@@ -5,7 +5,7 @@ import com.intellibucket.kafka.order.avro.model.PaymentResponseAvroModel;
 import com.intellibucket.order.service.domain.shell.dto.message.DeliveryResponse;
 import com.intellibucket.order.service.domain.shell.dto.message.PaymentResponse;
 
-public class OrderMessageDataMapper {
+public class OrderMessageListenerDataMapper {
     public PaymentResponse paymentResponseAvroModelToPaymentResponse(PaymentResponseAvroModel paymentResponseAvroModel) {
         return null;
     }
