@@ -49,6 +49,7 @@
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="order-dataaccess" target="17" />
+      <module name="user-dataaccess" target="17" />
     </bytecodeTargetLevel>
   </component>
 </project>
