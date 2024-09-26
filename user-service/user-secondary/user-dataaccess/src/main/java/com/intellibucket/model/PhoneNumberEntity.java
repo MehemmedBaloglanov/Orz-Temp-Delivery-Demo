@@ -22,7 +22,7 @@ public class PhoneNumberEntity {
     @Id
     @JsonProperty("id")
     @GeneratedValue(strategy = GenerationType.AUTO)
-    String phoneNumberId;
+    Long phoneNumberId;
     PhoneNumberType type;
     String countryCode;
     String number;

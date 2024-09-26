@@ -2,9 +2,7 @@ package com.intellibucket.user.service.domain.shell.port.output.repository;
 
 import com.intelliacademy.orizonroute.identity.user.UserID;
 import com.intelliacademy.orizonroute.valueobjects.common.Email;
-import com.intellibucket.model.UserEntity;
 import com.intellibucket.user.service.domain.core.root.UserRoot;
-import org.jetbrains.annotations.NotNull;
 
 import java.util.Optional;
 

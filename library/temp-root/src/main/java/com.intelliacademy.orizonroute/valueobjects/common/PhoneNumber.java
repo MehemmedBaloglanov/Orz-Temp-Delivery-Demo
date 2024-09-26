@@ -2,10 +2,12 @@ package com.intelliacademy.orizonroute.valueobjects.common;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.intelliacademy.orizonroute.valueobjects.user.PhoneNumberType;
+import lombok.Builder;
 
 /**
  * Raw Phone number must be x-xxxxxxxxx
  */
+@Builder
 @ValueObject
 public sealed class PhoneNumber permits PhoneNumber.Nil{
     public static final String WITHOUT_COUNTRY_CODE_PHONE_NUMBER_EXP = "^[0-9]{8,15}$";
