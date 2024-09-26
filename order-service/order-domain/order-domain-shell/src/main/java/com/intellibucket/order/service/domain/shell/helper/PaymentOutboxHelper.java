@@ -6,9 +6,10 @@ import com.food.ordering.system.outbox.OutboxStatus;
 import com.food.ordering.system.saga.SagaStatus;
 import com.intellibucket.order.service.domain.core.exception.OrderDomainException;
 import com.intellibucket.order.service.domain.core.valueobject.OrderStatus;
-import com.intellibucket.order.service.domain.shell.outbox.model.payment.OrderPaymentEventPayload;
-import com.intellibucket.order.service.domain.shell.outbox.model.payment.OrderPaymentOutboxMessage;
-import com.intellibucket.order.service.domain.shell.port.output.repository.PaymentOutboxRepository;
+import com.intellibucket.order.service.domain.shell.outbox.model.payload.OrderPaymentEventPayload;
+import com.intellibucket.order.service.domain.shell.outbox.model.message.OrderPaymentOutboxMessage;
+import com.intellibucket.order.service.domain.shell.port.output.repository.OrderPaymentOutboxRepository;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,29 +22,25 @@ import static com.food.ordering.system.saga.order.SagaConstants.ORDER_SAGA_NAME;
 
 @Slf4j
 @Component
+@RequiredArgsConstructor
 public class PaymentOutboxHelper {
 
-    private final PaymentOutboxRepository paymentOutboxRepository;
+    private final OrderPaymentOutboxRepository orderPaymentOutboxRepository;
     private final ObjectMapper objectMapper;
-
-    public PaymentOutboxHelper(PaymentOutboxRepository paymentOutboxRepository, ObjectMapper objectMapper) {
-        this.paymentOutboxRepository = paymentOutboxRepository;
-        this.objectMapper = objectMapper;
-    }
 
     @Transactional(readOnly = true)
     public Optional<List<OrderPaymentOutboxMessage>> getPaymentOutboxMessageByOutboxStatusAndSagaStatus(OutboxStatus outboxStatus, SagaStatus... sagaStatus) {
-        return paymentOutboxRepository.findByTypeAndOutboxStatusAndSagaStatus(ORDER_SAGA_NAME, outboxStatus, sagaStatus);
+        return orderPaymentOutboxRepository.findByTypeAndOutboxStatusAndSagaStatus(ORDER_SAGA_NAME, outboxStatus, sagaStatus);
     }
 
     @Transactional(readOnly = true)
     public Optional<OrderPaymentOutboxMessage> getPaymentOutboxMessageBySagaIdAndSagaStatus(UUID sagaId, SagaStatus... sagaStatus) {
-        return paymentOutboxRepository.findByTypeAndSagaIdAndSagaStatus(ORDER_SAGA_NAME, sagaId, sagaStatus);
+        return orderPaymentOutboxRepository.findByTypeAndSagaIdAndSagaStatus(ORDER_SAGA_NAME, sagaId, sagaStatus);
     }
 
     @Transactional
     public void save(OrderPaymentOutboxMessage orderPaymentOutboxMessage) throws OrderDomainException {
-        OrderPaymentOutboxMessage response = paymentOutboxRepository.save(orderPaymentOutboxMessage);
+        OrderPaymentOutboxMessage response = orderPaymentOutboxRepository.save(orderPaymentOutboxMessage);
         if (response == null) {
             log.error("Could not save OrderPaymentOutboxMessage with outbox id: {}", orderPaymentOutboxMessage.getId());
             throw new OrderDomainException("Could not save OrderPaymentOutboxMessage with outbox id: " + orderPaymentOutboxMessage.getId());
@@ -52,7 +49,11 @@ public class PaymentOutboxHelper {
     }
 
     @Transactional
-    public void savePaymentOutboxMessage(OrderPaymentEventPayload paymentEventPayload, OrderStatus orderStatus, SagaStatus sagaStatus, OutboxStatus outboxStatus, UUID sagaId) throws OrderDomainException {
+    public void savePaymentOutboxMessage(OrderPaymentEventPayload paymentEventPayload,
+                                         OrderStatus orderStatus,
+                                         SagaStatus sagaStatus,
+                                         OutboxStatus outboxStatus,
+                                         UUID sagaId) throws OrderDomainException {
         OrderPaymentOutboxMessage outboxMessage = OrderPaymentOutboxMessage.builder()
                 .id(UUID.randomUUID())
                 .sagaId(sagaId)
@@ -68,7 +69,7 @@ public class PaymentOutboxHelper {
 
     @Transactional
     public void deletePaymentOutboxMessageByOutboxStatusAndSagaStatus(OutboxStatus outboxStatus, SagaStatus... sagaStatus) {
-        paymentOutboxRepository.deleteByTypeAndOutboxStatusAndSagaStatus(ORDER_SAGA_NAME, outboxStatus, sagaStatus);
+        orderPaymentOutboxRepository.deleteByTypeAndOutboxStatusAndSagaStatus(ORDER_SAGA_NAME, outboxStatus, sagaStatus);
     }
 
     private String createPayload(OrderPaymentEventPayload paymentEventPayload) throws OrderDomainException {

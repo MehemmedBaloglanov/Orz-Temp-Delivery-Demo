@@ -12,7 +12,7 @@ import java.util.UUID;
 
 @Component
 @Scope("prototype")
-public class TestSecurityContextHolder implements AbstractSecurityContextHolder {
+public class TestSecurityContextHolder implements com.intellibucket.order.service.domain.shell.security.AbstractSecurityContextHolder {
 
     @Value("${env.test.current.user.id:#{null}}")
     private String testCurrentUserId;

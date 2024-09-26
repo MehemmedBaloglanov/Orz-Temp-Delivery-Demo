@@ -12,5 +12,4 @@ import lombok.Getter;
 public class UserChangePasswordCommand {
     private String oldPassword;
     private String newPassword;
-
 }

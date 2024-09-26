@@ -42,8 +42,6 @@ public class UserCommandService implements AbstractUserCommandService {
     @Override
     public void userLoggedIn(UserLoginCommand command) throws UserDomainException {
         userLoginCommandHandler.handle(command);
-
-
     }
 
     @Override
