@@ -31,6 +31,6 @@ private final AbstractSecurityContextHolder securityContextHolder;
 
         UserDeletedDomainEvent userDeletedDomainEvent = userDomainService.userDeleted(userRoot.get());
 
-        userRepository.save(userRoot.get());
+        userRepository.delete(userRoot.get());
     }
 }

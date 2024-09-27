@@ -4,6 +4,7 @@ import com.intelliacademy.orizonroute.identity.user.UserID;
 import com.intellibucket.user.service.domain.core.exception.UserDomainException;
 import com.intellibucket.user.service.domain.core.exception.password.PasswordValidationException;
 import com.intellibucket.user.service.domain.core.exception.user.UserNotFoundException;
+import com.intellibucket.user.service.domain.core.exception.user.UserSavedException;
 import com.intellibucket.user.service.domain.core.root.UserRoot;
 import com.intellibucket.user.service.domain.shell.dto.request.*;
 import com.intellibucket.user.service.domain.shell.handler.*;
@@ -56,13 +57,13 @@ public class UserCommandService implements AbstractUserCommandService {
     }
 
     @Override
-    public void updateCustomer(CustomerUpdateCommand command) throws UserNotFoundException {
+    public void updateCustomer(CustomerUpdateCommand command) throws UserNotFoundException, UserSavedException {
         customerUpdateCommandHandler.handle(command);
 
     }
 
     @Override
-    public void updateCompany(CompanyUpdateCommand command) throws UserNotFoundException {
+    public void updateCompany(CompanyUpdateCommand command) throws UserNotFoundException, UserSavedException {
         companyUpdateCommandHandler.handle(command);
     }
 
