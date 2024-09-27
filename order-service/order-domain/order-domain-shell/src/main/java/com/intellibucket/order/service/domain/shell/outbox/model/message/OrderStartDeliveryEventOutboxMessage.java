@@ -6,25 +6,13 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.experimental.SuperBuilder;
 
 import java.time.OffsetDateTime;
 import java.util.UUID;
 
 @Getter
-@Builder
-@AllArgsConstructor
-public class OrderStartDeliveryEventOutboxMessage implements BaseMessageModel {
-    private UUID id;
-    private UUID sagaId;
-    private OffsetDateTime createdAt;
-    private String type;
-    private String payload;
+@SuperBuilder
+public class OrderStartDeliveryEventOutboxMessage extends BaseMessageModel {
 
-    @Setter
-    private OutboxStatus outboxStatus;
-
-    @Setter
-    private OffsetDateTime processedAt;
-
-    private int version;
 }

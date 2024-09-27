@@ -9,6 +9,7 @@ import com.intellibucket.order.service.domain.core.service.OrderDomainService;
 import com.intellibucket.order.service.domain.core.valueobject.OrderCancelType;
 import com.intellibucket.order.service.domain.shell.dto.message.PaymentResponse;
 import com.intellibucket.order.service.domain.shell.helper.OrderOutboxHelper;
+import com.intellibucket.order.service.domain.shell.helper.OrderRepositoryHelper;
 import com.intellibucket.order.service.domain.shell.helper.OrderSagaHelper;
 import com.intellibucket.order.service.domain.shell.outbox.model.message.OrderPaymentOutboxMessage;
 import com.intellibucket.order.service.domain.shell.port.output.repository.OrderRepository;
@@ -27,6 +28,7 @@ public class PaymentCancelledMessageHandler {
 
     private final OrderDomainService orderDomainService;
     private final OrderRepository orderRepository;
+    private final OrderRepositoryHelper orderRepositoryHelper;
     private final OrderSagaHelper orderSagaHelper;
     private final OrderOutboxHelper orderOutboxHelper;
 
@@ -50,10 +52,10 @@ public class PaymentCancelledMessageHandler {
         }
 
         OrderRoot order = orderRootOptional.get();
+        order.cancelBySystem();
+        OrderCancelledEvent orderCancelledEvent = orderDomainService.orderPaymentCancel(order, paymentResponse.getFailureMessage());
 
-        OrderCancelledEvent orderCancelledEvent = orderDomainService.orderPaymentCancel(order, OrderCancelType.SYSTEM, paymentResponse.getFailureMessages());
-
-        orderRepository.save(order);
+        orderRepositoryHelper.saveOrder(order);
 
         orderOutboxHelper.cancelAndSavePaymentOutboxMessage(orderPaymentOutboxMessage, orderCancelledEvent);
 

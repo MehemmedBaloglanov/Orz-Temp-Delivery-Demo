@@ -12,7 +12,7 @@ import java.time.OffsetDateTime;
 @Getter
 @SuperBuilder
 @AllArgsConstructor
-public class OrderPaymentEventPayload  extends BaseEventPayload{
+public class OrderPaymentEventPayload extends BaseEventPayload {
 
     @JsonProperty
     private String customerId;
@@ -20,10 +20,5 @@ public class OrderPaymentEventPayload  extends BaseEventPayload{
     @JsonProperty
     private BigDecimal price;
 
-    @JsonProperty
-    private OffsetDateTime createdAt;
-
-    @JsonProperty
-    private String paymentOrderStatus;
 
 }

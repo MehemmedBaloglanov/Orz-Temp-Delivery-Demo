@@ -8,7 +8,11 @@ import lombok.Getter;
 @Getter
 @Builder
 @AllArgsConstructor
-public class OrderAssignCommand {
+public class OrderConfirmCommand {
+
     @JsonProperty("order_id")
     private String orderId;
+
+    @JsonProperty("order_id")
+    private String orderItemId;
 }

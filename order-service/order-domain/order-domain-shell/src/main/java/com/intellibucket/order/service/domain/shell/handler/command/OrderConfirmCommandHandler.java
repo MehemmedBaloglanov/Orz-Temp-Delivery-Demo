@@ -3,20 +3,14 @@ package com.intellibucket.order.service.domain.shell.handler.command;
 import com.intelliacademy.orizonroute.identity.company.CompanyID;
 import com.intelliacademy.orizonroute.identity.order.ord.OrderID;
 import com.intelliacademy.orizonroute.identity.order.ord.OrderItemID;
-import com.intellibucket.order.service.domain.core.event.OrderCancelledEvent;
 import com.intellibucket.order.service.domain.core.exception.OrderDomainException;
 import com.intellibucket.order.service.domain.core.exception.OrderNotFoundException;
 import com.intellibucket.order.service.domain.core.root.OrderItemRoot;
 import com.intellibucket.order.service.domain.core.root.OrderRoot;
 import com.intellibucket.order.service.domain.core.service.OrderDomainService;
-import com.intellibucket.order.service.domain.core.valueobject.OrderCancelType;
-import com.intellibucket.order.service.domain.core.valueobject.OrderStatus;
-import com.intellibucket.order.service.domain.shell.dto.rest.command.OrderRejectCommand;
-import com.intellibucket.order.service.domain.shell.helper.OrderOutboxHelper;
+import com.intellibucket.order.service.domain.core.valueobject.OrderItemStatus;
+import com.intellibucket.order.service.domain.shell.dto.rest.command.OrderConfirmCommand;
 import com.intellibucket.order.service.domain.shell.helper.OrderRepositoryHelper;
-import com.intellibucket.order.service.domain.shell.mapper.OrderShellMapper;
-import com.intellibucket.order.service.domain.shell.outbox.model.message.OrderCancelPaymentEventOutboxMessage;
-import com.intellibucket.order.service.domain.shell.outbox.model.payload.OrderCancelPaymentEventPayload;
 import com.intellibucket.order.service.domain.shell.port.output.repository.OrderRepository;
 import com.intellibucket.order.service.domain.shell.security.AbstractSecurityContextHolder;
 import lombok.RequiredArgsConstructor;
@@ -24,26 +18,23 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
 import java.util.Optional;
 
 @Slf4j
 @Component
 @RequiredArgsConstructor
-public class OrderRejectCommandHandler {
+public class OrderConfirmCommandHandler {
 
-    private final OrderRepository orderRepository;
-    private final OrderDomainService orderDomainService;
-    private final OrderRepositoryHelper orderRepositoryHelper;
     private final AbstractSecurityContextHolder securityContextHolder;
-    private final OrderShellMapper orderShellMapper;
-    private final OrderOutboxHelper orderOutboxHelper;
+    private final OrderRepository orderRepository;
+    private final OrderRepositoryHelper orderRepositoryHelper;
+    private final OrderDomainService orderDomainService;
 
     @Transactional
-    public void handle(OrderRejectCommand command) throws OrderDomainException {
+    public void handle(OrderConfirmCommand orderConfirmCommand) throws OrderDomainException {
 
-        OrderID orderId = OrderID.of(command.getOrderId());
-        OrderItemID orderItemId = OrderItemID.of(command.getOrderItemId());
+        OrderID orderId = OrderID.of(orderConfirmCommand.getOrderId());
+        OrderItemID orderItemId = OrderItemID.of(orderConfirmCommand.getOrderItemId());
         CompanyID companyID = securityContextHolder.currentCompanyID();
 
 
@@ -74,15 +65,14 @@ public class OrderRejectCommandHandler {
             throw new OrderDomainException("OrderItem with id: " + orderItemId + " is not in company ID");
         }
 
-        orderItemRoot.reject();
+        orderItemRoot.confirm();
 
-        OrderCancelledEvent orderCancelledEvent = orderDomainService.orderPaymentCancel(orderRoot, "company rejected order item: " + orderItemId);
+        if (orderRoot.getItems().stream().noneMatch(orderItem -> orderItem.getOrderItemStatus() == OrderItemStatus.DRAFT)) {
+            log.info("Order with id: {} is all items confirmed", orderId);
+            orderDomainService.confirmOrder(orderRoot);
+        }
+
         orderRepositoryHelper.saveOrder(orderRoot);
 
-        OrderCancelPaymentEventPayload orderCancelPaymentEventPayload = orderShellMapper.orderCancelledEventToOrderPaymentCancelEventPayload(orderCancelledEvent);
-        orderOutboxHelper.createAndSavePaymentCancelOutboxMessage(orderCancelPaymentEventPayload);
-
-
     }
-
 }
