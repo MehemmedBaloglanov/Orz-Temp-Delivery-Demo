@@ -9,5 +9,4 @@ import java.util.List;
 public interface CompanyQueryServiceAdapter {
     CompanyResponse getCompanyById(CompanyGetByIDQuery id) throws CompanyDomainException;
 
-    List<CompanyResponse> getAllCompany() throws CompanyDomainException;
 }

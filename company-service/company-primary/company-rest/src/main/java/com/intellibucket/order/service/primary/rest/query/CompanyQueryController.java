@@ -26,11 +26,4 @@ public class CompanyQueryController {
         CompanyResponse companyResponse = companyQueryServiceAdapter.getCompanyById(id);
         return new ResponseEntity<>(companyResponse, HttpStatus.OK);
     }
-
-    @GetMapping
-    public ResponseEntity<List<CompanyResponse>> getAllCompany() throws CompanyDomainException {
-        List<CompanyResponse> companyResponse =  companyQueryServiceAdapter.getAllCompany();
-        return new ResponseEntity<>(companyResponse, HttpStatus.OK);
-    }
-
 }
