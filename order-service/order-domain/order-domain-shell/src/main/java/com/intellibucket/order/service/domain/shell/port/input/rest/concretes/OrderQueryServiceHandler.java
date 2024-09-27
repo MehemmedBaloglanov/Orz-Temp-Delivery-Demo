@@ -6,7 +6,9 @@ import com.intellibucket.order.service.domain.core.exception.OrderNotFoundExcept
 import com.intellibucket.order.service.domain.shell.dto.rest.query.OrderTrackingQuery;
 import com.intellibucket.order.service.domain.shell.dto.rest.response.OrderResponse;
 import com.intellibucket.order.service.domain.shell.dto.rest.response.TrackOrderResponse;
-import com.intellibucket.order.service.domain.shell.handler.query.OrderQueryHandler;
+import com.intellibucket.order.service.domain.shell.handler.query.OrderCompanyUnassignedQueryHandler;
+import com.intellibucket.order.service.domain.shell.handler.query.OrderGetAllQueryHandler;
+import com.intellibucket.order.service.domain.shell.handler.query.OrderSingleFetchQueryHandler;
 import com.intellibucket.order.service.domain.shell.handler.query.OrderTrackQueryHandler;
 import com.intellibucket.order.service.domain.shell.port.input.rest.abstracts.query.OrderQueryServiceAdapter;
 import lombok.RequiredArgsConstructor;
@@ -18,7 +20,9 @@ import java.util.List;
 @RequiredArgsConstructor
 public class OrderQueryServiceHandler implements OrderQueryServiceAdapter {
     private final OrderTrackQueryHandler orderTrackQueryHandler;
-    private final OrderQueryHandler orderQueryHandler;
+    private final OrderGetAllQueryHandler orderGetAllQueryHandler;
+    private final OrderSingleFetchQueryHandler orderSingleFetchQueryHandler;
+    private final OrderCompanyUnassignedQueryHandler orderCompanyUnassignedQueryHandler;
 
     @Override
     public TrackOrderResponse trackOrder(OrderTrackingQuery orderTrackingQuery) throws OrderNotFoundException {
@@ -27,17 +31,16 @@ public class OrderQueryServiceHandler implements OrderQueryServiceAdapter {
 
     @Override
     public List<OrderResponse> orders(UserID userID) {
-        return orderQueryHandler.handle();
+        return orderGetAllQueryHandler.handle();
     }
 
     @Override
     public OrderResponse orderById(OrderID orderId) {
-
-        return null;
+        return orderSingleFetchQueryHandler.handle(orderId);
     }
 
     @Override
     public List<OrderResponse> getUnassignOrders() {
-        return List.of();
+        return orderCompanyUnassignedQueryHandler.handle();
     }
 }

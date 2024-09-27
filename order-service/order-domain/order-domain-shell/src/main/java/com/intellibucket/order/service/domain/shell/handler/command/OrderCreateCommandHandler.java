@@ -1,6 +1,6 @@
 package com.intellibucket.order.service.domain.shell.handler.command;
 
-import com.food.ordering.system.outbox.OutboxStatus;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.intelliacademy.orizonroute.identity.company.CompanyID;
 import com.intelliacademy.orizonroute.identity.order.ord.OrderID;
 import com.intelliacademy.orizonroute.identity.order.ord.OrderItemID;
@@ -19,9 +19,10 @@ import com.intellibucket.order.service.domain.shell.dto.connectors.company.Produ
 import com.intellibucket.order.service.domain.shell.dto.connectors.company.ProductStatus;
 import com.intellibucket.order.service.domain.shell.dto.connectors.user.UserAddress;
 import com.intellibucket.order.service.domain.shell.dto.rest.response.OrderResponse;
+import com.intellibucket.order.service.domain.shell.helper.OrderOutboxHelper;
 import com.intellibucket.order.service.domain.shell.helper.OrderSagaHelper;
-import com.intellibucket.order.service.domain.shell.helper.PaymentOutboxHelper;
 import com.intellibucket.order.service.domain.shell.mapper.OrderShellMapper;
+import com.intellibucket.order.service.domain.shell.outbox.model.payload.OrderPaymentEventPayload;
 import com.intellibucket.order.service.domain.shell.port.output.connector.AbstractCartServiceConnector;
 import com.intellibucket.order.service.domain.shell.port.output.connector.AbstractCompanyServiceConnector;
 import com.intellibucket.order.service.domain.shell.port.output.connector.AbstractUserServiceConnector;
@@ -33,9 +34,9 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -48,8 +49,7 @@ public class OrderCreateCommandHandler {
     private final OrderDomainService orderDomainService;
     private final OrderShellMapper orderShellMapper;
     private final OrderRepository orderRepository;
-    private final PaymentOutboxHelper paymentOutboxHelper;
-    private final OrderSagaHelper orderSagaHelper;
+    private final OrderOutboxHelper orderOutboxHelper;
 
     private final AbstractCartServiceConnector cartServiceConnector;
     private final AbstractCompanyServiceConnector companyServiceConnector;
@@ -64,7 +64,11 @@ public class OrderCreateCommandHandler {
 
         Map<ProductID, ProductResponse> productsResponse = fetchProducts(cartItems);
 
-        List<OrderItemRoot> orderItemRootList = cartItems.stream().map(item -> getOrderItemRoot(item, productsResponse, orderID)).toList();
+        List<OrderItemRoot> orderItemRootList = new ArrayList<>();
+        for (CartResponse item : cartItems) {
+            OrderItemRoot orderItemRoot = getOrderItemRoot(item, productsResponse, orderID);
+            orderItemRootList.add(orderItemRoot);
+        }
 
 
         OrderRoot orderRoot = OrderRoot.builder()
@@ -81,12 +85,9 @@ public class OrderCreateCommandHandler {
         orderRepository.save(orderRoot);
 
 
-        paymentOutboxHelper.savePaymentOutboxMessage(
-                orderShellMapper.orderCreatedEventToOrderPaymentEventPayload(orderCreatedEvent),
-                orderCreatedEvent.getOrderRoot().getStatus(),
-                orderSagaHelper.orderStatusToSagaStatus(orderCreatedEvent.getOrderRoot().getStatus()),
-                OutboxStatus.STARTED,
-                UUID.randomUUID());
+        OrderPaymentEventPayload paymentEventPayload = orderShellMapper.orderCreatedEventToOrderPaymentEventPayload(orderCreatedEvent);
+
+        orderOutboxHelper.createAndSavePaymentOutboxMessage(paymentEventPayload);
 
         return orderShellMapper.orderRootToOrderResponse(orderRoot);
     }
@@ -95,7 +96,6 @@ public class OrderCreateCommandHandler {
         UserAddress userPrimaryAddress = userServiceConnector.getUserPrimaryAddress(userID);
         return orderShellMapper.userAddressToOrderAddress(userPrimaryAddress);
     }
-
 
     private Map<ProductID, ProductResponse> fetchProducts(List<CartResponse> cartItems) {
         return companyServiceConnector
@@ -106,7 +106,7 @@ public class OrderCreateCommandHandler {
 
     private OrderItemRoot getOrderItemRoot(CartResponse item,
                                            Map<ProductID, ProductResponse> productsResponse,
-                                           OrderID orderID) {
+                                           OrderID orderID) throws OrderDomainException {
 
         ProductID productID = item.getProductID();
         ProductResponse productResponse = productsResponse.get(productID);
@@ -118,7 +118,7 @@ public class OrderCreateCommandHandler {
         }
         if (productResponse.getStatus() == ProductStatus.INACTIVE) {
             log.error("product is not in valid state, productId: {}", productID);
-//            throw new OrderDomainException("product is not in valid state, productId: " + productID);
+          throw new OrderDomainException("product is not in valid state, productId: " + productID);
         }
 
         Money price = productResponse.getPrice();
