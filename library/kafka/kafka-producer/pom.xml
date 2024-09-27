@@ -41,6 +41,10 @@
             <version>2.1.1</version>
             <scope>compile</scope>
         </dependency>
+        <dependency>
+            <groupId>com.intellibucket</groupId>
+            <artifactId>order-domain-core</artifactId>
+        </dependency>
     </dependencies>
 
 </project>

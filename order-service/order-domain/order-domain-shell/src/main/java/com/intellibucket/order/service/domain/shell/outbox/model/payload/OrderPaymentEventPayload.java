@@ -4,23 +4,21 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.experimental.SuperBuilder;
 
 import java.math.BigDecimal;
 import java.time.OffsetDateTime;
 
 @Getter
-@Builder
+@SuperBuilder
 @AllArgsConstructor
-public class OrderPaymentEventPayload {
+public class OrderPaymentEventPayload extends BaseEventPayload {
 
     @JsonProperty
-    private String orderId;
-    @JsonProperty
     private String customerId;
+
     @JsonProperty
     private BigDecimal price;
-    @JsonProperty
-    private OffsetDateTime createdAt;
-    @JsonProperty
-    private String paymentOrderStatus;
+
+
 }
