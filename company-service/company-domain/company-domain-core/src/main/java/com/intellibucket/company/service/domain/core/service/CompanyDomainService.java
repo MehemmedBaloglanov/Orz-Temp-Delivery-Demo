@@ -1,9 +1,11 @@
 package com.intellibucket.company.service.domain.core.service;
 
+import com.intelliacademy.orizonroute.valueobjects.common.Username;
 import com.intellibucket.company.service.domain.core.event.company.*;
 import com.intellibucket.company.service.domain.core.exception.ValidateException;
 import com.intellibucket.company.service.domain.core.root.CompanyRoot;
 import com.intellibucket.company.service.domain.core.root.ProductRoot;
+import com.intellibucket.company.service.domain.core.valueobject.CompanyAddress;
 
 public interface CompanyDomainService {
 
@@ -19,7 +21,8 @@ public interface CompanyDomainService {
 
     ProductRemovedEvent productRemoved(CompanyRoot companyRoot,ProductRoot productRoot) throws ValidateException;
 
+    CompanyAddressUpdateEvent companyAddressUpdate(CompanyRoot companyRoot, CompanyAddress companyAddress) throws ValidateException;
 
-
+    CompanyNameUpdateEvent companyNameUpdate(CompanyRoot companyRoot, Username companyName) throws ValidateException;
 }
 

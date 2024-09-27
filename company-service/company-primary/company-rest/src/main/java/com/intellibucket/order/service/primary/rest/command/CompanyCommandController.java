@@ -2,8 +2,8 @@ package com.intellibucket.order.service.primary.rest.command;
 
 
 import com.intellibucket.company.service.domain.core.exception.CompanyDomainException;
-import com.intellibucket.company.service.domain.shell.dto.rest.command.CompanyActiveCommand;
-import com.intellibucket.company.service.domain.shell.dto.rest.command.CompanySuspendedCommand;
+import com.intellibucket.company.service.domain.core.valueobject.CompanyAddress;
+import com.intellibucket.company.service.domain.shell.dto.rest.command.*;
 import com.intellibucket.company.service.domain.shell.port.input.rest.abstracts.command.CompanyCommandServiceAdapter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -16,21 +16,32 @@ public class CompanyCommandController {
     private final CompanyCommandServiceAdapter companyCommandServiceAdapter;
 
     //SUSPENDED
-    @PutMapping()
+    @PutMapping("/suspend")
     public void changeStatusToSuspended(@RequestBody CompanySuspendedCommand command) throws CompanyDomainException {
         companyCommandServiceAdapter.changeStatusToSuspend(command);
     }
 
     //ACTIVE
-    @PutMapping()
+    @PutMapping("/active")
     public void changeCompanyStatusToActive(@RequestBody CompanyActiveCommand command) throws CompanyDomainException {
         companyCommandServiceAdapter.changeStatusToActive(command);
     }
 
-    /*
-    1)deleteStatus
-    2)updateAddress
-    3)updateCompany name
-     */
+    //DELETE
+    @PutMapping("/delete")
+    public void changeCompanyStatusToDelete(@RequestBody CompanyDeleteCommand command) throws CompanyDomainException {
+        companyCommandServiceAdapter.changeStatusToDelete(command);
+    }
 
+    //UPDATE ADDRESS
+    @PutMapping("/address")
+    public void updateCompanyAddress(@RequestBody CompanyAddressUpdateCommand command) throws CompanyDomainException {
+        companyCommandServiceAdapter.updateCompanyAddress(command);
+    }
+
+    //UPDATE NAME
+    @PutMapping(" /name")
+    public void updateName(@RequestBody CompanyNameUpdateCommand command) throws CompanyDomainException {
+        companyCommandServiceAdapter.updateCompanyName(command);
+    }
 }
