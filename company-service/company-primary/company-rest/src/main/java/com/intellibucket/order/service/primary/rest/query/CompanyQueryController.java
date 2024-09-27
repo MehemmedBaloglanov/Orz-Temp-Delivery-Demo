@@ -21,7 +21,7 @@ public class CompanyQueryController {
     private final CompanyQueryServiceAdapter companyQueryServiceAdapter;
 
     //GET COMPANY WITH ID
-    @GetMapping("/")
+    @GetMapping()
     public ResponseEntity<CompanyResponse> getCompanyById(@RequestBody CompanyGetByIDQuery id) throws CompanyDomainException {
         CompanyResponse companyResponse = companyQueryServiceAdapter.getCompanyById(id);
         return new ResponseEntity<>(companyResponse, HttpStatus.OK);
