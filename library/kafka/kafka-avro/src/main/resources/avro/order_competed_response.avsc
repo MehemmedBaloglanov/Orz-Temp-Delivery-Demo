@@ -1,0 +1,28 @@
+{
+  "namespace": "com.intellibucket.kafka.order.avro.model",
+  "type": "record",
+  "name": "OrderCompletedResponseAvroModel",
+  "fields": [
+    {
+      "name": "id",
+      "type": {
+        "type": "string",
+        "logicalType": "uuid"
+      }
+    },
+    {
+      "name": "customerId",
+      "type": {
+        "type": "string",
+        "logicalType": "uuid"
+      }
+    },
+    {
+      "name": "orderId",
+      "type": {
+        "type": "string",
+        "logicalType": "uuid"
+      }
+    }
+  ]
+}
