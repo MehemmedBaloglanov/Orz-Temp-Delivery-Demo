@@ -11,6 +11,5 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class CompanyUpdateCommand extends AbstractUserCreateCommand {
-    private String companyIdl;
     private String companyName;
 }

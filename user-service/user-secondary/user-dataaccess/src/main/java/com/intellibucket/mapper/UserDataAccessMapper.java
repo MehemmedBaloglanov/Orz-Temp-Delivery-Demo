@@ -4,14 +4,12 @@ import com.intelliacademy.orizonroute.identity.user.UserID;
 import com.intelliacademy.orizonroute.valueobjects.common.Email;
 import com.intelliacademy.orizonroute.valueobjects.common.PhoneNumber;
 import com.intelliacademy.orizonroute.valueobjects.user.EmailType;
-import com.intelliacademy.orizonroute.valueobjects.user.PhoneNumberType;
 import com.intellibucket.model.BaseUserEntity;
 import com.intellibucket.model.PhoneNumberEntity;
 import com.intellibucket.model.UserAddressEntity;
 import com.intellibucket.user.service.domain.core.root.UserRoot;
 import com.intellibucket.user.service.domain.core.valueObject.Address;
 import com.intellibucket.user.service.domain.core.valueObject.Password;
-import com.intellibucket.user.service.domain.core.valueObject.RoleAuthorithy;
 import lombok.Getter;
 
 import java.util.UUID;
@@ -20,9 +18,9 @@ import java.util.UUID;
 public class UserDataAccessMapper {
     public BaseUserEntity userRootToUserEntity(UserRoot userRoot) {
         return BaseUserEntity.builder()
-                .userEntityId(userRoot.getUserID().value())
+                .userEntityId(UserID.random().value())
                 .roleAuthority(userRoot.getRoleAuthorithy())
-                .emailType(EmailType.NONE)
+                .emailType(userRoot.getEmail().getType())
                 .status(userRoot.getStatus())
                 .address(addressToUserJpaAddress(userRoot.getAddress()))
                 .phoneNumberEntity(phoneNumberToPhoneNumberEntity(userRoot.getPhoneNumber()))

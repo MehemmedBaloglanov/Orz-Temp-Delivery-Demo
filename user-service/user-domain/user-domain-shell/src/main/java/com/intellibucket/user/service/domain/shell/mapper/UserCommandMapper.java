@@ -11,6 +11,8 @@ import com.intellibucket.user.service.domain.core.valueObject.RoleAuthorithy;
 import com.intellibucket.user.service.domain.core.valueObject.Status;
 import com.intellibucket.user.service.domain.shell.dto.request.*;
 
+import java.util.UUID;
+
 public class UserCommandMapper {
     // CompanyRegisterCommand to UserRoot mapping
     public static UserRoot companyCreateCommandToUserRoot(CompanyCreateCommand command) {
@@ -18,7 +20,7 @@ public class UserCommandMapper {
                 .username(Username.generate(command.getCompanyName()))
                 .email(Email.of(command.getEmailType(), command.getEmail()))
                 .password(Password.of(command.getPassword()))
-                .roleAuthorithy(RoleAuthorithy.CUSTOMER)
+                .roleAuthorithy(RoleAuthorithy.COMPANY)
                 .email(Email.of(command.getEmailType(), command.getEmail()))
                 .phoneNumber(PhoneNumber.of(command.getPhoneNumberType(), command.getCountryCode(), command.getPhoneNumber()))
                 .address(Address.of(command.getState(), command.getCountry(), command.getCity(), command.getStreet(), command.getPostalCode()))

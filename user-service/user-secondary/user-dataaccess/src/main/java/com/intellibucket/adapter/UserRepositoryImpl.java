@@ -70,7 +70,7 @@ private final UserJpaRepository userJpaRepository;
 
     @Override
     public Optional<UserRoot> findByEmail(Email email) {
-        Optional<BaseUserEntity> userEntityOptional = userJpaRepository.findByEmail(Email.getValue(email));
+        Optional<BaseUserEntity> userEntityOptional = userJpaRepository.findByEmail(email.getValue());
 
         if (userEntityOptional.isEmpty()) {
             return Optional.empty();

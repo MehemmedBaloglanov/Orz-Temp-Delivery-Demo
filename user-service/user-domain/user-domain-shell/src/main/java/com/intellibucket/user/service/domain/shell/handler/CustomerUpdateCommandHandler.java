@@ -9,6 +9,7 @@ import com.intellibucket.user.service.domain.shell.dto.request.CustomerUpdateCom
 import com.intellibucket.user.service.domain.shell.mapper.UserCommandMapper;
 import com.intellibucket.user.service.domain.shell.port.input.rest.abstracts.AbstractUserCommandService;
 import com.intellibucket.user.service.domain.shell.port.output.repository.UserRepository;
+import com.intellibucket.user.service.domain.shell.security.AbstractSecurityContextHolder;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -20,11 +21,12 @@ import java.util.UUID;
 public class CustomerUpdateCommandHandler {
     private final UserRepository userRepository;
     private final UserDomainService userDomainService;
+    private final AbstractSecurityContextHolder securityContextHolder;
 
     public void handle(CustomerUpdateCommand command) throws UserNotFoundException {
         UserRoot userUpdate = UserCommandMapper.customerUpdateCommandToUserRoot(command);
 //FIXME nezer et
-        UserID userID = UserID.of(command.getCustomerId());
+        UserID userID = securityContextHolder.currentUserID();
         Optional<UserRoot> userRoot= userRepository.findByUserId(userID);
        if (userRoot.isEmpty()) {
            throw new UserNotFoundException("User not found with ID" + userID.value());

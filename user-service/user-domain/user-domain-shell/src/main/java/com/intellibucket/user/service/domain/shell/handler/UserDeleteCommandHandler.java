@@ -9,6 +9,7 @@ import com.intellibucket.user.service.domain.core.service.adapter.UserDomainServ
 import com.intellibucket.user.service.domain.shell.dto.request.UserDeleteCommand;
 import com.intellibucket.user.service.domain.shell.port.input.rest.abstracts.AbstractUserCommandService;
 import com.intellibucket.user.service.domain.shell.port.output.repository.UserRepository;
+import com.intellibucket.user.service.domain.shell.security.AbstractSecurityContextHolder;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -19,9 +20,9 @@ import java.util.Optional;
 public class UserDeleteCommandHandler {
     private final UserRepository userRepository;
     private final UserDomainServiceImpl userDomainService;
-
+private final AbstractSecurityContextHolder securityContextHolder;
     public void handle(UserDeleteCommand command) throws UserDomainException {
-        UserID userID = UserID.of(command.getUserid());
+        UserID userID = securityContextHolder.currentUserID();
         Optional<UserRoot> userRoot = userRepository.findByUserId(userID);
 
         if (userRoot.isEmpty()) {
