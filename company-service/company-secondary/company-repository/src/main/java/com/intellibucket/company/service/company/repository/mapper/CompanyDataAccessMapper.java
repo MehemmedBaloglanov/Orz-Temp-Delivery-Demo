@@ -63,7 +63,6 @@ public class CompanyDataAccessMapper {
                         .productId(productRoot.getProductID().value())
                         .name(productRoot.getName())
                         .price(productRoot.getPrice().getAmount())
-                        .quantity(productRoot.getQuantity())
                         .status(productRoot.getStatus())
                         .companyId(productRoot.getCompanyID().value())
                         .build()).collect(Collectors.toList());
@@ -77,7 +76,6 @@ public class CompanyDataAccessMapper {
                         .companyID(CompanyID.of(productJpaEntity.getCompanyId()))
                         .status(productJpaEntity.getStatus())
                         .stockQuantity(productJpaEntity.getStockQuantity())
-                        .quantity(productJpaEntity.getQuantity())
                         .price(Money.of(productJpaEntity.getPrice()))
                         .build()).collect(Collectors.toList());
     }
@@ -87,7 +85,6 @@ public class CompanyDataAccessMapper {
                 .name(root.getName())
                 .productId(root.getProductID().value())
                 .price(root.getPrice().getAmount())
-                .quantity(root.getQuantity())
                 .stockQuantity(root.getStockQuantity())
                 .status(root.getStatus())
                 .companyId(root.getCompanyID().value())
@@ -100,7 +97,6 @@ public class CompanyDataAccessMapper {
                 .companyID(CompanyID.of(entity.getCompanyId()))
                 .productID(ProductID.of(entity.getProductId()))
                 .status(entity.getStatus())
-                .quantity(entity.getQuantity())
                 .stockQuantity(entity.getQuantity())
                 .price(Money.of(entity.getPrice()))
                 .build();

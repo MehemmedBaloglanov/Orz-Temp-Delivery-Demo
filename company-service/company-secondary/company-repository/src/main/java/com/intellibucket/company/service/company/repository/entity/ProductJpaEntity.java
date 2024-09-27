@@ -30,9 +30,6 @@ public class ProductJpaEntity {
 
     private UUID companyId;
 
-    @Column(nullable = false)
-    private Integer quantity;
-
     private Integer stockQuantity;
 
     @Enumerated(EnumType.STRING)

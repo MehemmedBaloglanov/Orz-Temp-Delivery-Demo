@@ -21,7 +21,6 @@ public class ProductRoot extends AggregateRoot<ProductID> {
     private String name;
     private Money price;
     private CompanyID companyID;
-    private Integer quantity;
     private Integer stockQuantity;
     private ProductStatus status;
 
@@ -38,7 +37,6 @@ public class ProductRoot extends AggregateRoot<ProductID> {
     private void validateProduct() throws ValidateException {
         validateName();
         validatePrice();
-        validateQuantity();
         validateStockQuantity();
         validateCompanyID();
     }
@@ -55,11 +53,7 @@ public class ProductRoot extends AggregateRoot<ProductID> {
         }
     }
 
-    private void validateQuantity() throws ValidateException {
-        if (quantity == null || quantity < 0) {
-            throw new ValidateException("Quantity cannot be null or negative.");
-        }
-    }
+
 
     private void validateCompanyID() throws ValidateException {
         if (companyID == null) {
@@ -118,14 +112,6 @@ public class ProductRoot extends AggregateRoot<ProductID> {
         return this;
     }
 
-    public ProductRoot updateQuantity(Integer newQuantity) throws ValidateException {
-        if (newQuantity == null || newQuantity <= 0) {
-            throw new ValidateException("New quantity must be greater than zero.");
-        }
-        this.quantity = newQuantity;
-        return this;
-    }
-
     public ProductRoot updateStockQuantity(Integer newStockQuantity) throws ValidateException {
         if (newStockQuantity == null || newStockQuantity < 0) {
             throw new ValidateException("New stock quantity cannot be null or negative.");
@@ -135,26 +121,6 @@ public class ProductRoot extends AggregateRoot<ProductID> {
     }
 
     //----------------------------->DECREASE AND INCREASE METHODS
-
-    public ProductRoot increaseQuantity(Integer amount) throws ValidateException {
-        if (amount == null || amount <= 0) {
-            throw new ValidateException("Increase amount must be greater than zero.");
-        }
-        this.quantity += amount;
-        return this;
-    }
-
-    public ProductRoot decreaseQuantity(Integer amount) throws ValidateException {
-        if (amount == null || amount <= 0) {
-            throw new ValidateException("Decrease amount must be greater than zero.");
-        }
-        if (this.quantity - amount < 0) {
-            throw new ValidateException("Quantity cannot be less than zero.");
-        }
-        this.quantity -= amount;
-        return this;
-    }
-
     public ProductRoot increaseStockQuantity(Integer amount) throws ValidateException {
         if (amount == null || amount <= 0) {
             throw new ValidateException("Increase stock quantity must be greater than zero.");
