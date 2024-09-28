@@ -28,7 +28,7 @@ public abstract class AbstractOutboxSchedulerProcessor<R extends BaseOutboxRepos
     @Override
     @Transactional
     @Scheduled(fixedDelayString = "${order-service.outbox-scheduler-fixed-rate}", initialDelayString = "${order-service.outbox-scheduler-initial-delay}")
-    public void processOutboxMessage() {
+    public void processOutboxMessage() throws OrderDomainException{
         Optional<List<T>> outboxMessagesResponse = outboxRepository.findByOutboxStatus(OutboxStatus.STARTED);
         if (outboxMessagesResponse.isPresent()) {
             List<T> outboxMessages = outboxMessagesResponse.get();
@@ -38,7 +38,9 @@ public abstract class AbstractOutboxSchedulerProcessor<R extends BaseOutboxRepos
                     outboxMessages.stream().findFirst().getClass().getSimpleName(),
                     outboxMessages.stream().map(outboxMessage -> outboxMessage.getId().toString()).collect(Collectors.joining(",")));
 
-            outboxMessages.forEach(outboxMessage -> eventPublisher.publish(outboxMessage, this::updateOutboxStatus));
+            for (T outboxMessage : outboxMessages) {
+                eventPublisher.publish(outboxMessage, this::updateOutboxStatus);
+            }
             log.info("{} {} sent to message bus!", outboxMessages.size(), outboxMessages.stream().findFirst().getClass().getSimpleName());
 
         }

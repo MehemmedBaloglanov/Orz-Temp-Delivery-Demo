@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Optional;
 
 public class OrderCompleteOutboxRepositoryImpl implements OrderCompleteOutboxRepository {
+
     @Override
     public Optional<List<OrderCompletedEventOutboxMessage>> findByOutboxStatus(OutboxStatus outboxStatus) {
         return Optional.empty();
