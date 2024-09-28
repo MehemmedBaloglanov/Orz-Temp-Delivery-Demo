@@ -7,6 +7,7 @@ import com.intellibucket.order.service.domain.core.exception.OrderNotFoundExcept
 import com.intellibucket.order.service.domain.core.root.OrderRoot;
 import com.intellibucket.order.service.domain.core.service.OrderDomainService;
 import com.intellibucket.order.service.domain.shell.dto.message.DeliveryResponse;
+import com.intellibucket.order.service.domain.shell.helper.OrderRepositoryHelper;
 import com.intellibucket.order.service.domain.shell.port.output.repository.OrderRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -21,17 +22,20 @@ public class OrderDeliveredMessageHandler {
 
     private final OrderDomainService orderDomainService;
     private final OrderRepository orderRepository;
+    private final OrderRepositoryHelper orderRepositoryHelper;
 
     public void handle(DeliveryResponse deliveryResponse) throws OrderDomainException {
         OrderID orderID = OrderID.of(deliveryResponse.getOrderId());
         Optional<OrderRoot> orderRootOptional = orderRepository.findById(orderID);
+
         if (orderRootOptional.isEmpty()) {
             log.error("Order with id: {} not found", orderID);
             throw new OrderNotFoundException("Order with id: " + orderID + " not found");
         }
+
         OrderRoot orderRoot = orderRootOptional.get();
         OrderCompletedEvent orderCompletedEvent = orderDomainService.orderComplete(orderRoot);
-        orderRepository.save(orderCompletedEvent.getOrderRoot());
+        orderRepositoryHelper.saveOrder(orderCompletedEvent.getOrderRoot());
 
 
         // Fixme company odenisini et send event OrderCompletedEvent

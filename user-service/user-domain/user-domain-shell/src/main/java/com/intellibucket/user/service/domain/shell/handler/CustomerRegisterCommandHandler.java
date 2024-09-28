@@ -8,7 +8,6 @@ import com.intellibucket.user.service.domain.core.root.UserRoot;
 import com.intellibucket.user.service.domain.core.service.port.UserDomainService;
 import com.intellibucket.user.service.domain.shell.dto.request.CustomerCreateCommand;
 import com.intellibucket.user.service.domain.shell.mapper.UserCommandMapper;
-import com.intellibucket.user.service.domain.shell.port.input.rest.abstracts.AbstractUserCommandService;
 import com.intellibucket.user.service.domain.shell.port.output.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;

@@ -22,6 +22,6 @@ public class PaymentResponse {
     private BigDecimal price;
     private Instant createdAt;
     private PaymentStatus paymentStatus;
-    private List<String> failureMessages;
+    private String failureMessage;
 
 }

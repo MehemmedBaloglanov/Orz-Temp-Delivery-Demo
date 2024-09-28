@@ -8,7 +8,7 @@ import lombok.Getter;
 @Builder
 @Getter
 @AllArgsConstructor
-public class OrderRejectCommand {
+public class OrderPrepareCommand {
 
     @JsonProperty("order_id")
     private String orderId;

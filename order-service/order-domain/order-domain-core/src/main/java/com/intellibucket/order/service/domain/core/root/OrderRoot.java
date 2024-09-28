@@ -11,9 +11,11 @@ import com.intellibucket.order.service.domain.core.valueobject.OrderCancelType;
 import com.intellibucket.order.service.domain.core.valueobject.OrderStatus;
 import lombok.Getter;
 import lombok.experimental.SuperBuilder;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.List;
 
+@Slf4j
 @SuperBuilder
 @Getter
 public class OrderRoot extends AggregateRoot<OrderID> {
@@ -26,9 +28,8 @@ public class OrderRoot extends AggregateRoot<OrderID> {
 
     private OrderNumber orderNumber;
     private OrderStatus status;
-    private List<String> errorMessages;
+    private String errorMessage;
     private OrderCancelType cancelType;
-    public static final String FAILURE_MESSAGE_DELIMITER = ",";
 
 
     public OrderRoot initializeOrder() {
@@ -37,7 +38,11 @@ public class OrderRoot extends AggregateRoot<OrderID> {
         return this;
     }
 
-    public OrderRoot initCancel(List<String> failureMessages) throws OrderDomainException {
+    public OrderRoot initCancel(String failureMessages) throws OrderDomainException {
+        if (cancelType == null) {
+            log.error("Order is not valid cancel type with id: {}", this.getRootID());
+            throw new OrderDomainException("Order is not valid cancel type with id: " + this.getRootID());
+        }
         if (status.isDelivering() || status.isCompleted() || status.isCancelled()) {
             throw new OrderDomainException("Order is not in correct state for the initCancel operation!");
         }
@@ -46,12 +51,10 @@ public class OrderRoot extends AggregateRoot<OrderID> {
         return this;
     }
 
-    public OrderRoot cancel(List<String> failureMessages, OrderCancelType orderCancelType) throws OrderDomainException {
+    public OrderRoot cancel(String failureMessages) throws OrderDomainException {
         if (status.isCancelling() || status.isCreated()) {
             throw new OrderDomainException("Cannot cancel order");
         }
-
-        this.cancelType = orderCancelType;
         this.status = OrderStatus.CANCELLED;
         return this;
     }
@@ -68,16 +71,16 @@ public class OrderRoot extends AggregateRoot<OrderID> {
     }
 
     //when stock is ended return initCancel
-    public OrderRoot approve() throws OrderDomainException {
+    public OrderRoot comfirm() throws OrderDomainException {
         if (!status.isPaid()) {
-            throw new OrderDomainException("Cannot approve order");
+            throw new OrderDomainException("Cannot comfirm order");
         }
-        this.status = OrderStatus.APPROVED;
+        this.status = OrderStatus.CONFIRMED;
         return this;
     }
 
     public OrderRoot prepared() throws OrderDomainException {
-        if (!status.isApproved()) {
+        if (!status.isConfirmed()) {
             throw new OrderDomainException("Cannot prepare order");
         }
         this.status = OrderStatus.PREPARED;
@@ -106,12 +109,19 @@ public class OrderRoot extends AggregateRoot<OrderID> {
         return this;
     }
 
+    public OrderRoot cancelByCustomer() {
+        cancelType = OrderCancelType.CUSTOMER;
+        return this;
+    }
+
+    public OrderRoot cancelBySystem() {
+        cancelType = OrderCancelType.SYSTEM;
+        return this;
+    }
+
     private void validatePrice() throws OrderDomainException {
         Money total = Money.ZERO;
         for (OrderItemRoot orderItem : items) {
-            if (!orderItem.isPriceValid()) {
-                throw new OrderDomainException("Invalid order item: " + orderItem);
-            }
             Money orderItemRootPrice = orderItem.getPrice();
             total = total.add(orderItemRootPrice);
         }
@@ -125,22 +135,6 @@ public class OrderRoot extends AggregateRoot<OrderID> {
         if (this.address == null || !address.isAddressValid()) {
             throw new OrderDomainException("Address is not valid");
         }
-    }
-    public void reject() throws OrderDomainException {
-
-        if (!canReject()) {
-            throw new OrderDomainException("Order cannot be rejected in its current state");
-        }
-
-
-        this.status = OrderStatus.REJECTED;
-
-
-    }
-
-    public boolean canReject() {
-
-        return this.status == OrderStatus.CANCELLED || this.status == OrderStatus.CANCELLING;
     }
 
 }

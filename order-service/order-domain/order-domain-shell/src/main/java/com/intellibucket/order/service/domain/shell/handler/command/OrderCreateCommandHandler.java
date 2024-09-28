@@ -20,6 +20,7 @@ import com.intellibucket.order.service.domain.shell.dto.connectors.company.Produ
 import com.intellibucket.order.service.domain.shell.dto.connectors.user.UserAddress;
 import com.intellibucket.order.service.domain.shell.dto.rest.response.OrderResponse;
 import com.intellibucket.order.service.domain.shell.helper.OrderOutboxHelper;
+import com.intellibucket.order.service.domain.shell.helper.OrderRepositoryHelper;
 import com.intellibucket.order.service.domain.shell.helper.OrderSagaHelper;
 import com.intellibucket.order.service.domain.shell.mapper.OrderShellMapper;
 import com.intellibucket.order.service.domain.shell.outbox.model.payload.OrderPaymentEventPayload;
@@ -48,8 +49,8 @@ public class OrderCreateCommandHandler {
     private final AbstractSecurityContextHolder securityContextHolder;
     private final OrderDomainService orderDomainService;
     private final OrderShellMapper orderShellMapper;
-    private final OrderRepository orderRepository;
     private final OrderOutboxHelper orderOutboxHelper;
+    private final OrderRepositoryHelper orderRepositoryHelper;
 
     private final AbstractCartServiceConnector cartServiceConnector;
     private final AbstractCompanyServiceConnector companyServiceConnector;
@@ -65,11 +66,12 @@ public class OrderCreateCommandHandler {
         Map<ProductID, ProductResponse> productsResponse = fetchProducts(cartItems);
 
         List<OrderItemRoot> orderItemRootList = new ArrayList<>();
+
         for (CartResponse item : cartItems) {
             OrderItemRoot orderItemRoot = getOrderItemRoot(item, productsResponse, orderID);
+            orderItemRoot.validateInitialize();
             orderItemRootList.add(orderItemRoot);
         }
-
 
         OrderRoot orderRoot = OrderRoot.builder()
                 .id(orderID)
@@ -82,8 +84,8 @@ public class OrderCreateCommandHandler {
                 .build();
 
         OrderCreatedEvent orderCreatedEvent = orderDomainService.validateAndInitiateOrder(orderRoot);
-        orderRepository.save(orderRoot);
 
+        orderRepositoryHelper.saveOrder(orderRoot);
 
         OrderPaymentEventPayload paymentEventPayload = orderShellMapper.orderCreatedEventToOrderPaymentEventPayload(orderCreatedEvent);
 
@@ -111,14 +113,14 @@ public class OrderCreateCommandHandler {
         ProductID productID = item.getProductID();
         ProductResponse productResponse = productsResponse.get(productID);
         CompanyID companyID = productResponse.getCompany().getCompanyID();
-        // FIXME product ve ya company inactive oldugunda xeta mesaji gonder sifarisi legv et
+
         if (productResponse.getCompany().getStatus() == CompanyStatus.INACTIVE) {
             log.error("company is not in valid state, companyId: {}", companyID);
-//            throw new OrderDomainException("company is not in valid state, companyId: " + companyID);
+            throw new OrderDomainException("company is not in valid state, companyId: " + companyID);
         }
         if (productResponse.getStatus() == ProductStatus.INACTIVE) {
             log.error("product is not in valid state, productId: {}", productID);
-          throw new OrderDomainException("product is not in valid state, productId: " + productID);
+            throw new OrderDomainException("product is not in valid state, productId: " + productID);
         }
 
         Money price = productResponse.getPrice();

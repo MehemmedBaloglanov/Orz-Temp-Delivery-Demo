@@ -11,17 +11,6 @@ import java.time.OffsetDateTime;
 
 @Getter
 @SuperBuilder
-@AllArgsConstructor
 public class OrderStartDeliveryEventPayload extends BaseEventPayload {
-
-
-    @JsonProperty
-    private String customerId;
-
-    @JsonProperty
-    private String companyId;
-
-    @JsonProperty
-    private OffsetDateTime createdAt;
 
 }

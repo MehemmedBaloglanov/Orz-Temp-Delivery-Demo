@@ -54,9 +54,9 @@ public class UserDomainServiceImpl implements UserDomainService {
     return new UserUpdatedDomainEvent(userRoot, OffsetDateTime.now(DomainConstants.ZONE_ID));
     }
 
-    @Override
-    public List<UserRoot> findByUserId(UserID userID) {
-  //     userRepository.findByUserId(userID);
-        return List.of();
-    }
+//    @Override
+//    public List<UserRoot> findByUserId(UserID userID) {
+//  //     userRepository.findByUserId(userID);
+//        return List.of();
+//    }
 }

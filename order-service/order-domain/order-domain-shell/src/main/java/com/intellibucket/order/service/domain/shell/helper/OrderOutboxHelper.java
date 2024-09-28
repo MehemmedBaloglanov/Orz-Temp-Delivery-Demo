@@ -2,14 +2,22 @@ package com.intellibucket.order.service.domain.shell.helper;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.intellibucket.outbox.OutboxStatus;
-import com.intellibucket.saga.SagaStatus;
+import com.intellibucket.message.model.BaseMessageModel;
 import com.intellibucket.order.service.domain.core.event.OrderCancelledEvent;
 import com.intellibucket.order.service.domain.core.exception.OrderDomainException;
 import com.intellibucket.order.service.domain.core.valueobject.OrderStatus;
-import com.intellibucket.order.service.domain.shell.outbox.model.payload.OrderPaymentEventPayload;
+import com.intellibucket.order.service.domain.shell.outbox.model.message.OrderCancelPaymentEventOutboxMessage;
 import com.intellibucket.order.service.domain.shell.outbox.model.message.OrderPaymentOutboxMessage;
+import com.intellibucket.order.service.domain.shell.outbox.model.message.OrderStartDeliveryEventOutboxMessage;
+import com.intellibucket.order.service.domain.shell.outbox.model.payload.BaseEventPayload;
+import com.intellibucket.order.service.domain.shell.outbox.model.payload.OrderCancelPaymentEventPayload;
+import com.intellibucket.order.service.domain.shell.outbox.model.payload.OrderPaymentEventPayload;
+import com.intellibucket.order.service.domain.shell.outbox.model.payload.OrderStartDeliveryEventPayload;
+import com.intellibucket.order.service.domain.shell.port.output.repository.BaseOutboxRepository;
+import com.intellibucket.order.service.domain.shell.port.output.repository.OrderCancelPaymentOutboxRepository;
 import com.intellibucket.order.service.domain.shell.port.output.repository.OrderPaymentOutboxRepository;
+import com.intellibucket.outbox.OutboxStatus;
+import com.intellibucket.saga.SagaStatus;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -19,8 +27,8 @@ import java.time.OffsetDateTime;
 import java.util.Optional;
 import java.util.UUID;
 
-import static com.intellibucket.saga.order.SagaConstants.ORDER_SAGA_NAME;
 import static com.intellibucket.constants.DomainConstants.ZONE_ID;
+import static com.intellibucket.saga.order.SagaConstants.ORDER_SAGA_NAME;
 
 @Slf4j
 @Component
@@ -28,6 +36,7 @@ import static com.intellibucket.constants.DomainConstants.ZONE_ID;
 public class OrderOutboxHelper {
 
     private final OrderPaymentOutboxRepository orderPaymentOutboxRepository;
+    private final OrderCancelPaymentOutboxRepository orderCancelPaymentOutboxRepository;
     private final ObjectMapper objectMapper;
     private final OrderSagaHelper orderSagaHelper;
 
@@ -40,29 +49,19 @@ public class OrderOutboxHelper {
                 sagaStatus);
     }
 
-    @Transactional
-    public void save(OrderPaymentOutboxMessage orderPaymentOutboxMessage) throws OrderDomainException {
-        OrderPaymentOutboxMessage response = orderPaymentOutboxRepository.save(orderPaymentOutboxMessage);
-        if (response == null) {
-            log.error("Could not save OrderPaymentOutboxMessage with outbox id: {}", orderPaymentOutboxMessage.getId());
-            throw new OrderDomainException("Could not save OrderPaymentOutboxMessage with outbox id: " + orderPaymentOutboxMessage.getId());
-        }
-        log.info("OrderPaymentOutboxMessage saved with outbox id: {}", orderPaymentOutboxMessage.getId());
-    }
 
     @Transactional
     public void createAndSavePaymentOutboxMessage(OrderPaymentEventPayload paymentEventPayload) throws OrderDomainException {
         OrderPaymentOutboxMessage outboxMessage = OrderPaymentOutboxMessage.builder()
                 .id(UUID.randomUUID())
                 .sagaId(UUID.randomUUID())
-                .createdAt(paymentEventPayload.getCreatedAt())
-                .type(ORDER_SAGA_NAME)
                 .payload(createPayload(paymentEventPayload))
                 .orderStatus(OrderStatus.CREATED)
-                .sagaStatus(orderSagaHelper.orderStatusToSagaStatus(OrderStatus.CREATED))
+                .sagaStatus(SagaStatus.COMPENSATING)
                 .outboxStatus(OutboxStatus.STARTED)
+                .createdAt(paymentEventPayload.getCreatedAt())
                 .build();
-        save(outboxMessage);
+        save(outboxMessage, orderPaymentOutboxRepository);
     }
 
     @Transactional
@@ -72,11 +71,34 @@ public class OrderOutboxHelper {
         orderPaymentOutboxMessage.setOrderStatus(orderCancelledEvent.getOrderRoot().getStatus());
         SagaStatus sagaStatus = orderSagaHelper.orderStatusToSagaStatus(orderCancelledEvent.getOrderRoot().getStatus());
         orderPaymentOutboxMessage.setSagaStatus(sagaStatus);
-        save(orderPaymentOutboxMessage);
+        save(orderPaymentOutboxMessage, orderPaymentOutboxRepository);
     }
 
 
-    private String createPayload(OrderPaymentEventPayload paymentEventPayload) throws OrderDomainException {
+    @Transactional
+    public void createAndSavePaymentCancelOutboxMessage(OrderCancelPaymentEventPayload orderCancelEventPayload) throws OrderDomainException {
+        OrderCancelPaymentEventOutboxMessage outboxMessage = OrderCancelPaymentEventOutboxMessage.builder()
+                .id(UUID.randomUUID())
+                .sagaId(UUID.randomUUID())
+                .payload(createPayload(orderCancelEventPayload))
+                .sagaStatus(orderSagaHelper.orderStatusToSagaStatus(OrderStatus.CREATED))
+                .createdAt(orderCancelEventPayload.getCreatedAt())
+                .outboxStatus(OutboxStatus.STARTED)
+                .build();
+        save(outboxMessage, orderCancelPaymentOutboxRepository);
+    }
+
+    public void createAndSaveOrderStartDeliveryOutboxMessage(OrderStartDeliveryEventPayload orderStartDeliveryEventPayload) throws OrderDomainException {
+        OrderStartDeliveryEventOutboxMessage message = OrderStartDeliveryEventOutboxMessage.builder()
+                .id(UUID.randomUUID())
+                .sagaId(UUID.randomUUID())
+                .payload(createPayload(orderStartDeliveryEventPayload))
+                .createdAt(orderStartDeliveryEventPayload.getCreatedAt())
+                .outboxStatus(OutboxStatus.STARTED)
+                .build();
+    }
+
+    private <T extends BaseEventPayload> String createPayload(T paymentEventPayload) throws OrderDomainException {
         try {
             return objectMapper.writeValueAsString(paymentEventPayload);
         } catch (JsonProcessingException e) {
@@ -85,4 +107,12 @@ public class OrderOutboxHelper {
         }
     }
 
+    private <M extends BaseMessageModel, R extends BaseOutboxRepository<M>> void save(M outboxMessage, R repository) throws OrderDomainException {
+        M response = repository.save(outboxMessage);
+        if (response == null) {
+            log.error("Could not save {} with outbox id: {}", outboxMessage.getClass().getSimpleName(), outboxMessage.getId());
+            throw new OrderDomainException("Could not save " + outboxMessage.getClass().getSimpleName() + " with outbox id: " + outboxMessage.getId());
+        }
+        log.info("{} saved with outbox id: {}", outboxMessage.getClass().getSimpleName(), outboxMessage.getId());
+    }
 }

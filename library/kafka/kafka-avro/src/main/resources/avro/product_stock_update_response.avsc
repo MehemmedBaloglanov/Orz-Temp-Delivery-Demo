@@ -1,0 +1,8 @@
+{
+  "namespace": "com.intellibucket.kafka.order.avro.model",
+  "type": "record",
+  "name": "ProductStockUpdateResponseAvroModel",
+  "fields": [
+
+  ]
+}
