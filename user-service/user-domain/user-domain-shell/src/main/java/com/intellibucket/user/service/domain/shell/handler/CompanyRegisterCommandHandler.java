@@ -2,6 +2,7 @@ package com.intellibucket.user.service.domain.shell.handler;
 
 import com.intellibucket.user.service.domain.core.event.UserRegisteredEvent;
 import com.intellibucket.user.service.domain.core.exception.UserDomainException;
+import com.intellibucket.user.service.domain.core.exception.user.UserSavedException;
 import com.intellibucket.user.service.domain.core.exception.user.UserValidationException;
 import com.intellibucket.user.service.domain.core.root.UserRoot;
 import com.intellibucket.user.service.domain.core.service.port.UserDomainService;
@@ -22,15 +23,18 @@ public class CompanyRegisterCommandHandler {
 
     public void handle(CompanyCreateCommand command) throws UserDomainException {
         UserRoot newUser = UserCommandMapper.companyCreateCommandToUserRoot(command);
-        Optional<UserRoot> optionalUserRoot = userRepository.findByEmail(newUser.getEmail());
+        Optional<UserRoot> userRoot = userRepository.findByEmail(newUser.getEmail());
 
-        if (optionalUserRoot.isPresent()) {
+        if (userRoot.isPresent()) {
             throw new UserValidationException ("User already exist with email..: " + command.getEmail());
         }
 
         UserRegisteredEvent userRegisteredEvent = userDomainService.companyRegistered(newUser);
-        userRepository.save(newUser);
 
+        UserRoot savedUserRoot = userRepository.save(newUser);
+        if (savedUserRoot == null) {
+            throw new UserSavedException("User could not be saved: " + newUser.getUserID());
+        }
         //outbox-a save et userRegisteredEvent
         //sonra scheduler ile mueyyen vaxtdan bir meulumarlari cekib kafkaya push et
     }

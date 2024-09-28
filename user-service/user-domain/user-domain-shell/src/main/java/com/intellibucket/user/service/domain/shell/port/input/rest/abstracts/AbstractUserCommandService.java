@@ -3,6 +3,7 @@ package com.intellibucket.user.service.domain.shell.port.input.rest.abstracts;
 import com.intelliacademy.orizonroute.identity.user.UserID;
 import com.intellibucket.user.service.domain.core.exception.UserDomainException;
 import com.intellibucket.user.service.domain.core.exception.user.UserNotFoundException;
+import com.intellibucket.user.service.domain.core.exception.user.UserSavedException;
 import com.intellibucket.user.service.domain.core.root.UserRoot;
 import com.intellibucket.user.service.domain.shell.dto.request.*;
 
@@ -21,7 +22,7 @@ public interface AbstractUserCommandService {
 
     void changePassword(UserChangePasswordCommand userChangePasswordCommand) throws UserDomainException;
 
-    void updateCustomer(CustomerUpdateCommand command ) throws UserNotFoundException;
+    void updateCustomer(CustomerUpdateCommand command ) throws UserNotFoundException, UserSavedException;
 
-    void updateCompany(CompanyUpdateCommand command ) throws UserNotFoundException;
+    void updateCompany(CompanyUpdateCommand command ) throws UserNotFoundException, UserSavedException;
 }

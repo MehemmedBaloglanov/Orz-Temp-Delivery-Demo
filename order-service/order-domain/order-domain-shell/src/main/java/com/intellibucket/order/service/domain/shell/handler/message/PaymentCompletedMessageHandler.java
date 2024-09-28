@@ -1,6 +1,6 @@
 package com.intellibucket.order.service.domain.shell.handler.message;
 
-import com.food.ordering.system.saga.SagaStatus;
+import com.intellibucket.saga.SagaStatus;
 import com.intelliacademy.orizonroute.identity.order.ord.OrderID;
 import com.intellibucket.order.service.domain.core.event.OrderPaidEvent;
 import com.intellibucket.order.service.domain.core.exception.OrderDomainException;
@@ -21,7 +21,7 @@ import java.time.OffsetDateTime;
 import java.util.Optional;
 import java.util.UUID;
 
-import static com.food.ordering.system.saga.order.SagaConstants.ORDER_SAGA_NAME;
+import static com.intellibucket.saga.order.SagaConstants.ORDER_SAGA_NAME;
 import static com.intellibucket.constants.DomainConstants.ZONE_ID;
 
 @Slf4j

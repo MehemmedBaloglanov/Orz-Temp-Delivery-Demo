@@ -5,6 +5,7 @@ import com.intelliacademy.orizonroute.valueobjects.common.Email;
 import com.intellibucket.mapper.UserDataAccessMapper;
 import com.intellibucket.model.BaseUserEntity;
 import com.intellibucket.repository.UserJpaRepository;
+import com.intellibucket.user.service.domain.core.exception.user.UserNotFoundException;
 import com.intellibucket.user.service.domain.core.root.UserRoot;
 import com.intellibucket.user.service.domain.shell.port.output.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -33,47 +34,47 @@ private final UserJpaRepository userJpaRepository;
 
 
     @Override
-    public Optional<UserRoot> update(UserRoot userRoot) {
+    public UserRoot update(UserRoot userRoot) throws UserNotFoundException {
 
         Optional<BaseUserEntity> user = userJpaRepository.findById(userRoot.getUserID().value());
 
         if (user.isEmpty()) {
-            return Optional.empty();
+            throw new UserNotFoundException("User not found with email: " + userRoot.getUserID());
         } else {
             BaseUserEntity userEntity = user.get();
             userJpaRepository.updateBy(userEntity);
-            return Optional.of(userDataAccessMapper.userEntityToUserRoot(userEntity));
+            return userDataAccessMapper.userEntityToUserRoot(userEntity);
         }
     }
 
     @Override
-    public Optional<UserRoot> delete(UserRoot userRoot) {
+    public UserRoot delete(UserRoot userRoot) throws UserNotFoundException {
 
         Optional<BaseUserEntity> user = userJpaRepository.findById(userRoot.getUserID().value());
 
         if (user.isEmpty()) {
-            return Optional.empty();
+            throw new UserNotFoundException("User not found with ID: " + userRoot.getUserID().value());
         } else {
             BaseUserEntity userEntity = user.get();
             userJpaRepository.delete(userEntity);
-            return Optional.of(userDataAccessMapper.userEntityToUserRoot(userEntity));
+            return userDataAccessMapper.userEntityToUserRoot(userEntity);
         }
     }
 
     @Override
-    public Optional <UserRoot> save(UserRoot userRoot) {
+    public UserRoot save(UserRoot userRoot) {
 
         BaseUserEntity userEntity = userDataAccessMapper.userRootToUserEntity(userRoot);
         BaseUserEntity savedUserEntity = userJpaRepository.save(userEntity);
-        return Optional.ofNullable(userDataAccessMapper.userEntityToUserRoot(savedUserEntity));
+        return userDataAccessMapper.userEntityToUserRoot(savedUserEntity);
     }
 
     @Override
-    public Optional<UserRoot> findByEmail(Email email) {
-        Optional<BaseUserEntity> userEntityOptional = userJpaRepository.findByEmail(Email.getValue(email));
+    public Optional<UserRoot> findByEmail(Email email) throws UserNotFoundException {
+        Optional<BaseUserEntity> userEntityOptional = userJpaRepository.findByEmail(email.getValue());
 
         if (userEntityOptional.isEmpty()) {
-            return Optional.empty();
+            throw new UserNotFoundException("User not found with email: " + email.getValue());
         } else {
             BaseUserEntity userEntity = userEntityOptional.get();
             return Optional.of(userDataAccessMapper.userEntityToUserRoot(userEntity));

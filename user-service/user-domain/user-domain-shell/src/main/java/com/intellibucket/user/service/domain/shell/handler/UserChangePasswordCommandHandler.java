@@ -5,6 +5,7 @@ import com.intellibucket.user.service.domain.core.event.UserChangePasswordDomain
 import com.intellibucket.user.service.domain.core.exception.UserDomainException;
 import com.intellibucket.user.service.domain.core.exception.password.PasswordValidationException;
 import com.intellibucket.user.service.domain.core.exception.user.UserNotFoundException;
+import com.intellibucket.user.service.domain.core.exception.user.UserSavedException;
 import com.intellibucket.user.service.domain.core.root.UserRoot;
 import com.intellibucket.user.service.domain.core.service.port.UserDomainService;
 import com.intellibucket.user.service.domain.core.valueObject.Password;
@@ -38,8 +39,12 @@ public class UserChangePasswordCommandHandler {
         }
 
         Password newPassword = Password.builder().value(command.getNewPassword()).build();
-        user.setPassword(newPassword);
+      //  user.userChangePassword(newPassword);
         UserChangePasswordDomainEvent userChangePasswordDomainEvent = userDomainService.userChangePassword(user);
-        userRepository.save(user);
+
+        UserRoot savedUserRoot = userRepository.save(byUserId.get());
+        if (savedUserRoot == null) {
+            throw new UserSavedException("User could not be saved: " + user.getUserID());
+        }
     }
 }

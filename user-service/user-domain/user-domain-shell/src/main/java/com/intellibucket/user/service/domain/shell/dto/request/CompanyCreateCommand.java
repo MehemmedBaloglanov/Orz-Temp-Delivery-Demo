@@ -12,5 +12,4 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class CompanyCreateCommand extends AbstractUserCreateCommand {
     private String companyName;
-    private String licenceNumber;
 }

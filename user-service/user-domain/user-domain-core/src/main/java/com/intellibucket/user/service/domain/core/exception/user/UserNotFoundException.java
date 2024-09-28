@@ -7,7 +7,4 @@ public class UserNotFoundException extends UserDomainException {
         super(message);
     }
 
-    public UserNotFoundException(String message, Throwable cause) {
-        super(message, cause);
-    }
 }

@@ -37,7 +37,6 @@ public class UserDomainServiceImpl implements UserDomainService {
 
     @Override
     public UserChangePasswordDomainEvent userChangePassword(UserRoot userRoot) throws UserDomainException {
-        userRoot.userChangePassword(oldPassword,newPassword);
         return new UserChangePasswordDomainEvent(userRoot, OffsetDateTime.now(DomainConstants.ZONE_ID));
     }
 
@@ -57,7 +56,7 @@ public class UserDomainServiceImpl implements UserDomainService {
 
     @Override
     public List<UserRoot> findByUserId(UserID userID) {
-//        userRepository.findByUserId(userID);
+  //     userRepository.findByUserId(userID);
         return List.of();
     }
 }
