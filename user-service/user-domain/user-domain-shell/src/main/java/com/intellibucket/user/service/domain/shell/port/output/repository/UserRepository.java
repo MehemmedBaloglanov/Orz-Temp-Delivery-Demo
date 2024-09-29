@@ -4,17 +4,17 @@ import com.intelliacademy.orizonroute.identity.user.UserID;
 import com.intelliacademy.orizonroute.valueobjects.common.Email;
 import com.intellibucket.user.service.domain.core.exception.user.UserNotFoundException;
 import com.intellibucket.user.service.domain.core.root.UserRoot;
+import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
-
 public interface UserRepository {
     Optional<UserRoot> findByUserId(UserID userId);
 
-    UserRoot update(UserRoot userRoot) throws UserNotFoundException;
-
-    UserRoot delete(UserRoot userRoot) throws UserNotFoundException;
+    Optional<UserRoot> findByEmail(Email email) throws UserNotFoundException;
 
     UserRoot save(UserRoot userRoot);
-
-   Optional <UserRoot> findByEmail(Email email) throws UserNotFoundException;
 }
+//    UserRoot update(UserRoot userRoot) throws UserNotFoundException;
+//
+//    UserRoot delete(UserRoot userRoot) throws UserNotFoundException;
+//

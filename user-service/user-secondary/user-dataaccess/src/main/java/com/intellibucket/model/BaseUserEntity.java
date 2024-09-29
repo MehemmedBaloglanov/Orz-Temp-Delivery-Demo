@@ -10,20 +10,16 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.UUID;
 
-@Builder
+@Getter
+@Setter
 @MappedSuperclass
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity
-@Getter
 public abstract class BaseUserEntity {
     @Id
     @Column(name = "id")

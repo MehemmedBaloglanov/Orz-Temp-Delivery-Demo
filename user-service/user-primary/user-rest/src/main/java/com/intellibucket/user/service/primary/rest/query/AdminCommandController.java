@@ -2,7 +2,6 @@ package com.intellibucket.user.service.primary.rest.query;
 
 import com.intellibucket.user.service.domain.core.valueObject.RoleAuthorithy;
 import com.intellibucket.user.service.domain.core.valueObject.Status;
-import com.intellibucket.user.service.domain.shell.port.input.rest.concrets.UserQueryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,20 +14,20 @@ import java.util.List;
 @RequiredArgsConstructor
 @RequestMapping("/api/admin")
 public class AdminCommandController {
-    private final UserQueryService adminCommandService;
+//    private final UserQueryService adminCommandService;
 
     @GetMapping("/allCustomers")
     public List<RoleAuthorithy> getAllCustomers() {
-        return adminCommandService.getAllCustomers();
+        return null;
     }
 
     @GetMapping("/allCompanies")
     public List<RoleAuthorithy> getAllCompanies() {
-        return adminCommandService.getAllCompanies();
+        return null;
     }
 
     @GetMapping("/getUsersByStatusAndByRole/{status}/{role}")
     public List<Status> getUsersByStatusAndByRole(@PathVariable Status status, @PathVariable RoleAuthorithy role) {
-        return adminCommandService.getUsersByStatusAndByRole(status, role);
+        return null;
     }
 }

@@ -31,13 +31,9 @@ public class CustomerRegisterCommandHandler {
 
         UserRegisteredEvent userRegisteredEvent = userDomainService.customerRegistered(newUser);
 
-
         UserRoot savedUserRoot = userRepository.save(newUser);
         if (savedUserRoot == null) {
             throw new UserSavedException("User could not be saved: " + newUser.getUserID());
         }
-
-
     }
-
 }

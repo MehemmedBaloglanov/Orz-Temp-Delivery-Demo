@@ -10,7 +10,6 @@ import com.intellibucket.user.service.domain.core.valueObject.Password;
 import com.intellibucket.user.service.domain.shell.dto.request.UserLoginCommand;
 import com.intellibucket.user.service.domain.shell.mapper.UserCommandMapper;
 import com.intellibucket.user.service.domain.shell.port.output.repository.UserRepository;
-import com.intellibucket.user.service.domain.shell.security.AbstractSecurityContextHolder;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 

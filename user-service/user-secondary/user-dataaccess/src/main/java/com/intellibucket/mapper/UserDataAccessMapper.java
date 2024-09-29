@@ -3,8 +3,8 @@ package com.intellibucket.mapper;
 import com.intelliacademy.orizonroute.identity.user.UserID;
 import com.intelliacademy.orizonroute.valueobjects.common.Email;
 import com.intelliacademy.orizonroute.valueobjects.common.PhoneNumber;
-import com.intelliacademy.orizonroute.valueobjects.user.EmailType;
 import com.intellibucket.model.BaseUserEntity;
+import com.intellibucket.model.CompanyRegistrationEntity;
 import com.intellibucket.model.PhoneNumberEntity;
 import com.intellibucket.model.UserAddressEntity;
 import com.intellibucket.user.service.domain.core.root.UserRoot;
@@ -16,16 +16,17 @@ import java.util.UUID;
 
 @Getter
 public class UserDataAccessMapper {
-    public BaseUserEntity userRootToUserEntity(UserRoot userRoot) {
-        return BaseUserEntity.builder()
-                .userEntityId(UserID.random().value())
-                .roleAuthority(userRoot.getRoleAuthorithy())
-                .emailType(userRoot.getEmail().getType())
-                .status(userRoot.getStatus())
-                .address(addressToUserJpaAddress(userRoot.getAddress()))
-                .phoneNumberEntity(phoneNumberToPhoneNumberEntity(userRoot.getPhoneNumber()))
-                .password(userRoot.getPassword().getValue())
-                .build();
+    public CompanyRegistrationEntity userRootToCompanyEntity(UserRoot userRoot) {
+        CompanyRegistrationEntity entity = new CompanyRegistrationEntity();
+
+        entity.setUserEntityId(UserID.random().value());
+        entity.setCompanyName(userRoot.getUsername().value());
+        entity.setEmail(userRoot.getEmail().getValue());
+        entity.setEmailType(userRoot.getEmail().getType());
+        entity.setPassword(userRoot.getPassword().getValue());
+        entity.setStatus(userRoot.getStatus());
+
+        return entity;
     }
 
     public UserRoot userEntityToUserRoot(BaseUserEntity userEntity) {
@@ -35,11 +36,10 @@ public class UserDataAccessMapper {
                 .status(userEntity.getStatus())
                 .password(Password.of(userEntity.getPassword()))
                 .roleAuthorithy(userEntity.getRoleAuthority())
-                .email(Email.of(userEntity.getEmailType(),userEntity.getEmail()))
+                .email(Email.of(userEntity.getEmailType(), userEntity.getEmail()))
                 .phoneNumber(phoneNumberEntityToPhoneNumber(userEntity.getPhoneNumberEntity()))
                 .build();
     }
-
 
 
     public Address userJpaAdresstoAddress(UserAddressEntity address) {
@@ -59,11 +59,11 @@ public class UserDataAccessMapper {
     }
 
     public PhoneNumber phoneNumberEntityToPhoneNumber(PhoneNumberEntity phoneNumber) {
-    return PhoneNumber.builder()
-            .number(phoneNumber.getNumber())
-            .countryCode(phoneNumber.getCountryCode())
-            .type(phoneNumber.getType())
-            .build();
+        return PhoneNumber.builder()
+                .number(phoneNumber.getNumber())
+                .countryCode(phoneNumber.getCountryCode())
+                .type(phoneNumber.getType())
+                .build();
     }
 
     public PhoneNumberEntity phoneNumberToPhoneNumberEntity(PhoneNumber phoneNumber) {
