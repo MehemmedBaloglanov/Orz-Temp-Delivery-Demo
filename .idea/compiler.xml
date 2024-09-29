@@ -48,6 +48,7 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="library" target="17" />
       <module name="order-dataaccess" target="17" />
       <module name="orizon-http" target="17" />
     </bytecodeTargetLevel>

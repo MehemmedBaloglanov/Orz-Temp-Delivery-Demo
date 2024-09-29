@@ -1,6 +1,7 @@
 package com.intellibucket.user.service.primary.rest.command;
 import com.intellibucket.user.service.domain.core.exception.UserDomainException;
 import com.intellibucket.user.service.domain.core.exception.user.UserNotFoundException;
+import com.intellibucket.user.service.domain.core.exception.user.UserSavedException;
 import com.intellibucket.user.service.domain.shell.dto.request.*;
 import com.intellibucket.user.service.domain.shell.dto.response.EmptyResponse;
 import com.intellibucket.user.service.domain.shell.dto.response.UserLoginResponse;
@@ -51,13 +52,13 @@ public class UserCommandController {
         return ResponseEntity.ok(response);
     }
     @PostMapping("/updateCustomer")
-    public ResponseEntity<EmptyResponse> updateUser(@RequestBody CustomerUpdateCommand command) throws UserNotFoundException {
+    public ResponseEntity<EmptyResponse> updateUser(@RequestBody CustomerUpdateCommand command) throws UserNotFoundException, UserSavedException {
         abstractUserCommandService.updateCustomer(command);
         EmptyResponse response = EmptyResponse.builder().message("User updated successfully").success(true).build();
     return ResponseEntity.ok(response);
     }
     @PostMapping("/updateCompany")
-    public ResponseEntity<EmptyResponse> updateUser(@RequestBody CompanyUpdateCommand command) throws UserNotFoundException {
+    public ResponseEntity<EmptyResponse> updateUser(@RequestBody CompanyUpdateCommand command) throws UserNotFoundException, UserSavedException {
         abstractUserCommandService.updateCompany(command);
         EmptyResponse response = EmptyResponse.builder().message("User updated successfully").success(true).build();
         return ResponseEntity.ok(response);
