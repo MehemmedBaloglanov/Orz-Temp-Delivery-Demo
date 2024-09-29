@@ -15,9 +15,6 @@ import java.time.OffsetDateTime;
 public class OrderCompletedEventPayload extends BaseEventPayload {
 
     @JsonProperty
-    private String companyId;
-    @JsonProperty
-    private BigDecimal price;
-    @JsonProperty
-    private OffsetDateTime createdAt;
+    private String customerId;
+
 }

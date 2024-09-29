@@ -9,6 +9,11 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public class OrderRejectCommand {
+
     @JsonProperty("order_id")
     private String orderId;
+
+    @JsonProperty("order_item_id")
+    private String orderItemId;
+
 }

@@ -7,9 +7,12 @@ import com.intellibucket.order.service.domain.core.exception.OrderDomainExceptio
 import com.intellibucket.order.service.domain.core.exception.OrderNotFoundException;
 import com.intellibucket.order.service.domain.core.root.OrderRoot;
 import com.intellibucket.order.service.domain.core.service.OrderDomainService;
-import com.intellibucket.order.service.domain.core.valueobject.OrderCancelType;
-import com.intellibucket.order.service.domain.core.valueobject.OrderStatus;
 import com.intellibucket.order.service.domain.shell.dto.rest.command.OrderCancelCommand;
+import com.intellibucket.order.service.domain.shell.helper.OrderOutboxHelper;
+import com.intellibucket.order.service.domain.shell.helper.OrderRepositoryHelper;
+import com.intellibucket.order.service.domain.shell.mapper.OrderShellMapper;
+import com.intellibucket.order.service.domain.shell.outbox.model.payload.OrderCancelPaymentEventPayload;
+import com.intellibucket.order.service.domain.shell.outbox.model.payload.OrderPaymentEventPayload;
 import com.intellibucket.order.service.domain.shell.port.output.repository.OrderRepository;
 import com.intellibucket.order.service.domain.shell.security.AbstractSecurityContextHolder;
 import lombok.RequiredArgsConstructor;
@@ -17,7 +20,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
 import java.util.Optional;
 
 @Slf4j
@@ -28,6 +30,9 @@ public class OrderCancelCommandHandler {
     private final OrderRepository orderRepository;
     private final OrderDomainService orderDomainService;
     private final AbstractSecurityContextHolder securityContextHolder;
+    private final OrderRepositoryHelper orderRepositoryHelper;
+    private final OrderShellMapper orderShellMapper;
+    private final OrderOutboxHelper orderOutboxHelper;
 
 
     @Transactional
@@ -46,18 +51,15 @@ public class OrderCancelCommandHandler {
         OrderRoot orderRoot = orderRootOptional.get();
         if (!orderRoot.getUserId().equals(currentUserID)) {
             log.error("User: {} is not authorized to order: {} cancel", currentUserID, orderId);
-            throw new OrderDomainException("User is not authorized to order cancel");
+            throw new OrderDomainException("User: " + currentUserID + " is not authorized to order: " + orderId + " cancel");
         }
 
-        orderRepository.save(orderRoot);
+        orderRoot.cancelByCustomer();
+        OrderCancelledEvent orderCancelEvent = orderDomainService.orderPaymentCancel(orderRoot, "Customer cancelled order");
+        orderRepositoryHelper.saveOrder(orderRoot);
 
-        OrderCancelledEvent orderCancelEvent = orderDomainService.orderPaymentCancel(orderRoot, OrderCancelType.CUSTOMER, List.of("order cancelled by user"));
-
-
-        //FIXME Outboxa save et
-
-        orderRepository.save(orderRoot);
+        OrderCancelPaymentEventPayload orderCancelEventPayload = orderShellMapper.orderCancelledEventToOrderPaymentCancelEventPayload(orderCancelEvent);
+        orderOutboxHelper.createAndSavePaymentCancelOutboxMessage(orderCancelEventPayload);
 
     }
-
 }
