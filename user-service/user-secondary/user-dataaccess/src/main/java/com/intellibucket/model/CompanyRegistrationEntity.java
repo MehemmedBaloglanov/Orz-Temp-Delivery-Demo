@@ -10,7 +10,7 @@ import org.jetbrains.annotations.NotNull;
 
 @Getter
 @Setter
-@Builder
+//@Builder
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor

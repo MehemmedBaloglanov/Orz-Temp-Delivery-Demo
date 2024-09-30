@@ -1,16 +1,17 @@
 package com.intellibucket.model;
 
 import com.intelliacademy.orizonroute.valueobjects.user.EmailType;
-import com.intelliacademy.orizonroute.valueobjects.user.PhoneNumberType;
 import com.intellibucket.user.service.domain.core.valueObject.Password;
 import com.intellibucket.user.service.domain.core.valueObject.RoleAuthorithy;
 import com.intellibucket.user.service.domain.core.valueObject.Status;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.UUID;
@@ -25,8 +26,6 @@ public abstract class BaseUserEntity {
     @Column(name = "id")
     UUID userEntityId;
 
-    @NotNull
-    @Email
     String email;
 
     @NotEmpty
@@ -44,14 +43,11 @@ public abstract class BaseUserEntity {
     @Enumerated(EnumType.STRING)
     EmailType emailType;
 
-    @Enumerated(EnumType.STRING)
-    PhoneNumberType phoneNumberType;
-
-    @OneToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "user_address_id") // foreign key
     UserAddressEntity address;
 
-    @OneToOne // FIX IT TO OneToMany
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "phone_number_id") // foreign key
     PhoneNumberEntity phoneNumberEntity;
 }

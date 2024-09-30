@@ -1,6 +1,6 @@
 package com.intellibucket.user.service.configuration.jpa;
 
-import com.intellibucket.model.BaseUserEntity;
+import com.intellibucket.model.*;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
@@ -18,7 +18,10 @@ public class JpaConfig {
         em.setDataSource(dataSource);
 
         // Use Product class to determine the package to scan
-        em.setPackagesToScan(BaseUserEntity.class.getPackage().getName());
+        em.setPackagesToScan(CompanyRegistrationEntity.class.getPackage().getName(),
+                CustomerRegistrationEntity.class.getPackage().getName(),
+                PhoneNumberEntity.class.getPackage().getName(),
+                UserAddressEntity.class.getPackage().getName());
 
         // Set the JPA vendor (Hibernate)
         em.setJpaVendorAdapter(new HibernateJpaVendorAdapter());
