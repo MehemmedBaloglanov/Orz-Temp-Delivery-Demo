@@ -11,11 +11,12 @@ import com.intellibucket.user.service.domain.core.valueObject.Password;
 import com.intellibucket.user.service.domain.core.valueObject.RoleAuthorithy;
 import com.intellibucket.user.service.domain.core.valueObject.Status;
 import lombok.Getter;
+import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
 @SuperBuilder
 @Getter
-//@Setter
+@Setter
 public class UserRoot extends AggregateRoot<UserID> {
     private final UserID userID;
     private final Address address;

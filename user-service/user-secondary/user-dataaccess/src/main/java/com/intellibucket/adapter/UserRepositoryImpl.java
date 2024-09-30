@@ -58,27 +58,20 @@ public class UserRepositoryImpl implements UserRepository {
 //
     @Override
     public UserRoot save(UserRoot userRoot) {
-        System.out.println("UserRepositoryImpl: save 1");
         CompanyRegistrationEntity companyRegistrationEntity = userDataAccessMapper.userRootToCompanyEntity(userRoot);
-        System.out.println("UserRepositoryImpl: save 2");
         CompanyRegistrationEntity savedUserEntity = companyJpaRepository.save(companyRegistrationEntity);
-        System.out.println("UserRepositoryImpl: save 3");
         return userDataAccessMapper.companyEntityToUserRoot(savedUserEntity);
     }
 
     @Override
     public Optional<UserRoot> findByEmail(Email email) {
-        System.out.println("UserRepositoryImpl: findByEmail 1");
         Optional<CompanyRegistrationEntity> userEntityOptional = companyJpaRepository.findByEmail(email.getValue());
-        System.out.println("UserRepositoryImpl: findByEmail 2");
 
-        if (userEntityOptional.isEmpty()) {
-            return Optional.empty();
-//            throw new UserNotFoundException("User not found with email: " + email.getValue());
-        } else {
+        if (userEntityOptional.isPresent()) {
             CompanyRegistrationEntity companyRegistrationEntity = userEntityOptional.get();
-            System.out.println("UserRepositoryImpl: findByEmail 3");
             return Optional.of(userDataAccessMapper.companyEntityToUserRoot(companyRegistrationEntity));
+        } else {
+            return Optional.empty();
         }
     }
 }

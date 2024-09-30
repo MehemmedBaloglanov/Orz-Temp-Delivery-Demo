@@ -16,7 +16,6 @@ import lombok.Getter;
 @Getter
 public class UserDataAccessMapper {
     public CompanyRegistrationEntity userRootToCompanyEntity(UserRoot userRoot) {
-        System.out.println("UserDataAccessMapper.userRootToCompanyEntity -->1");
         CompanyRegistrationEntity entity = new CompanyRegistrationEntity();
 
         entity.setUserEntityId(UserID.random().value());
@@ -25,11 +24,10 @@ public class UserDataAccessMapper {
         entity.setEmailType(userRoot.getEmail().getType());
         entity.setPassword(userRoot.getPassword().getValue());
         entity.setStatus(userRoot.getStatus());
-        System.out.println("UserDataAccessMapper.userRootToCompanyEntity -->2");
+        entity.setRoleAuthority(userRoot.getRoleAuthorithy());
 
         UserAddressEntity addressEntity = addressToUserAddressEntity(userRoot.getAddress());
         entity.setAddress(addressEntity);
-        System.out.println("UserDataAccessMapper.userRootToCompanyEntity -->3");
 
         PhoneNumberEntity phoneNumberEntity = phoneNumberToPhoneNumberEntity(userRoot.getPhoneNumber());
         entity.setPhoneNumberEntity(phoneNumberEntity);
@@ -37,7 +35,6 @@ public class UserDataAccessMapper {
     }
 
     public UserRoot companyEntityToUserRoot(CompanyRegistrationEntity userEntity) {
-        System.out.println("UserDataAccessMapper.companyEntityToUserRoot -->1");
         return UserRoot.builder()
                 .userID(UserID.of(userEntity.getUserEntityId()))
                 .address(Address.of(

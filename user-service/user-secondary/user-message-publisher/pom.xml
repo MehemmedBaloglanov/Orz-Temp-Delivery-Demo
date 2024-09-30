@@ -19,6 +19,10 @@
             <version>6.1.12</version>
             <scope>compile</scope>
         </dependency>
+        <dependency>
+            <groupId>org.springframework.kafka</groupId>
+            <artifactId>spring-kafka</artifactId>
+        </dependency>
     </dependencies>
     <modelVersion>4.0.0</modelVersion>
 

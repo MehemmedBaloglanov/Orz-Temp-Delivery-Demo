@@ -43,11 +43,11 @@ public abstract class BaseUserEntity {
     @Enumerated(EnumType.STRING)
     EmailType emailType;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "user_address_id") // foreign key
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "user_address_id")
     UserAddressEntity address;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "phone_number_id") // foreign key
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "phone_number_id")
     PhoneNumberEntity phoneNumberEntity;
 }
