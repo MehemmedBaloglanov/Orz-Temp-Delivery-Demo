@@ -2,11 +2,13 @@ package com.intellibucket.user.service.domain.shell.port.input.rest.abstracts.co
 
 import com.intellibucket.user.service.domain.core.exception.UserDomainException;
 import com.intellibucket.user.service.domain.shell.dto.request.CompanyCreateCommand;
+import com.intellibucket.user.service.domain.shell.dto.request.CustomerCreateCommand;
 
 public interface UserCommandServicePort {
     void companyRegistered(CompanyCreateCommand companyCreateCommand) throws UserDomainException;
+
+    void customerRegistered(CustomerCreateCommand customerCreateCommand) throws UserDomainException;
 }
-//    void customerRegistered(CustomerCreateCommand customerCreateCommand) throws UserDomainException;
 //
 //    void deleteUser(UserDeleteCommand command) throws UserDomainException;
 //

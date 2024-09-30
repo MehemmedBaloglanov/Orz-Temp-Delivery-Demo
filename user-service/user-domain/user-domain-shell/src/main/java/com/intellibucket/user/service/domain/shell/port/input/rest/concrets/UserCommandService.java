@@ -2,6 +2,7 @@ package com.intellibucket.user.service.domain.shell.port.input.rest.concrets;
 
 import com.intellibucket.user.service.domain.core.exception.UserDomainException;
 import com.intellibucket.user.service.domain.shell.dto.request.CompanyCreateCommand;
+import com.intellibucket.user.service.domain.shell.dto.request.CustomerCreateCommand;
 import com.intellibucket.user.service.domain.shell.handler.*;
 import com.intellibucket.user.service.domain.shell.port.input.rest.abstracts.command.UserCommandServicePort;
 import lombok.RequiredArgsConstructor;
@@ -20,14 +21,13 @@ public class UserCommandService implements UserCommandServicePort {
 
     @Override
     public void companyRegistered(CompanyCreateCommand command) throws UserDomainException {
-        System.out.println("UserCommandService is ok!");
         companyRegisterCommandHandler.handle(command);
     }
 
-//    @Override
-//    public void customerRegistered(CustomerCreateCommand command) throws UserDomainException {
-//        customerRegisterCommandHandler.handle(command);
-//    }
+    @Override
+    public void customerRegistered(CustomerCreateCommand command) throws UserDomainException {
+        customerRegisterCommandHandler.handle(command);
+    }
 //
 //    @Override
 //    public void deleteUser(UserDeleteCommand command) throws UserDomainException {

@@ -10,10 +10,10 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 @Configuration
 @EnableJpaRepositories(basePackages = "com.intellibucket.repository")
-public class UserRepositoryConfig {
+public class RepositoryBeanConfig {
     private final CompanyJpaRepository companyJpaRepository;
 
-    public UserRepositoryConfig(CompanyJpaRepository companyJpaRepository) {
+    public RepositoryBeanConfig(CompanyJpaRepository companyJpaRepository) {
         this.companyJpaRepository = companyJpaRepository;
     }
 
