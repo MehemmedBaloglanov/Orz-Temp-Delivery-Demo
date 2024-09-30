@@ -40,6 +40,7 @@
             <groupId>com.intellibucket</groupId>
             <artifactId>user-domain-shell</artifactId>
         </dependency>
+
     </dependencies>
 
 </project>

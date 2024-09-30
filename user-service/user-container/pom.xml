@@ -44,6 +44,10 @@
             <groupId>com.intellibucket</groupId>
             <artifactId>user-dataaccess</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.intellibucket</groupId>
+            <artifactId>user-dataaccess</artifactId>
+        </dependency>
 
 
     </dependencies>
