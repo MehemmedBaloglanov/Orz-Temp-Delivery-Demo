@@ -25,8 +25,6 @@ public abstract class BaseUserEntity {
     @Column(name = "id")
     UUID userEntityId;
 
-    @NotNull
-    @Email
     String email;
 
     @NotEmpty
@@ -43,9 +41,6 @@ public abstract class BaseUserEntity {
 
     @Enumerated(EnumType.STRING)
     EmailType emailType;
-
-    @Enumerated(EnumType.STRING)
-    PhoneNumberType phoneNumberType;
 
     @OneToOne
     @JoinColumn(name = "user_address_id") // foreign key

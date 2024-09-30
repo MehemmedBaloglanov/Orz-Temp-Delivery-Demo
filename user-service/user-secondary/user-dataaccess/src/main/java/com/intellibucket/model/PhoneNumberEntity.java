@@ -2,10 +2,7 @@ package com.intellibucket.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.intelliacademy.orizonroute.valueobjects.user.PhoneNumberType;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
@@ -23,7 +20,11 @@ public class PhoneNumberEntity {
     @JsonProperty("id")
     @GeneratedValue(strategy = GenerationType.AUTO)
     Long phoneNumberId;
+
+    @Enumerated(EnumType.STRING)
     PhoneNumberType type;
+
     String countryCode;
+
     String number;
 }

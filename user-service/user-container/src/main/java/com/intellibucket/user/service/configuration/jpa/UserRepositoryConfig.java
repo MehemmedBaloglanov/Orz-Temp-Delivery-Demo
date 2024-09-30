@@ -7,9 +7,11 @@ import com.intellibucket.user.service.domain.shell.port.output.repository.UserRe
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 @Configuration
 @RequiredArgsConstructor
+@EnableJpaRepositories(basePackages = "com.intellibucket.repository")
 public class UserRepositoryConfig {
     private UserDataAccessMapper userDataAccessMapper;
     private CompanyJpaRepository companyJpaRepository;

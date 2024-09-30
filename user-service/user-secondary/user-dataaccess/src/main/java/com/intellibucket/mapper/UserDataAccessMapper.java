@@ -3,7 +3,6 @@ package com.intellibucket.mapper;
 import com.intelliacademy.orizonroute.identity.user.UserID;
 import com.intelliacademy.orizonroute.valueobjects.common.Email;
 import com.intelliacademy.orizonroute.valueobjects.common.PhoneNumber;
-import com.intellibucket.model.BaseUserEntity;
 import com.intellibucket.model.CompanyRegistrationEntity;
 import com.intellibucket.model.PhoneNumberEntity;
 import com.intellibucket.model.UserAddressEntity;
@@ -29,7 +28,7 @@ public class UserDataAccessMapper {
         return entity;
     }
 
-    public UserRoot userEntityToUserRoot(BaseUserEntity userEntity) {
+    public UserRoot companyEntityToUserRoot(CompanyRegistrationEntity userEntity) {
         return UserRoot.builder()
                 .userID(UserID.of(UUID.randomUUID()))
                 .address(userJpaAdresstoAddress(userEntity.getAddress()))
@@ -40,7 +39,6 @@ public class UserDataAccessMapper {
                 .phoneNumber(phoneNumberEntityToPhoneNumber(userEntity.getPhoneNumberEntity()))
                 .build();
     }
-
 
     public Address userJpaAdresstoAddress(UserAddressEntity address) {
         return Address.builder()

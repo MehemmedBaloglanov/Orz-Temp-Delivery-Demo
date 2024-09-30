@@ -13,6 +13,10 @@ public final class Password {
     public static final String PATTERN = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d).*$";
     private final String value;
 
+    private Password(String value) {
+        this.value = value;
+    }
+
     public static Password of(String value) {
         return new Password(value);
     }
