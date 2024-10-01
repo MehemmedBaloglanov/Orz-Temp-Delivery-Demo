@@ -18,6 +18,7 @@ import org.jetbrains.annotations.NotNull;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "company")
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class CompanyRegistrationEntity extends BaseUserEntity {
     @NotNull
     @NotEmpty

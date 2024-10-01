@@ -17,7 +17,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.Optional;
 
 @RequiredArgsConstructor
-@Component
 public class CompanyUpdateCommandHandler {
     private final UserRepository userRepository;
     private final UserDomainService userDomainService;

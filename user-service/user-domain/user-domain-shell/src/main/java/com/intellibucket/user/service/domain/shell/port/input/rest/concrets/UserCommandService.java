@@ -6,9 +6,7 @@ import com.intellibucket.user.service.domain.shell.dto.request.CustomerCreateCom
 import com.intellibucket.user.service.domain.shell.handler.*;
 import com.intellibucket.user.service.domain.shell.port.input.rest.abstracts.command.UserCommandServicePort;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
 
-@Service
 @RequiredArgsConstructor
 public class UserCommandService implements UserCommandServicePort {
     private final CompanyRegisterCommandHandler companyRegisterCommandHandler;
