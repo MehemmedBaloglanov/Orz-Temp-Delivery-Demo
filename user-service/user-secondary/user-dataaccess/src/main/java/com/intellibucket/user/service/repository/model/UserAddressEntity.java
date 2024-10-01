@@ -1,4 +1,4 @@
-package com.intellibucket.model;
+package com.intellibucket.user.service.repository.model;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

@@ -1,4 +1,4 @@
-package com.intellibucket.model;
+package com.intellibucket.user.service.repository.model;
 
 import com.intelliacademy.orizonroute.valueobjects.user.PhoneNumberType;
 import jakarta.persistence.*;

@@ -14,7 +14,7 @@ public final class Address {
     private final String street;
     private final String postalCode;
 
-    private Address(String state, String country, String city, String street, String postalCode) {
+    public Address(String state, String country, String city, String street, String postalCode) {
         this.state = state;
         this.country = country;
         this.city = city;
