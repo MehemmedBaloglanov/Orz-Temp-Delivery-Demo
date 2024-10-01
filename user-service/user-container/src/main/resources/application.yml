@@ -14,8 +14,8 @@ spring:
       ddl-auto: update
     show-sql: true
     open-in-view: false
-#  main:
-#    allow-circular-references: true
+  main:
+    allow-circular-references: true
 #spring:
 #  datasource:
 #    url: jdbc:postgresql://localhost:5432/delivery

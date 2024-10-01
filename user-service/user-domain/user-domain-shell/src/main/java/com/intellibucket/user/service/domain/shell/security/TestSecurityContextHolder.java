@@ -12,7 +12,7 @@ import java.util.UUID;
 
 @Component
 @Scope("prototype")
-public class TestSecurityContextHolder  {
+public class TestSecurityContextHolder implements AbstractSecurityContextHolder {
 
     @Value("${env.test.current.user.id:#{null}}")
     private String testCurrentUserId;
@@ -27,27 +27,27 @@ public class TestSecurityContextHolder  {
     @Value("${env.test.current.company.id:#{null}}")
     private String testCurrentCompanyId;
 
-//    @Override
-//    public UserID currentUserID() {
-//        return UserID.of(testCurrentUserId);
-//    }
-//
-//    @Override
-//    public UserID currentNullableUserID() {
-//        return UserID.of(UUID.fromString(testCurrentUserId));
-//    }
-//    @Override
-//    public CustomerID currentCustomerID() {
-//        return CustomerID.of(testCurrentCustomerId);
-//    }
-//
-//    @Override
-//    public CourierID currentCourierID() {
-//        return CourierID.of(testCurrentCourierId);
-//    }
-//
-//    @Override
-//    public CompanyID currentCompanyID() {
-//        return CompanyID.of(testCurrentCompanyId);
-//    }
+    @Override
+    public UserID currentUserID() {
+        return UserID.of(testCurrentUserId);
+    }
+
+    @Override
+    public UserID currentNullableUserID() {
+        return UserID.of(UUID.fromString(testCurrentUserId));
+    }
+    @Override
+    public CustomerID currentCustomerID() {
+        return CustomerID.of(testCurrentCustomerId);
+    }
+
+    @Override
+    public CourierID currentCourierID() {
+        return CourierID.of(testCurrentCourierId);
+    }
+
+    @Override
+    public CompanyID currentCompanyID() {
+        return CompanyID.of(testCurrentCompanyId);
+    }
 }
