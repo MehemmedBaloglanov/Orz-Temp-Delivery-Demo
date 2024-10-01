@@ -1,6 +1,9 @@
 package com.intellibucket.company.service.domain.shell.port.input.rest.concretes;
 
 import com.intellibucket.company.service.domain.core.exception.CompanyDomainException;
+import com.intellibucket.company.service.domain.shell.dto.rest.command.ProductCreateCommand;
+import com.intellibucket.company.service.domain.shell.dto.rest.command.ProductDeleteCommand;
+import com.intellibucket.company.service.domain.shell.dto.rest.command.ProductUpdateCommand;
 import com.intellibucket.company.service.domain.shell.dto.rest.response.ProductResponse;
 import com.intellibucket.company.service.domain.shell.handler.ProductCreateCommandHandler;
 import com.intellibucket.company.service.domain.shell.handler.ProductDeleteCommandHandler;
@@ -17,17 +20,17 @@ public class ProductCommandServiceHandler implements ProductCommandServiceAdapte
 
 
     @Override
-    public ProductResponse createProduct() throws CompanyDomainException {
-        return productCreateCommandHandler.handle();
+    public ProductResponse createProduct(ProductCreateCommand command) throws CompanyDomainException {
+        return productCreateCommandHandler.handle(command);
     }
 
     @Override
-    public void deleteProduct(Long id) throws CompanyDomainException {
-        productDeleteCommandHandler.handle();
+    public void deleteProduct(ProductDeleteCommand command) throws CompanyDomainException {
+        productDeleteCommandHandler.handle(command);
     }
 
     @Override
-    public ProductResponse updateProduct(Long id) {
-        return productUpdateCommandHandler.handle();
+    public void updateProduct(ProductUpdateCommand command) throws CompanyDomainException {
+        productUpdateCommandHandler.handle(command);
     }
 }

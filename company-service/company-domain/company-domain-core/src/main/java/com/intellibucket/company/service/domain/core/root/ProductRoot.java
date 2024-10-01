@@ -4,10 +4,8 @@ import com.intelliacademy.orizonroute.identity.company.CompanyID;
 import com.intelliacademy.orizonroute.identity.order.product.ProductID;
 import com.intelliacademy.orizonroute.root.AggregateRoot;
 import com.intelliacademy.orizonroute.valueobjects.common.Money;
-import com.intelliacademy.orizonroute.valueobjects.common.Username;
 import com.intellibucket.company.service.domain.core.exception.ValidateException;
 import com.intellibucket.company.service.domain.core.valueobject.ProductStatus;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
@@ -16,12 +14,9 @@ import lombok.experimental.SuperBuilder;
 @Setter
 @Getter
 public class ProductRoot extends AggregateRoot<ProductID> {
-
-    private ProductID productID;
     private String name;
     private Money price;
     private CompanyID companyID;
-    private Integer quantity;
     private Integer stockQuantity;
     private ProductStatus status;
 
@@ -38,7 +33,6 @@ public class ProductRoot extends AggregateRoot<ProductID> {
     private void validateProduct() throws ValidateException {
         validateName();
         validatePrice();
-        validateQuantity();
         validateStockQuantity();
         validateCompanyID();
     }
@@ -55,11 +49,6 @@ public class ProductRoot extends AggregateRoot<ProductID> {
         }
     }
 
-    private void validateQuantity() throws ValidateException {
-        if (quantity == null || quantity < 0) {
-            throw new ValidateException("Quantity cannot be null or negative.");
-        }
-    }
 
     private void validateCompanyID() throws ValidateException {
         if (companyID == null) {
@@ -102,56 +91,24 @@ public class ProductRoot extends AggregateRoot<ProductID> {
 
     //--------------------------------->UPDATE OTHER FIELDS
 
-    public ProductRoot updateName(String newName) throws ValidateException {
-        if (newName == null || newName.isBlank()) {
-            throw new ValidateException("New name cannot be empty or blank.");
-        }
-        this.name = newName;
+    //todo Icini dopldurun
+    public ProductRoot update() throws ValidateException {
+
         return this;
     }
 
-    public ProductRoot updatePrice(Money newPrice) throws ValidateException {
-        if (newPrice == null || newPrice.isNil()) {
-            throw new ValidateException("New price cannot be null or zero.");
-        }
-        this.price = newPrice;
-        return this;
-    }
-
-    public ProductRoot updateQuantity(Integer newQuantity) throws ValidateException {
-        if (newQuantity == null || newQuantity <= 0) {
-            throw new ValidateException("New quantity must be greater than zero.");
-        }
-        this.quantity = newQuantity;
-        return this;
-    }
-
-    public ProductRoot updateStockQuantity(Integer newStockQuantity) throws ValidateException {
-        if (newStockQuantity == null || newStockQuantity < 0) {
-            throw new ValidateException("New stock quantity cannot be null or negative.");
-        }
-        this.stockQuantity = newStockQuantity;
-        return this;
-    }
 
     //----------------------------->DECREASE AND INCREASE METHODS
 
-    public ProductRoot increaseQuantity(Integer amount) throws ValidateException {
-        if (amount == null || amount <= 0) {
-            throw new ValidateException("Increase amount must be greater than zero.");
-        }
-        this.quantity += amount;
-        return this;
-    }
 
-    public ProductRoot decreaseQuantity(Integer amount) throws ValidateException {
+    public ProductRoot decreaseStockQuantity(Integer amount) throws ValidateException {
         if (amount == null || amount <= 0) {
             throw new ValidateException("Decrease amount must be greater than zero.");
         }
-        if (this.quantity - amount < 0) {
-            throw new ValidateException("Quantity cannot be less than zero.");
+        if (this.stockQuantity - amount < 0) {
+            throw new ValidateException("Stock quantity cannot be less than zero.");
         }
-        this.quantity -= amount;
+        this.stockQuantity -= amount;
         return this;
     }
 

@@ -1,6 +1,5 @@
 package com.intellibucket.company.service.domain.core.service.serviceImpl;
 
-import com.intelliacademy.orizonroute.valueobjects.common.Money;
 import com.intellibucket.company.service.domain.core.event.product.*;
 import com.intellibucket.company.service.domain.core.exception.ValidateException;
 import com.intellibucket.company.service.domain.core.root.ProductRoot;
@@ -37,20 +36,21 @@ public class ProductDomainServiceImpl implements ProductDomainService {
     }
 
     @Override
-    public ProductPriceUpdatedEvent updateProductPrice(ProductRoot productRoot,Money newPrice) throws ValidateException{
-        productRoot.updatePrice(newPrice);
+    public ProductPriceUpdatedEvent updateProduct(ProductRoot productRoot) throws ValidateException{
+        productRoot.update();
         return new ProductPriceUpdatedEvent(productRoot,OffsetDateTime.now(ZONE_ID));
     }
 
-    @Override
-    public ProductQuantityIncreasedEvent increaseProductQuantity(ProductRoot productRoot, Integer newQuantity) throws ValidateException {
-        productRoot.increaseQuantity(newQuantity);
-        return new ProductQuantityIncreasedEvent(productRoot,OffsetDateTime.now(ZONE_ID));
-    }
 
     @Override
     public ProductStockQuantityIncreasedEvent increaseProductStockQuantity(ProductRoot productRoot, Integer newQuantity) throws ValidateException {
         productRoot.increaseStockQuantity(newQuantity);
         return new ProductStockQuantityIncreasedEvent(productRoot,OffsetDateTime.now(ZONE_ID));
+    }
+
+    @Override
+    public ProductStockQuantityDecreaseEvent decreaseProductStockQuantity(ProductRoot productRoot, Integer newQuantity) throws ValidateException {
+        productRoot.decreaseStockQuantity(newQuantity);
+        return new ProductStockQuantityDecreaseEvent(productRoot,OffsetDateTime.now(ZONE_ID));
     }
 }

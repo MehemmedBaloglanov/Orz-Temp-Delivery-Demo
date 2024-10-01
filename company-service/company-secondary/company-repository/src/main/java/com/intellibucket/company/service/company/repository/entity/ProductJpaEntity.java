@@ -1,5 +1,6 @@
 package com.intellibucket.company.service.company.repository.entity;
 
+import com.intelliacademy.orizonroute.identity.company.CompanyID;
 import com.intelliacademy.orizonroute.identity.order.product.ProductID;
 import com.intelliacademy.orizonroute.valueobjects.common.Money;
 import com.intellibucket.company.service.domain.core.valueobject.ProductStatus;

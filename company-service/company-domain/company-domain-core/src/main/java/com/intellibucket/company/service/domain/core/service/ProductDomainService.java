@@ -15,11 +15,10 @@ public interface ProductDomainService {
 
     ProductOutOfStockEvent outOfStockProduct(ProductRoot productRoot) throws ValidateException;
 
-    ProductPriceUpdatedEvent updateProductPrice(ProductRoot productRoot, Money price) throws ValidateException;
-
-    ProductQuantityIncreasedEvent increaseProductQuantity(ProductRoot productRoot,Integer newQuantity) throws ValidateException;
+    ProductPriceUpdatedEvent updateProduct(ProductRoot productRoot) throws ValidateException;
 
     ProductStockQuantityIncreasedEvent increaseProductStockQuantity(ProductRoot productRoot,Integer newQuantity) throws ValidateException;
+    ProductStockQuantityDecreaseEvent decreaseProductStockQuantity(ProductRoot productRoot,Integer newQuantity) throws ValidateException;
 
 
 

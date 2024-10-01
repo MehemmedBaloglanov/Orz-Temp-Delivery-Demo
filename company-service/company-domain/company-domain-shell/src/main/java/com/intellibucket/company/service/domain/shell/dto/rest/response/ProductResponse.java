@@ -1,5 +1,6 @@
 package com.intellibucket.company.service.domain.shell.dto.rest.response;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.intelliacademy.orizonroute.identity.company.CompanyID;
 import com.intelliacademy.orizonroute.identity.order.product.ProductID;
 import com.intelliacademy.orizonroute.valueobjects.common.Money;
@@ -15,21 +16,19 @@ import java.time.OffsetDateTime;
 @AllArgsConstructor
 public class ProductResponse {
 
-    private final ProductID productID;
+    private final String id;
 
     private final String name;
 
     private final Money price;
 
-    private final CompanyID companyID;
+    @JsonProperty("company_id")
+    private final String companyId;
 
-    private final String quantity;
+    @JsonProperty("stock_quantity")
+    private final Integer stockQuantity;
 
-    private final String stockQuantity;
-
-    private final ProductStatus status;
-
-    private final OffsetDateTime createdAt;
+    private final String status;
 
 
 }

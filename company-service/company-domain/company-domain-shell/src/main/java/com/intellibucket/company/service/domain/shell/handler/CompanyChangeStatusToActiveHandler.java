@@ -9,8 +9,6 @@ import com.intellibucket.company.service.domain.shell.dto.rest.command.CompanyAc
 import com.intellibucket.company.service.domain.shell.port.output.repository.CompanyRepositoryAdapter;
 import lombok.RequiredArgsConstructor;
 
-import java.util.Optional;
-
 @RequiredArgsConstructor
 public class CompanyChangeStatusToActiveHandler {
 

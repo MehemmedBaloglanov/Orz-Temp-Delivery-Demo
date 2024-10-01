@@ -1,6 +1,9 @@
 package com.intellibucket.order.service.primary.rest.command;
 
 import com.intellibucket.company.service.domain.core.exception.CompanyDomainException;
+import com.intellibucket.company.service.domain.shell.dto.rest.command.ProductCreateCommand;
+import com.intellibucket.company.service.domain.shell.dto.rest.command.ProductDeleteCommand;
+import com.intellibucket.company.service.domain.shell.dto.rest.command.ProductUpdateCommand;
 import com.intellibucket.company.service.domain.shell.dto.rest.response.ProductResponse;
 import com.intellibucket.company.service.domain.shell.port.input.rest.abstracts.command.ProductCommandServiceAdapter;
 import lombok.RequiredArgsConstructor;
@@ -17,25 +20,23 @@ public class ProductCommandController {
 
     //PRODUCT CREATE
     @PostMapping
-    public ResponseEntity<ProductResponse> createProduct() throws CompanyDomainException {
-        ProductResponse productResponse = productCommandServiceAdapter.createProduct();
+    public ResponseEntity<ProductResponse> createProduct(@RequestBody ProductCreateCommand command) throws CompanyDomainException {
+        ProductResponse productResponse = productCommandServiceAdapter.createProduct(command);
         return new ResponseEntity<>(productResponse, HttpStatus.CREATED);
     }
 
     //PRODUCT UPDATE
-    @PutMapping("/{id}")
-    public ResponseEntity<ProductResponse> updateProduct(@PathVariable Long id) throws CompanyDomainException {
-        ProductResponse productResponse = productCommandServiceAdapter.updateProduct(id);
-        return new ResponseEntity<>(productResponse, HttpStatus.OK);
+    @PostMapping("/command")
+    public void updateProduct(@RequestBody ProductUpdateCommand command) throws CompanyDomainException {
+        productCommandServiceAdapter.updateProduct(command);
     }
 
-    //PRODUCT DELETE
+
+    //PRODUCT SOFT DELETE
     @DeleteMapping("/{id}")
-    public void deleteProduct(@PathVariable Long id) throws CompanyDomainException {
-        productCommandServiceAdapter.deleteProduct(id);
+    public void deleteProduct(@RequestBody ProductDeleteCommand command) throws CompanyDomainException {
+        productCommandServiceAdapter.deleteProduct(command);
     }
-
-
 
 
     //todo 1)changeDelete 2)changeActive 3)changeOutOfStock
