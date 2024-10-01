@@ -7,8 +7,8 @@ import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 @SpringBootApplication(scanBasePackages = "com.intellibucket.order.service")
-@EnableJpaRepositories("com.intellibucket.order.service")
-@EntityScan("com.intellibucket.order.service")
+@EnableJpaRepositories("com.intellibucket.order.service.repository.repository")
+@EntityScan("com.intellibucket.order.service.repository.model")
 
 public class OrderServiceApplication {
     public static void main(String[] args) {

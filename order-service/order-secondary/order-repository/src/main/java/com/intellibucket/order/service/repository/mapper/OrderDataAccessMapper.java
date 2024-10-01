@@ -50,7 +50,7 @@ public class OrderDataAccessMapper {
     private List<OrderItemRoot> orderItemEntitiesToOrderItemRoot(List<OrderItemEntity> items) {
         return items.stream()
                 .map(orderItem -> OrderItemRoot.builder()
-                        .orderId(OrderID.of(orderItem.getOrderId()))
+                        .orderId(OrderID.of(orderItem.getOrderItemId()))
                         .productID(ProductID.of(orderItem.getProductID()))
                         .quantity(orderItem.getQuantity())
                         .price(Money.of(orderItem.getPrice()))
@@ -62,7 +62,7 @@ public class OrderDataAccessMapper {
     private List<OrderItemEntity> orderItemRootToOrderItemEntities(List<OrderItemRoot> items) {
         return items.stream()
                 .map(orderItemRoot -> OrderItemEntity.builder()
-                        .orderId(orderItemRoot.getOrderId().value())
+                        .orderItemId(orderItemRoot.getOrderId().value())
                         .productID(orderItemRoot.getProductID().value())
                         .quantity(orderItemRoot.getQuantity())
                         .price(orderItemRoot.getPrice().getAmount())

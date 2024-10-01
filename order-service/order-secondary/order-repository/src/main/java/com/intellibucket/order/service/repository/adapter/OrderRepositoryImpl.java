@@ -3,6 +3,7 @@ package com.intellibucket.order.service.repository.adapter;
 import com.intelliacademy.orizonroute.identity.order.ord.OrderID;
 import com.intelliacademy.orizonroute.identity.user.UserID;
 import com.intelliacademy.orizonroute.valueobjects.order.OrderNumber;
+import com.intellibucket.order.service.domain.core.root.OrderItemRoot;
 import com.intellibucket.order.service.domain.core.root.OrderRoot;
 import com.intellibucket.order.service.domain.shell.port.output.repository.OrderRepository;
 import com.intellibucket.order.service.repository.mapper.OrderDataAccessMapper;
@@ -37,6 +38,11 @@ public class OrderRepositoryImpl implements OrderRepository {
             OrderEntity orderEntity = order.get();
             return Optional.of(orderDataAccessMapper.orderEntityToOrderRoot(orderEntity));
         }
+    }
+
+    @Override
+    public Optional<OrderRoot> findByOrderIdAndOrderItemId(OrderID orderId, OrderItemRoot orderItemRoot) {
+        return Optional.empty();
     }
 
     @Override

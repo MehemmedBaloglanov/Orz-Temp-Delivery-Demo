@@ -13,8 +13,6 @@ import java.time.OffsetDateTime;
 import static com.intellibucket.constants.DomainConstants.ZONE_ID;
 
 @Slf4j
-@RequiredArgsConstructor
-@Service
 public class OrderDomainServiceImpl implements OrderDomainService {
 
     /**
