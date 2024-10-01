@@ -11,6 +11,7 @@ import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import lombok.*;
+import lombok.experimental.FieldDefaults;
 import lombok.experimental.SuperBuilder;
 import org.jetbrains.annotations.NotNull;
 
@@ -20,41 +21,42 @@ import java.util.UUID;
 @Setter
 @ToString
 @SuperBuilder
+@MappedSuperclass
 @NoArgsConstructor
 @AllArgsConstructor
-@MappedSuperclass
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public abstract class BaseUserEntity {
     @Id
     @Column(name = "id")
-    private UUID userEntityId;
+    UUID userEntityId;
 
     @NotNull
     @Email
-    private String email;
+    String email;
 
     @NotEmpty
     @NotNull
     @Size(min = 8, max = 25)
     @Pattern(regexp = Password.PATTERN)
-    private String password;
+    String password;
 
     @Enumerated(EnumType.STRING)
-    private Status status;
+    Status status;
 
     @Enumerated(EnumType.STRING)
-    private RoleAuthorithy roleAuthority;
+    RoleAuthorithy roleAuthority;
 
     @Enumerated(EnumType.STRING)
-    private EmailType emailType;
+    EmailType emailType;
 
     @Enumerated(EnumType.STRING)
-    private PhoneNumberType phoneNumberType;
+    PhoneNumberType phoneNumberType;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "user_address_id") // foreign key
-    private UserAddressEntity address;
+    UserAddressEntity address;
 
-    @OneToOne // FIX IT TO OneToMany
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "phone_number_id") // foreign key
-    private PhoneNumberEntity phoneNumberEntity;
+    PhoneNumberEntity phoneNumberEntity;
 }

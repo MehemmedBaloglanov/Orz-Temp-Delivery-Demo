@@ -16,9 +16,10 @@ import org.jetbrains.annotations.NotNull;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "customer")
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class CustomerRegistrationEntity extends BaseUserEntity{
     @NotNull
     @NotEmpty
     @Size(min = 3, max = 25)
-    private String username;
+    String username;
 }

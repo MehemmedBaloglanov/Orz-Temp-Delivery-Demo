@@ -13,16 +13,13 @@ import com.intellibucket.user.service.repository.model.CustomerRegistrationEntit
 import com.intellibucket.user.service.repository.repository.CompanyJpaRepository;
 import com.intellibucket.user.service.repository.repository.CustomerJpaRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.Optional;
 
-@Component
+//@Component
 @RequiredArgsConstructor
-
 public class UserRepositoryImpl implements UserRepository {
-
     private final UserDataAccessMapper userDataAccessMapper;
     private final CustomerJpaRepository customerJpaRepository;
     private final CompanyJpaRepository companyJpaRepository;

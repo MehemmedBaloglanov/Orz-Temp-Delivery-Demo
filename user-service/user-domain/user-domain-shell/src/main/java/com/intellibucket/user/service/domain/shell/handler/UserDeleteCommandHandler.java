@@ -13,7 +13,6 @@ import org.springframework.stereotype.Component;
 
 import java.util.Optional;
 
-@Component
 @RequiredArgsConstructor
 public class UserDeleteCommandHandler {
     private final UserRepository userRepository;
