@@ -13,6 +13,7 @@ import java.util.UUID;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
+@Table(name = "phone_number")
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class PhoneNumberEntity {
     @Id

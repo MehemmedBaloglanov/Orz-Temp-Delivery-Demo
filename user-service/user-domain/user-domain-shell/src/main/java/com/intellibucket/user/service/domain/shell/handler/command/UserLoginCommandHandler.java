@@ -1,4 +1,4 @@
-package com.intellibucket.user.service.domain.shell.handler;
+package com.intellibucket.user.service.domain.shell.handler.command;
 
 import com.intellibucket.user.service.domain.core.event.UserLoggedInDomainEvent;
 import com.intellibucket.user.service.domain.core.exception.UserDomainException;
@@ -11,9 +11,10 @@ import com.intellibucket.user.service.domain.shell.dto.request.UserLoginCommand;
 import com.intellibucket.user.service.domain.shell.mapper.UserCommandMapper;
 import com.intellibucket.user.service.domain.shell.port.output.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Component;
 
 import java.util.Optional;
-
+@Component
 @RequiredArgsConstructor
 public class UserLoginCommandHandler {
     private final UserRepository userRepository;
@@ -22,7 +23,7 @@ public class UserLoginCommandHandler {
     public void handle(UserLoginCommand command) throws UserDomainException {
         UserRoot userFromCommand = UserCommandMapper.userLoginCommandToUserRoot(command);
 
-        Optional<UserRoot> userRootOptional = userRepository.findByEmail(userFromCommand.getEmail());
+        Optional<UserRoot> userRootOptional = userRepository.findByEmail(userFromCommand.getEmail(),userFromCommand);
 
         if (userRootOptional.isEmpty()) {
             throw new UserNotFoundException("User not found with email! " + command.getEmail());

@@ -1,8 +1,12 @@
 package com.intellibucket.user.service.primary.rest.command;
 
 import com.intellibucket.user.service.domain.core.exception.UserDomainException;
+import com.intellibucket.user.service.domain.core.exception.user.UserNotFoundException;
+import com.intellibucket.user.service.domain.core.exception.user.UserSavedException;
 import com.intellibucket.user.service.domain.shell.dto.request.CompanyCreateCommand;
+import com.intellibucket.user.service.domain.shell.dto.request.CompanyUpdateCommand;
 import com.intellibucket.user.service.domain.shell.dto.request.CustomerCreateCommand;
+import com.intellibucket.user.service.domain.shell.dto.request.CustomerUpdateCommand;
 import com.intellibucket.user.service.domain.shell.dto.response.EmptyResponse;
 import com.intellibucket.user.service.domain.shell.port.input.rest.abstracts.command.UserCommandServicePort;
 import lombok.RequiredArgsConstructor;
@@ -31,6 +35,21 @@ public class UserCommandController {
         EmptyResponse response = EmptyResponse.builder().message("User registered successfully !").success(true).build();
         return ResponseEntity.ok(response);
     }
+
+    @PostMapping("/updateCustomer")
+    public ResponseEntity<EmptyResponse> updateUser(@RequestBody CustomerUpdateCommand command) throws UserNotFoundException, UserSavedException {
+        abstractUserCommandService.updateCustomer(command);
+        EmptyResponse response = EmptyResponse.builder().message("User updated successfully !").success(true).build();
+        return ResponseEntity.ok(response);
+    }
+
+    @PostMapping("/updateCompany")
+    public ResponseEntity<EmptyResponse> updateUser(@RequestBody CompanyUpdateCommand command) throws UserNotFoundException, UserSavedException {
+        abstractUserCommandService.updateCompany(command);
+        EmptyResponse response = EmptyResponse.builder().message("User updated successfully !").success(true).build();
+        return ResponseEntity.ok(response);
+    }
+}
 //
 //    @DeleteMapping("/{delete}")
 //    public ResponseEntity<EmptyResponse> userDeleted(@PathVariable UserDeleteCommand command) throws UserDomainException {
@@ -52,18 +71,3 @@ public class UserCommandController {
 //        UserLoginResponse response = new UserLoginResponse();
 //        return ResponseEntity.ok(response);
 //    }
-//
-//    @PostMapping("/updateCustomer")
-//    public ResponseEntity<EmptyResponse> updateUser(@RequestBody CustomerUpdateCommand command) throws UserNotFoundException, UserSavedException {
-//        abstractUserCommandService.updateCustomer(command);
-//        EmptyResponse response = EmptyResponse.builder().message("User updated successfully !").success(true).build();
-//        return ResponseEntity.ok(response);
-//    }
-//
-//    @PostMapping("/updateCompany")
-//    public ResponseEntity<EmptyResponse> updateUser(@RequestBody CompanyUpdateCommand command) throws UserNotFoundException, UserSavedException {
-//        abstractUserCommandService.updateCompany(command);
-//        EmptyResponse response = EmptyResponse.builder().message("User updated successfully !").success(true).build();
-//        return ResponseEntity.ok(response);
-//    }
-}

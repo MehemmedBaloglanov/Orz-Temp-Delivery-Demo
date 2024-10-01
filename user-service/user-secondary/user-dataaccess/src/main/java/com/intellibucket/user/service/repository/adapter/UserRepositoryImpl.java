@@ -57,7 +57,7 @@ public class UserRepositoryImpl implements UserRepository {
                 throw new UserNotFoundException("User not found with ID: " + userRoot.getUserID());
             } else {
                 CustomerRegistrationEntity userEntity = user.get();
-                customerJpaRepository.updateBy(userEntity);
+                customerJpaRepository.save(userEntity);
                 return userDataAccessMapper.customerEntityToUserRoot(userEntity);
             }
         } else if (RoleAuthorithy.COMPANY.isRoleCompany()) {
@@ -68,7 +68,7 @@ public class UserRepositoryImpl implements UserRepository {
                 throw new UserNotFoundException("User not found with ID: " + userRoot.getUserID());
             } else {
                 CompanyRegistrationEntity userEntity = user.get();
-                companyJpaRepository.updateBy(userEntity);
+                companyJpaRepository.save(userEntity);
                 return userDataAccessMapper.companyEntityToUserRoot(userEntity);
             }
 
@@ -103,11 +103,11 @@ public class UserRepositoryImpl implements UserRepository {
 
     @Override
     public UserRoot save(UserRoot userRoot) {
-        if (RoleAuthorithy.CUSTOMER.isRoleCustomer()) {
+        if (userRoot.getRoleAuthorithy().isRoleCustomer()) {
             CustomerRegistrationEntity userEntity = userDataAccessMapper.userRootToCustomerEntity(userRoot);
             CustomerRegistrationEntity savedUserEntity = customerJpaRepository.save(userEntity);
             return userDataAccessMapper.customerEntityToUserRoot(savedUserEntity);
-        } else if (RoleAuthorithy.COMPANY.isRoleCompany()) {
+        } else if (userRoot.getRoleAuthorithy().isRoleCompany()) {
             CompanyRegistrationEntity userEntity = userDataAccessMapper.userRootToCompanyEntity(userRoot);
             CompanyRegistrationEntity savedUserEntity = companyJpaRepository.save(userEntity);
             return userDataAccessMapper.companyEntityToUserRoot(savedUserEntity);
@@ -116,24 +116,24 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
-    public Optional<UserRoot> findByEmail(Email email) throws UserNotFoundException {
-        if (RoleAuthorithy.CUSTOMER.isRoleCustomer()) {
+    public Optional<UserRoot> findByEmail(Email email, UserRoot userRoot) throws UserNotFoundException {
+        if (userRoot.getRoleAuthorithy().isRoleCustomer()) {
+            System.out.println("inside findByEmail and check if-else!");
             Optional<CustomerRegistrationEntity> userEntityOptional = customerJpaRepository.findByEmail(email.getValue());
             if (userEntityOptional.isEmpty()) {
-                throw new UserNotFoundException("User not found with email: " + email.getValue());
+                return Optional.empty();
             } else {
                 CustomerRegistrationEntity userEntity = userEntityOptional.get();
                 return Optional.of(userDataAccessMapper.customerEntityToUserRoot(userEntity));
             }
-        } else if (RoleAuthorithy.COMPANY.isRoleCompany()) {
+        } else if (userRoot.getRoleAuthorithy().isRoleCompany()) {
             Optional<CompanyRegistrationEntity> userEntityOptional = companyJpaRepository.findByEmail(email.getValue());
             if (userEntityOptional.isEmpty()) {
-                throw new UserNotFoundException("User not found with email: " + email.getValue());
+                return Optional.empty();
             } else {
                 CompanyRegistrationEntity userEntity = userEntityOptional.get();
                 return Optional.of(userDataAccessMapper.companyEntityToUserRoot(userEntity));
             }
-
         }
         return Optional.empty();
     }

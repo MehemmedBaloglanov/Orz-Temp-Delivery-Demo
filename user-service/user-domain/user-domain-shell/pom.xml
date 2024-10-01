@@ -50,9 +50,12 @@
             <version>6.1.12</version>
             <scope>compile</scope>
         </dependency>
+        <dependency>
+            <groupId>com.intellibucket</groupId>
+            <artifactId>user-message-publisher</artifactId>
+        </dependency>
     </dependencies>
     <modelVersion>4.0.0</modelVersion>
-
     <artifactId>user-domain-shell</artifactId>
 
     <dependencyManagement>

@@ -1,5 +1,7 @@
 package com.intellibucket.user.service.repository.mapper;
 
+import com.intelliacademy.orizonroute.identity.AddressID;
+import com.intelliacademy.orizonroute.identity.user.PhoneNumberID;
 import com.intelliacademy.orizonroute.identity.user.UserID;
 import com.intelliacademy.orizonroute.valueobjects.common.Email;
 import com.intelliacademy.orizonroute.valueobjects.common.PhoneNumber;
@@ -69,16 +71,21 @@ public UserRoot companyEntityToUserRoot(CompanyRegistrationEntity userEntity) {
     public Address userJpaAdresstoAddress(UserAddressEntity address) {
         return Address.builder()
                 .state(address.getState())
-                .street(address.getStreet())
+                .country(address.getCountry())
                 .city(address.getCity())
+                .street(address.getStreet())
+                .postalCode(address.getPostalCode())
                 .build();
     }
 
     public UserAddressEntity addressToUserJpaAddress(Address address) {
         return UserAddressEntity.builder()
+                .userAddressId(AddressID.random().value())
                 .state(address.getState())
+                .country(address.getCountry())
                 .city(address.getCity())
                 .street(address.getStreet())
+                .postalCode(address.getPostalCode())
                 .build();
     }
 
@@ -92,9 +99,10 @@ public UserRoot companyEntityToUserRoot(CompanyRegistrationEntity userEntity) {
 
     public PhoneNumberEntity phoneNumberToPhoneNumberEntity(PhoneNumber phoneNumber) {
         return PhoneNumberEntity.builder()
+                .phoneNumberId(PhoneNumberID.random().value())
                 .number(phoneNumber.getNumber())
-                .type(phoneNumber.getType())
                 .countryCode(phoneNumber.getCountryCode())
+                .type(phoneNumber.getType())
                 .build();
     }
 }

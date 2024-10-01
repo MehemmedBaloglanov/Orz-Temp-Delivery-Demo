@@ -14,6 +14,7 @@ import lombok.experimental.SuperBuilder;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.UUID;
+
 @SuperBuilder
 @Getter
 @Setter
@@ -33,7 +34,7 @@ public abstract class BaseUserEntity {
     @NotNull
     @Size(min = 8, max = 25)
     @Pattern(regexp = Password.PATTERN)
-     String password;
+    String password;
 
     @Enumerated(EnumType.STRING)
     Status status;
@@ -45,7 +46,7 @@ public abstract class BaseUserEntity {
     EmailType emailType;
 
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "user_address_id")
+    @JoinColumn(name = "address_id")
     UserAddressEntity address;
 
     @OneToOne(cascade = CascadeType.ALL)
