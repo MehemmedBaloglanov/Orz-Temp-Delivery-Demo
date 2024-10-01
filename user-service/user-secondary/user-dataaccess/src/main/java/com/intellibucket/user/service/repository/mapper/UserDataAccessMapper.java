@@ -1,46 +1,72 @@
-package com.intellibucket.mapper;
+package com.intellibucket.user.service.repository.mapper;
 
 import com.intelliacademy.orizonroute.identity.user.UserID;
 import com.intelliacademy.orizonroute.valueobjects.common.Email;
 import com.intelliacademy.orizonroute.valueobjects.common.PhoneNumber;
-import com.intelliacademy.orizonroute.valueobjects.user.EmailType;
-import com.intellibucket.model.BaseUserEntity;
-import com.intellibucket.model.PhoneNumberEntity;
-import com.intellibucket.model.UserAddressEntity;
 import com.intellibucket.user.service.domain.core.root.UserRoot;
 import com.intellibucket.user.service.domain.core.valueObject.Address;
 import com.intellibucket.user.service.domain.core.valueObject.Password;
-import lombok.Getter;
+import com.intellibucket.user.service.repository.model.CompanyRegistrationEntity;
+import com.intellibucket.user.service.repository.model.CustomerRegistrationEntity;
+import com.intellibucket.user.service.repository.model.PhoneNumberEntity;
+import com.intellibucket.user.service.repository.model.UserAddressEntity;
+import org.springframework.stereotype.Component;
 
 import java.util.UUID;
 
-@Getter
+@Component
 public class UserDataAccessMapper {
-    public BaseUserEntity userRootToUserEntity(UserRoot userRoot) {
-        return BaseUserEntity.builder()
+    public CustomerRegistrationEntity userRootToCustomerEntity(UserRoot userRoot) {
+        return CustomerRegistrationEntity.builder()
                 .userEntityId(UserID.random().value())
-                .roleAuthority(userRoot.getRoleAuthorithy())
+                .username(userRoot.getUsername().value())
+                .email(userRoot.getEmail().getValue())
                 .emailType(userRoot.getEmail().getType())
+                .password(userRoot.getPassword().getValue())
                 .status(userRoot.getStatus())
+                .roleAuthority(userRoot.getRoleAuthorithy())
                 .address(addressToUserJpaAddress(userRoot.getAddress()))
                 .phoneNumberEntity(phoneNumberToPhoneNumberEntity(userRoot.getPhoneNumber()))
-                .password(userRoot.getPassword().getValue())
                 .build();
     }
 
-    public UserRoot userEntityToUserRoot(BaseUserEntity userEntity) {
+    public CompanyRegistrationEntity userRootToCompanyEntity(UserRoot userRoot) {
+        return CompanyRegistrationEntity.builder()
+                .userEntityId(UserID.random().value())
+                .companyName(userRoot.getUsername().value())
+                .email(userRoot.getEmail().getValue())
+                .emailType(userRoot.getEmail().getType())
+                .password(userRoot.getPassword().getValue())
+                .status(userRoot.getStatus())
+                .roleAuthority(userRoot.getRoleAuthorithy())
+                .address(addressToUserJpaAddress(userRoot.getAddress()))
+                .phoneNumberEntity(phoneNumberToPhoneNumberEntity(userRoot.getPhoneNumber()))
+                .build();
+    }
+
+public UserRoot customerEntityToUserRoot(CustomerRegistrationEntity userEntity) {
         return UserRoot.builder()
-                .userID(UserID.of(UUID.randomUUID()))
+                .userID(UserID.of(userEntity.getUserEntityId()))
                 .address(userJpaAdresstoAddress(userEntity.getAddress()))
                 .status(userEntity.getStatus())
-                .password(Password.of(userEntity.getPassword()))
                 .roleAuthorithy(userEntity.getRoleAuthority())
+                .password(Password.of(userEntity.getPassword()))
                 .email(Email.of(userEntity.getEmailType(),userEntity.getEmail()))
                 .phoneNumber(phoneNumberEntityToPhoneNumber(userEntity.getPhoneNumberEntity()))
                 .build();
     }
 
-
+public UserRoot companyEntityToUserRoot(CompanyRegistrationEntity userEntity) {
+    return UserRoot.builder()
+            .userID(UserID.of(userEntity.getUserEntityId()))
+            .address(userJpaAdresstoAddress(userEntity.getAddress()))
+            .status(userEntity.getStatus())
+            .roleAuthorithy(userEntity.getRoleAuthority())
+            .password(Password.of(userEntity.getPassword()))
+            .email(Email.of(userEntity.getEmailType(),userEntity.getEmail()))
+            .phoneNumber(phoneNumberEntityToPhoneNumber(userEntity.getPhoneNumberEntity()))
+            .build();
+}
 
     public Address userJpaAdresstoAddress(UserAddressEntity address) {
         return Address.builder()

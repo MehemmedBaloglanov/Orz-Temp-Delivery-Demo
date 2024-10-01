@@ -1,6 +1,6 @@
 package com.intellibucket.user.service.configuration.jpa;
 
-import com.intellibucket.model.BaseUserEntity;
+import com.intellibucket.user.service.repository.model.BaseUserEntity;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;

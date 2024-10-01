@@ -14,6 +14,14 @@ public final class Address {
     private final String street;
     private final String postalCode;
 
+    public Address(String state, String country, String city, String street, String postalCode) {
+        this.state = state;
+        this.country = country;
+        this.city = city;
+        this.street = street;
+        this.postalCode = postalCode;
+    }
+
     public static Address of(String state, String country, String city, String street, String postalCode) {
         return new Address(state, country, city, street, postalCode);
     }

@@ -1,4 +1,4 @@
-package com.intellibucket.model;
+package com.intellibucket.user.service.repository.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.Entity;

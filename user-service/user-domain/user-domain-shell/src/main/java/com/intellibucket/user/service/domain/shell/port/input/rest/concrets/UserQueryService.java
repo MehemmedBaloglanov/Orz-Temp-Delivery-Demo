@@ -5,8 +5,7 @@ import com.intellibucket.user.service.domain.core.root.UserRoot;
 import com.intellibucket.user.service.domain.core.valueObject.RoleAuthorithy;
 import com.intellibucket.user.service.domain.core.valueObject.Status;
 import com.intellibucket.user.service.domain.shell.port.input.rest.abstracts.query.UserQueryServicePort;
-import com.intellibucket.user.service.domain.shell.port.output.repository.RoleRepository;
-import com.intellibucket.user.service.domain.shell.port.output.repository.StatusRepository;
+import com.intellibucket.user.service.domain.shell.port.output.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -16,22 +15,21 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 public class UserQueryService implements UserQueryServicePort {
-    private final RoleRepository roleRepository;
-    private final StatusRepository statusRepository;
+    private final UserRepository userRepository;
 
     @Override
     public List<RoleAuthorithy> getAllCustomers() {
-        return roleRepository.findByAuthority(RoleAuthorithy.CUSTOMER.name());
+        return userRepository.findByAuthority(RoleAuthorithy.CUSTOMER.name());
     }
 
     @Override
     public List<RoleAuthorithy> getAllCompanies() {
-        return roleRepository.findByAuthority(RoleAuthorithy.COMPANY.name());
+        return userRepository.findByAuthority(RoleAuthorithy.COMPANY.name());
     }
 
     @Override
     public List<Status> getUsersByStatusAndByRole(Status status, RoleAuthorithy role) {
-        return statusRepository.findByStatusAndRoleAuthority(status, role);
+        return userRepository.findByStatusAndRoleAuthority(status, role);
     }
 
     @Override

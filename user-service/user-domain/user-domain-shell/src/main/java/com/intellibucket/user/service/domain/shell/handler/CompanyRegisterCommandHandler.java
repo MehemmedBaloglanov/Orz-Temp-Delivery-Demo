@@ -16,7 +16,6 @@ import java.util.Optional;
 
 @Component
 @RequiredArgsConstructor
-
 public class CompanyRegisterCommandHandler {
     private final UserRepository userRepository;
     private final UserDomainService userDomainService;

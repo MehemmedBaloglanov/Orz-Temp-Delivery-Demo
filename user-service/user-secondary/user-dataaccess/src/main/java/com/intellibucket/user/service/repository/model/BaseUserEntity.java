@@ -1,4 +1,4 @@
-package com.intellibucket.model;
+package com.intellibucket.user.service.repository.model;
 
 import com.intelliacademy.orizonroute.valueobjects.user.EmailType;
 import com.intelliacademy.orizonroute.valueobjects.user.PhoneNumberType;
@@ -10,52 +10,51 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import lombok.experimental.SuperBuilder;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.UUID;
 
-@Builder
-@MappedSuperclass
-@AllArgsConstructor
-@NoArgsConstructor
-@Entity
 @Getter
+@Setter
+@ToString
+@SuperBuilder
+@NoArgsConstructor
+@AllArgsConstructor
+@MappedSuperclass
 public abstract class BaseUserEntity {
     @Id
     @Column(name = "id")
-    UUID userEntityId;
+    private UUID userEntityId;
 
     @NotNull
     @Email
-    String email;
+    private String email;
 
     @NotEmpty
     @NotNull
     @Size(min = 8, max = 25)
     @Pattern(regexp = Password.PATTERN)
-    String password;
+    private String password;
 
     @Enumerated(EnumType.STRING)
-    Status status;
+    private Status status;
 
     @Enumerated(EnumType.STRING)
-    RoleAuthorithy roleAuthority;
+    private RoleAuthorithy roleAuthority;
 
     @Enumerated(EnumType.STRING)
-    EmailType emailType;
+    private EmailType emailType;
 
     @Enumerated(EnumType.STRING)
-    PhoneNumberType phoneNumberType;
+    private PhoneNumberType phoneNumberType;
 
     @OneToOne
     @JoinColumn(name = "user_address_id") // foreign key
-    UserAddressEntity address;
+    private UserAddressEntity address;
 
     @OneToOne // FIX IT TO OneToMany
     @JoinColumn(name = "phone_number_id") // foreign key
-    PhoneNumberEntity phoneNumberEntity;
+    private PhoneNumberEntity phoneNumberEntity;
 }

@@ -13,8 +13,9 @@ import com.intellibucket.user.service.domain.core.valueObject.Status;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.experimental.SuperBuilder;
 
-@Builder
+@SuperBuilder
 @Getter
 @Setter
 public class UserRoot extends AggregateRoot<UserID> {

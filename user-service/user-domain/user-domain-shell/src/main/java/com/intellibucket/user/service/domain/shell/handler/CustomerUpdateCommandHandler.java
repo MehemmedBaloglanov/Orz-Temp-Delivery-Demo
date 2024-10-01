@@ -24,7 +24,7 @@ public class CustomerUpdateCommandHandler {
 
     public void handle(CustomerUpdateCommand command) throws UserNotFoundException, UserSavedException {
         UserRoot userUpdate = UserCommandMapper.customerUpdateCommandToUserRoot(command);
-//FIXME nezer et
+
         UserID userID = securityContextHolder.currentUserID();
         Optional<UserRoot> userRoot= userRepository.findByUserId(userID);
        if (userRoot.isEmpty()) {
