@@ -1,6 +1,9 @@
 package com.intellibucket.user.service.configuration.jpa;
 
-import com.intellibucket.model.*;
+import com.intellibucket.user.service.repository.model.CompanyRegistrationEntity;
+import com.intellibucket.user.service.repository.model.CustomerRegistrationEntity;
+import com.intellibucket.user.service.repository.model.PhoneNumberEntity;
+import com.intellibucket.user.service.repository.model.UserAddressEntity;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;

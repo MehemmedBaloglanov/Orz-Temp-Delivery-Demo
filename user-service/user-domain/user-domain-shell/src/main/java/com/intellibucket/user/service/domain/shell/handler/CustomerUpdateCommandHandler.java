@@ -1,6 +1,7 @@
 package com.intellibucket.user.service.domain.shell.handler;
 
 import com.intelliacademy.orizonroute.identity.user.UserID;
+import com.intellibucket.order.service.domain.shell.security.AbstractSecurityContextHolder;
 import com.intellibucket.user.service.domain.core.event.UserUpdatedDomainEvent;
 import com.intellibucket.user.service.domain.core.exception.user.UserNotFoundException;
 import com.intellibucket.user.service.domain.core.exception.user.UserSavedException;
@@ -9,7 +10,7 @@ import com.intellibucket.user.service.domain.core.service.port.UserDomainService
 import com.intellibucket.user.service.domain.shell.dto.request.CustomerUpdateCommand;
 import com.intellibucket.user.service.domain.shell.mapper.UserCommandMapper;
 import com.intellibucket.user.service.domain.shell.port.output.repository.UserRepository;
-import com.intellibucket.user.service.domain.shell.security.AbstractSecurityContextHolder;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 

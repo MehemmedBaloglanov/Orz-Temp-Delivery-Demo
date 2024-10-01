@@ -1,4 +1,4 @@
-package com.intellibucket.model;
+package com.intellibucket.user.service.repository.model;
 
 import com.intelliacademy.orizonroute.valueobjects.user.EmailType;
 import com.intellibucket.user.service.domain.core.valueObject.Password;
@@ -8,22 +8,23 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
+import lombok.experimental.FieldDefaults;
+import lombok.experimental.SuperBuilder;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.UUID;
-
+@SuperBuilder
 @Getter
 @Setter
 @MappedSuperclass
 @AllArgsConstructor
 @NoArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public abstract class BaseUserEntity {
     @Id
     @Column(name = "id")
+
     UUID userEntityId;
 
     String email;
@@ -32,7 +33,7 @@ public abstract class BaseUserEntity {
     @NotNull
     @Size(min = 8, max = 25)
     @Pattern(regexp = Password.PATTERN)
-    String password;
+     String password;
 
     @Enumerated(EnumType.STRING)
     Status status;

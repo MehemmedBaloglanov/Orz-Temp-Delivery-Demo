@@ -12,8 +12,6 @@ import com.intellibucket.user.service.repository.model.PhoneNumberEntity;
 import com.intellibucket.user.service.repository.model.UserAddressEntity;
 import org.springframework.stereotype.Component;
 
-import java.util.UUID;
-
 @Component
 public class UserDataAccessMapper {
     public CustomerRegistrationEntity userRootToCustomerEntity(UserRoot userRoot) {

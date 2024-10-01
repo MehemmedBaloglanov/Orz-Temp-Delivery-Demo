@@ -4,6 +4,7 @@ import com.intelliacademy.orizonroute.identity.company.CompanyID;
 import com.intelliacademy.orizonroute.identity.courier.CourierID;
 import com.intelliacademy.orizonroute.identity.customer.CustomerID;
 import com.intelliacademy.orizonroute.identity.user.UserID;
+import com.intellibucket.order.service.domain.shell.security.AbstractSecurityContextHolder;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;

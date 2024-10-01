@@ -16,7 +16,7 @@ import org.jetbrains.annotations.NotNull;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "customer")
-public class CustomerRegistrationEntity extends BaseUserEntity{
+public class CustomerRegistrationEntity extends BaseUserEntity {
     @NotNull
     @NotEmpty
     @Size(min = 3, max = 25)
