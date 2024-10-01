@@ -2,32 +2,115 @@ package com.intellibucket.order.service.domain.core.service;
 
 import com.intellibucket.order.service.domain.core.event.*;
 import com.intellibucket.order.service.domain.core.exception.OrderDomainException;
+import com.intellibucket.order.service.domain.core.root.OrderItemRoot;
 import com.intellibucket.order.service.domain.core.root.OrderRoot;
-import com.intellibucket.order.service.domain.core.valueobject.OrderCancelType;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.time.OffsetDateTime;
-import java.util.List;
 
 import static com.intellibucket.constants.DomainConstants.ZONE_ID;
 
 @Slf4j
 @RequiredArgsConstructor
 @Service
-
 public class OrderDomainServiceImpl implements OrderDomainService {
 
+    /**
+    * Validates and initiates the given order.
+    *
+    * @param orderRoot the root object of the order to be validated and initiated.
+    * @throws OrderDomainException if the order validation or initialization fails.
+    */
     @Override
-    public OrderCreatedEvent validateAndInitiateOrder(OrderRoot orderRoot) throws OrderDomainException {
+    public void validateAndInitiateOrder(OrderRoot orderRoot) throws OrderDomainException {
         orderRoot.validateOrder();
         orderRoot.initializeOrder();
         log.info("Order with id: {} is initiated", orderRoot.getRootID().value());
-        return new OrderCreatedEvent(orderRoot, OffsetDateTime.now(ZONE_ID));
-
     }
 
+    /**
+    * Cancels the order payment due to a system failure.
+    *
+    * @param orderRoot the root object of the order to be cancelled.
+    * @param failureMessage the message describing the reason for the cancellation.
+    * @return an OrderCancelledEvent indicating the order has been cancelled.
+    * @throws OrderDomainException if the order cancellation fails.
+    */
+    @Override
+    public OrderCancelledEvent orderPaymentCancel(OrderRoot orderRoot, String failureMessage) throws OrderDomainException {
+        orderRoot.cancelBySystem();
+        orderRoot.initCancel(failureMessage);
+        log.info("Order payment is cancelling for order id: {}", orderRoot.getRootID().value());
+        return new OrderCancelledEvent(orderRoot, OffsetDateTime.now(ZONE_ID));
+    }
+
+    /**
+    * Cancels the order initiated by the customer.
+    *
+    * @param orderRoot the root object of the order to be cancelled.
+    * @param failureMessage the message describing the reason for the cancellation.
+    * @return an OrderCancelledEvent indicating the order has been cancelled.
+    * @throws OrderDomainException if the order cancellation fails.
+    */
+    @Override
+    public OrderCancelledEvent orderCustomerCancel(OrderRoot orderRoot, String failureMessage) throws OrderDomainException {
+        orderRoot.cancelByCustomer();
+        orderRoot.initCancel(failureMessage);
+        log.info("User cancelling for order id: {}", orderRoot.getRootID().value());
+        return new OrderCancelledEvent(orderRoot, OffsetDateTime.now(ZONE_ID));
+    }
+
+    /**
+    * Cancels the order initiated by the company.
+    *
+    * @param orderRoot the root object of the order to be cancelled.
+    * @param orderItemRoot the root object of the order item associated with the company.
+    * @param failureMessage the message describing the reason for the cancellation.
+    * @return an OrderCancelledEvent indicating the order has been cancelled.
+    * @throws OrderDomainException if the order cancellation fails.
+    */
+    @Override
+    public OrderCancelledEvent orderCompanyCancel(OrderRoot orderRoot, OrderItemRoot orderItemRoot, String failureMessage) throws OrderDomainException {
+        orderRoot.cancelByCompany();
+        orderRoot.initCancel(orderItemRoot.getCompanyID() + "-" + failureMessage);
+        log.info("Company is cancelling for order id: {}, companyId: {}", orderRoot.getRootID().value(), orderItemRoot.getCompanyID());
+        return new OrderCancelledEvent(orderRoot, OffsetDateTime.now(ZONE_ID));
+    }
+
+     /**
+     * Approves the given order.
+     *
+     * @param orderRoot the root object of the order to be approved.
+     * @throws OrderDomainException if the order approval fails.
+     */
+    @Override
+    public void approveOrder(OrderRoot orderRoot) throws OrderDomainException {
+        orderRoot.approve();
+        log.info("Order with id: {} is approved", orderRoot.getRootID().value());
+    }
+
+    /**
+    * Cancels the given order with a specified failure message.
+    *
+    * @param orderRoot the root object of the order to be cancelled.
+    * @param failureMessage the message describing the reason for the cancellation.
+    * @throws OrderDomainException if the order cancellation fails.
+    */
+    @Override
+    public void orderCancel(OrderRoot orderRoot, String failureMessage) throws OrderDomainException {
+        orderRoot.cancel(failureMessage);
+        log.info("Order with id: {} is cancelled", orderRoot.getRootID().value());
+    }
+
+    /**
+    * Processes the payment for the given order.
+    *
+    * @param orderRoot the root object of the order to be paid.
+    * @return an OrderPaidEvent indicating the order has been paid.
+    * @throws OrderDomainException if the order payment fails.
+    */
     @Override
     public OrderPaidEvent orderPay(OrderRoot orderRoot) throws OrderDomainException {
         orderRoot.pay();
@@ -35,43 +118,44 @@ public class OrderDomainServiceImpl implements OrderDomainService {
         return new OrderPaidEvent(orderRoot, OffsetDateTime.now(ZONE_ID));
     }
 
+    /**
+    * Confirms the given order.
+    *
+    * @param orderRoot the root object of the order to be confirmed.
+    * @throws OrderDomainException if the order confirmation fails.
+    */
     @Override
-    public OrderCancelledEvent orderPaymentCancel(OrderRoot orderRoot, OrderCancelType orderCancelType, List<String> failureMessages) throws OrderDomainException {
-        orderRoot.initCancel(failureMessages);
-        log.info("Order payment is cancelling for order id: {}", orderRoot.getRootID().value());
-        return new OrderCancelledEvent(orderRoot, OffsetDateTime.now(ZONE_ID));
-    }
-
-    @Override
-    public void orderCancel(OrderRoot orderRoot, OrderCancelType orderCancelType, List<String> failureMessages) throws OrderDomainException {
-        orderRoot.cancel(failureMessages, orderCancelType);
-        log.info("Order with id: {} is cancelled", orderRoot.getRootID().value());
-    }
-
-    @Override
-    public void approveOrder(OrderRoot orderRoot) throws OrderDomainException {
-        orderRoot.approve();
-        log.info("Order with id: {} is approved", orderRoot.getRootID().value());
+    public void confirmOrder(OrderRoot orderRoot) throws OrderDomainException {
+        orderRoot.confirm();
+        log.info("Order with id: {} is confirmed", orderRoot.getRootID().value());
     }
 
 
+    /**
+    * Prepares the given order for delivery.
+    *
+    * @param orderRoot the root object of the order to be prepared.
+    * @return a StartDeliveryOrderEvent indicating the order is ready for delivery.
+    * @throws OrderDomainException if the order preparation fails.
+    */
     @Override
-    public StartDeliveryOrderEvent prepareOrder(OrderRoot orderRoot) throws OrderDomainException {
+    public StartDeliveryOrderEvent preparedOrder(OrderRoot orderRoot) throws OrderDomainException {
         orderRoot.prepared();
         log.info("Order with id: {} is prepared", orderRoot.getRootID().value());
         return new StartDeliveryOrderEvent(orderRoot, OffsetDateTime.now(ZONE_ID));
     }
 
+    /**
+    * Completes the given order.
+    *
+    * @param orderRoot the root object of the order to be completed.
+    * @return an OrderCompletedEvent indicating the order has been completed.
+    * @throws OrderDomainException if the order completion fails.
+    */
     @Override
     public OrderCompletedEvent orderComplete(OrderRoot orderRoot) throws OrderDomainException {
-        orderRoot.startDelivery();
+        orderRoot.completed();
         log.info("Order with id: {} is completed", orderRoot.getRootID().value());
         return new OrderCompletedEvent(orderRoot, OffsetDateTime.now(ZONE_ID));
-    }
-
-    @Override
-    public void rejectedOrder(OrderRoot orderRoot) throws OrderDomainException {
-        // Logic to reject the order
-        orderRoot.reject();
     }
 }

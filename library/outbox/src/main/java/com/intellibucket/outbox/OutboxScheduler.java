@@ -1,5 +1,5 @@
 package com.intellibucket.outbox;
 
 public interface OutboxScheduler {
-    void processOutboxMessage();
+    void processOutboxMessage() throws Throwable;
 }

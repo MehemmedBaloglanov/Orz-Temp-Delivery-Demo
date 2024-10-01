@@ -6,7 +6,7 @@ import com.intellibucket.kafka.order.avro.model.PaymentStatus;
 import com.intellibucket.order.service.domain.core.exception.OrderDomainException;
 import com.intellibucket.order.service.domain.core.exception.OrderNotFoundException;
 import com.intellibucket.order.service.domain.shell.port.input.listener.abstracts.AbstractPaymentResponseMessageListener;
-import com.intellibucket.order.service.primary.message.listener.mapper.OrderMessageDataMapper;
+import com.intellibucket.order.service.primary.message.listener.mapper.OrderMessageListenerDataMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.OptimisticLockingFailureException;
@@ -22,10 +22,10 @@ import java.util.List;
 @Component
 @RequiredArgsConstructor
 public class PaymentResponseKafkaListener implements KafkaConsumer<PaymentResponseAvroModel> {
-    private final OrderMessageDataMapper orderMessageDataMapper;
+    private final OrderMessageListenerDataMapper orderMessageListenerDataMapper;
     private final AbstractPaymentResponseMessageListener paymentResponseMessageListener;
 
-
+    @Override
     @KafkaListener(id = "${kafka-consumer-config.payment-consumer-group-id}", topics = "${order-service.payment-response-topic-name}")
     public void receive(@Payload List<PaymentResponseAvroModel> messages,
                         @Header(KafkaHeaders.RECEIVED_KEY) List<String> keys,
@@ -43,13 +43,16 @@ public class PaymentResponseKafkaListener implements KafkaConsumer<PaymentRespon
                 if (PaymentStatus.COMPLETED == paymentResponseAvroModel.getPaymentStatus()) {
 
                     log.info("Processing successful payment for order id: {}", paymentResponseAvroModel.getOrderId());
-                    paymentResponseMessageListener.paymentCompleted(orderMessageDataMapper.paymentResponseAvroModelToPaymentResponse(paymentResponseAvroModel));
+                    paymentResponseMessageListener.paymentCompleted(orderMessageListenerDataMapper.paymentResponseAvroModelToPaymentResponse(paymentResponseAvroModel));
 
                 } else if (PaymentStatus.CANCELLED == paymentResponseAvroModel.getPaymentStatus() || PaymentStatus.FAILED == paymentResponseAvroModel.getPaymentStatus()) {
 
                     log.info("Processing unsuccessful payment for order id: {}", paymentResponseAvroModel.getOrderId());
-                    paymentResponseMessageListener.paymentCancelled(orderMessageDataMapper.paymentResponseAvroModelToPaymentResponse(paymentResponseAvroModel));
+                    paymentResponseMessageListener.paymentCancelled(orderMessageListenerDataMapper.paymentResponseAvroModelToPaymentResponse(paymentResponseAvroModel));
 
+                }else {
+                    log.error("Unknown payment status for order id: {}", paymentResponseAvroModel.getOrderId());
+                    throw new OrderDomainException("Unknown payment status for order id: " + paymentResponseAvroModel.getOrderId());
                 }
             } catch (OptimisticLockingFailureException e) {
                 //NO-OP for optimistic lock. This means another thread finished the work, do not throw error to prevent reading the data from kafka again!

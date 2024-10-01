@@ -1,13 +1,11 @@
 package com.intellibucket.order.service.domain.shell.handler.command;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.intelliacademy.orizonroute.identity.company.CompanyID;
 import com.intelliacademy.orizonroute.identity.order.ord.OrderID;
 import com.intelliacademy.orizonroute.identity.order.ord.OrderItemID;
 import com.intelliacademy.orizonroute.identity.order.product.ProductID;
 import com.intelliacademy.orizonroute.identity.user.UserID;
 import com.intelliacademy.orizonroute.valueobjects.common.Money;
-import com.intellibucket.order.service.domain.core.event.OrderCreatedEvent;
 import com.intellibucket.order.service.domain.core.exception.OrderDomainException;
 import com.intellibucket.order.service.domain.core.root.OrderItemRoot;
 import com.intellibucket.order.service.domain.core.root.OrderRoot;
@@ -19,14 +17,11 @@ import com.intellibucket.order.service.domain.shell.dto.connectors.company.Produ
 import com.intellibucket.order.service.domain.shell.dto.connectors.company.ProductStatus;
 import com.intellibucket.order.service.domain.shell.dto.connectors.user.UserAddress;
 import com.intellibucket.order.service.domain.shell.dto.rest.response.OrderResponse;
-import com.intellibucket.order.service.domain.shell.helper.OrderOutboxHelper;
-import com.intellibucket.order.service.domain.shell.helper.OrderSagaHelper;
+import com.intellibucket.order.service.domain.shell.helper.OrderRepositoryHelper;
 import com.intellibucket.order.service.domain.shell.mapper.OrderShellMapper;
-import com.intellibucket.order.service.domain.shell.outbox.model.payload.OrderPaymentEventPayload;
 import com.intellibucket.order.service.domain.shell.port.output.connector.AbstractCartServiceConnector;
 import com.intellibucket.order.service.domain.shell.port.output.connector.AbstractCompanyServiceConnector;
 import com.intellibucket.order.service.domain.shell.port.output.connector.AbstractUserServiceConnector;
-import com.intellibucket.order.service.domain.shell.port.output.repository.OrderRepository;
 import com.intellibucket.order.service.domain.shell.security.AbstractSecurityContextHolder;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -48,14 +43,14 @@ public class OrderCreateCommandHandler {
     private final AbstractSecurityContextHolder securityContextHolder;
     private final OrderDomainService orderDomainService;
     private final OrderShellMapper orderShellMapper;
-    private final OrderRepository orderRepository;
-    private final OrderOutboxHelper orderOutboxHelper;
+    private final OrderRepositoryHelper orderRepositoryHelper;
 
     private final AbstractCartServiceConnector cartServiceConnector;
     private final AbstractCompanyServiceConnector companyServiceConnector;
     private final AbstractUserServiceConnector userServiceConnector;
 
     @Transactional
+
     public OrderResponse handle() throws OrderDomainException {
         UserID userID = this.securityContextHolder.currentUserID();
 
@@ -65,11 +60,12 @@ public class OrderCreateCommandHandler {
         Map<ProductID, ProductResponse> productsResponse = fetchProducts(cartItems);
 
         List<OrderItemRoot> orderItemRootList = new ArrayList<>();
+
         for (CartResponse item : cartItems) {
             OrderItemRoot orderItemRoot = getOrderItemRoot(item, productsResponse, orderID);
+            orderItemRoot.validateInitialize();
             orderItemRootList.add(orderItemRoot);
         }
-
 
         OrderRoot orderRoot = OrderRoot.builder()
                 .id(orderID)
@@ -81,16 +77,11 @@ public class OrderCreateCommandHandler {
                         .reduce(Money.ZERO, Money::add))
                 .build();
 
-        OrderCreatedEvent orderCreatedEvent = orderDomainService.validateAndInitiateOrder(orderRoot);
-        orderRepository.save(orderRoot);
-
-
-        OrderPaymentEventPayload paymentEventPayload = orderShellMapper.orderCreatedEventToOrderPaymentEventPayload(orderCreatedEvent);
-
-        orderOutboxHelper.createAndSavePaymentOutboxMessage(paymentEventPayload);
-
+        orderDomainService.validateAndInitiateOrder(orderRoot);
+        orderRepositoryHelper.saveOrder(orderRoot);
         return orderShellMapper.orderRootToOrderResponse(orderRoot);
     }
+
 
     private OrderAddress fetchUserPrimaryAddress(UserID userID) {
         UserAddress userPrimaryAddress = userServiceConnector.getUserPrimaryAddress(userID);
@@ -111,14 +102,15 @@ public class OrderCreateCommandHandler {
         ProductID productID = item.getProductID();
         ProductResponse productResponse = productsResponse.get(productID);
         CompanyID companyID = productResponse.getCompany().getCompanyID();
-        // FIXME product ve ya company inactive oldugunda xeta mesaji gonder sifarisi legv et
+
         if (productResponse.getCompany().getStatus() == CompanyStatus.INACTIVE) {
             log.error("company is not in valid state, companyId: {}", companyID);
-//            throw new OrderDomainException("company is not in valid state, companyId: " + companyID);
+            throw new OrderDomainException("company is not in valid state, companyId: " + companyID);
         }
+
         if (productResponse.getStatus() == ProductStatus.INACTIVE) {
             log.error("product is not in valid state, productId: {}", productID);
-          throw new OrderDomainException("product is not in valid state, productId: " + productID);
+            throw new OrderDomainException("product is not in valid state, productId: " + productID);
         }
 
         Money price = productResponse.getPrice();
