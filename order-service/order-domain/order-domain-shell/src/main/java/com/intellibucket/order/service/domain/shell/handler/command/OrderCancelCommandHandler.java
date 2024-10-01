@@ -10,7 +10,7 @@ import com.intellibucket.order.service.domain.shell.dto.rest.command.OrderCancel
 import com.intellibucket.order.service.domain.shell.helper.OrderOutboxHelper;
 import com.intellibucket.order.service.domain.shell.helper.OrderRepositoryHelper;
 import com.intellibucket.order.service.domain.shell.mapper.OrderShellMapper;
-import com.intellibucket.order.service.domain.shell.outbox.model.payload.company.OrderCompanyEventPayload;
+import com.intellibucket.order.service.domain.shell.outbox.model.payload.company.OrderCompanyCancelEventPayload;
 import com.intellibucket.order.service.domain.shell.outbox.model.payload.payment.OrderPaymentCancelEventPayload;
 import com.intellibucket.order.service.domain.shell.security.AbstractSecurityContextHolder;
 import lombok.RequiredArgsConstructor;
@@ -54,7 +54,7 @@ public class OrderCancelCommandHandler {
         OrderPaymentCancelEventPayload orderCancelEventPayload = orderShellMapper.orderCancelledEventToOrderPaymentCancelEventPayload(orderCancelEvent);
         orderOutboxHelper.createAndSaveOutboxMessage(orderCancelEventPayload, orderId, ORDER_PAYMENT_CANCEL_SAGA_NAME);
 
-        OrderCompanyEventPayload orderCompanyEventPayload = orderShellMapper.orderCancelledEventToOrderCompanyEventPayload(orderCancelEvent);
+        OrderCompanyCancelEventPayload orderCompanyEventPayload = orderShellMapper.orderCancelledEventToOrderCompanyCancelEventPayload(orderCancelEvent);
         orderOutboxHelper.createAndSaveOutboxMessage(orderCompanyEventPayload, orderId, ORDER_COMPANY_CANCEL_SAGA_NAME);
 
     }

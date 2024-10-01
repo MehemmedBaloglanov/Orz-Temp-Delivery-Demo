@@ -13,7 +13,7 @@ import java.util.List;
 @Getter
 @Builder
 @AllArgsConstructor
-public class OrderCompanyEventPayload implements BaseEventPayload {
+public class OrderCompanyApproveEventPayload implements BaseEventPayload {
 
     @JsonProperty
     private String orderId;

@@ -9,8 +9,8 @@ import com.intellibucket.order.service.domain.core.valueobject.OrderAddress;
 import com.intellibucket.order.service.domain.shell.dto.connectors.user.UserAddress;
 import com.intellibucket.order.service.domain.shell.dto.rest.response.OrderResponse;
 import com.intellibucket.order.service.domain.shell.dto.rest.response.TrackOrderResponse;
-import com.intellibucket.order.service.domain.shell.outbox.model.OutboxMessage;
-import com.intellibucket.order.service.domain.shell.outbox.model.payload.company.OrderCompanyEventPayload;
+import com.intellibucket.order.service.domain.shell.outbox.model.payload.company.OrderCompanyApproveEventPayload;
+import com.intellibucket.order.service.domain.shell.outbox.model.payload.company.OrderCompanyCancelEventPayload;
 import com.intellibucket.order.service.domain.shell.outbox.model.payload.delivery.OrderStartDeliveryEventPayload;
 import com.intellibucket.order.service.domain.shell.outbox.model.payload.payment.OrderPaymentCancelEventPayload;
 import org.springframework.stereotype.Component;
@@ -39,19 +39,16 @@ public class OrderShellMapper {
         return null;
     }
 
-    public OrderCompanyEventPayload orderCancelledEventToOrderCompanyEventPayload(OrderCancelledEvent orderCancelEvent) {
+    public OrderCompanyCancelEventPayload orderCancelledEventToOrderCompanyCancelEventPayload(OrderCancelledEvent orderCancelEvent) {
         return null;
     }
 
-    public OrderCompanyEventPayload orderPaidEventToOrderCompanyEventPayload(OrderPaidEvent orderPaidEvent) {
+    public OrderCompanyApproveEventPayload orderPaidEventToOrderCompanyApproveEventPayload(OrderPaidEvent orderPaidEvent) {
         return null;
     }
 
-    public OutboxMessage orderCompletedEventToOutboxMessage(OrderCompletedEvent orderCompletedEvent) {
+    public OrderCompanyApproveEventPayload orderCompletedEventToOrderCompanyApproveEventPayload(OrderCompletedEvent orderCompletedEvent) {
         return null;
-    }
 
-    public OrderCompanyEventPayload orderCompletedEventToOrderCompanyEventPayload(OrderCompletedEvent orderCompletedEvent) {
-        return null;
     }
 }

@@ -9,18 +9,14 @@ import com.intellibucket.order.service.domain.shell.dto.message.PaymentResponse;
 import com.intellibucket.order.service.domain.shell.helper.OrderOutboxHelper;
 import com.intellibucket.order.service.domain.shell.helper.OrderRepositoryHelper;
 import com.intellibucket.order.service.domain.shell.mapper.OrderShellMapper;
-import com.intellibucket.order.service.domain.shell.outbox.model.payload.company.OrderCompanyEventPayload;
-import com.intellibucket.order.service.domain.shell.port.output.repository.OutboxRepository;
+import com.intellibucket.order.service.domain.shell.outbox.model.payload.company.OrderCompanyApproveEventPayload;
 import com.intellibucket.saga.SagaStep;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.UUID;
-
-import static com.intellibucket.saga.order.SagaConstants.ORDER_COMPANY_CANCEL_SAGA_NAME;
-import static com.intellibucket.saga.order.SagaConstants.ORDER_COMPLETED_SAGA_NAME;
+import static com.intellibucket.saga.order.SagaConstants.ORDER_APPROVE_SAGA_NAME;
 
 
 @Slf4j
@@ -45,8 +41,8 @@ public class OrderPaymentResponseSagaHandler implements SagaStep<PaymentResponse
         orderRepositoryHelper.saveOrder(orderRoot);
 
         log.info("Saving OrderApproveEventOutboxMessage for order with id: {}", data.getOrderId());
-        OrderCompanyEventPayload payload = orderShellMapper.orderPaidEventToOrderCompanyEventPayload(orderPaidEvent);
-        orderOutboxHelper.createAndSaveOutboxMessage(payload, orderId, ORDER_COMPANY_CANCEL_SAGA_NAME);
+        OrderCompanyApproveEventPayload payload = orderShellMapper.orderPaidEventToOrderCompanyApproveEventPayload(orderPaidEvent);
+        orderOutboxHelper.createAndSaveOutboxMessage(payload, orderId, ORDER_APPROVE_SAGA_NAME);
         log.info("Completing payment for order with id: {}", data.getOrderId());
 
     }

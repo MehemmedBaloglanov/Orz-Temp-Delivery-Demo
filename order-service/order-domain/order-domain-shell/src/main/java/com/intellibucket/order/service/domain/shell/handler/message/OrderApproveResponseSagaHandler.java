@@ -9,22 +9,22 @@ import com.intellibucket.order.service.domain.shell.dto.message.ApproveResponse;
 import com.intellibucket.order.service.domain.shell.helper.OrderOutboxHelper;
 import com.intellibucket.order.service.domain.shell.helper.OrderRepositoryHelper;
 import com.intellibucket.order.service.domain.shell.mapper.OrderShellMapper;
-import com.intellibucket.order.service.domain.shell.outbox.model.OutboxMessage;
-import com.intellibucket.order.service.domain.shell.port.output.repository.OutboxRepository;
+import com.intellibucket.order.service.domain.shell.outbox.model.payload.payment.OrderPaymentCancelEventPayload;
 import com.intellibucket.saga.SagaStep;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import static com.intellibucket.saga.order.SagaConstants.ORDER_COMPANY_CANCEL_SAGA_NAME;
+
 @Slf4j
 @Component
 @RequiredArgsConstructor
-public class OrderApproveSagaHandler implements SagaStep<ApproveResponse> {
+public class OrderApproveResponseSagaHandler implements SagaStep<ApproveResponse> {
     private final OrderRepositoryHelper orderRepositoryHelper;
     private final OrderDomainService orderDomainService;
     private final OrderShellMapper orderShellMapper;
-    private final OutboxRepository outboxRepository;
     private final OrderOutboxHelper orderOutboxHelper;
 
     @Override
@@ -44,8 +44,8 @@ public class OrderApproveSagaHandler implements SagaStep<ApproveResponse> {
         OrderRoot orderRoot = orderRepositoryHelper.findOrderById(orderID);
         OrderCancelledEvent orderCancelledEvent = orderDomainService.orderPaymentCancel(orderRoot, data.getFailureMessage());
         orderRepositoryHelper.saveOrder(orderRoot);
-        OutboxMessage outboxMessage = orderShellMapper.orderCancelledEventToOutboxMessage(orderCancelledEvent);
-        orderCancelPaymentOutboxRepository.save(outboxMessage);
+        OrderPaymentCancelEventPayload orderCancelledEventPayload = orderShellMapper.orderCancelledEventToOrderPaymentCancelEventPayload(orderCancelledEvent);
+        orderOutboxHelper.createAndSaveOutboxMessage(orderCancelledEventPayload, orderID, ORDER_COMPANY_CANCEL_SAGA_NAME);
 
     }
 

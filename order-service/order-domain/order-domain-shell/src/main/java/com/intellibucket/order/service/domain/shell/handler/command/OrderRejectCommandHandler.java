@@ -13,7 +13,7 @@ import com.intellibucket.order.service.domain.shell.helper.OrderOutboxHelper;
 import com.intellibucket.order.service.domain.shell.helper.OrderRepositoryHelper;
 import com.intellibucket.order.service.domain.shell.helper.OrderShellHelper;
 import com.intellibucket.order.service.domain.shell.mapper.OrderShellMapper;
-import com.intellibucket.order.service.domain.shell.outbox.model.payload.company.OrderCompanyEventPayload;
+import com.intellibucket.order.service.domain.shell.outbox.model.payload.company.OrderCompanyCancelEventPayload;
 import com.intellibucket.order.service.domain.shell.outbox.model.payload.payment.OrderPaymentCancelEventPayload;
 import com.intellibucket.order.service.domain.shell.port.output.repository.OrderRepository;
 import com.intellibucket.order.service.domain.shell.security.AbstractSecurityContextHolder;
@@ -68,7 +68,7 @@ public class OrderRejectCommandHandler {
         OrderPaymentCancelEventPayload orderCancelEventPayload = orderShellMapper.orderCancelledEventToOrderPaymentCancelEventPayload(orderCancelledEvent);
         orderOutboxHelper.createAndSaveOutboxMessage(orderCancelEventPayload, orderId, ORDER_PAYMENT_CANCEL_SAGA_NAME);
 
-        OrderCompanyEventPayload orderCompanyEventPayload = orderShellMapper.orderCancelledEventToOrderCompanyEventPayload(orderCancelledEvent);
+        OrderCompanyCancelEventPayload orderCompanyEventPayload = orderShellMapper.orderCancelledEventToOrderCompanyCancelEventPayload(orderCancelledEvent);
         orderOutboxHelper.createAndSaveOutboxMessage(orderCompanyEventPayload, orderId, ORDER_COMPANY_CANCEL_SAGA_NAME);
 
 
