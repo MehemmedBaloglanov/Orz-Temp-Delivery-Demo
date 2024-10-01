@@ -5,6 +5,7 @@ import com.intellibucket.order.service.domain.core.exception.OrderNotFoundExcept
 import com.intellibucket.order.service.domain.core.root.OrderRoot;
 import com.intellibucket.order.service.domain.shell.dto.rest.query.OrderTrackingQuery;
 import com.intellibucket.order.service.domain.shell.dto.rest.response.TrackOrderResponse;
+import com.intellibucket.order.service.domain.shell.mapper.OrderShellMapper;
 import com.intellibucket.order.service.domain.shell.port.output.repository.OrderRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
