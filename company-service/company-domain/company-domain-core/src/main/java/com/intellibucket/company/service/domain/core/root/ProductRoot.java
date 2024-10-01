@@ -11,7 +11,6 @@ import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
 @SuperBuilder
-@Setter
 @Getter
 public class ProductRoot extends AggregateRoot<ProductID> {
     private String name;
@@ -89,14 +88,6 @@ public class ProductRoot extends AggregateRoot<ProductID> {
         return this;
     }
 
-    //--------------------------------->UPDATE OTHER FIELDS
-
-    //todo Icini dopldurun
-    public ProductRoot update() throws ValidateException {
-
-        return this;
-    }
-
 
     //----------------------------->DECREASE AND INCREASE METHODS
 
@@ -120,6 +111,24 @@ public class ProductRoot extends AggregateRoot<ProductID> {
             throw new ValidateException("StockQuantity cannot be less than zero.");
         }
         this.stockQuantity += amount;
+        return this;
+    }
+
+    public ProductRoot updateName(String name) throws ValidateException {
+        validateName();
+        this.name=name;
+        return this;
+    }
+
+    public ProductRoot updatePrice(Money price) throws ValidateException {
+        validatePrice();
+        this.price = price;
+        return this;
+    }
+
+    public ProductRoot updateStockQuantity(Integer stockQuantity) throws ValidateException {
+        validateStockQuantity();
+        this.stockQuantity = stockQuantity;
         return this;
     }
 }
