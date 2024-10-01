@@ -33,15 +33,4 @@ public class CompanyCommandController {
         companyCommandServiceAdapter.changeStatusToDelete(command);
     }
 
-    //UPDATE ADDRESS
-    @PutMapping("/address")
-    public void updateCompanyAddress(@RequestBody CompanyAddressUpdateCommand command) throws CompanyDomainException {
-        companyCommandServiceAdapter.updateCompanyAddress(command);
-    }
-
-    //UPDATE NAME
-    @PutMapping(" /name")
-    public void updateName(@RequestBody CompanyNameUpdateCommand command) throws CompanyDomainException {
-        companyCommandServiceAdapter.updateCompanyName(command);
-    }
 }

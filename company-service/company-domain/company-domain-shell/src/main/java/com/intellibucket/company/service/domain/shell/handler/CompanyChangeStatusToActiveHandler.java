@@ -9,6 +9,8 @@ import com.intellibucket.company.service.domain.shell.dto.rest.command.CompanyAc
 import com.intellibucket.company.service.domain.shell.port.output.repository.CompanyRepositoryAdapter;
 import lombok.RequiredArgsConstructor;
 
+import java.util.Optional;
+
 @RequiredArgsConstructor
 public class CompanyChangeStatusToActiveHandler {
 
@@ -17,10 +19,14 @@ public class CompanyChangeStatusToActiveHandler {
 
     public void handle(CompanyActiveCommand command) throws CompanyDomainException {
         CompanyID companyID = CompanyID.of(command.getCompanyId());
-        CompanyRoot companyRoot = companyRepositoryAdapter.findById(companyID)
-                .orElseThrow(()-> new CompanyDomainException("Company not found with id " + companyID));
-        CompanyActivatedEvent companyActivatedEvent = companyDomainService.activateCompany(companyRoot);
-        companyRepositoryAdapter.save(companyRoot);
+        Optional<CompanyRoot> companyRoot = companyRepositoryAdapter.findById(companyID);
+
+        if (companyRoot.isEmpty()){
+            throw new CompanyDomainException("Company not found with id " + companyID);
+        }
+
+        CompanyActivatedEvent companyActivatedEvent = companyDomainService.activateCompany(companyRoot.get());
+        companyRepositoryAdapter.save(companyRoot.get());
     }
 }
 

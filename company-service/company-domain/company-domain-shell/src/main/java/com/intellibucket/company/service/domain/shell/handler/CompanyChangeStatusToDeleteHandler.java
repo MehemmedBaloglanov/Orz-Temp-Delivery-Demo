@@ -9,6 +9,8 @@ import com.intellibucket.company.service.domain.shell.dto.rest.command.CompanyDe
 import com.intellibucket.company.service.domain.shell.port.output.repository.CompanyRepositoryAdapter;
 import lombok.RequiredArgsConstructor;
 
+import java.util.Optional;
+
 @RequiredArgsConstructor
 public class CompanyChangeStatusToDeleteHandler {
 
@@ -17,9 +19,13 @@ public class CompanyChangeStatusToDeleteHandler {
 
     public void handle(CompanyDeleteCommand command) throws CompanyDomainException {
         CompanyID companyID =  CompanyID.of(command.getCompanyId());
-        CompanyRoot companyRoot = companyRepositoryAdapter.findById(companyID)
-                .orElseThrow(() -> new CompanyDomainException("Company not found with id "+ companyID));
-        CompanyDeletedEvent companyDeletedEvent =  companyDomainService.deleteCompany(companyRoot);
-        companyRepositoryAdapter.save(companyRoot);
+        Optional<CompanyRoot> companyRoot = companyRepositoryAdapter.findById(companyID);
+
+        if (companyRoot.isEmpty()) {
+            throw new CompanyDomainException("Company does not found with id: " + companyID);
+        }
+
+        CompanyDeletedEvent companyDeletedEvent =  companyDomainService.deleteCompany(companyRoot.get());
+        companyRepositoryAdapter.save(companyRoot.get());
     }
 }

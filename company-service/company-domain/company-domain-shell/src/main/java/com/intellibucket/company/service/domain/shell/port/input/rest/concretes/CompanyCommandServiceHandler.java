@@ -30,14 +30,5 @@ public class CompanyCommandServiceHandler implements CompanyCommandServiceAdapte
         changeStatusToDeleteHandler.handle(command);
     }
 
-    @Override
-    public void updateCompanyAddress(CompanyAddressUpdateCommand command) throws CompanyDomainException {
-        addressUpdateHandler.handle(command);
-    }
-
-    @Override
-    public void updateCompanyName(CompanyNameUpdateCommand command) throws CompanyDomainException {
-        nameUpdateHandler.handle(command);
-    }
 
 }

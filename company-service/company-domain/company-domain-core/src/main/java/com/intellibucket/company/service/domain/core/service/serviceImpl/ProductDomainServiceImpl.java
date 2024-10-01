@@ -37,7 +37,6 @@ public class ProductDomainServiceImpl implements ProductDomainService {
 
     @Override
     public ProductPriceUpdatedEvent updateProduct(ProductRoot productRoot) throws ValidateException{
-        productRoot.update();
         return new ProductPriceUpdatedEvent(productRoot,OffsetDateTime.now(ZONE_ID));
     }
 

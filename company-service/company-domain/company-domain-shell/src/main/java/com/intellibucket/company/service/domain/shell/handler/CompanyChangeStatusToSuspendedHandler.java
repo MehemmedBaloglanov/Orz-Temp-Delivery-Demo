@@ -7,7 +7,10 @@ import com.intellibucket.company.service.domain.core.root.CompanyRoot;
 import com.intellibucket.company.service.domain.core.service.CompanyDomainService;
 import com.intellibucket.company.service.domain.shell.dto.rest.command.CompanySuspendedCommand;
 import com.intellibucket.company.service.domain.shell.port.output.repository.CompanyRepositoryAdapter;
+import com.intellibucket.order.service.domain.shell.security.AbstractSecurityContextHolder;
 import lombok.RequiredArgsConstructor;
+
+import java.util.Optional;
 
 @RequiredArgsConstructor
 public class CompanyChangeStatusToSuspendedHandler {
@@ -16,9 +19,14 @@ public class CompanyChangeStatusToSuspendedHandler {
 
     public void handle(CompanySuspendedCommand command) throws CompanyDomainException {
         CompanyID companyID=CompanyID.of(command.getCompanyId());
-        CompanyRoot companyRoot=companyRepositoryAdapter.findById(companyID)
-                .orElseThrow(()-> new CompanyDomainException("Company not found with id " + companyID));
-        CompanySuspendedEvent companySuspendedEvent=companyDomainService.suspendCompany(companyRoot);
-        companyRepositoryAdapter.save(companyRoot);
+
+        Optional<CompanyRoot> companyRoot=companyRepositoryAdapter.findById(companyID);
+
+        if (companyRoot.isEmpty()) {
+            throw new CompanyDomainException("Company does not found with ID: " + companyID);
+        }
+
+        CompanySuspendedEvent companySuspendedEvent = companyDomainService.suspendCompany(companyRoot.get());
+        companyRepositoryAdapter.save(companyRoot.get());
     }
 }

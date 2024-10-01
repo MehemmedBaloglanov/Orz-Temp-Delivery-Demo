@@ -11,7 +11,4 @@ public interface CompanyCommandServiceAdapter {
 
     void changeStatusToDelete(CompanyDeleteCommand command) throws CompanyDomainException;
 
-    void updateCompanyAddress(CompanyAddressUpdateCommand command) throws CompanyDomainException;
-
-    void updateCompanyName(CompanyNameUpdateCommand command) throws CompanyDomainException;
 }

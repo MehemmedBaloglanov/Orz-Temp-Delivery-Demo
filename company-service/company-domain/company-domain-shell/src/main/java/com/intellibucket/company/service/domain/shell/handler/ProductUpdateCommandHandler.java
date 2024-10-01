@@ -2,11 +2,12 @@ package com.intellibucket.company.service.domain.shell.handler;
 
 import com.intelliacademy.orizonroute.identity.company.CompanyID;
 import com.intelliacademy.orizonroute.identity.order.product.ProductID;
+import com.intelliacademy.orizonroute.valueobjects.common.Money;
+import com.intellibucket.company.service.domain.core.event.product.ProductPriceUpdatedEvent;
 import com.intellibucket.company.service.domain.core.exception.CompanyDomainException;
 import com.intellibucket.company.service.domain.core.root.ProductRoot;
 import com.intellibucket.company.service.domain.core.service.ProductDomainService;
 import com.intellibucket.company.service.domain.shell.dto.rest.command.ProductUpdateCommand;
-import com.intellibucket.company.service.domain.shell.dto.rest.response.ProductResponse;
 import com.intellibucket.company.service.domain.shell.port.output.repository.ProductRepositoryAdapter;
 import com.intellibucket.order.service.domain.shell.security.AbstractSecurityContextHolder;
 import lombok.RequiredArgsConstructor;
@@ -25,16 +26,22 @@ public class ProductUpdateCommandHandler {
 
     public void handle(ProductUpdateCommand command) throws CompanyDomainException {
         ProductID productId = ProductID.of(command.getProductId());
-        Optional<ProductRoot> productRoot = productRepository.findById(productId);//todo
+        Optional<ProductRoot> productRootOptional = productRepository.findById(productId);
         CompanyID companyID = this.securityContextHolder.currentCompanyID();
 
-        if (!productRoot.isPresent()) {
+        if (productRootOptional.isEmpty()) {
             throw new CompanyDomainException("Product not found by id: " + productId);
         }
 
-        productDomainService.updateProduct(productRoot.get());
+        ProductRoot productRoot = productRootOptional.get();
+        productRoot.updateName(command.getProductName());
+//        productRoot.setStockQuantity(command.getStockQuantity());
+//        Money money = Money.of(command.getPrice());
+//        productRoot.setPrice(money);
 
-        productRepository.save(productRoot.get());
+        ProductPriceUpdatedEvent productPriceUpdatedEvent = productDomainService.updateProduct(productRoot);
+
+        productRepository.save(productRoot);
 
     }
 }
