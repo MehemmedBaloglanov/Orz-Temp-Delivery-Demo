@@ -4,10 +4,14 @@ import com.intelliacademy.orizonroute.valueobjects.common.ValueObject;
 
 @ValueObject
 public enum OrderStatus {
-    CREATED, CANCELLING, CANCELLED, PAID, CONFIRMED, PREPARED, DELIVERING, COMPLETED;
+    CREATED, APPROVED, CANCELLING, CANCELLED, PAID, CONFIRMED, PREPARED, DELIVERING, COMPLETED;
 
     public Boolean isCreated() {
         return this == CREATED;
+    }
+
+    public Boolean isApproved() {
+        return this == APPROVED;
     }
 
     public Boolean isCancelling() {

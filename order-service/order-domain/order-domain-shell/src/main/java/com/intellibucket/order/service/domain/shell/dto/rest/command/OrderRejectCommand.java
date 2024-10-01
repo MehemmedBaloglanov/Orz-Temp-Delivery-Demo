@@ -16,4 +16,7 @@ public class OrderRejectCommand {
     @JsonProperty("order_item_id")
     private String orderItemId;
 
+    @JsonProperty("reject_message")
+    private String rejectMessage;
+
 }

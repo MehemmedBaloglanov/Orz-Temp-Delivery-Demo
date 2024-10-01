@@ -39,8 +39,9 @@ public class OrderCommandController {
         return ResponseEntity.ok("Order successfully assigned.");
 
     }
+
     @PutMapping("/cancel")
-    public ResponseEntity<String> cancelOrder(OrderCancelCommand orderCancelCommand) throws OrderDomainException {
+    public ResponseEntity<String> cancelOrder(@RequestBody OrderCancelCommand orderCancelCommand) throws OrderDomainException {
         orderCommandServiceAdapter.cancelOrder(orderCancelCommand);
         return new ResponseEntity<>("Order canceled successfully", HttpStatus.OK);
     }

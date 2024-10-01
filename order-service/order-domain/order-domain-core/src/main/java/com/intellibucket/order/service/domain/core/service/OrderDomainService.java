@@ -2,7 +2,10 @@ package com.intellibucket.order.service.domain.core.service;
 
 import com.intellibucket.order.service.domain.core.event.*;
 import com.intellibucket.order.service.domain.core.exception.OrderDomainException;
+import com.intellibucket.order.service.domain.core.root.OrderItemRoot;
 import com.intellibucket.order.service.domain.core.root.OrderRoot;
+
+import java.util.List;
 
 /**
  * Author: Ali Gadashov
@@ -13,11 +16,17 @@ import com.intellibucket.order.service.domain.core.root.OrderRoot;
 
 public interface OrderDomainService {
 
-    OrderCreatedEvent validateAndInitiateOrder(OrderRoot orderRoot) throws OrderDomainException;
+    void validateAndInitiateOrder(OrderRoot orderRoot) throws OrderDomainException;
 
     OrderPaidEvent orderPay(OrderRoot orderRoot) throws OrderDomainException;
 
     OrderCancelledEvent orderPaymentCancel(OrderRoot orderRoot, String failureMessage) throws OrderDomainException;
+
+    OrderCancelledEvent orderCustomerCancel(OrderRoot orderRoot, String failureMessage) throws OrderDomainException;
+
+    OrderCancelledEvent orderCompanyCancel(OrderRoot orderRoot, OrderItemRoot orderItemRoot, String failureMessage) throws OrderDomainException;
+
+    void approveOrder(OrderRoot orderRoot) throws OrderDomainException;
 
     void orderCancel(OrderRoot orderRoot, String failureMessage) throws OrderDomainException;
 

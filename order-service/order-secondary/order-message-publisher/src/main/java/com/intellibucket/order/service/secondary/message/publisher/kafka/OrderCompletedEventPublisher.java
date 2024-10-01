@@ -5,8 +5,8 @@ import com.intellibucket.kafka.config.producer.KafkaProducer;
 import com.intellibucket.kafka.order.avro.model.OrderCompletedRequestAvroModel;
 import com.intellibucket.order.service.domain.core.exception.OrderDomainException;
 import com.intellibucket.order.service.domain.shell.config.OrderServiceConfigData;
-import com.intellibucket.order.service.domain.shell.outbox.model.message.OrderCompletedEventOutboxMessage;
-import com.intellibucket.order.service.domain.shell.outbox.model.payload.OrderCompletedEventPayload;
+import com.intellibucket.order.service.domain.shell.outbox.model.OutboxMessage;
+import com.intellibucket.order.service.domain.shell.outbox.model.payload.delivery.OrderDeliveryCompletedEventPayload;
 import com.intellibucket.order.service.domain.shell.port.output.publisher.AbstractOrderCompletedEventPublisher;
 import com.intellibucket.order.service.secondary.message.publisher.helper.OrderKafkaPublisherHelper;
 import com.intellibucket.order.service.secondary.message.publisher.mapper.OrderMessagePublisherDataMapper;
@@ -28,8 +28,8 @@ public class OrderCompletedEventPublisher implements AbstractOrderCompletedEvent
     private final OrderServiceConfigData orderServiceConfigData;
 
     @Override
-    public void publish(OrderCompletedEventOutboxMessage message, BiConsumer<OrderCompletedEventOutboxMessage, OutboxStatus> outboxCallback) throws OrderDomainException {
-        OrderCompletedEventPayload payload = kafkaMessageHelper.getOrderEventPayload(message.getPayload(), OrderCompletedEventPayload.class);
+    public void publish(OutboxMessage message, BiConsumer<OutboxMessage, OutboxStatus> outboxCallback) throws OrderDomainException {
+        OrderDeliveryCompletedEventPayload payload = kafkaMessageHelper.getOrderEventPayload(message.getPayload(), OrderDeliveryCompletedEventPayload.class);
         String sagaId = message.getSagaId().toString();
 
         log.info("Received OrderCompletedEventPublisher for order id: {} and saga id: {}", payload.getOrderId(), sagaId);
@@ -40,7 +40,7 @@ public class OrderCompletedEventPublisher implements AbstractOrderCompletedEvent
                     orderServiceConfigData.getCompleteOrderRequestTopicName(),
                     sagaId,
                     orderCompletedRequestAvroModel,
-                    orderKafkaPublisherHelper.getCallback(orderCompletedRequestAvroModel, message, payload, outboxCallback));
+                    orderKafkaPublisherHelper.getCallback(orderCompletedRequestAvroModel, message, payload.getOrderId(), outboxCallback));
 
             log.info("OrderCompletedEventPublisher sent to Kafka for order id: {} and saga id: {}", payload.getOrderId(), sagaId);
 

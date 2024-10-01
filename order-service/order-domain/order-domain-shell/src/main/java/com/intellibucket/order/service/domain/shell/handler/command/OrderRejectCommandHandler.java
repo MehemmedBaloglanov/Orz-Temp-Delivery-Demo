@@ -5,18 +5,16 @@ import com.intelliacademy.orizonroute.identity.order.ord.OrderID;
 import com.intelliacademy.orizonroute.identity.order.ord.OrderItemID;
 import com.intellibucket.order.service.domain.core.event.OrderCancelledEvent;
 import com.intellibucket.order.service.domain.core.exception.OrderDomainException;
-import com.intellibucket.order.service.domain.core.exception.OrderNotFoundException;
 import com.intellibucket.order.service.domain.core.root.OrderItemRoot;
 import com.intellibucket.order.service.domain.core.root.OrderRoot;
 import com.intellibucket.order.service.domain.core.service.OrderDomainService;
-import com.intellibucket.order.service.domain.core.valueobject.OrderCancelType;
-import com.intellibucket.order.service.domain.core.valueobject.OrderStatus;
 import com.intellibucket.order.service.domain.shell.dto.rest.command.OrderRejectCommand;
 import com.intellibucket.order.service.domain.shell.helper.OrderOutboxHelper;
 import com.intellibucket.order.service.domain.shell.helper.OrderRepositoryHelper;
+import com.intellibucket.order.service.domain.shell.helper.OrderShellHelper;
 import com.intellibucket.order.service.domain.shell.mapper.OrderShellMapper;
-import com.intellibucket.order.service.domain.shell.outbox.model.message.OrderCancelPaymentEventOutboxMessage;
-import com.intellibucket.order.service.domain.shell.outbox.model.payload.OrderCancelPaymentEventPayload;
+import com.intellibucket.order.service.domain.shell.outbox.model.payload.company.OrderCompanyEventPayload;
+import com.intellibucket.order.service.domain.shell.outbox.model.payload.payment.OrderPaymentCancelEventPayload;
 import com.intellibucket.order.service.domain.shell.port.output.repository.OrderRepository;
 import com.intellibucket.order.service.domain.shell.security.AbstractSecurityContextHolder;
 import lombok.RequiredArgsConstructor;
@@ -24,8 +22,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
-import java.util.Optional;
+import static com.intellibucket.saga.order.SagaConstants.ORDER_COMPANY_CANCEL_SAGA_NAME;
+import static com.intellibucket.saga.order.SagaConstants.ORDER_PAYMENT_CANCEL_SAGA_NAME;
 
 @Slf4j
 @Component
@@ -38,6 +36,7 @@ public class OrderRejectCommandHandler {
     private final AbstractSecurityContextHolder securityContextHolder;
     private final OrderShellMapper orderShellMapper;
     private final OrderOutboxHelper orderOutboxHelper;
+    private final OrderShellHelper orderShellHelper;
 
     @Transactional
     public void handle(OrderRejectCommand command) throws OrderDomainException {
@@ -52,22 +51,9 @@ public class OrderRejectCommandHandler {
             throw new OrderDomainException("Authorization need to confirm Order with id: " + orderId + " OrderItem with id: " + orderItemId);
         }
 
-        Optional<OrderRoot> orderRootOptional = orderRepository.findById(orderId);
-        if (orderRootOptional.isEmpty()) {
-            log.error("Order with id: {} not found", orderId);
-            throw new OrderNotFoundException("Order with id: " + orderId + " not found");
-        }
+        OrderRoot orderRoot = orderRepositoryHelper.findOrderById(orderId);
 
-        OrderRoot orderRoot = orderRootOptional.get();
-
-        Optional<OrderItemRoot> orderItemRootOptional = orderRoot.getItems().stream().filter(orderItem -> orderItem.getRootID().equals(orderItemId)).findFirst();
-
-        if (orderItemRootOptional.isEmpty()) {
-            log.error("OrderItem with id: {} not found in OrderId: {}", orderItemId, orderId);
-            throw new OrderNotFoundException("Order with id: " + orderId + " not found in OrderId: " + orderId);
-        }
-
-        OrderItemRoot orderItemRoot = orderItemRootOptional.get();
+        OrderItemRoot orderItemRoot = orderShellHelper.findOrderItemRootInOrderRoot(orderRoot, orderItemId);
 
         if (!orderItemRoot.getCompanyID().equals(companyID)) {
             log.error("Order with id: {} OrderItem with id: {} authorization not valid: OrderCompanyId: {}, current CompanyId: {}", orderId, orderItemId, companyID, orderItemRoot.getCompanyID());
@@ -76,11 +62,14 @@ public class OrderRejectCommandHandler {
 
         orderItemRoot.reject();
 
-        OrderCancelledEvent orderCancelledEvent = orderDomainService.orderPaymentCancel(orderRoot, "company rejected order item: " + orderItemId);
-        orderRepositoryHelper.saveOrder(orderRoot);
+        OrderCancelledEvent orderCancelledEvent = orderDomainService.orderCompanyCancel(orderRoot, orderItemRoot, command.getRejectMessage());
+        orderRepositoryHelper.saveOrder(orderCancelledEvent.getOrderRoot());
 
-        OrderCancelPaymentEventPayload orderCancelPaymentEventPayload = orderShellMapper.orderCancelledEventToOrderPaymentCancelEventPayload(orderCancelledEvent);
-        orderOutboxHelper.createAndSavePaymentCancelOutboxMessage(orderCancelPaymentEventPayload);
+        OrderPaymentCancelEventPayload orderCancelEventPayload = orderShellMapper.orderCancelledEventToOrderPaymentCancelEventPayload(orderCancelledEvent);
+        orderOutboxHelper.createAndSaveOutboxMessage(orderCancelEventPayload, orderId, ORDER_PAYMENT_CANCEL_SAGA_NAME);
+
+        OrderCompanyEventPayload orderCompanyEventPayload = orderShellMapper.orderCancelledEventToOrderCompanyEventPayload(orderCancelledEvent);
+        orderOutboxHelper.createAndSaveOutboxMessage(orderCompanyEventPayload, orderId, ORDER_COMPANY_CANCEL_SAGA_NAME);
 
 
     }

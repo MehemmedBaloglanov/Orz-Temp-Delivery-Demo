@@ -3,9 +3,9 @@ package com.intellibucket.order.service.domain.core.valueobject;
 import lombok.Builder;
 import lombok.Getter;
 
-@Builder
 @Getter
-public class OrderAddress {
+@Builder
+public final class OrderAddress {
     private final String street;
     private final String city;
     private final String state;

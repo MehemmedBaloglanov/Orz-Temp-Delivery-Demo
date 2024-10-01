@@ -3,19 +3,16 @@ package com.intellibucket.order.service.secondary.message.publisher.kafka;
 import com.intellibucket.kafka.config.producer.KafkaMessageHelper;
 import com.intellibucket.kafka.config.producer.KafkaProducer;
 import com.intellibucket.kafka.order.avro.model.OrderStartDeliveryRequestAvroModel;
-import com.intellibucket.kafka.order.avro.model.PaymentRequestAvroModel;
 import com.intellibucket.order.service.domain.core.exception.OrderDomainException;
 import com.intellibucket.order.service.domain.shell.config.OrderServiceConfigData;
-import com.intellibucket.order.service.domain.shell.outbox.model.message.OrderStartDeliveryEventOutboxMessage;
-import com.intellibucket.order.service.domain.shell.outbox.model.payload.OrderPaymentEventPayload;
-import com.intellibucket.order.service.domain.shell.outbox.model.payload.OrderStartDeliveryEventPayload;
+import com.intellibucket.order.service.domain.shell.outbox.model.OutboxMessage;
+import com.intellibucket.order.service.domain.shell.outbox.model.payload.delivery.OrderStartDeliveryEventPayload;
 import com.intellibucket.order.service.domain.shell.port.output.publisher.AbstractOrderStartDeliveryEventPublisher;
 import com.intellibucket.order.service.secondary.message.publisher.helper.OrderKafkaPublisherHelper;
 import com.intellibucket.order.service.secondary.message.publisher.mapper.OrderMessagePublisherDataMapper;
 import com.intellibucket.outbox.OutboxStatus;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.kafka.support.SendResult;
 import org.springframework.stereotype.Component;
 
 import java.util.function.BiConsumer;
@@ -33,7 +30,7 @@ public class OrderStartDeliveryEventPublisher implements AbstractOrderStartDeliv
     private final OrderServiceConfigData orderServiceConfigData;
 
     @Override
-    public void publish(OrderStartDeliveryEventOutboxMessage message, BiConsumer<OrderStartDeliveryEventOutboxMessage, OutboxStatus> outboxCallback) throws OrderDomainException {
+    public void publish(OutboxMessage message, BiConsumer<OutboxMessage, OutboxStatus> outboxCallback) throws OrderDomainException {
         OrderStartDeliveryEventPayload payload = kafkaMessageHelper.getOrderEventPayload(message.getPayload(), OrderStartDeliveryEventPayload.class);
 
         String sagaId = message.getSagaId().toString();
@@ -46,7 +43,7 @@ public class OrderStartDeliveryEventPublisher implements AbstractOrderStartDeliv
                     orderServiceConfigData.getStartDeliveryRequestTopicName(),
                     sagaId,
                     avroModel,
-                    orderKafkaPublisherHelper.getCallback(avroModel, message, payload, outboxCallback));
+                    orderKafkaPublisherHelper.getCallback(avroModel, message, payload.getOrderId(), outboxCallback));
             log.info("OrderStartDeliveryEventOutboxMessage sent to Kafka for order id: {} and saga id: {}", payload.getOrderId(), sagaId);
 
         } catch (Exception e) {

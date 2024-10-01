@@ -1,8 +1,6 @@
 package com.intellibucket.order.service.repository.adapter;
 
 import com.intellibucket.order.service.domain.core.exception.OrderDomainException;
-import com.intellibucket.order.service.domain.shell.outbox.model.message.OrderPaymentOutboxMessage;
-import com.intellibucket.order.service.domain.shell.port.output.repository.OrderPaymentOutboxRepository;
 import com.intellibucket.outbox.OutboxStatus;
 import com.intellibucket.saga.SagaStatus;
 

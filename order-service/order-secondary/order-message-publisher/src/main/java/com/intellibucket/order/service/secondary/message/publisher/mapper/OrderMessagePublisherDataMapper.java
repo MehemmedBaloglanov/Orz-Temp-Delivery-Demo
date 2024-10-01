@@ -3,20 +3,19 @@ package com.intellibucket.order.service.secondary.message.publisher.mapper;
 import com.intellibucket.kafka.order.avro.model.OrderCompletedRequestAvroModel;
 import com.intellibucket.kafka.order.avro.model.OrderStartDeliveryRequestAvroModel;
 import com.intellibucket.kafka.order.avro.model.PaymentRequestAvroModel;
-import com.intellibucket.order.service.domain.shell.outbox.model.message.OrderCompletedEventOutboxMessage;
-import com.intellibucket.order.service.domain.shell.outbox.model.payload.OrderCompletedEventPayload;
-import com.intellibucket.order.service.domain.shell.outbox.model.payload.OrderPaymentEventPayload;
-import com.intellibucket.order.service.domain.shell.outbox.model.payload.OrderStartDeliveryEventPayload;
+import com.intellibucket.order.service.domain.shell.outbox.model.payload.delivery.OrderDeliveryCompletedEventPayload;
+import com.intellibucket.order.service.domain.shell.outbox.model.payload.delivery.OrderStartDeliveryEventPayload;
+import com.intellibucket.order.service.domain.shell.outbox.model.payload.payment.OrderPaymentCancelEventPayload;
 import org.springframework.stereotype.Component;
 
 @Component
 public class OrderMessagePublisherDataMapper {
 
-    public PaymentRequestAvroModel orderPaymentEventToPaymentRequestAvroModel(String sagaId, OrderPaymentEventPayload orderPaymentEventPayload) {
+    public PaymentRequestAvroModel orderPaymentEventToPaymentCancelAvroModel(String sagaId, OrderPaymentCancelEventPayload orderPaymentEventPayload) {
         return null;
     }
 
-    public OrderCompletedRequestAvroModel orderCompetedEventToOrderCompletedRequestAvroModel(String sagaId, OrderCompletedEventPayload orderPaymentEventPayload) {
+    public OrderCompletedRequestAvroModel orderCompetedEventToOrderCompletedRequestAvroModel(String sagaId, OrderDeliveryCompletedEventPayload orderPaymentEventPayload) {
 
         return null;
     }

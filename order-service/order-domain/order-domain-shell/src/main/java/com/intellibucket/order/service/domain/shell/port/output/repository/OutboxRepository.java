@@ -1,0 +1,19 @@
+package com.intellibucket.order.service.domain.shell.port.output.repository;
+
+import com.intelliacademy.orizonroute.identity.order.ord.OrderID;
+import com.intellibucket.order.service.domain.core.exception.OrderDomainException;
+import com.intellibucket.order.service.domain.shell.outbox.model.OutboxMessage;
+import com.intellibucket.order.service.domain.shell.outbox.model.payload.payment.OrderPaymentCancelEventPayload;
+import com.intellibucket.outbox.OutboxStatus;
+
+import java.util.List;
+import java.util.Optional;
+
+public interface OutboxRepository {
+
+    Optional<List<OutboxMessage>> findByOutboxStatus(OutboxStatus outboxStatus);
+
+    OutboxMessage save(OutboxMessage outboxMessages) throws OrderDomainException;
+
+    void deleteByOutboxStatus(OutboxStatus outboxStatus);
+}

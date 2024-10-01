@@ -15,6 +15,8 @@ import lombok.extern.slf4j.Slf4j;
 
 import java.util.List;
 
+
+// FIXME error mesajlarini duzelt log mesajlari yaz
 @Slf4j
 @SuperBuilder
 @Getter
@@ -28,7 +30,7 @@ public class OrderRoot extends AggregateRoot<OrderID> {
 
     private OrderNumber orderNumber;
     private OrderStatus status;
-    private String errorMessage;
+    private String failureMessage;
     private OrderCancelType cancelType;
 
 
@@ -38,21 +40,21 @@ public class OrderRoot extends AggregateRoot<OrderID> {
         return this;
     }
 
-    public OrderRoot initCancel(String failureMessages) throws OrderDomainException {
-        if (cancelType == null) {
-            log.error("Order is not valid cancel type with id: {}", this.getRootID());
-            throw new OrderDomainException("Order is not valid cancel type with id: " + this.getRootID());
-        }
-        if (status.isDelivering() || status.isCompleted() || status.isCancelled()) {
+    public OrderRoot initCancel(String failureMessage) throws OrderDomainException {
+        if (cancelType.isCompany() && status.isApproved()) {
             throw new OrderDomainException("Order is not in correct state for the initCancel operation!");
         }
 
+        if (cancelType.isCustomer() && (status.isDelivering() || status.isCompleted() || status.isCancelled())) {
+            throw new OrderDomainException("Order is not in correct state for the initCancel operation!");
+        }
+        this.failureMessage = failureMessage;
         this.status = OrderStatus.CANCELLING;
         return this;
     }
 
     public OrderRoot cancel(String failureMessages) throws OrderDomainException {
-        if (status.isCancelling() || status.isCreated()) {
+        if (status.isCompleted()) {
             throw new OrderDomainException("Cannot cancel order");
         }
         this.status = OrderStatus.CANCELLED;
@@ -65,15 +67,26 @@ public class OrderRoot extends AggregateRoot<OrderID> {
         if (!status.isCreated()) {
             throw new OrderDomainException("Cannot pay order");
         }
-        this.status = OrderStatus.PAID;
 
+        this.status = OrderStatus.PAID;
         return this;
     }
 
-    //when stock is ended return initCancel
-    public OrderRoot comfirm() throws OrderDomainException {
+    public OrderRoot approve() throws OrderDomainException {
+
         if (!status.isPaid()) {
-            throw new OrderDomainException("Cannot comfirm order");
+            throw new OrderDomainException("Cannot be approve order");
+        }
+
+        this.status = OrderStatus.APPROVED;
+        return this;
+    }
+
+
+    //when stock is ended return initCancel
+    public OrderRoot confirm() throws OrderDomainException {
+        if (!status.isApproved()) {
+            throw new OrderDomainException("Cannot confirm order");
         }
         this.status = OrderStatus.CONFIRMED;
         return this;
@@ -116,6 +129,11 @@ public class OrderRoot extends AggregateRoot<OrderID> {
 
     public OrderRoot cancelBySystem() {
         cancelType = OrderCancelType.SYSTEM;
+        return this;
+    }
+
+    public OrderRoot cancelByCompany() {
+        cancelType = OrderCancelType.COMPANY;
         return this;
     }
 

@@ -15,4 +15,5 @@ public interface AbstractSecurityContextHolder {
     CourierID currentCourierID();
     CompanyID currentCompanyID();
 
+
 }
