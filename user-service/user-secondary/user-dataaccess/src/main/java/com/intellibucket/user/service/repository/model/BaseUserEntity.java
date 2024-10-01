@@ -1,60 +1,53 @@
-package com.intellibucket.user.service.repository.model;
+package com.intellibucket.model;
 
 import com.intelliacademy.orizonroute.valueobjects.user.EmailType;
-import com.intelliacademy.orizonroute.valueobjects.user.PhoneNumberType;
 import com.intellibucket.user.service.domain.core.valueObject.Password;
 import com.intellibucket.user.service.domain.core.valueObject.RoleAuthorithy;
 import com.intellibucket.user.service.domain.core.valueObject.Status;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
-import lombok.*;
-import lombok.experimental.SuperBuilder;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.UUID;
 
 @Getter
 @Setter
-@ToString
-@SuperBuilder
-@NoArgsConstructor
-@AllArgsConstructor
 @MappedSuperclass
+@AllArgsConstructor
+@NoArgsConstructor
 public abstract class BaseUserEntity {
     @Id
     @Column(name = "id")
-    private UUID userEntityId;
+    UUID userEntityId;
 
-    @NotNull
-    @Email
-    private String email;
+    String email;
 
     @NotEmpty
     @NotNull
     @Size(min = 8, max = 25)
     @Pattern(regexp = Password.PATTERN)
-    private String password;
+    String password;
 
     @Enumerated(EnumType.STRING)
-    private Status status;
+    Status status;
 
     @Enumerated(EnumType.STRING)
-    private RoleAuthorithy roleAuthority;
+    RoleAuthorithy roleAuthority;
 
     @Enumerated(EnumType.STRING)
-    private EmailType emailType;
+    EmailType emailType;
 
-    @Enumerated(EnumType.STRING)
-    private PhoneNumberType phoneNumberType;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "user_address_id")
+    UserAddressEntity address;
 
-    @OneToOne
-    @JoinColumn(name = "user_address_id") // foreign key
-    private UserAddressEntity address;
-
-    @OneToOne // FIX IT TO OneToMany
-    @JoinColumn(name = "phone_number_id") // foreign key
-    private PhoneNumberEntity phoneNumberEntity;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "phone_number_id")
+    PhoneNumberEntity phoneNumberEntity;
 }

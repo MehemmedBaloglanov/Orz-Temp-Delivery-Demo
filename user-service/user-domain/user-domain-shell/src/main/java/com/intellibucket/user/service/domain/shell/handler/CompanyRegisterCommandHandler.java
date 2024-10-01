@@ -11,6 +11,7 @@ import com.intellibucket.user.service.domain.shell.mapper.UserCommandMapper;
 import com.intellibucket.user.service.domain.shell.port.output.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
+import publisher.KafkaEventPublisher;
 
 import java.util.Optional;
 
@@ -19,25 +20,20 @@ import java.util.Optional;
 public class CompanyRegisterCommandHandler {
     private final UserRepository userRepository;
     private final UserDomainService userDomainService;
+    private final KafkaEventPublisher eventPublisher;
 
     public void handle(CompanyCreateCommand command) throws UserDomainException {
         UserRoot newUser = UserCommandMapper.companyCreateCommandToUserRoot(command);
         Optional<UserRoot> userRoot = userRepository.findByEmail(newUser.getEmail());
 
         if (userRoot.isPresent()) {
-            throw new UserValidationException ("User already exist with email..: " + command.getEmail());
+            throw new UserValidationException("User already exist with email..: " + command.getEmail());
         }
-
         UserRegisteredEvent userRegisteredEvent = userDomainService.companyRegistered(newUser);
-
+//        eventPublisher.publishEvent(userRegisteredEvent);
         UserRoot savedUserRoot = userRepository.save(newUser);
         if (savedUserRoot == null) {
             throw new UserSavedException("User could not be saved: " + newUser.getUserID());
         }
-        //outbox-a save et userRegisteredEvent
-        //sonra scheduler ile mueyyen vaxtdan bir meulumarlari cekib kafkaya push et
     }
-
-
-}
-
+} //outbox-a save et userRegisteredEvent, sonra scheduler ile mueyyen vaxtdan bir meulumarlari cekib kafkaya push et

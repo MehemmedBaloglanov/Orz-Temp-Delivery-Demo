@@ -1,5 +1,5 @@
-//package com.intellibucket.user.service.configuration.security;
-//
+package com.intellibucket.user.service.domain.shell.security;
+
 //import org.springframework.context.annotation.Bean;
 //import org.springframework.context.annotation.Configuration;
 //import org.springframework.http.HttpMethod;
@@ -17,8 +17,9 @@
 //
 //@Configuration
 //@EnableWebSecurity
-//public class SecurityConfig {
-////    private final CompanyRegisterCommandHandler companyRegisterCommandHandler;
+public class SecurityConfig {
+}
+//    private final CompanyRegisterCommandHandler companyRegisterCommandHandler;
 //
 //    private final AuthenticationProvider authenticationProvider;
 //

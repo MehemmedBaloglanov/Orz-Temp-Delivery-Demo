@@ -19,12 +19,12 @@ import java.util.Optional;
 @Component
 @RequiredArgsConstructor
 public class UserChangePasswordCommandHandler {
-
     private final UserRepository userRepository;
     private final UserDomainService userDomainService;
+
     public void handle(UserChangePasswordCommand command) throws UserDomainException {
         UserID userID = UserID.random(); // FIXME userID securityContextHolder'dan alinacaq
-       // id= SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        // id= SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
         Optional<UserRoot> byUserId = userRepository.findByUserId(userID);
 
@@ -38,7 +38,7 @@ public class UserChangePasswordCommandHandler {
         }
 
         Password newPassword = Password.builder().value(command.getNewPassword()).build();
-      //  user.userChangePassword(newPassword);
+        //  user.userChangePassword(newPassword);
         UserChangePasswordDomainEvent userChangePasswordDomainEvent = userDomainService.userChangePassword(user);
 
         UserRoot savedUserRoot = userRepository.save(byUserId.get());

@@ -10,7 +10,6 @@ import com.intellibucket.user.service.domain.core.valueObject.Address;
 import com.intellibucket.user.service.domain.core.valueObject.Password;
 import com.intellibucket.user.service.domain.core.valueObject.RoleAuthorithy;
 import com.intellibucket.user.service.domain.core.valueObject.Status;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
@@ -27,7 +26,6 @@ public class UserRoot extends AggregateRoot<UserID> {
     private final Email email;
     private final PhoneNumber phoneNumber;
     private final Username username;
-
 
     public void initializeUser() {
         setId(UserID.random());
@@ -60,6 +58,7 @@ public class UserRoot extends AggregateRoot<UserID> {
             throw new UserDomainException("Address is not valid");
         }
     }
+
     private void validatePhoneNumber() throws UserDomainException {
         if (this.phoneNumber == null || !phoneNumber.isValid()) {
             throw new UserDomainException("Phone number is not valid");
@@ -73,6 +72,7 @@ public class UserRoot extends AggregateRoot<UserID> {
 
 
     }
+
     //FIXME nezer etmek lazimdir
     public void userChangePassword(Password oldPassword, Password newPassword) throws UserDomainException {
         if (!this.password.isEqual(oldPassword)) {

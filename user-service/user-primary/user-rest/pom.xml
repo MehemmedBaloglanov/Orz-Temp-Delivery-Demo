@@ -7,6 +7,9 @@
         <groupId>com.intellibucket</groupId>
         <version>1.0-SNAPSHOT</version>
     </parent>
+
+    <artifactId>user-rest</artifactId>
+
     <dependencies>
         <dependency>
             <groupId>org.springframework</groupId>
@@ -18,11 +21,12 @@
             <groupId>com.intellibucket</groupId>
             <artifactId>user-domain-shell</artifactId>
         </dependency>
-
-
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-orm</artifactId>
+            <version>6.1.13</version>
+            <scope>compile</scope>
+        </dependency>
     </dependencies>
     <modelVersion>4.0.0</modelVersion>
-
-    <artifactId>user-rest</artifactId>
-
 </project>
