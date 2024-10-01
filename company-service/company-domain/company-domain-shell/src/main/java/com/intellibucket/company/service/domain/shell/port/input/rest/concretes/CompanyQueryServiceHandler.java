@@ -6,6 +6,7 @@ import com.intellibucket.company.service.domain.core.root.CompanyRoot;
 import com.intellibucket.company.service.domain.core.service.CompanyDomainService;
 import com.intellibucket.company.service.domain.shell.dto.rest.query.CompanyGetByIDQuery;
 import com.intellibucket.company.service.domain.shell.dto.rest.response.CompanyResponse;
+import com.intellibucket.company.service.domain.shell.mapper.CompanyDataMapper;
 import com.intellibucket.company.service.domain.shell.port.input.rest.abstracts.query.CompanyQueryServiceAdapter;
 import com.intellibucket.company.service.domain.shell.port.output.repository.CompanyRepositoryAdapter;
 import lombok.RequiredArgsConstructor;
@@ -16,6 +17,7 @@ import java.util.List;
 public class CompanyQueryServiceHandler implements CompanyQueryServiceAdapter {
     private final CompanyDomainService companyDomainService;
     private final CompanyRepositoryAdapter companyRepositoryAdapter;
+    private final CompanyDataMapper companyDataMapper;
 
 
     @Override
@@ -23,11 +25,8 @@ public class CompanyQueryServiceHandler implements CompanyQueryServiceAdapter {
         CompanyID companyID = CompanyID.of(id.getCompanyId());
         CompanyRoot companyRoot = companyRepositoryAdapter.findById(companyID)
                 .orElseThrow(() -> new CompanyDomainException("Company cannot found with id: " +companyID));
-        return null;
+        CompanyResponse companyResponse = companyDataMapper.mapCompanyRootToCompanyResponse(companyRoot);
+        return companyResponse;
     }
 
-    @Override
-    public List<CompanyResponse> getAllCompany() throws CompanyDomainException {
-        return List.of();
-    }
 }

@@ -16,7 +16,7 @@ public class CompanyAddressUpdateHandler {
     private final CompanyDomainService companyDomainService;
     private final CompanyRepositoryAdapter companyRepositoryAdapter;
 
-    public void handle(CompanyAddressUpdateCommand command) throws CompanyDomainException {
+    public void  handle(CompanyAddressUpdateCommand command) throws CompanyDomainException {
         CompanyID companyID = CompanyID.of(command.getCompanyId());
         CompanyRoot companyRoot = companyRepositoryAdapter.findById(companyID)
                 .orElseThrow(()-> new CompanyDomainException("Company not found with id " + companyID));
