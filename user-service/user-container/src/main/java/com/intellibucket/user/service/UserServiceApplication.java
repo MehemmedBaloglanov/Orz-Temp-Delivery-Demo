@@ -8,7 +8,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 @EnableJpaRepositories(basePackages = {"com.intellibucket.user.service.repository.repository"})
 //@EntityScan(basePackageClasses = {CompanyRegistrationEntity.class, CustomerRegistrationEntity.class, PhoneNumberEntity.class, UserAddressEntity.class})
 @ComponentScan(basePackages = {"com.intellibucket.user.service", "publisher"})
-@SpringBootApplication(scanBasePackages = {"com.intellibucket.user.service.repository.repository", "com.intellibucket.user.service"})
+@SpringBootApplication(scanBasePackages = {"com.intellibucket.user.service"})
 public class UserServiceApplication {
     public static void main(String[] args) {
         SpringApplication.run(UserServiceApplication.class, args);

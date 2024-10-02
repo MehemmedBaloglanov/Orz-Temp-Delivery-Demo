@@ -1,4 +1,4 @@
-package com.intellibucket.user.service.domain.shell.handler;
+package com.intellibucket.user.service.domain.shell.handler.command;
 
 import com.intellibucket.user.service.domain.core.event.UserLoggedInDomainEvent;
 import com.intellibucket.user.service.domain.core.exception.UserDomainException;
@@ -23,7 +23,7 @@ public class UserLoginCommandHandler {
     public void handle(UserLoginCommand command) throws UserDomainException {
         UserRoot userFromCommand = UserCommandMapper.userLoginCommandToUserRoot(command);
 
-        Optional<UserRoot> userRootOptional = userRepository.findByEmail(userFromCommand.getEmail());
+        Optional<UserRoot> userRootOptional = userRepository.findByEmail(userFromCommand.getEmail(),userFromCommand);
 
         if (userRootOptional.isEmpty()) {
             throw new UserNotFoundException("User not found with email! " + command.getEmail());

@@ -19,7 +19,7 @@ public interface UserRepository {
 
     UserRoot save(UserRoot userRoot);
 
-   Optional <UserRoot> findByEmail(Email email) throws UserNotFoundException;
+    Optional<UserRoot> findByEmail(Email email, UserRoot userRoot) throws UserNotFoundException;
 
     List<RoleAuthorithy> findByAuthority(String name);
 
