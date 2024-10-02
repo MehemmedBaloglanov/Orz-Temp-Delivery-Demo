@@ -7,7 +7,5 @@ import java.util.Optional;
 import java.util.UUID;
 
 public interface CustomerJpaRepository extends JpaRepository<CustomerRegistrationEntity, UUID> {
-    void updateBy(CustomerRegistrationEntity userEntity);
-
     Optional<CustomerRegistrationEntity> findByEmail(String value);
 }

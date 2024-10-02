@@ -54,10 +54,7 @@
             <groupId>com.intellibucket</groupId>
             <artifactId>user-message-publisher</artifactId>
         </dependency>
-        <dependency>
-            <groupId>com.intellibucket</groupId>
-            <artifactId>order-domain-shell</artifactId>
-        </dependency>
+
     </dependencies>
     <modelVersion>4.0.0</modelVersion>
 

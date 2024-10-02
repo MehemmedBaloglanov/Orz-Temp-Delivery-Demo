@@ -11,9 +11,10 @@ import com.intellibucket.user.service.domain.shell.dto.request.UserLoginCommand;
 import com.intellibucket.user.service.domain.shell.mapper.UserCommandMapper;
 import com.intellibucket.user.service.domain.shell.port.output.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Component;
 
 import java.util.Optional;
-
+@Component
 @RequiredArgsConstructor
 public class UserLoginCommandHandler {
     private final UserRepository userRepository;

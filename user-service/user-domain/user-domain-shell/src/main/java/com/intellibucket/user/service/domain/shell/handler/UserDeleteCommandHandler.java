@@ -12,14 +12,16 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.util.Optional;
-
+@Component
 @RequiredArgsConstructor
 public class UserDeleteCommandHandler {
     private final UserRepository userRepository;
     private final UserDomainServiceImpl userDomainService;
-//
+
+
+
 //    public void handle(UserDeleteCommand command) throws UserDomainException {
-////        UserID userID = securityContextHolder.currentUserID();
+//       UserID userID =
 //        Optional<UserRoot> userRoot = userRepository.findByUserId(userID);
 //
 //        if (userRoot.isEmpty()) {
@@ -29,5 +31,5 @@ public class UserDeleteCommandHandler {
 //        UserDeletedDomainEvent userDeletedDomainEvent = userDomainService.userDeleted(userRoot.get());
 //
 //        userRepository.delete(userRoot.get());
-//    }
-}
+//}
+    }

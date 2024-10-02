@@ -1,7 +1,7 @@
 package com.intellibucket.user.service.domain.shell.handler;
 
 import com.intelliacademy.orizonroute.identity.user.UserID;
-import com.intellibucket.order.service.domain.shell.security.AbstractSecurityContextHolder;
+
 import com.intellibucket.user.service.domain.core.event.UserUpdatedDomainEvent;
 import com.intellibucket.user.service.domain.core.exception.user.UserNotFoundException;
 import com.intellibucket.user.service.domain.core.exception.user.UserSavedException;
@@ -21,12 +21,12 @@ import java.util.Optional;
 public class CustomerUpdateCommandHandler {
     private final UserRepository userRepository;
     private final UserDomainService userDomainService;
-    private final AbstractSecurityContextHolder securityContextHolder;
+
 
     public void handle(CustomerUpdateCommand command) throws UserNotFoundException, UserSavedException {
         UserRoot userUpdate = UserCommandMapper.customerUpdateCommandToUserRoot(command);
 
-        UserID userID = securityContextHolder.currentUserID();
+        UserID userID = userUpdate.getUserID();
         Optional<UserRoot> userRoot= userRepository.findByUserId(userID);
        if (userRoot.isEmpty()) {
            throw new UserNotFoundException("User not found with ID" + userID.value());
