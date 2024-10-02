@@ -3,7 +3,6 @@ package com.intellibucket.order.service.domain.shell.outbox.model.payload.delive
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 
 @Getter
 @Builder

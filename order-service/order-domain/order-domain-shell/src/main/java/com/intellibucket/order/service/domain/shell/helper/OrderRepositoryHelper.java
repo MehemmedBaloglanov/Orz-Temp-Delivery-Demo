@@ -19,6 +19,7 @@ public class OrderRepositoryHelper {
     private final OrderRepository orderRepository;
 
     public OrderRoot saveOrder(OrderRoot orderRoot) throws OrderDomainException {
+        log.debug("OrderRepositoryHelper Saving order: {}", orderRoot);
         OrderRoot orderRootResult = orderRepository.save(orderRoot);
         if (orderRootResult == null) {
             log.error("Could not save order!");

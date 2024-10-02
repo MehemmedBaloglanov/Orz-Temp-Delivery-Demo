@@ -8,8 +8,8 @@ import com.intelliacademy.orizonroute.root.AggregateRoot;
 import com.intelliacademy.orizonroute.valueobjects.common.Money;
 import com.intellibucket.order.service.domain.core.exception.OrderDomainException;
 import com.intellibucket.order.service.domain.core.valueobject.OrderItemStatus;
-import lombok.Builder;
 import lombok.Getter;
+import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 import lombok.extern.slf4j.Slf4j;
 
@@ -18,6 +18,7 @@ import java.math.BigDecimal;
 @Slf4j
 @Getter
 @SuperBuilder
+@ToString
 public class OrderItemRoot extends AggregateRoot<OrderItemID> {
     private OrderID orderId;
     private CompanyID companyID;

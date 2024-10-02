@@ -7,14 +7,19 @@ import com.intellibucket.order.service.domain.core.valueobject.OrderStatus;
 import com.intellibucket.order.service.repository.model.order.OrderCancellationJpaType;
 import com.intellibucket.order.service.repository.model.order.OrderItemJpaStatus;
 import com.intellibucket.order.service.repository.model.order.OrderJpaStatus;
+import com.intellibucket.order.service.repository.model.outbox.OutboxJpaStatus;
+import com.intellibucket.outbox.OutboxStatus;
 import org.springframework.stereotype.Component;
+
+import static com.intellibucket.order.service.repository.model.outbox.OutboxJpaStatus.STARTED;
 
 @Component
 public class OrderRepositoryDataHelper {
 
     public OrderJpaStatus orderStatusToOrderJpaStatus(OrderStatus orderStatus) throws OrderDomainException {
         return switch (orderStatus) {
-            case COMPLETED -> OrderJpaStatus.CREATED;
+            case CREATED -> OrderJpaStatus.CREATED;
+            case COMPLETED -> OrderJpaStatus.COMPLETED;
             case APPROVED -> OrderJpaStatus.APPROVED;
             case CANCELLING -> OrderJpaStatus.CANCELLING;
             case CANCELLED -> OrderJpaStatus.CANCELLED;
@@ -28,7 +33,8 @@ public class OrderRepositoryDataHelper {
 
     public OrderStatus orderJpaStatusToOrderStatus(OrderJpaStatus orderStatus) throws OrderDomainException {
         return switch (orderStatus) {
-            case COMPLETED -> OrderStatus.CREATED;
+            case CREATED -> OrderStatus.CREATED;
+            case COMPLETED -> OrderStatus.COMPLETED;
             case APPROVED -> OrderStatus.APPROVED;
             case CANCELLING -> OrderStatus.CANCELLING;
             case CANCELLED -> OrderStatus.CANCELLED;
@@ -75,6 +81,24 @@ public class OrderRepositoryDataHelper {
             case CUSTOMER -> OrderCancelType.CUSTOMER;
             case COMPANY -> OrderCancelType.COMPANY;
             default -> throw new OrderDomainException("Unsupported OrderCancelType: " + cancelType);
+        };
+    }
+
+    public OutboxJpaStatus outboxStatusToOutboxJpaStatus(OutboxStatus outboxStatus) throws OrderDomainException {
+        return switch (outboxStatus) {
+            case STARTED -> STARTED;
+            case COMPLETED -> OutboxJpaStatus.COMPLETED;
+            case FAILED -> OutboxJpaStatus.FAILED;
+            default -> throw new OrderDomainException("Unsupported OutboxStatus: " + outboxStatus);
+        };
+    }
+
+    public OutboxStatus outboxJpaStatusToOutboxStatus(OutboxJpaStatus outboxJpaStatus) throws OrderDomainException {
+        return switch (outboxJpaStatus) {
+            case STARTED -> OutboxStatus.STARTED;
+            case COMPLETED -> OutboxStatus.COMPLETED;
+            case FAILED -> OutboxStatus.FAILED;
+            default -> throw new OrderDomainException("Unsupported OutboxJpaStatus: " + outboxJpaStatus);
         };
     }
 }

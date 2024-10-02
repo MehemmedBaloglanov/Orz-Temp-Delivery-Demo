@@ -1,10 +1,10 @@
 package com.intellibucket.order.service.domain.shell.handler.command;
 
 import com.intelliacademy.orizonroute.identity.company.CompanyID;
+import com.intelliacademy.orizonroute.identity.customer.CustomerID;
 import com.intelliacademy.orizonroute.identity.order.ord.OrderID;
 import com.intelliacademy.orizonroute.identity.order.ord.OrderItemID;
 import com.intelliacademy.orizonroute.identity.order.product.ProductID;
-import com.intelliacademy.orizonroute.identity.user.UserID;
 import com.intelliacademy.orizonroute.valueobjects.common.Money;
 import com.intellibucket.order.service.domain.core.exception.OrderDomainException;
 import com.intellibucket.order.service.domain.core.root.OrderItemRoot;
@@ -55,9 +55,9 @@ public class OrderCreateCommandHandler {
     @Transactional
 
     public OrderResponse handle() throws OrderDomainException {
-        UserID userID = this.securityContextHolder.currentUserID();
+        CustomerID customerID = this.securityContextHolder.currentCustomerID();
 
-        List<CartResponse> cartItems = cartServiceConnector.findUserCartItems(userID);
+        List<CartResponse> cartItems = cartServiceConnector.findUserCartItems(customerID);
         OrderID orderID = OrderID.random();
 
         Map<ProductID, ProductResponse> productsResponse = fetchProducts(cartItems);
@@ -72,9 +72,9 @@ public class OrderCreateCommandHandler {
 
         OrderRoot orderRoot = OrderRoot.builder()
                 .id(orderID)
-                .userId(userID)
+                .customerID(customerID)
                 .items(orderItemRootList)
-                .address(fetchUserPrimaryAddress(userID))
+                .address(fetchUserPrimaryAddress(customerID))
                 .price(orderItemRootList.stream()
                         .map(OrderItemRoot::getSubTotal)
                         .reduce(Money.ZERO, Money::add))
@@ -87,16 +87,19 @@ public class OrderCreateCommandHandler {
     }
 
 
-    private OrderAddress fetchUserPrimaryAddress(UserID userID) {
-        UserAddress userPrimaryAddress = userServiceConnector.getUserPrimaryAddress(userID);
+    private OrderAddress fetchUserPrimaryAddress(CustomerID customerID) {
+        UserAddress userPrimaryAddress = userServiceConnector.getUserPrimaryAddress(customerID);
         return orderShellDataMapper.userAddressToOrderAddress(userPrimaryAddress);
     }
 
     private Map<ProductID, ProductResponse> fetchProducts(List<CartResponse> cartItems) {
-        return companyServiceConnector
-                .getProductsInformation(cartItems.stream().map(CartResponse::getProductID).toList())
+        List<ProductResponse> productsInformation = companyServiceConnector.getProductsInformation(cartItems.stream().map(CartResponse::getProductID).toList());
+        log.debug("Fetched products information: {}", productsInformation);
+        Map<ProductID, ProductResponse> collectedItems = productsInformation
                 .stream()
                 .collect(Collectors.toMap(ProductResponse::getProductId, Function.identity()));
+        log.debug("Collected products: {}", collectedItems);
+        return collectedItems;
     }
 
     private OrderItemRoot getOrderItemRoot(CartResponse item,

@@ -1,7 +1,7 @@
 package com.intellibucket.order.service.domain.shell.handler.command;
 
+import com.intelliacademy.orizonroute.identity.customer.CustomerID;
 import com.intelliacademy.orizonroute.identity.order.ord.OrderID;
-import com.intelliacademy.orizonroute.identity.user.UserID;
 import com.intellibucket.order.service.domain.core.event.OrderCancelledEvent;
 import com.intellibucket.order.service.domain.core.exception.OrderDomainException;
 import com.intellibucket.order.service.domain.core.root.OrderRoot;
@@ -36,15 +36,15 @@ public class OrderCancelCommandHandler {
     @Transactional
     public void handle(OrderCancelCommand command) throws OrderDomainException {
 
-        UserID currentUserID = securityContextHolder.currentUserID();
+        CustomerID customerID = securityContextHolder.currentCustomerID();
 
         OrderID orderId = OrderID.of(command.getOrderId());
 
         OrderRoot orderRoot = orderRepositoryHelper.findOrderById(orderId);
 
-        if (!orderRoot.getUserId().equals(currentUserID)) {
-            log.error("User: {} is not authorized to order: {} cancel", currentUserID, orderId);
-            throw new OrderDomainException("User: " + currentUserID + " is not authorized to order: " + orderId + " cancel");
+        if (!orderRoot.getCustomerID().equals(customerID)) {
+            log.error("User: {} is not authorized to order: {} cancel", customerID, orderId);
+            throw new OrderDomainException("User: " + customerID + " is not authorized to order: " + orderId + " cancel");
         }
 
         orderRoot.cancelByCustomer();

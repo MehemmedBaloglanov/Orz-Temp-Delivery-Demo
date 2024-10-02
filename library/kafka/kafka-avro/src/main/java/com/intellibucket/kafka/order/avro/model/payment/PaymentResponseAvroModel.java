@@ -13,10 +13,10 @@ import org.apache.avro.message.SchemaStore;
 
 @org.apache.avro.specific.AvroGenerated
 public class PaymentResponseAvroModel extends org.apache.avro.specific.SpecificRecordBase implements org.apache.avro.specific.SpecificRecord {
-  private static final long serialVersionUID = -5336885162160267987L;
+  private static final long serialVersionUID = 8107257216034116053L;
 
 
-  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"PaymentResponseAvroModel\",\"namespace\":\"com.intellibucket.kafka.order.avro.model.payment\",\"fields\":[{\"name\":\"id\",\"type\":{\"type\":\"string\",\"logicalType\":\"uuid\"}},{\"name\":\"paymentId\",\"type\":{\"type\":\"string\",\"logicalType\":\"uuid\"}},{\"name\":\"customerId\",\"type\":{\"type\":\"string\",\"logicalType\":\"uuid\"}},{\"name\":\"orderId\",\"type\":{\"type\":\"string\",\"logicalType\":\"uuid\"}},{\"name\":\"price\",\"type\":{\"type\":\"bytes\",\"logicalType\":\"decimal\",\"precision\":10,\"scale\":2}},{\"name\":\"createdAt\",\"type\":{\"type\":\"long\",\"logicalType\":\"timestamp-millis\"}},{\"name\":\"paymentStatus\",\"type\":{\"type\":\"enum\",\"name\":\"PaymentAvroStatus\",\"symbols\":[\"COMPLETED\",\"FAILED\"]}},{\"name\":\"failureMessages\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\",\"logicalType\":\"string\"}}]}");
+  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"PaymentResponseAvroModel\",\"namespace\":\"com.intellibucket.kafka.order.avro.model.payment\",\"fields\":[{\"name\":\"paymentId\",\"type\":{\"type\":\"string\",\"logicalType\":\"uuid\"}},{\"name\":\"orderId\",\"type\":{\"type\":\"string\",\"logicalType\":\"uuid\"}},{\"name\":\"price\",\"type\":{\"type\":\"bytes\",\"logicalType\":\"decimal\",\"precision\":10,\"scale\":2}},{\"name\":\"createdAt\",\"type\":{\"type\":\"long\",\"logicalType\":\"timestamp-millis\"}},{\"name\":\"paymentStatus\",\"type\":{\"type\":\"enum\",\"name\":\"PaymentAvroStatus\",\"symbols\":[\"COMPLETED\",\"FAILED\"]}},{\"name\":\"failureMessages\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\",\"logicalType\":\"string\"}}]}");
   public static org.apache.avro.Schema getClassSchema() { return SCHEMA$; }
 
   private static final SpecificData MODEL$ = new SpecificData();
@@ -77,9 +77,7 @@ public class PaymentResponseAvroModel extends org.apache.avro.specific.SpecificR
     return DECODER.decode(b);
   }
 
-  private java.util.UUID id;
   private java.util.UUID paymentId;
-  private java.util.UUID customerId;
   private java.util.UUID orderId;
   private java.math.BigDecimal price;
   private java.time.Instant createdAt;
@@ -95,19 +93,15 @@ public class PaymentResponseAvroModel extends org.apache.avro.specific.SpecificR
 
   /**
    * All-args constructor.
-   * @param id The new value for id
    * @param paymentId The new value for paymentId
-   * @param customerId The new value for customerId
    * @param orderId The new value for orderId
    * @param price The new value for price
    * @param createdAt The new value for createdAt
    * @param paymentStatus The new value for paymentStatus
    * @param failureMessages The new value for failureMessages
    */
-  public PaymentResponseAvroModel(java.util.UUID id, java.util.UUID paymentId, java.util.UUID customerId, java.util.UUID orderId, java.math.BigDecimal price, java.time.Instant createdAt, com.intellibucket.kafka.order.avro.model.payment.PaymentAvroStatus paymentStatus, java.lang.String failureMessages) {
-    this.id = id;
+  public PaymentResponseAvroModel(java.util.UUID paymentId, java.util.UUID orderId, java.math.BigDecimal price, java.time.Instant createdAt, com.intellibucket.kafka.order.avro.model.payment.PaymentAvroStatus paymentStatus, java.lang.String failureMessages) {
     this.paymentId = paymentId;
-    this.customerId = customerId;
     this.orderId = orderId;
     this.price = price;
     this.createdAt = createdAt.truncatedTo(java.time.temporal.ChronoUnit.MILLIS);
@@ -125,22 +119,18 @@ public class PaymentResponseAvroModel extends org.apache.avro.specific.SpecificR
   @Override
   public java.lang.Object get(int field$) {
     switch (field$) {
-    case 0: return id;
-    case 1: return paymentId;
-    case 2: return customerId;
-    case 3: return orderId;
-    case 4: return price;
-    case 5: return createdAt;
-    case 6: return paymentStatus;
-    case 7: return failureMessages;
+    case 0: return paymentId;
+    case 1: return orderId;
+    case 2: return price;
+    case 3: return createdAt;
+    case 4: return paymentStatus;
+    case 5: return failureMessages;
     default: throw new IndexOutOfBoundsException("Invalid index: " + field$);
     }
   }
 
   private static final org.apache.avro.Conversion<?>[] conversions =
       new org.apache.avro.Conversion<?>[] {
-      new org.apache.avro.Conversions.UUIDConversion(),
-      new org.apache.avro.Conversions.UUIDConversion(),
       new org.apache.avro.Conversions.UUIDConversion(),
       new org.apache.avro.Conversions.UUIDConversion(),
       new org.apache.avro.Conversions.DecimalConversion(),
@@ -160,33 +150,14 @@ public class PaymentResponseAvroModel extends org.apache.avro.specific.SpecificR
   @SuppressWarnings(value="unchecked")
   public void put(int field$, java.lang.Object value$) {
     switch (field$) {
-    case 0: id = (java.util.UUID)value$; break;
-    case 1: paymentId = (java.util.UUID)value$; break;
-    case 2: customerId = (java.util.UUID)value$; break;
-    case 3: orderId = (java.util.UUID)value$; break;
-    case 4: price = (java.math.BigDecimal)value$; break;
-    case 5: createdAt = (java.time.Instant)value$; break;
-    case 6: paymentStatus = (com.intellibucket.kafka.order.avro.model.payment.PaymentAvroStatus)value$; break;
-    case 7: failureMessages = value$ != null ? value$.toString() : null; break;
+    case 0: paymentId = (java.util.UUID)value$; break;
+    case 1: orderId = (java.util.UUID)value$; break;
+    case 2: price = (java.math.BigDecimal)value$; break;
+    case 3: createdAt = (java.time.Instant)value$; break;
+    case 4: paymentStatus = (com.intellibucket.kafka.order.avro.model.payment.PaymentAvroStatus)value$; break;
+    case 5: failureMessages = value$ != null ? value$.toString() : null; break;
     default: throw new IndexOutOfBoundsException("Invalid index: " + field$);
     }
-  }
-
-  /**
-   * Gets the value of the 'id' field.
-   * @return The value of the 'id' field.
-   */
-  public java.util.UUID getId() {
-    return id;
-  }
-
-
-  /**
-   * Sets the value of the 'id' field.
-   * @param value the value to set.
-   */
-  public void setId(java.util.UUID value) {
-    this.id = value;
   }
 
   /**
@@ -204,23 +175,6 @@ public class PaymentResponseAvroModel extends org.apache.avro.specific.SpecificR
    */
   public void setPaymentId(java.util.UUID value) {
     this.paymentId = value;
-  }
-
-  /**
-   * Gets the value of the 'customerId' field.
-   * @return The value of the 'customerId' field.
-   */
-  public java.util.UUID getCustomerId() {
-    return customerId;
-  }
-
-
-  /**
-   * Sets the value of the 'customerId' field.
-   * @param value the value to set.
-   */
-  public void setCustomerId(java.util.UUID value) {
-    this.customerId = value;
   }
 
   /**
@@ -349,9 +303,7 @@ public class PaymentResponseAvroModel extends org.apache.avro.specific.SpecificR
   public static class Builder extends org.apache.avro.specific.SpecificRecordBuilderBase<PaymentResponseAvroModel>
     implements org.apache.avro.data.RecordBuilder<PaymentResponseAvroModel> {
 
-    private java.util.UUID id;
     private java.util.UUID paymentId;
-    private java.util.UUID customerId;
     private java.util.UUID orderId;
     private java.math.BigDecimal price;
     private java.time.Instant createdAt;
@@ -369,37 +321,29 @@ public class PaymentResponseAvroModel extends org.apache.avro.specific.SpecificR
      */
     private Builder(com.intellibucket.kafka.order.avro.model.payment.PaymentResponseAvroModel.Builder other) {
       super(other);
-      if (isValidValue(fields()[0], other.id)) {
-        this.id = data().deepCopy(fields()[0].schema(), other.id);
+      if (isValidValue(fields()[0], other.paymentId)) {
+        this.paymentId = data().deepCopy(fields()[0].schema(), other.paymentId);
         fieldSetFlags()[0] = other.fieldSetFlags()[0];
       }
-      if (isValidValue(fields()[1], other.paymentId)) {
-        this.paymentId = data().deepCopy(fields()[1].schema(), other.paymentId);
+      if (isValidValue(fields()[1], other.orderId)) {
+        this.orderId = data().deepCopy(fields()[1].schema(), other.orderId);
         fieldSetFlags()[1] = other.fieldSetFlags()[1];
       }
-      if (isValidValue(fields()[2], other.customerId)) {
-        this.customerId = data().deepCopy(fields()[2].schema(), other.customerId);
+      if (isValidValue(fields()[2], other.price)) {
+        this.price = data().deepCopy(fields()[2].schema(), other.price);
         fieldSetFlags()[2] = other.fieldSetFlags()[2];
       }
-      if (isValidValue(fields()[3], other.orderId)) {
-        this.orderId = data().deepCopy(fields()[3].schema(), other.orderId);
+      if (isValidValue(fields()[3], other.createdAt)) {
+        this.createdAt = data().deepCopy(fields()[3].schema(), other.createdAt);
         fieldSetFlags()[3] = other.fieldSetFlags()[3];
       }
-      if (isValidValue(fields()[4], other.price)) {
-        this.price = data().deepCopy(fields()[4].schema(), other.price);
+      if (isValidValue(fields()[4], other.paymentStatus)) {
+        this.paymentStatus = data().deepCopy(fields()[4].schema(), other.paymentStatus);
         fieldSetFlags()[4] = other.fieldSetFlags()[4];
       }
-      if (isValidValue(fields()[5], other.createdAt)) {
-        this.createdAt = data().deepCopy(fields()[5].schema(), other.createdAt);
+      if (isValidValue(fields()[5], other.failureMessages)) {
+        this.failureMessages = data().deepCopy(fields()[5].schema(), other.failureMessages);
         fieldSetFlags()[5] = other.fieldSetFlags()[5];
-      }
-      if (isValidValue(fields()[6], other.paymentStatus)) {
-        this.paymentStatus = data().deepCopy(fields()[6].schema(), other.paymentStatus);
-        fieldSetFlags()[6] = other.fieldSetFlags()[6];
-      }
-      if (isValidValue(fields()[7], other.failureMessages)) {
-        this.failureMessages = data().deepCopy(fields()[7].schema(), other.failureMessages);
-        fieldSetFlags()[7] = other.fieldSetFlags()[7];
       }
     }
 
@@ -409,78 +353,30 @@ public class PaymentResponseAvroModel extends org.apache.avro.specific.SpecificR
      */
     private Builder(com.intellibucket.kafka.order.avro.model.payment.PaymentResponseAvroModel other) {
       super(SCHEMA$, MODEL$);
-      if (isValidValue(fields()[0], other.id)) {
-        this.id = data().deepCopy(fields()[0].schema(), other.id);
+      if (isValidValue(fields()[0], other.paymentId)) {
+        this.paymentId = data().deepCopy(fields()[0].schema(), other.paymentId);
         fieldSetFlags()[0] = true;
       }
-      if (isValidValue(fields()[1], other.paymentId)) {
-        this.paymentId = data().deepCopy(fields()[1].schema(), other.paymentId);
+      if (isValidValue(fields()[1], other.orderId)) {
+        this.orderId = data().deepCopy(fields()[1].schema(), other.orderId);
         fieldSetFlags()[1] = true;
       }
-      if (isValidValue(fields()[2], other.customerId)) {
-        this.customerId = data().deepCopy(fields()[2].schema(), other.customerId);
+      if (isValidValue(fields()[2], other.price)) {
+        this.price = data().deepCopy(fields()[2].schema(), other.price);
         fieldSetFlags()[2] = true;
       }
-      if (isValidValue(fields()[3], other.orderId)) {
-        this.orderId = data().deepCopy(fields()[3].schema(), other.orderId);
+      if (isValidValue(fields()[3], other.createdAt)) {
+        this.createdAt = data().deepCopy(fields()[3].schema(), other.createdAt);
         fieldSetFlags()[3] = true;
       }
-      if (isValidValue(fields()[4], other.price)) {
-        this.price = data().deepCopy(fields()[4].schema(), other.price);
+      if (isValidValue(fields()[4], other.paymentStatus)) {
+        this.paymentStatus = data().deepCopy(fields()[4].schema(), other.paymentStatus);
         fieldSetFlags()[4] = true;
       }
-      if (isValidValue(fields()[5], other.createdAt)) {
-        this.createdAt = data().deepCopy(fields()[5].schema(), other.createdAt);
+      if (isValidValue(fields()[5], other.failureMessages)) {
+        this.failureMessages = data().deepCopy(fields()[5].schema(), other.failureMessages);
         fieldSetFlags()[5] = true;
       }
-      if (isValidValue(fields()[6], other.paymentStatus)) {
-        this.paymentStatus = data().deepCopy(fields()[6].schema(), other.paymentStatus);
-        fieldSetFlags()[6] = true;
-      }
-      if (isValidValue(fields()[7], other.failureMessages)) {
-        this.failureMessages = data().deepCopy(fields()[7].schema(), other.failureMessages);
-        fieldSetFlags()[7] = true;
-      }
-    }
-
-    /**
-      * Gets the value of the 'id' field.
-      * @return The value.
-      */
-    public java.util.UUID getId() {
-      return id;
-    }
-
-
-    /**
-      * Sets the value of the 'id' field.
-      * @param value The value of 'id'.
-      * @return This builder.
-      */
-    public com.intellibucket.kafka.order.avro.model.payment.PaymentResponseAvroModel.Builder setId(java.util.UUID value) {
-      validate(fields()[0], value);
-      this.id = value;
-      fieldSetFlags()[0] = true;
-      return this;
-    }
-
-    /**
-      * Checks whether the 'id' field has been set.
-      * @return True if the 'id' field has been set, false otherwise.
-      */
-    public boolean hasId() {
-      return fieldSetFlags()[0];
-    }
-
-
-    /**
-      * Clears the value of the 'id' field.
-      * @return This builder.
-      */
-    public com.intellibucket.kafka.order.avro.model.payment.PaymentResponseAvroModel.Builder clearId() {
-      id = null;
-      fieldSetFlags()[0] = false;
-      return this;
     }
 
     /**
@@ -498,9 +394,9 @@ public class PaymentResponseAvroModel extends org.apache.avro.specific.SpecificR
       * @return This builder.
       */
     public com.intellibucket.kafka.order.avro.model.payment.PaymentResponseAvroModel.Builder setPaymentId(java.util.UUID value) {
-      validate(fields()[1], value);
+      validate(fields()[0], value);
       this.paymentId = value;
-      fieldSetFlags()[1] = true;
+      fieldSetFlags()[0] = true;
       return this;
     }
 
@@ -509,7 +405,7 @@ public class PaymentResponseAvroModel extends org.apache.avro.specific.SpecificR
       * @return True if the 'paymentId' field has been set, false otherwise.
       */
     public boolean hasPaymentId() {
-      return fieldSetFlags()[1];
+      return fieldSetFlags()[0];
     }
 
 
@@ -519,47 +415,7 @@ public class PaymentResponseAvroModel extends org.apache.avro.specific.SpecificR
       */
     public com.intellibucket.kafka.order.avro.model.payment.PaymentResponseAvroModel.Builder clearPaymentId() {
       paymentId = null;
-      fieldSetFlags()[1] = false;
-      return this;
-    }
-
-    /**
-      * Gets the value of the 'customerId' field.
-      * @return The value.
-      */
-    public java.util.UUID getCustomerId() {
-      return customerId;
-    }
-
-
-    /**
-      * Sets the value of the 'customerId' field.
-      * @param value The value of 'customerId'.
-      * @return This builder.
-      */
-    public com.intellibucket.kafka.order.avro.model.payment.PaymentResponseAvroModel.Builder setCustomerId(java.util.UUID value) {
-      validate(fields()[2], value);
-      this.customerId = value;
-      fieldSetFlags()[2] = true;
-      return this;
-    }
-
-    /**
-      * Checks whether the 'customerId' field has been set.
-      * @return True if the 'customerId' field has been set, false otherwise.
-      */
-    public boolean hasCustomerId() {
-      return fieldSetFlags()[2];
-    }
-
-
-    /**
-      * Clears the value of the 'customerId' field.
-      * @return This builder.
-      */
-    public com.intellibucket.kafka.order.avro.model.payment.PaymentResponseAvroModel.Builder clearCustomerId() {
-      customerId = null;
-      fieldSetFlags()[2] = false;
+      fieldSetFlags()[0] = false;
       return this;
     }
 
@@ -578,9 +434,9 @@ public class PaymentResponseAvroModel extends org.apache.avro.specific.SpecificR
       * @return This builder.
       */
     public com.intellibucket.kafka.order.avro.model.payment.PaymentResponseAvroModel.Builder setOrderId(java.util.UUID value) {
-      validate(fields()[3], value);
+      validate(fields()[1], value);
       this.orderId = value;
-      fieldSetFlags()[3] = true;
+      fieldSetFlags()[1] = true;
       return this;
     }
 
@@ -589,7 +445,7 @@ public class PaymentResponseAvroModel extends org.apache.avro.specific.SpecificR
       * @return True if the 'orderId' field has been set, false otherwise.
       */
     public boolean hasOrderId() {
-      return fieldSetFlags()[3];
+      return fieldSetFlags()[1];
     }
 
 
@@ -599,7 +455,7 @@ public class PaymentResponseAvroModel extends org.apache.avro.specific.SpecificR
       */
     public com.intellibucket.kafka.order.avro.model.payment.PaymentResponseAvroModel.Builder clearOrderId() {
       orderId = null;
-      fieldSetFlags()[3] = false;
+      fieldSetFlags()[1] = false;
       return this;
     }
 
@@ -618,9 +474,9 @@ public class PaymentResponseAvroModel extends org.apache.avro.specific.SpecificR
       * @return This builder.
       */
     public com.intellibucket.kafka.order.avro.model.payment.PaymentResponseAvroModel.Builder setPrice(java.math.BigDecimal value) {
-      validate(fields()[4], value);
+      validate(fields()[2], value);
       this.price = value;
-      fieldSetFlags()[4] = true;
+      fieldSetFlags()[2] = true;
       return this;
     }
 
@@ -629,7 +485,7 @@ public class PaymentResponseAvroModel extends org.apache.avro.specific.SpecificR
       * @return True if the 'price' field has been set, false otherwise.
       */
     public boolean hasPrice() {
-      return fieldSetFlags()[4];
+      return fieldSetFlags()[2];
     }
 
 
@@ -639,7 +495,7 @@ public class PaymentResponseAvroModel extends org.apache.avro.specific.SpecificR
       */
     public com.intellibucket.kafka.order.avro.model.payment.PaymentResponseAvroModel.Builder clearPrice() {
       price = null;
-      fieldSetFlags()[4] = false;
+      fieldSetFlags()[2] = false;
       return this;
     }
 
@@ -658,9 +514,9 @@ public class PaymentResponseAvroModel extends org.apache.avro.specific.SpecificR
       * @return This builder.
       */
     public com.intellibucket.kafka.order.avro.model.payment.PaymentResponseAvroModel.Builder setCreatedAt(java.time.Instant value) {
-      validate(fields()[5], value);
+      validate(fields()[3], value);
       this.createdAt = value.truncatedTo(java.time.temporal.ChronoUnit.MILLIS);
-      fieldSetFlags()[5] = true;
+      fieldSetFlags()[3] = true;
       return this;
     }
 
@@ -669,7 +525,7 @@ public class PaymentResponseAvroModel extends org.apache.avro.specific.SpecificR
       * @return True if the 'createdAt' field has been set, false otherwise.
       */
     public boolean hasCreatedAt() {
-      return fieldSetFlags()[5];
+      return fieldSetFlags()[3];
     }
 
 
@@ -678,7 +534,7 @@ public class PaymentResponseAvroModel extends org.apache.avro.specific.SpecificR
       * @return This builder.
       */
     public com.intellibucket.kafka.order.avro.model.payment.PaymentResponseAvroModel.Builder clearCreatedAt() {
-      fieldSetFlags()[5] = false;
+      fieldSetFlags()[3] = false;
       return this;
     }
 
@@ -697,9 +553,9 @@ public class PaymentResponseAvroModel extends org.apache.avro.specific.SpecificR
       * @return This builder.
       */
     public com.intellibucket.kafka.order.avro.model.payment.PaymentResponseAvroModel.Builder setPaymentStatus(com.intellibucket.kafka.order.avro.model.payment.PaymentAvroStatus value) {
-      validate(fields()[6], value);
+      validate(fields()[4], value);
       this.paymentStatus = value;
-      fieldSetFlags()[6] = true;
+      fieldSetFlags()[4] = true;
       return this;
     }
 
@@ -708,7 +564,7 @@ public class PaymentResponseAvroModel extends org.apache.avro.specific.SpecificR
       * @return True if the 'paymentStatus' field has been set, false otherwise.
       */
     public boolean hasPaymentStatus() {
-      return fieldSetFlags()[6];
+      return fieldSetFlags()[4];
     }
 
 
@@ -718,7 +574,7 @@ public class PaymentResponseAvroModel extends org.apache.avro.specific.SpecificR
       */
     public com.intellibucket.kafka.order.avro.model.payment.PaymentResponseAvroModel.Builder clearPaymentStatus() {
       paymentStatus = null;
-      fieldSetFlags()[6] = false;
+      fieldSetFlags()[4] = false;
       return this;
     }
 
@@ -737,9 +593,9 @@ public class PaymentResponseAvroModel extends org.apache.avro.specific.SpecificR
       * @return This builder.
       */
     public com.intellibucket.kafka.order.avro.model.payment.PaymentResponseAvroModel.Builder setFailureMessages(java.lang.String value) {
-      validate(fields()[7], value);
+      validate(fields()[5], value);
       this.failureMessages = value;
-      fieldSetFlags()[7] = true;
+      fieldSetFlags()[5] = true;
       return this;
     }
 
@@ -748,7 +604,7 @@ public class PaymentResponseAvroModel extends org.apache.avro.specific.SpecificR
       * @return True if the 'failureMessages' field has been set, false otherwise.
       */
     public boolean hasFailureMessages() {
-      return fieldSetFlags()[7];
+      return fieldSetFlags()[5];
     }
 
 
@@ -758,7 +614,7 @@ public class PaymentResponseAvroModel extends org.apache.avro.specific.SpecificR
       */
     public com.intellibucket.kafka.order.avro.model.payment.PaymentResponseAvroModel.Builder clearFailureMessages() {
       failureMessages = null;
-      fieldSetFlags()[7] = false;
+      fieldSetFlags()[5] = false;
       return this;
     }
 
@@ -767,14 +623,12 @@ public class PaymentResponseAvroModel extends org.apache.avro.specific.SpecificR
     public PaymentResponseAvroModel build() {
       try {
         PaymentResponseAvroModel record = new PaymentResponseAvroModel();
-        record.id = fieldSetFlags()[0] ? this.id : (java.util.UUID) defaultValue(fields()[0]);
-        record.paymentId = fieldSetFlags()[1] ? this.paymentId : (java.util.UUID) defaultValue(fields()[1]);
-        record.customerId = fieldSetFlags()[2] ? this.customerId : (java.util.UUID) defaultValue(fields()[2]);
-        record.orderId = fieldSetFlags()[3] ? this.orderId : (java.util.UUID) defaultValue(fields()[3]);
-        record.price = fieldSetFlags()[4] ? this.price : (java.math.BigDecimal) defaultValue(fields()[4]);
-        record.createdAt = fieldSetFlags()[5] ? this.createdAt : (java.time.Instant) defaultValue(fields()[5]);
-        record.paymentStatus = fieldSetFlags()[6] ? this.paymentStatus : (com.intellibucket.kafka.order.avro.model.payment.PaymentAvroStatus) defaultValue(fields()[6]);
-        record.failureMessages = fieldSetFlags()[7] ? this.failureMessages : (java.lang.String) defaultValue(fields()[7]);
+        record.paymentId = fieldSetFlags()[0] ? this.paymentId : (java.util.UUID) defaultValue(fields()[0]);
+        record.orderId = fieldSetFlags()[1] ? this.orderId : (java.util.UUID) defaultValue(fields()[1]);
+        record.price = fieldSetFlags()[2] ? this.price : (java.math.BigDecimal) defaultValue(fields()[2]);
+        record.createdAt = fieldSetFlags()[3] ? this.createdAt : (java.time.Instant) defaultValue(fields()[3]);
+        record.paymentStatus = fieldSetFlags()[4] ? this.paymentStatus : (com.intellibucket.kafka.order.avro.model.payment.PaymentAvroStatus) defaultValue(fields()[4]);
+        record.failureMessages = fieldSetFlags()[5] ? this.failureMessages : (java.lang.String) defaultValue(fields()[5]);
         return record;
       } catch (org.apache.avro.AvroMissingFieldException e) {
         throw e;

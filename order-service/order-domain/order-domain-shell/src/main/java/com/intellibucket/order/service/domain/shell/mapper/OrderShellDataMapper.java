@@ -12,11 +12,7 @@ import com.intellibucket.order.service.domain.shell.dto.rest.response.OrderAddre
 import com.intellibucket.order.service.domain.shell.dto.rest.response.OrderItemResponse;
 import com.intellibucket.order.service.domain.shell.dto.rest.response.OrderResponse;
 import com.intellibucket.order.service.domain.shell.dto.rest.response.TrackOrderResponse;
-import com.intellibucket.order.service.domain.shell.outbox.model.payload.company.OrderCompletedEventPayload;
-import com.intellibucket.order.service.domain.shell.outbox.model.payload.company.OrderCompanyApproveEventPayload;
-import com.intellibucket.order.service.domain.shell.outbox.model.payload.company.OrderCompanyApproveEventProduct;
-import com.intellibucket.order.service.domain.shell.outbox.model.payload.company.OrderCompletedEventProduct;
-import com.intellibucket.order.service.domain.shell.outbox.model.payload.company.OrderCompanyRefundEventPayload;
+import com.intellibucket.order.service.domain.shell.outbox.model.payload.company.*;
 import com.intellibucket.order.service.domain.shell.outbox.model.payload.delivery.OrderStartDeliveryEventAddress;
 import com.intellibucket.order.service.domain.shell.outbox.model.payload.delivery.OrderStartDeliveryEventPayload;
 import com.intellibucket.order.service.domain.shell.outbox.model.payload.payment.OrderPaymentRefundEventPayload;
@@ -78,7 +74,7 @@ public class OrderShellDataMapper {
         OrderRoot orderRoot = orderCancelEvent.getOrderRoot();
         return OrderPaymentRefundEventPayload.builder()
                 .orderId(orderRoot.getRootID().value())
-                .customerId(orderRoot.getUserId().value())
+                .customerId(orderRoot.getCustomerID().value())
                 .price(orderRoot.getPrice().getAmount())
                 .createdAt(OffsetDateTime.now(ZONE_ID))
                 .build();
@@ -88,7 +84,7 @@ public class OrderShellDataMapper {
         OrderRoot orderRoot = startDeliveryOrderEvent.getOrderRoot();
         return OrderStartDeliveryEventPayload.builder()
                 .orderId(orderRoot.getRootID().value())
-                .customerId(orderRoot.getUserId().value())
+                .customerId(orderRoot.getCustomerID().value())
                 .address(orderAddressToOrderStartDeliveryEventAddress(orderRoot.getAddress()))
                 .createdAt(OffsetDateTime.now(ZONE_ID))
                 .build();
@@ -99,7 +95,7 @@ public class OrderShellDataMapper {
         return OrderCompanyRefundEventPayload.builder()
                 .orderId(orderRoot.getRootID().value())
                 .price(orderRoot.getPrice().getAmount())
-                .customerId(orderRoot.getUserId().value())
+                .customerId(orderRoot.getCustomerID().value())
                 .products(orderRoot.getItems().stream().map(this::orderRootItemsToOrderCompanyApproveEventProduct).toList())
                 .createdAt(OffsetDateTime.now(ZONE_ID))
                 .build();
@@ -118,7 +114,7 @@ public class OrderShellDataMapper {
         OrderRoot orderRoot = orderCompletedEvent.getOrderRoot();
         return OrderCompletedEventPayload.builder()
                 .orderId(orderRoot.getRootID().value())
-                .customerId(orderRoot.getUserId().value())
+                .customerId(orderRoot.getCustomerID().value())
                 .createdAt(OffsetDateTime.now(ZONE_ID))
                 .products(orderRoot.getItems().stream().map(this::orderItemRootToOrderCompletedEventProduct).toList())
                 .build();

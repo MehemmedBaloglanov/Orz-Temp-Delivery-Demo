@@ -14,10 +14,8 @@ import java.util.UUID;
 @AllArgsConstructor
 public class PaymentResponse {
 
-    private UUID id;
     private UUID orderId;
     private UUID paymentId;
-    private UUID customerId;
     private BigDecimal price;
     private Instant createdAt;
     private PaymentStatus status;

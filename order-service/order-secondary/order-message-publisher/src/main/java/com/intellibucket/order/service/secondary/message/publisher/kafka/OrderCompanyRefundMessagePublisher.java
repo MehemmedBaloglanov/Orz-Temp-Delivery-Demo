@@ -2,12 +2,10 @@ package com.intellibucket.order.service.secondary.message.publisher.kafka;
 
 import com.intellibucket.kafka.config.producer.KafkaMessageHelper;
 import com.intellibucket.kafka.config.producer.KafkaProducer;
-import com.intellibucket.kafka.order.avro.model.company.CompanyOrderApproveRequestAvroModel;
 import com.intellibucket.kafka.order.avro.model.company.CompanyOrderRefundRequestAvroModel;
 import com.intellibucket.order.service.domain.core.exception.OrderDomainException;
 import com.intellibucket.order.service.domain.shell.config.OrderServiceConfigData;
 import com.intellibucket.order.service.domain.shell.outbox.model.OutboxMessage;
-import com.intellibucket.order.service.domain.shell.outbox.model.payload.company.OrderCompanyApproveEventPayload;
 import com.intellibucket.order.service.domain.shell.outbox.model.payload.company.OrderCompanyRefundEventPayload;
 import com.intellibucket.order.service.domain.shell.port.output.publisher.AbstractOrderCompanyRefundEventPublisher;
 import com.intellibucket.order.service.secondary.message.publisher.helper.OrderKafkaPublisherHelper;

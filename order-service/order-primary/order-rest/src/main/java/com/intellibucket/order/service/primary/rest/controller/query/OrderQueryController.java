@@ -1,16 +1,17 @@
 package com.intellibucket.order.service.primary.rest.controller.query;
 
 import com.intelliacademy.orizonroute.identity.order.ord.OrderID;
-import com.intelliacademy.orizonroute.identity.user.UserID;
 import com.intellibucket.order.service.domain.core.exception.OrderDomainException;
-import com.intellibucket.order.service.domain.core.exception.OrderNotFoundException;
 import com.intellibucket.order.service.domain.shell.dto.rest.query.OrderTrackingQuery;
 import com.intellibucket.order.service.domain.shell.dto.rest.response.OrderResponse;
 import com.intellibucket.order.service.domain.shell.dto.rest.response.TrackOrderResponse;
 import com.intellibucket.order.service.domain.shell.port.input.rest.abstracts.query.OrderQueryServiceAdapter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 import java.util.UUID;
@@ -29,9 +30,7 @@ public class OrderQueryController {
 
     @GetMapping("/customer")
     public ResponseEntity<List<OrderResponse>> getOrdersByCustomerId() throws OrderDomainException {
-        //FIXme
-        UserID userId = UserID.random();
-        List<OrderResponse> orders = orderQueryServiceAdapter.orders(userId);
+        List<OrderResponse> orders = orderQueryServiceAdapter.ordersByCustomer();
         return ResponseEntity.ok(orders);
     }
 

@@ -10,6 +10,7 @@ import lombok.*;
 @Embeddable
 @Builder
 @EqualsAndHashCode
+@ToString
 public class OrderJpaAddress {
 
     private String street;

@@ -17,10 +17,8 @@ public class OrderMessageListenerDataMapper {
 
     public PaymentResponse paymentResponseAvroModelToPaymentResponse(PaymentResponseAvroModel paymentResponseAvroModel) {
         return PaymentResponse.builder()
-                .id(paymentResponseAvroModel.getPaymentId())
                 .orderId(paymentResponseAvroModel.getOrderId())
                 .paymentId(paymentResponseAvroModel.getPaymentId())
-                .customerId(paymentResponseAvroModel.getCustomerId())
                 .price(paymentResponseAvroModel.getPrice())
                 .createdAt(paymentResponseAvroModel.getCreatedAt())
                 .status(messageListenerHelper.paymentAvroStatusToPaymentPaymentStatus(paymentResponseAvroModel.getPaymentStatus()))

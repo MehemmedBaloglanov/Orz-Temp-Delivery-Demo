@@ -1,5 +1,6 @@
 package com.intellibucket.order.service.domain.shell.outbox.scheduler;
 
+import com.intellibucket.order.service.domain.core.exception.OrderDomainException;
 import com.intellibucket.order.service.domain.shell.outbox.model.OutboxMessage;
 import com.intellibucket.order.service.domain.shell.port.output.repository.OutboxRepository;
 import com.intellibucket.outbox.OutboxScheduler;
@@ -24,7 +25,7 @@ public class OutboxCleanerScheduler implements OutboxScheduler {
     @Override
     @Transactional
     @Scheduled(fixedDelayString = "${order-service.outbox-scheduler-fixed-rate}", initialDelayString = "${order-service.outbox-scheduler-initial-delay}")
-    public void processOutboxMessage() {
+    public void processOutboxMessage() throws OrderDomainException {
         Optional<List<OutboxMessage>> outboxMessagesResponse = outboxRepository.findByOutboxStatus(OutboxStatus.COMPLETED);
         if (outboxMessagesResponse.isPresent()) {
             List<OutboxMessage> outboxMessages = outboxMessagesResponse.get();

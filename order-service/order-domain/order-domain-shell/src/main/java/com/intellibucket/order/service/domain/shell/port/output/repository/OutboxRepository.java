@@ -9,9 +9,9 @@ import java.util.Optional;
 
 public interface OutboxRepository {
 
-    Optional<List<OutboxMessage>> findByOutboxStatus(OutboxStatus outboxStatus);
+    Optional<List<OutboxMessage>> findByOutboxStatus(OutboxStatus outboxStatus) throws OrderDomainException;
 
     OutboxMessage save(OutboxMessage outboxMessages) throws OrderDomainException;
 
-    void deleteByOutboxStatus(OutboxStatus outboxStatus);
+    void deleteByOutboxStatus(OutboxStatus outboxStatus) throws OrderDomainException;
 }

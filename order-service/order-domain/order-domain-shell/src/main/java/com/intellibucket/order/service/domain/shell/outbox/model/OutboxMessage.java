@@ -2,7 +2,6 @@ package com.intellibucket.order.service.domain.shell.outbox.model;
 
 import com.intellibucket.domain.message.model.BaseMessageModel;
 import com.intellibucket.outbox.OutboxStatus;
-import com.intellibucket.saga.SagaStatus;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;

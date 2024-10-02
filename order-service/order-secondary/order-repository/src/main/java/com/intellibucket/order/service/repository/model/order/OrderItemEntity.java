@@ -4,7 +4,6 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.math.BigDecimal;
-import java.time.OffsetDateTime;
 import java.util.UUID;
 
 @Entity
@@ -15,6 +14,7 @@ import java.util.UUID;
 @AllArgsConstructor
 @Table(name = "order_items")
 @EqualsAndHashCode(of = "id")
+@ToString(exclude = {"order"})
 public class OrderItemEntity {
     @Id
     private UUID id;

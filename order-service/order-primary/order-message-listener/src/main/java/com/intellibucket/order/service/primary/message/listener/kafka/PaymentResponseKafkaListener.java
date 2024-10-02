@@ -1,7 +1,6 @@
 package com.intellibucket.order.service.primary.message.listener.kafka;
 
 import com.intellibucket.kafka.config.consumer.KafkaConsumer;
-import com.intellibucket.kafka.order.avro.model.payment.PaymentAvroStatus;
 import com.intellibucket.kafka.order.avro.model.payment.PaymentResponseAvroModel;
 import com.intellibucket.order.service.domain.core.exception.OrderDomainException;
 import com.intellibucket.order.service.domain.core.exception.OrderNotFoundException;

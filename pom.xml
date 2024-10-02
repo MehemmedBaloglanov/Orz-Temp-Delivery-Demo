@@ -54,6 +54,7 @@
         <module>cart-service</module>
         <module>library</module>
         <module>order-service/order-secondary/user-service-connector</module>
+        <module>payment-service</module>
     </modules>
 
     <dependencyManagement>

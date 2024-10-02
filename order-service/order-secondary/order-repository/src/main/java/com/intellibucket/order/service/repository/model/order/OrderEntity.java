@@ -16,6 +16,7 @@ import java.util.UUID;
 @AllArgsConstructor
 @Table(name = "orders")
 @EqualsAndHashCode(of = "id")
+@ToString
 public class OrderEntity {
 
     @Id

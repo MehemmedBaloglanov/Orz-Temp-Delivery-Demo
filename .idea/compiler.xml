@@ -18,6 +18,7 @@
         <module name="company-domain-shell" />
         <module name="order-domain-shell" />
         <module name="cart-rest" />
+        <module name="payment-service" />
         <module name="temp-root" />
         <module name="order-domain-core" />
         <module name="saga" />

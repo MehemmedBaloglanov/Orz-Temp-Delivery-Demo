@@ -1,6 +1,9 @@
 package com.intellibucket.order.service.domain.core.service;
 
-import com.intellibucket.order.service.domain.core.event.*;
+import com.intellibucket.order.service.domain.core.event.OrderCancelledEvent;
+import com.intellibucket.order.service.domain.core.event.OrderCompletedEvent;
+import com.intellibucket.order.service.domain.core.event.OrderPaidEvent;
+import com.intellibucket.order.service.domain.core.event.StartDeliveryOrderEvent;
 import com.intellibucket.order.service.domain.core.exception.OrderDomainException;
 import com.intellibucket.order.service.domain.core.root.OrderItemRoot;
 import com.intellibucket.order.service.domain.core.root.OrderRoot;
@@ -24,6 +27,7 @@ public class OrderDomainServiceImpl implements OrderDomainService {
         orderRoot.validateOrder();
         orderRoot.initializeOrder();
         log.info("Order with id: {} is initiated", orderRoot.getRootID().value());
+        log.debug("Order with id: {}", orderRoot);
     }
 
     /**

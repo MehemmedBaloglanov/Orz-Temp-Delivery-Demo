@@ -1,13 +1,15 @@
-port: 8181
+server:
+  port: 8182
 
 logging:
   level:
-    com.food.ordering.system: DEBUG
+    com.intellibucket: DEBUG
 
 order-service:
   payment-request-topic-name: payment-request
   payment-response-topic-name: payment-response
   company-order-approve-response-topic-name: company-order-approve-response
+  company-order-approve-request-topic-name: company-order-approve-request
   order-delivered-response-topic-name: order-delivered-response
 
   outbox-scheduler-fixed-rate: 10000
@@ -62,3 +64,14 @@ kafka-consumer-config:
   max-partition-fetch-bytes-default: 1048576
   max-partition-fetch-bytes-boost-factor: 1
   poll-timeout-ms: 150
+
+
+test:
+  current:
+    company:
+      id: 01924d1f-a2f8-7825-9730-15ebaf6d4738
+    customer:
+      id: 01924d1f-a2f8-7bce-833e-d5ef9561d17a
+    courier:
+      id: 01924d1f-a2f8-7630-b7a5-b5c2130e5053
+

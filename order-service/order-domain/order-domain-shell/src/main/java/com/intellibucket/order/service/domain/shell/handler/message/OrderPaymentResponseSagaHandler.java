@@ -37,6 +37,7 @@ public class OrderPaymentResponseSagaHandler implements SagaStep<PaymentResponse
         log.info("Received payment complete event for order id: {}", orderId);
 
         OrderRoot orderRoot = orderRepositoryHelper.findOrderById(orderId);
+        log.debug("Order found: {}", orderRoot);
         OrderPaidEvent orderPaidEvent = orderDomainService.orderPay(orderRoot);
         orderRepositoryHelper.saveOrder(orderRoot);
 

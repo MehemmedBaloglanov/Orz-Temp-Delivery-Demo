@@ -1,6 +1,6 @@
 package com.intellibucket.order.service.domain.shell.handler.query;
 
-import com.intelliacademy.orizonroute.identity.user.UserID;
+import com.intelliacademy.orizonroute.identity.customer.CustomerID;
 import com.intellibucket.order.service.domain.core.exception.OrderDomainException;
 import com.intellibucket.order.service.domain.core.root.OrderRoot;
 import com.intellibucket.order.service.domain.shell.dto.rest.response.OrderResponse;
@@ -21,8 +21,8 @@ public class OrderGetAllQueryHandler {
     private final AbstractSecurityContextHolder securityContextHolder;
 
     public List<OrderResponse> handle() throws OrderDomainException {
-        UserID userID = securityContextHolder.currentUserID();
-        List<OrderRoot> orderRoots = orderRepository.findByUserId(userID);
+        CustomerID customerID = securityContextHolder.currentCustomerID();
+        List<OrderRoot> orderRoots = orderRepository.findByCustomerId(customerID);
         return orderRoots.stream()
                 .map(orderShellDataMapper::orderRootToOrderResponse)
                 .collect(Collectors.toList());

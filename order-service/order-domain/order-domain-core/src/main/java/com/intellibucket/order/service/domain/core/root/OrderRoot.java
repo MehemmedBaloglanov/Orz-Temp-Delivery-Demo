@@ -1,7 +1,7 @@
 package com.intellibucket.order.service.domain.core.root;
 
+import com.intelliacademy.orizonroute.identity.customer.CustomerID;
 import com.intelliacademy.orizonroute.identity.order.ord.OrderID;
-import com.intelliacademy.orizonroute.identity.user.UserID;
 import com.intelliacademy.orizonroute.root.AggregateRoot;
 import com.intelliacademy.orizonroute.valueobjects.common.Money;
 import com.intelliacademy.orizonroute.valueobjects.order.OrderNumber;
@@ -10,6 +10,7 @@ import com.intellibucket.order.service.domain.core.valueobject.OrderAddress;
 import com.intellibucket.order.service.domain.core.valueobject.OrderCancelType;
 import com.intellibucket.order.service.domain.core.valueobject.OrderStatus;
 import lombok.Getter;
+import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 import lombok.extern.slf4j.Slf4j;
 
@@ -21,10 +22,9 @@ import java.util.List;
 @Slf4j
 @SuperBuilder
 @Getter
+@ToString
 public class OrderRoot extends AggregateRoot<OrderID> {
-
-
-    private final UserID userId;
+    private final CustomerID customerID;
     private final OrderAddress address;
     private final Money price;
     private final List<OrderItemRoot> items;
@@ -119,6 +119,7 @@ public class OrderRoot extends AggregateRoot<OrderID> {
     }
 
     public OrderRoot validateOrder() throws OrderDomainException {
+        validateItems();
         validateAddress();
         validatePrice();
         return this;
@@ -139,14 +140,22 @@ public class OrderRoot extends AggregateRoot<OrderID> {
         return this;
     }
 
+    private void validateItems() throws OrderDomainException {
+        if (items == null || items.isEmpty()) {
+            throw new OrderDomainException("Order must have at least one and one more item");
+        }
+    }
+
     private void validatePrice() throws OrderDomainException {
         Money total = Money.ZERO;
         for (OrderItemRoot orderItem : items) {
-            Money orderItemRootPrice = orderItem.getPrice();
+            Money orderItemRootPrice = orderItem.getSubTotal();
             total = total.add(orderItemRootPrice);
         }
+        log.debug("Total price: {}", total);
+        log.debug("Root price: {}", price);
 
-        if (price.getAmount().compareTo(total.getAmount()) != 0) {
+        if (!price.isEqualTo(total)) {
             throw new OrderDomainException("Order price is greater than total price");
         }
     }

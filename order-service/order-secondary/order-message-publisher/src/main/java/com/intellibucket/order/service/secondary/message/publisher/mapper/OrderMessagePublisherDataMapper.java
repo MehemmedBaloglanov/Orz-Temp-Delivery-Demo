@@ -6,8 +6,8 @@ import com.intellibucket.kafka.order.avro.model.delivery.OrderStartDeliveryReque
 import com.intellibucket.kafka.order.avro.model.payment.PaymentRefundAvroModel;
 import com.intellibucket.order.service.domain.shell.outbox.model.payload.company.OrderCompanyApproveEventPayload;
 import com.intellibucket.order.service.domain.shell.outbox.model.payload.company.OrderCompanyApproveEventProduct;
-import com.intellibucket.order.service.domain.shell.outbox.model.payload.company.OrderCompletedEventProduct;
 import com.intellibucket.order.service.domain.shell.outbox.model.payload.company.OrderCompanyRefundEventPayload;
+import com.intellibucket.order.service.domain.shell.outbox.model.payload.company.OrderCompletedEventProduct;
 import com.intellibucket.order.service.domain.shell.outbox.model.payload.delivery.OrderDeliveryCompletedEventPayload;
 import com.intellibucket.order.service.domain.shell.outbox.model.payload.delivery.OrderStartDeliveryEventAddress;
 import com.intellibucket.order.service.domain.shell.outbox.model.payload.delivery.OrderStartDeliveryEventPayload;

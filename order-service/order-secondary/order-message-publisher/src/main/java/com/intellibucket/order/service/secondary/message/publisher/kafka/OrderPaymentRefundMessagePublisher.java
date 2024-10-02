@@ -3,7 +3,6 @@ package com.intellibucket.order.service.secondary.message.publisher.kafka;
 import com.intellibucket.kafka.config.producer.KafkaMessageHelper;
 import com.intellibucket.kafka.config.producer.KafkaProducer;
 import com.intellibucket.kafka.order.avro.model.payment.PaymentRefundAvroModel;
-import com.intellibucket.kafka.order.avro.model.payment.PaymentRequestAvroModel;
 import com.intellibucket.order.service.domain.core.exception.OrderDomainException;
 import com.intellibucket.order.service.domain.shell.config.OrderServiceConfigData;
 import com.intellibucket.order.service.domain.shell.outbox.model.OutboxMessage;
