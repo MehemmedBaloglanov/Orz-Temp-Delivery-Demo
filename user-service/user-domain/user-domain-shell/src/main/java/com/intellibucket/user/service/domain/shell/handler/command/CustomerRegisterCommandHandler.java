@@ -1,4 +1,4 @@
-package com.intellibucket.user.service.domain.shell.handler;
+package com.intellibucket.user.service.domain.shell.handler.command;
 
 import com.intellibucket.user.service.domain.core.event.UserRegisteredEvent;
 import com.intellibucket.user.service.domain.core.exception.UserDomainException;
@@ -21,7 +21,7 @@ public class CustomerRegisterCommandHandler {
 
     public void handle(CustomerCreateCommand command) throws UserDomainException {
         UserRoot newUser = UserCommandMapper.customerCreateCommandToUserRoot(command);
-        Optional<UserRoot> optionalUserRoot = userRepository.findByEmail(newUser.getEmail());
+        Optional<UserRoot> optionalUserRoot = userRepository.findByEmail(newUser.getEmail(),newUser);
 
         if (optionalUserRoot.isPresent()) {
             throw new UserValidationException("User already exist with email..: " + command.getEmail());

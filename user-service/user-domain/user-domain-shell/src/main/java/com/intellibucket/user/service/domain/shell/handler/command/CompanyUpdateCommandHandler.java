@@ -1,4 +1,4 @@
-package com.intellibucket.user.service.domain.shell.handler;
+package com.intellibucket.user.service.domain.shell.handler.command;
 
 import com.intelliacademy.orizonroute.identity.user.UserID;
 
