@@ -1,11 +1,12 @@
 package com.intellibucket.order.service.domain.shell.handler.query;
 
 import com.intelliacademy.orizonroute.valueobjects.order.OrderNumber;
+import com.intellibucket.order.service.domain.core.exception.OrderDomainException;
 import com.intellibucket.order.service.domain.core.exception.OrderNotFoundException;
 import com.intellibucket.order.service.domain.core.root.OrderRoot;
 import com.intellibucket.order.service.domain.shell.dto.rest.query.OrderTrackingQuery;
 import com.intellibucket.order.service.domain.shell.dto.rest.response.TrackOrderResponse;
-import com.intellibucket.order.service.domain.shell.mapper.OrderShellMapper;
+import com.intellibucket.order.service.domain.shell.mapper.OrderShellDataMapper;
 import com.intellibucket.order.service.domain.shell.port.output.repository.OrderRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -16,8 +17,8 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class OrderTrackQueryHandler {
     private final OrderRepository orderRepository;
-    private final OrderShellMapper orderShellMapper;
-    public TrackOrderResponse handle(OrderTrackingQuery orderTrackingQuery) throws OrderNotFoundException {
+    private final OrderShellDataMapper orderShellDataMapper;
+    public TrackOrderResponse handle(OrderTrackingQuery orderTrackingQuery) throws OrderDomainException {
         OrderNumber orderNumber = OrderNumber.of(orderTrackingQuery.getTrackingId());
         Optional<OrderRoot> orderRootOptional = orderRepository.findByOrderNumber(orderNumber);
         if (orderRootOptional.isEmpty()) {
@@ -25,6 +26,6 @@ public class OrderTrackQueryHandler {
         }
         OrderRoot orderRoot = orderRootOptional.get();
 
-        return orderShellMapper.orderRootToTrackOrderResponse(orderRoot);
+        return orderShellDataMapper.orderRootToTrackOrderResponse(orderRoot);
     }
 }

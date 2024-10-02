@@ -9,9 +9,9 @@ import com.intellibucket.order.service.domain.core.service.OrderDomainService;
 import com.intellibucket.order.service.domain.shell.dto.message.DeliveryResponse;
 import com.intellibucket.order.service.domain.shell.helper.OrderOutboxHelper;
 import com.intellibucket.order.service.domain.shell.helper.OrderRepositoryHelper;
-import com.intellibucket.order.service.domain.shell.mapper.OrderShellMapper;
-import com.intellibucket.order.service.domain.shell.outbox.model.payload.company.OrderCompanyApproveEventPayload;
-import com.intellibucket.order.service.domain.shell.outbox.model.payload.payment.OrderPaymentCancelEventPayload;
+import com.intellibucket.order.service.domain.shell.mapper.OrderShellDataMapper;
+import com.intellibucket.order.service.domain.shell.outbox.model.payload.company.OrderCompletedEventPayload;
+import com.intellibucket.order.service.domain.shell.outbox.model.payload.payment.OrderPaymentRefundEventPayload;
 import com.intellibucket.saga.SagaStep;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -27,7 +27,7 @@ public class OrderDeliveredResponseSagaHandler implements SagaStep<DeliveryRespo
 
     private final OrderDomainService orderDomainService;
     private final OrderRepositoryHelper orderRepositoryHelper;
-    private final OrderShellMapper orderShellMapper;
+    private final OrderShellDataMapper orderShellDataMapper;
     private final OrderOutboxHelper orderOutboxHelper;
 
 
@@ -41,7 +41,7 @@ public class OrderDeliveredResponseSagaHandler implements SagaStep<DeliveryRespo
         OrderCompletedEvent orderCompletedEvent = orderDomainService.orderComplete(orderRoot);
         orderRepositoryHelper.saveOrder(orderCompletedEvent.getOrderRoot());
 
-        OrderCompanyApproveEventPayload orderCompanyEventPayload = orderShellMapper.orderCompletedEventToOrderCompanyApproveEventPayload(orderCompletedEvent);
+        OrderCompletedEventPayload orderCompanyEventPayload = orderShellDataMapper.orderCompletedEventToOrderCompletedEventPayload(orderCompletedEvent);
         orderOutboxHelper.createAndSaveOutboxMessage(orderCompanyEventPayload, orderID, ORDER_COMPLETED_SAGA_NAME);
 
 
@@ -56,7 +56,7 @@ public class OrderDeliveredResponseSagaHandler implements SagaStep<DeliveryRespo
         OrderCancelledEvent orderCancelledEvent = orderDomainService.orderPaymentCancel(orderRoot, data.getFailureMessage());
         orderRepositoryHelper.saveOrder(orderCancelledEvent.getOrderRoot());
 
-        OrderPaymentCancelEventPayload orderPaymentCancelEventPayload = orderShellMapper.orderCancelledEventToOrderPaymentCancelEventPayload(orderCancelledEvent);
-        orderOutboxHelper.createAndSaveOutboxMessage(orderPaymentCancelEventPayload, orderID, ORDER_COMPLETED_SAGA_NAME);
+        OrderPaymentRefundEventPayload orderPaymentRefundEventPayload = orderShellDataMapper.orderCancelledEventToOrderPaymentCancelEventPayload(orderCancelledEvent);
+        orderOutboxHelper.createAndSaveOutboxMessage(orderPaymentRefundEventPayload, orderID, ORDER_COMPLETED_SAGA_NAME);
     }
 }

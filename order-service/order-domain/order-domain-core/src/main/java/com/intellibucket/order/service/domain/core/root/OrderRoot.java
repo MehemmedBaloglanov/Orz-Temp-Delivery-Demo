@@ -13,6 +13,7 @@ import lombok.Getter;
 import lombok.experimental.SuperBuilder;
 import lombok.extern.slf4j.Slf4j;
 
+import java.time.OffsetDateTime;
 import java.util.List;
 
 
@@ -27,6 +28,7 @@ public class OrderRoot extends AggregateRoot<OrderID> {
     private final OrderAddress address;
     private final Money price;
     private final List<OrderItemRoot> items;
+    private final OffsetDateTime createdAt;
 
     private OrderNumber orderNumber;
     private OrderStatus status;

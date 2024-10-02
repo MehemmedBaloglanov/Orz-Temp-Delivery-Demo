@@ -16,7 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.OffsetDateTime;
 import java.util.UUID;
 
-import static com.intellibucket.constants.DomainConstants.ZONE_ID;
+import static com.intellibucket.domain.constants.DomainConstants.ZONE_ID;
 
 @Slf4j
 @Component
@@ -50,7 +50,6 @@ public class OrderOutboxHelper {
     public void createAndSaveOutboxMessage(BaseEventPayload payload, OrderID orderId, String sagaName) throws OrderDomainException {
         OutboxMessage outboxMessage = OutboxMessage.builder()
                 .id(UUID.randomUUID())
-                .sagaId(UUID.randomUUID())
                 .payload(createPayload(payload, orderId))
                 .createdAt(OffsetDateTime.now(ZONE_ID))
                 .sagaName(sagaName)

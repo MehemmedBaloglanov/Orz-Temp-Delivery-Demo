@@ -7,7 +7,9 @@ import lombok.Builder;
 import lombok.Getter;
 
 import java.math.BigDecimal;
+import java.time.OffsetDateTime;
 import java.time.ZonedDateTime;
+import java.util.UUID;
 
 @Getter
 @Builder
@@ -15,14 +17,14 @@ import java.time.ZonedDateTime;
 public class OrderStartDeliveryEventPayload implements BaseEventPayload {
 
     @JsonProperty
-    private String orderId;
+    private UUID orderId;
 
     @JsonProperty
-    private String customerId;
+    private UUID customerId;
 
     @JsonProperty
-    private BigDecimal price;
+    private OffsetDateTime createdAt;
 
     @JsonProperty
-    private ZonedDateTime createdAt;
+    private OrderStartDeliveryEventAddress address;
 }

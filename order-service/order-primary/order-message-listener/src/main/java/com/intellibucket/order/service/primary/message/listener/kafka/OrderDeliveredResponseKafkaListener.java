@@ -1,7 +1,7 @@
 package com.intellibucket.order.service.primary.message.listener.kafka;
 
 import com.intellibucket.kafka.config.consumer.KafkaConsumer;
-import com.intellibucket.kafka.order.avro.model.DeliveryResponseAvroModel;
+import com.intellibucket.kafka.order.avro.model.delivery.DeliveryResponseAvroModel;
 import com.intellibucket.order.service.domain.core.exception.OrderDomainException;
 import com.intellibucket.order.service.domain.core.exception.OrderNotFoundException;
 import com.intellibucket.order.service.domain.core.valueobject.DeliveryStatus;
@@ -27,7 +27,7 @@ public class OrderDeliveredResponseKafkaListener implements KafkaConsumer<Delive
     private final AbstractDeliveryResponseMessageListener deliveryMessageListener;
 
     @Override
-    @KafkaListener(groupId = "${kafka-consumer-config.payment-consumer-group-id}", topics = "${order-service.order-delivered-response-topic-name}")
+    @KafkaListener(groupId = "${kafka-consumer-config.order-service-consumer-group-id}", topics = "${order-service.order-delivered-response-topic-name}")
     public void receive(@Payload List<DeliveryResponseAvroModel> messages,
                         @Header(KafkaHeaders.RECEIVED_KEY) List<String> keys,
                         @Header(KafkaHeaders.RECEIVED_PARTITION) List<Integer> partitions,

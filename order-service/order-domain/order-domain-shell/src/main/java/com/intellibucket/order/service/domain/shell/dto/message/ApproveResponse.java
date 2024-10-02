@@ -6,14 +6,13 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.time.Instant;
+import java.util.UUID;
 
 @Getter
 @Setter
 @Builder
 public class ApproveResponse {
-    private String orderId;
-    private String customerId;
-    private String sagaId;
+    private UUID orderId;
     private ApproveStatus status;
     private String failureMessage;
     private Instant createdAt;

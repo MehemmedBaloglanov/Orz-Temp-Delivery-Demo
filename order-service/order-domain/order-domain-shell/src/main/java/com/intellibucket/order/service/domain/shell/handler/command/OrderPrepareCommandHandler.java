@@ -13,7 +13,7 @@ import com.intellibucket.order.service.domain.shell.dto.rest.command.OrderPrepar
 import com.intellibucket.order.service.domain.shell.helper.OrderOutboxHelper;
 import com.intellibucket.order.service.domain.shell.helper.OrderRepositoryHelper;
 import com.intellibucket.order.service.domain.shell.helper.OrderShellHelper;
-import com.intellibucket.order.service.domain.shell.mapper.OrderShellMapper;
+import com.intellibucket.order.service.domain.shell.mapper.OrderShellDataMapper;
 import com.intellibucket.order.service.domain.shell.outbox.model.payload.delivery.OrderStartDeliveryEventPayload;
 import com.intellibucket.order.service.domain.shell.security.AbstractSecurityContextHolder;
 import lombok.RequiredArgsConstructor;
@@ -31,7 +31,7 @@ public class OrderPrepareCommandHandler {
     private final OrderDomainService orderDomainService;
     private final OrderRepositoryHelper orderRepositoryHelper;
     private final AbstractSecurityContextHolder securityContextHolder;
-    private final OrderShellMapper orderShellMapper;
+    private final OrderShellDataMapper orderShellDataMapper;
     private final OrderOutboxHelper orderOutboxHelper;
     private final OrderShellHelper orderShellHelper;
 
@@ -61,7 +61,7 @@ public class OrderPrepareCommandHandler {
         if (orderRoot.getItems().stream().noneMatch(orderItem -> orderItem.getOrderItemStatus() != OrderItemStatus.CONFIRMED)) {
             log.info("Order with id: {} is all items confirmed", orderId);
             StartDeliveryOrderEvent startDeliveryOrderEvent = orderDomainService.preparedOrder(orderRoot);
-            OrderStartDeliveryEventPayload orderStartDeliveryEventPayload = orderShellMapper.startDeliveryOrderEventToOrderStartDeliveryEventPayload(startDeliveryOrderEvent);
+            OrderStartDeliveryEventPayload orderStartDeliveryEventPayload = orderShellDataMapper.startDeliveryOrderEventToOrderStartDeliveryEventPayload(startDeliveryOrderEvent);
             orderOutboxHelper.createAndSaveOutboxMessage(orderStartDeliveryEventPayload, orderId, ORDER_START_DELIVERY_SAGA_NAME);
         }
         orderRepositoryHelper.saveOrder(orderRoot);

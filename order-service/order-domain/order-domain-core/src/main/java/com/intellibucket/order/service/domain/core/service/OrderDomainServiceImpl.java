@@ -4,13 +4,11 @@ import com.intellibucket.order.service.domain.core.event.*;
 import com.intellibucket.order.service.domain.core.exception.OrderDomainException;
 import com.intellibucket.order.service.domain.core.root.OrderItemRoot;
 import com.intellibucket.order.service.domain.core.root.OrderRoot;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Service;
 
 import java.time.OffsetDateTime;
 
-import static com.intellibucket.constants.DomainConstants.ZONE_ID;
+import static com.intellibucket.domain.constants.DomainConstants.ZONE_ID;
 
 @Slf4j
 public class OrderDomainServiceImpl implements OrderDomainService {

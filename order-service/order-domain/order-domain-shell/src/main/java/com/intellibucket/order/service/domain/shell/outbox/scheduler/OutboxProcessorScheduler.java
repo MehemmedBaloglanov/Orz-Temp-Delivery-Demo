@@ -1,12 +1,9 @@
 package com.intellibucket.order.service.domain.shell.outbox.scheduler;
 
-import com.intellibucket.exception.DomainException;
+import com.intellibucket.domain.exception.DomainException;
 import com.intellibucket.order.service.domain.core.exception.OrderDomainException;
 import com.intellibucket.order.service.domain.shell.outbox.model.OutboxMessage;
-import com.intellibucket.order.service.domain.shell.port.output.publisher.AbstractOrderApproveEventPublisher;
-import com.intellibucket.order.service.domain.shell.port.output.publisher.AbstractOrderCompletedEventPublisher;
-import com.intellibucket.order.service.domain.shell.port.output.publisher.AbstractOrderPaymentCancelEventPublisher;
-import com.intellibucket.order.service.domain.shell.port.output.publisher.AbstractOrderStartDeliveryEventPublisher;
+import com.intellibucket.order.service.domain.shell.port.output.publisher.*;
 import com.intellibucket.order.service.domain.shell.port.output.repository.OutboxRepository;
 import com.intellibucket.outbox.OutboxScheduler;
 import com.intellibucket.outbox.OutboxStatus;
@@ -21,7 +18,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import static com.intellibucket.constants.DomainConstants.ZONE_ID;
+import static com.intellibucket.domain.constants.DomainConstants.ZONE_ID;
 import static com.intellibucket.saga.order.SagaConstants.*;
 
 @Slf4j
@@ -34,7 +31,8 @@ public class OutboxProcessorScheduler implements OutboxScheduler {
     private final AbstractOrderCompletedEventPublisher orderCompletedEventPublisher;
     private final AbstractOrderApproveEventPublisher orderApproveEventPublisher;
     private final AbstractOrderStartDeliveryEventPublisher orderStartDeliveryEventPublisher;
-    private final AbstractOrderPaymentCancelEventPublisher orderPaymentCancelEventPublisher;
+    private final AbstractOrderPaymentRefundEventPublisher abstractOrderPaymentRefundEventPublisher;
+    private final AbstractOrderCompanyRefundEventPublisher abstractOrderCompanyRefundEventPublisher;
 
     @Override
     @Transactional
@@ -57,8 +55,14 @@ public class OutboxProcessorScheduler implements OutboxScheduler {
                             orderCompletedEventPublisher.publish(outboxMessage, this::updateOutboxStatus);
                     case ORDER_APPROVE_SAGA_NAME ->
                             orderApproveEventPublisher.publish(outboxMessage, this::updateOutboxStatus);
-                    case ORDER_PAYMENT_CANCEL_SAGA_NAME ->
-                            orderPaymentCancelEventPublisher.publish(outboxMessage, this::updateOutboxStatus);
+                    case ORDER_PAYMENT_REFUND_SAGA_NAME ->
+                            abstractOrderPaymentRefundEventPublisher.publish(outboxMessage, this::updateOutboxStatus);
+                    case ORDER_COMPANY_REFUND_SAGA_NAME ->
+                            abstractOrderCompanyRefundEventPublisher.publish(outboxMessage, this::updateOutboxStatus);
+                    default -> {
+                        log.error("Unknown saga name: {}", outboxMessage.getSagaName());
+                        throw new OrderDomainException("Unknown saga name: " + outboxMessage.getSagaName());
+                    }
                 }
 
             }

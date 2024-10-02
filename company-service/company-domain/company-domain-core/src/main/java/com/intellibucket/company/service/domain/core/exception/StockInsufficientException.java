@@ -1,6 +1,6 @@
 package com.intellibucket.company.service.domain.core.exception;
 
-import com.intellibucket.exception.DomainException;
+import com.intellibucket.domain.exception.DomainException;
 
 public class StockInsufficientException extends DomainException {
 

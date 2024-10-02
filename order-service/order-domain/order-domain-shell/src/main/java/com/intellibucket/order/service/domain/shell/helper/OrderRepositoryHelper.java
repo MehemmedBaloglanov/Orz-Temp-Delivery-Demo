@@ -28,7 +28,7 @@ public class OrderRepositoryHelper {
         return orderRootResult;
     }
 
-    public OrderRoot findOrderById(OrderID orderId) throws OrderNotFoundException {
+    public OrderRoot findOrderById(OrderID orderId) throws OrderDomainException {
         Optional<OrderRoot> orderRootOptional = orderRepository.findById(orderId);
 
         if (orderRootOptional.isEmpty()) {

@@ -1,0 +1,17 @@
+package com.intellibucket.cart.service.connector.service;
+
+import com.intelliacademy.orizonroute.identity.user.UserID;
+import com.intellibucket.order.service.domain.shell.dto.connectors.cart.CartResponse;
+
+import com.intellibucket.order.service.domain.shell.port.output.connector.AbstractCartServiceConnector;
+import org.springframework.stereotype.Component;
+
+import java.util.List;
+
+@Component
+public class CartServiceConnector implements AbstractCartServiceConnector {
+    @Override
+    public List<CartResponse> findUserCartItems(UserID userID) {
+        return List.of();
+    }
+}

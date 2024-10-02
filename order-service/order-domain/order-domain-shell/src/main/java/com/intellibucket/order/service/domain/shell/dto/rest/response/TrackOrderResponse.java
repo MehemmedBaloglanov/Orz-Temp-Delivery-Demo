@@ -13,8 +13,8 @@ import java.util.UUID;
 @AllArgsConstructor
 public class TrackOrderResponse {
 
-    @JsonProperty("tracking_id")
-    private final UUID trackingId;
+    @JsonProperty("order_id")
+    private final UUID orderId;
 
     private final OrderStatus status;
 }

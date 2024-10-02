@@ -43,6 +43,7 @@
         <module name="cart-domain-shell" />
         <module name="kafka-avro" />
         <module name="cart-service-connector" />
+        <module name="user-service-connector" />
         <module name="user-domain-core" />
         <module name="user-repository" />
       </profile>

@@ -18,7 +18,7 @@ import com.intellibucket.order.service.domain.shell.dto.connectors.company.Produ
 import com.intellibucket.order.service.domain.shell.dto.connectors.user.UserAddress;
 import com.intellibucket.order.service.domain.shell.dto.rest.response.OrderResponse;
 import com.intellibucket.order.service.domain.shell.helper.OrderRepositoryHelper;
-import com.intellibucket.order.service.domain.shell.mapper.OrderShellMapper;
+import com.intellibucket.order.service.domain.shell.mapper.OrderShellDataMapper;
 import com.intellibucket.order.service.domain.shell.port.output.connector.AbstractCartServiceConnector;
 import com.intellibucket.order.service.domain.shell.port.output.connector.AbstractCompanyServiceConnector;
 import com.intellibucket.order.service.domain.shell.port.output.connector.AbstractUserServiceConnector;
@@ -29,11 +29,14 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
+import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
+
+import static com.intellibucket.domain.constants.DomainConstants.ZONE_ID;
 
 @Slf4j
 @Component
@@ -42,7 +45,7 @@ public class OrderCreateCommandHandler {
 
     private final AbstractSecurityContextHolder securityContextHolder;
     private final OrderDomainService orderDomainService;
-    private final OrderShellMapper orderShellMapper;
+    private final OrderShellDataMapper orderShellDataMapper;
     private final OrderRepositoryHelper orderRepositoryHelper;
 
     private final AbstractCartServiceConnector cartServiceConnector;
@@ -75,17 +78,18 @@ public class OrderCreateCommandHandler {
                 .price(orderItemRootList.stream()
                         .map(OrderItemRoot::getSubTotal)
                         .reduce(Money.ZERO, Money::add))
+                .createdAt(OffsetDateTime.now(ZONE_ID))
                 .build();
 
         orderDomainService.validateAndInitiateOrder(orderRoot);
         orderRepositoryHelper.saveOrder(orderRoot);
-        return orderShellMapper.orderRootToOrderResponse(orderRoot);
+        return orderShellDataMapper.orderRootToOrderResponse(orderRoot);
     }
 
 
     private OrderAddress fetchUserPrimaryAddress(UserID userID) {
         UserAddress userPrimaryAddress = userServiceConnector.getUserPrimaryAddress(userID);
-        return orderShellMapper.userAddressToOrderAddress(userPrimaryAddress);
+        return orderShellDataMapper.userAddressToOrderAddress(userPrimaryAddress);
     }
 
     private Map<ProductID, ProductResponse> fetchProducts(List<CartResponse> cartItems) {

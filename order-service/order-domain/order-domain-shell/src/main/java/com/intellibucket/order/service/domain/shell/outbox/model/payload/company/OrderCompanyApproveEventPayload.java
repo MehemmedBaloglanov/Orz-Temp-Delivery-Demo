@@ -9,6 +9,7 @@ import lombok.Getter;
 import java.math.BigDecimal;
 import java.time.OffsetDateTime;
 import java.util.List;
+import java.util.UUID;
 
 @Getter
 @Builder
@@ -16,13 +17,10 @@ import java.util.List;
 public class OrderCompanyApproveEventPayload implements BaseEventPayload {
 
     @JsonProperty
-    private String orderId;
+    private UUID orderId;
 
     @JsonProperty
-    private List<OrderCompanyEventProduct> products;
-
-    @JsonProperty
-    private BigDecimal price;
+    private List<OrderCompanyApproveEventProduct> products;
 
     @JsonProperty
     private OffsetDateTime createdAt;

@@ -1,0 +1,38 @@
+{
+  "namespace": "com.intellibucket.kafka.order.avro.model.company",
+  "type": "record",
+  "name": "CompanyOrderApproveResponseAvroModel",
+  "fields": [
+    {
+      "name": "orderId",
+      "type": {
+        "type": "string",
+        "logicalType": "uuid"
+      }
+    },
+    {
+      "name": "status",
+      "type": {
+        "type": "enum",
+        "name": "ApproveAvroStatus",
+        "symbols": [
+          "APPROVED",
+          "REJECTED"
+        ]
+      }
+    },
+    {
+      "name": "failureMessage",
+      "type": {
+        "type": "string"
+      }
+    },
+    {
+      "name": "createdAt",
+      "type": {
+        "type": "long",
+        "logicalType": "timestamp-millis"
+      }
+    }
+  ]
+}

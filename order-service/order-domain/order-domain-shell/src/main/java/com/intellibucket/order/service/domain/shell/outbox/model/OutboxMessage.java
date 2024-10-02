@@ -1,6 +1,6 @@
 package com.intellibucket.order.service.domain.shell.outbox.model;
 
-import com.intellibucket.message.model.BaseMessageModel;
+import com.intellibucket.domain.message.model.BaseMessageModel;
 import com.intellibucket.outbox.OutboxStatus;
 import com.intellibucket.saga.SagaStatus;
 import lombok.Builder;
@@ -14,7 +14,6 @@ import java.util.UUID;
 @Builder
 public class OutboxMessage implements BaseMessageModel {
     private UUID id;
-    private UUID sagaId;
     private String sagaName;
 
     private String payload;
@@ -23,9 +22,6 @@ public class OutboxMessage implements BaseMessageModel {
     private OutboxStatus outboxStatus;
 
     private OffsetDateTime createdAt;
-
-    @Setter
-    private SagaStatus sagaStatus;
 
     @Setter
     private OffsetDateTime processedAt;

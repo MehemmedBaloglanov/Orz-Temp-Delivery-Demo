@@ -8,7 +8,7 @@ import com.intellibucket.order.service.domain.core.service.OrderDomainService;
 import com.intellibucket.order.service.domain.shell.dto.message.PaymentResponse;
 import com.intellibucket.order.service.domain.shell.helper.OrderOutboxHelper;
 import com.intellibucket.order.service.domain.shell.helper.OrderRepositoryHelper;
-import com.intellibucket.order.service.domain.shell.mapper.OrderShellMapper;
+import com.intellibucket.order.service.domain.shell.mapper.OrderShellDataMapper;
 import com.intellibucket.order.service.domain.shell.outbox.model.payload.company.OrderCompanyApproveEventPayload;
 import com.intellibucket.saga.SagaStep;
 import lombok.RequiredArgsConstructor;
@@ -26,7 +26,7 @@ public class OrderPaymentResponseSagaHandler implements SagaStep<PaymentResponse
 
     private final OrderRepositoryHelper orderRepositoryHelper;
     private final OrderDomainService orderDomainService;
-    private final OrderShellMapper orderShellMapper;
+    private final OrderShellDataMapper orderShellDataMapper;
     private final OrderOutboxHelper orderOutboxHelper;
 
     @Override
@@ -41,7 +41,7 @@ public class OrderPaymentResponseSagaHandler implements SagaStep<PaymentResponse
         orderRepositoryHelper.saveOrder(orderRoot);
 
         log.info("Saving OrderApproveEventOutboxMessage for order with id: {}", data.getOrderId());
-        OrderCompanyApproveEventPayload payload = orderShellMapper.orderPaidEventToOrderCompanyApproveEventPayload(orderPaidEvent);
+        OrderCompanyApproveEventPayload payload = orderShellDataMapper.orderPaidEventToOrderCompanyApproveEventPayload(orderPaidEvent);
         orderOutboxHelper.createAndSaveOutboxMessage(payload, orderId, ORDER_APPROVE_SAGA_NAME);
         log.info("Completing payment for order with id: {}", data.getOrderId());
 

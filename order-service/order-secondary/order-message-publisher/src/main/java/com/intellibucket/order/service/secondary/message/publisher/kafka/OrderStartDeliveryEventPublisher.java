@@ -2,7 +2,7 @@ package com.intellibucket.order.service.secondary.message.publisher.kafka;
 
 import com.intellibucket.kafka.config.producer.KafkaMessageHelper;
 import com.intellibucket.kafka.config.producer.KafkaProducer;
-import com.intellibucket.kafka.order.avro.model.OrderStartDeliveryRequestAvroModel;
+import com.intellibucket.kafka.order.avro.model.delivery.OrderStartDeliveryRequestAvroModel;
 import com.intellibucket.order.service.domain.core.exception.OrderDomainException;
 import com.intellibucket.order.service.domain.shell.config.OrderServiceConfigData;
 import com.intellibucket.order.service.domain.shell.outbox.model.OutboxMessage;
@@ -15,6 +15,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
+import java.util.UUID;
 import java.util.function.BiConsumer;
 
 @Slf4j
@@ -33,21 +34,20 @@ public class OrderStartDeliveryEventPublisher implements AbstractOrderStartDeliv
     public void publish(OutboxMessage message, BiConsumer<OutboxMessage, OutboxStatus> outboxCallback) throws OrderDomainException {
         OrderStartDeliveryEventPayload payload = kafkaMessageHelper.getOrderEventPayload(message.getPayload(), OrderStartDeliveryEventPayload.class);
 
-        String sagaId = message.getSagaId().toString();
-        log.info("Received OrderStartDeliveryEventOutboxMessage for order id: {} and saga id: {}", payload.getOrderId(), sagaId);
+        log.info("Received OrderStartDeliveryEventOutboxMessage for order id: {}", payload.getOrderId());
 
         try {
-            OrderStartDeliveryRequestAvroModel avroModel = orderMessagePublisherDataMapper.orderPaymentEventToOrderStartDeliveryRequestAvroModel(sagaId, payload);
+            OrderStartDeliveryRequestAvroModel avroModel = orderMessagePublisherDataMapper.orderPaymentEventToOrderStartDeliveryRequestAvroModel(payload);
 
             kafkaProducer.send(
                     orderServiceConfigData.getStartDeliveryRequestTopicName(),
-                    sagaId,
+                    UUID.randomUUID().toString(),
                     avroModel,
                     orderKafkaPublisherHelper.getCallback(avroModel, message, payload.getOrderId(), outboxCallback));
-            log.info("OrderStartDeliveryEventOutboxMessage sent to Kafka for order id: {} and saga id: {}", payload.getOrderId(), sagaId);
+            log.info("OrderStartDeliveryEventOutboxMessage sent to Kafka for order id: {}", payload.getOrderId());
 
         } catch (Exception e) {
-            log.error("Error while sending OrderStartDeliveryEventOutboxMessage to kafka with order id: {} and saga id: {}, error: {}", payload.getOrderId(), sagaId, e.getMessage());
+            log.error("Error while sending OrderStartDeliveryEventOutboxMessage to kafka with order id: {}, error: {}", payload.getOrderId(), e.getMessage());
         }
 
 

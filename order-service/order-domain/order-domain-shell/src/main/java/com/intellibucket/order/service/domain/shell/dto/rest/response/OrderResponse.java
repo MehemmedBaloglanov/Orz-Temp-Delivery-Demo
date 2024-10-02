@@ -20,14 +20,14 @@ public class OrderResponse {
     private final String id;
 
     @JsonProperty("tracking_id")
-    private final UUID trackingId;
+    private final String trackingId;
 
     private final OrderStatus status;
 
-    private final List<OrderItemRoot> items;
+    private final List<OrderItemResponse> items;
 
     @JsonProperty("shipping_address")
-    private final OrderAddress shippingAddress;
+    private final OrderAddressResponse shippingAddress;
 
     private final OffsetDateTime createdAt;
 

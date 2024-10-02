@@ -1,6 +1,6 @@
 package com.intellibucket.saga;
 
-import com.intellibucket.exception.DomainException;
+import com.intellibucket.domain.exception.DomainException;
 
 public interface SagaStep<T> {
     void process(T data) throws DomainException;

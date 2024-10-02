@@ -12,9 +12,9 @@ import com.intellibucket.order.service.domain.shell.dto.rest.command.OrderReject
 import com.intellibucket.order.service.domain.shell.helper.OrderOutboxHelper;
 import com.intellibucket.order.service.domain.shell.helper.OrderRepositoryHelper;
 import com.intellibucket.order.service.domain.shell.helper.OrderShellHelper;
-import com.intellibucket.order.service.domain.shell.mapper.OrderShellMapper;
-import com.intellibucket.order.service.domain.shell.outbox.model.payload.company.OrderCompanyCancelEventPayload;
-import com.intellibucket.order.service.domain.shell.outbox.model.payload.payment.OrderPaymentCancelEventPayload;
+import com.intellibucket.order.service.domain.shell.mapper.OrderShellDataMapper;
+import com.intellibucket.order.service.domain.shell.outbox.model.payload.company.OrderCompanyRefundEventPayload;
+import com.intellibucket.order.service.domain.shell.outbox.model.payload.payment.OrderPaymentRefundEventPayload;
 import com.intellibucket.order.service.domain.shell.port.output.repository.OrderRepository;
 import com.intellibucket.order.service.domain.shell.security.AbstractSecurityContextHolder;
 import lombok.RequiredArgsConstructor;
@@ -22,8 +22,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import static com.intellibucket.saga.order.SagaConstants.ORDER_COMPANY_CANCEL_SAGA_NAME;
-import static com.intellibucket.saga.order.SagaConstants.ORDER_PAYMENT_CANCEL_SAGA_NAME;
+import static com.intellibucket.saga.order.SagaConstants.ORDER_COMPANY_REFUND_SAGA_NAME;
+import static com.intellibucket.saga.order.SagaConstants.ORDER_PAYMENT_REFUND_SAGA_NAME;
 
 @Slf4j
 @Component
@@ -34,7 +34,7 @@ public class OrderRejectCommandHandler {
     private final OrderDomainService orderDomainService;
     private final OrderRepositoryHelper orderRepositoryHelper;
     private final AbstractSecurityContextHolder securityContextHolder;
-    private final OrderShellMapper orderShellMapper;
+    private final OrderShellDataMapper orderShellDataMapper;
     private final OrderOutboxHelper orderOutboxHelper;
     private final OrderShellHelper orderShellHelper;
 
@@ -65,11 +65,11 @@ public class OrderRejectCommandHandler {
         OrderCancelledEvent orderCancelledEvent = orderDomainService.orderCompanyCancel(orderRoot, orderItemRoot, command.getRejectMessage());
         orderRepositoryHelper.saveOrder(orderCancelledEvent.getOrderRoot());
 
-        OrderPaymentCancelEventPayload orderCancelEventPayload = orderShellMapper.orderCancelledEventToOrderPaymentCancelEventPayload(orderCancelledEvent);
-        orderOutboxHelper.createAndSaveOutboxMessage(orderCancelEventPayload, orderId, ORDER_PAYMENT_CANCEL_SAGA_NAME);
+        OrderPaymentRefundEventPayload orderCancelEventPayload = orderShellDataMapper.orderCancelledEventToOrderPaymentCancelEventPayload(orderCancelledEvent);
+        orderOutboxHelper.createAndSaveOutboxMessage(orderCancelEventPayload, orderId, ORDER_PAYMENT_REFUND_SAGA_NAME);
 
-        OrderCompanyCancelEventPayload orderCompanyEventPayload = orderShellMapper.orderCancelledEventToOrderCompanyCancelEventPayload(orderCancelledEvent);
-        orderOutboxHelper.createAndSaveOutboxMessage(orderCompanyEventPayload, orderId, ORDER_COMPANY_CANCEL_SAGA_NAME);
+        OrderCompanyRefundEventPayload orderCompanyEventPayload = orderShellDataMapper.orderCancelledEventToOrderCompanyCancelEventPayload(orderCancelledEvent);
+        orderOutboxHelper.createAndSaveOutboxMessage(orderCompanyEventPayload, orderId, ORDER_COMPANY_REFUND_SAGA_NAME);
 
 
     }
