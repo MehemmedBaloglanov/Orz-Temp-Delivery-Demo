@@ -1,0 +1,22 @@
+OrderPaymentResponseEventListener -> payment servisden gelecek mesaj odenis ugursuz olarsa geri al eger ugurlu olarsa sifris statusunu paid olaraq deyis
+
+
+OrderApproveRequestEventPublisher -> Stock yenlienmesi ucun company servise gonder ve cavabi gozle
+OrderApproveResponseEventListener -> Stock yenilenmesi mesaj cavabi eger xeta varsa order statusu cancel et yoxdursa order statusu deyis approved et
+
+
+OrderDeliveryRequestPublisher -> sifaris catdirilmasini baslatmaq ucun delivery servise gonder ve order statusunu derivering olaraq deyis
+OrderDeliveryResponseListener -> sifaris catdirildiqdan sonra bu mesaj gelecek ve order status complated olaraq deyisdirilecek note: delivery status elave edib eger catdirilma sirasinda bir xeta bas veribse saga ile odenisi geri qaytarib buna uygun emeliyyat aparmaq olar
+
+
+OrderPaymentResponseEventListener ->
+OrderApproveResponseEventListener ->
+OrderDeliveryResponseListener ->
+
+
+
+OrderPaymentApprovedEventPublisher ->
+OrderApproveRequestEventPublisher ->
+
+OrderCompletedEventPublisher ->
+OrderPaymentCancelEventPublisher ->

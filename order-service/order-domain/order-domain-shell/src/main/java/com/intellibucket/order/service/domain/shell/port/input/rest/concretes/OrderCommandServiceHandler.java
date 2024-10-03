@@ -11,7 +11,6 @@ import com.intellibucket.order.service.domain.shell.handler.command.OrderCreateC
 import com.intellibucket.order.service.domain.shell.handler.command.OrderRejectCommandHandler;
 import com.intellibucket.order.service.domain.shell.port.input.rest.abstracts.command.OrderCommandServiceAdapter;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 @Service

@@ -1,0 +1,55 @@
+{
+  "namespace": "com.intellibucket.kafka.order.avro.model.delivery",
+  "type": "record",
+  "name": "OrderStartDeliveryRequestAvroModel",
+  "fields": [
+    {
+      "name": "customerId",
+      "type": {
+        "type": "string",
+        "logicalType": "uuid"
+      }
+    },
+    {
+      "name": "orderId",
+      "type": {
+        "type": "string",
+        "logicalType": "uuid"
+      }
+    },
+    {
+      "name": "createdAt",
+      "type": {
+        "type": "long",
+        "logicalType": "timestamp-millis"
+      }
+    },
+    {
+      "name": "deliveryAddress",
+      "type": {
+        "type": "record",
+        "name": "DeliveryAvroAddress",
+        "fields": [
+          {
+            "name": "street",
+            "type": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "city",
+            "type": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "state",
+            "type": {
+              "type": "string"
+            }
+          }
+        ]
+      }
+    }
+  ]
+}
