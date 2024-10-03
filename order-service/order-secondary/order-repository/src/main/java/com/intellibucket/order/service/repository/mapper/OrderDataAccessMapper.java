@@ -62,6 +62,7 @@ public class OrderDataAccessMapper {
                 .price(Money.of(orderEntity.getPrice()))
                 .orderNumber(OrderNumber.of(orderEntity.getOrderNumber()))
                 .status(orderRepositoryDataHelper.orderJpaStatusToOrderStatus(orderEntity.getOrderStatus()))
+                .createdAt(orderEntity.getCreatedAt())
                 .cancelType(orderEntity.getCancellationType() == null ? null : orderRepositoryDataHelper.orderCancellationJpaTypeToOrderCancelType(orderEntity.getCancellationType()))
                 .build();
     }
