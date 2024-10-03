@@ -5,6 +5,7 @@ import com.intelliacademy.orizonroute.identity.user.PhoneNumberID;
 import com.intelliacademy.orizonroute.identity.user.UserID;
 import com.intelliacademy.orizonroute.valueobjects.common.Email;
 import com.intelliacademy.orizonroute.valueobjects.common.PhoneNumber;
+import com.intelliacademy.orizonroute.valueobjects.common.Username;
 import com.intellibucket.user.service.domain.core.root.UserRoot;
 import com.intellibucket.user.service.domain.core.valueObject.Address;
 import com.intellibucket.user.service.domain.core.valueObject.Password;
@@ -26,7 +27,7 @@ public class UserDataAccessMapper {
                 .status(userRoot.getStatus())
                 .roleAuthority(userRoot.getRoleAuthorithy())
                 .address(addressToUserJpaAddress(userRoot.getAddress()))
-                .phoneNumberEntity(phoneNumberToPhoneNumberEntity(userRoot.getPhoneNumber()))
+                .phoneNumberEntity(phoneNumberToPhoneNumberEntity(userRoot.getPhoneNumber().validate()))
                 .build();
     }
 
@@ -40,33 +41,35 @@ public class UserDataAccessMapper {
                 .status(userRoot.getStatus())
                 .roleAuthority(userRoot.getRoleAuthorithy())
                 .address(addressToUserJpaAddress(userRoot.getAddress()))
-                .phoneNumberEntity(phoneNumberToPhoneNumberEntity(userRoot.getPhoneNumber()))
+                .phoneNumberEntity(phoneNumberToPhoneNumberEntity(userRoot.getPhoneNumber().validate()))
                 .build();
     }
 
-public UserRoot customerEntityToUserRoot(CustomerRegistrationEntity userEntity) {
+    public UserRoot customerEntityToUserRoot(CustomerRegistrationEntity userEntity) {
         return UserRoot.builder()
+                .username(Username.generate(userEntity.getUsername()))
                 .userID(UserID.of(userEntity.getUserEntityId()))
                 .address(userJpaAdresstoAddress(userEntity.getAddress()))
                 .status(userEntity.getStatus())
                 .roleAuthorithy(userEntity.getRoleAuthority())
                 .password(Password.of(userEntity.getPassword()))
-                .email(Email.of(userEntity.getEmailType(),userEntity.getEmail()))
+                .email(Email.of(userEntity.getEmailType(), userEntity.getEmail()))
                 .phoneNumber(phoneNumberEntityToPhoneNumber(userEntity.getPhoneNumberEntity()))
                 .build();
     }
 
-public UserRoot companyEntityToUserRoot(CompanyRegistrationEntity userEntity) {
-    return UserRoot.builder()
-            .userID(UserID.of(userEntity.getUserEntityId()))
-            .address(userJpaAdresstoAddress(userEntity.getAddress()))
-            .status(userEntity.getStatus())
-            .roleAuthorithy(userEntity.getRoleAuthority())
-            .password(Password.of(userEntity.getPassword()))
-            .email(Email.of(userEntity.getEmailType(),userEntity.getEmail()))
-            .phoneNumber(phoneNumberEntityToPhoneNumber(userEntity.getPhoneNumberEntity()))
-            .build();
-}
+    public UserRoot companyEntityToUserRoot(CompanyRegistrationEntity userEntity) {
+        return UserRoot.builder()
+                .username(Username.generate(userEntity.getCompanyName()))
+                .userID(UserID.of(userEntity.getUserEntityId()))
+                .address(userJpaAdresstoAddress(userEntity.getAddress()))
+                .status(userEntity.getStatus())
+                .roleAuthorithy(userEntity.getRoleAuthority())
+                .password(Password.of(userEntity.getPassword()))
+                .email(Email.of(userEntity.getEmailType(), userEntity.getEmail()))
+                .phoneNumber(phoneNumberEntityToPhoneNumber(userEntity.getPhoneNumberEntity()))
+                .build();
+    }
 
     public Address userJpaAdresstoAddress(UserAddressEntity address) {
         return Address.builder()
@@ -90,11 +93,11 @@ public UserRoot companyEntityToUserRoot(CompanyRegistrationEntity userEntity) {
     }
 
     public PhoneNumber phoneNumberEntityToPhoneNumber(PhoneNumberEntity phoneNumber) {
-    return PhoneNumber.builder()
-            .number(phoneNumber.getNumber())
-            .countryCode(phoneNumber.getCountryCode())
-            .type(phoneNumber.getType())
-            .build();
+        return PhoneNumber.builder()
+                .number(phoneNumber.getNumber())
+                .countryCode(phoneNumber.getCountryCode())
+                .type(phoneNumber.getType())
+                .build();
     }
 
     public PhoneNumberEntity phoneNumberToPhoneNumberEntity(PhoneNumber phoneNumber) {
@@ -103,6 +106,34 @@ public UserRoot companyEntityToUserRoot(CompanyRegistrationEntity userEntity) {
                 .number(phoneNumber.getNumber())
                 .countryCode(phoneNumber.getCountryCode())
                 .type(phoneNumber.getType())
+                .build();
+    }
+
+    public CompanyRegistrationEntity loginToCompanyEntity(UserRoot userRoot) {
+        return CompanyRegistrationEntity.builder()
+                .email(userRoot.getEmail().getValue())
+                .emailType(userRoot.getEmail().getType())
+                .password(userRoot.getPassword().getValue())
+                .build();
+    }
+
+    public CustomerRegistrationEntity loginToCustomerEntity(UserRoot userRoot) {
+        return CustomerRegistrationEntity.builder()
+                .email(userRoot.getEmail().getValue())
+                .emailType(userRoot.getEmail().getType())
+                .password(userRoot.getPassword().getValue())
+                .build();
+    }
+    public UserRoot loginCustomerToUserRoot(CustomerRegistrationEntity userEntity) {
+        return UserRoot.builder()
+                .password(Password.of(userEntity.getPassword()))
+                .email(Email.of(userEntity.getEmailType(), userEntity.getEmail()))
+                .build();
+    }
+    public UserRoot loginCompanyToUserRoot(CompanyRegistrationEntity userEntity) {
+        return UserRoot.builder()
+                .password(Password.of(userEntity.getPassword()))
+                .email(Email.of(userEntity.getEmailType(), userEntity.getEmail()))
                 .build();
     }
 }

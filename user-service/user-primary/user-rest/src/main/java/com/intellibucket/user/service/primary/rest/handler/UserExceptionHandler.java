@@ -30,7 +30,7 @@ public class UserExceptionHandler {
 
     @ExceptionHandler(PasswordValidationException.class)
     public ResponseEntity<String> handlePasswordValidationException(PasswordValidationException ex, WebRequest request) {
-        return new ResponseEntity<>("Old password is invalid!: " + ex.getMessage(), HttpStatus.BAD_REQUEST); // 400
+        return new ResponseEntity<>("Invalid credentials!: " + ex.getMessage(), HttpStatus.BAD_REQUEST); // 400
     }
 
     @ExceptionHandler(IllegalArgumentException.class)

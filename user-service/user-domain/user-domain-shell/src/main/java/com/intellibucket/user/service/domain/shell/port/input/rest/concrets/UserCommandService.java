@@ -3,10 +3,7 @@ package com.intellibucket.user.service.domain.shell.port.input.rest.concrets;
 import com.intellibucket.user.service.domain.core.exception.UserDomainException;
 import com.intellibucket.user.service.domain.core.exception.user.UserNotFoundException;
 import com.intellibucket.user.service.domain.core.exception.user.UserSavedException;
-import com.intellibucket.user.service.domain.shell.dto.request.CompanyCreateCommand;
-import com.intellibucket.user.service.domain.shell.dto.request.CompanyUpdateCommand;
-import com.intellibucket.user.service.domain.shell.dto.request.CustomerCreateCommand;
-import com.intellibucket.user.service.domain.shell.dto.request.CustomerUpdateCommand;
+import com.intellibucket.user.service.domain.shell.dto.request.*;
 import com.intellibucket.user.service.domain.shell.handler.command.*;
 import com.intellibucket.user.service.domain.shell.port.input.rest.abstracts.command.UserCommandServicePort;
 import lombok.RequiredArgsConstructor;
@@ -43,6 +40,17 @@ public class UserCommandService implements UserCommandServicePort {
     public void updateCompany(CompanyUpdateCommand command) throws UserNotFoundException, UserSavedException {
         companyUpdateCommandHandler.handle(command);
     }
+
+    @Override
+    public void changePassword(UserChangePasswordCommand command) throws UserDomainException {
+        userChangePasswordCommandHandler.handle(command);
+    }
+
+    @Override
+    public void userLoggedIn(UserLoginCommand command) throws UserDomainException {
+        System.out.println("UserCommandService --> userLoggedIn method: 2");
+        userLoginCommandHandler.handle(command);
+    }
 }
 //
 //    @Override
@@ -50,13 +58,5 @@ public class UserCommandService implements UserCommandServicePort {
 //        userDeleteCommandHandler.handle(command);
 //    }
 //
-//    @Override
-//    public void userLoggedIn(UserLoginCommand command) throws UserDomainException {
-//        userLoginCommandHandler.handle(command);
-//    }
+
 //
-//    @Override
-//    public void changePassword(UserChangePasswordCommand command) throws UserDomainException {
-//        userChangePasswordCommandHandler.handle(command);
-//
-//    }

@@ -18,7 +18,7 @@ public class UserCommandMapper {
                 .email(Email.of(command.getEmailType(), command.getEmail()))
                 .password(Password.of(command.getPassword()))
                 .roleAuthorithy(RoleAuthorithy.COMPANY)
-                .phoneNumber(PhoneNumber.of(command.getPhoneNumberType(), command.getCountryCode(), command.getPhoneNumber()))
+                .phoneNumber(PhoneNumber.of(command.getPhoneNumberType(), command.getCountryCode(), command.getPhoneNumber()).validate())
                 .address(Address.of(command.getState(), command.getCountry(), command.getCity(), command.getStreet(), command.getPostalCode()))
                 .status(Status.ACTIVE)
                 .build();
@@ -59,6 +59,12 @@ public class UserCommandMapper {
                 .email(Email.of(command.getEmailType(), command.getEmail()))
                 .phoneNumber(PhoneNumber.of(command.getPhoneNumberType(), command.getCountryCode(), command.getPhoneNumber()))
                 .address(Address.of(command.getState(), command.getCountry(), command.getCity(), command.getStreet(), command.getPostalCode()))
+                .build();
+    }
+
+    public static UserRoot userChangePasswordCommandToUserRoot(UserChangePasswordCommand command) {
+        return UserRoot.builder()
+                .password(Password.of(command.getNewPassword()))
                 .build();
     }
 }

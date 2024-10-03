@@ -78,7 +78,7 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
-    public UserRoot delete(UserRoot userRoot) throws UserNotFoundException {
+    public void delete(UserRoot userRoot) throws UserNotFoundException {
         if (RoleAuthorithy.CUSTOMER.isRoleCustomer()) {
             Optional<CustomerRegistrationEntity> user = customerJpaRepository.findById(userRoot.getUserID().value());
 
@@ -87,7 +87,7 @@ public class UserRepositoryImpl implements UserRepository {
             } else {
                 CustomerRegistrationEntity userEntity = user.get();
                 customerJpaRepository.delete(userEntity);
-                return userDataAccessMapper.customerEntityToUserRoot(userEntity);
+                userDataAccessMapper.customerEntityToUserRoot(userEntity);
             }
         } else {
             Optional<CompanyRegistrationEntity> user = companyJpaRepository.findById(userRoot.getUserID().value());
@@ -96,7 +96,7 @@ public class UserRepositoryImpl implements UserRepository {
             } else {
                 CompanyRegistrationEntity userEntity = user.get();
                 companyJpaRepository.delete(userEntity);
-                return userDataAccessMapper.companyEntityToUserRoot(userEntity);
+                userDataAccessMapper.companyEntityToUserRoot(userEntity);
             }
         }
     }
@@ -116,9 +116,21 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
+    public void loginUser(UserRoot userRoot) {
+        if (userRoot.getRoleAuthorithy().isRoleCustomer()) {
+            CustomerRegistrationEntity userEntity = userDataAccessMapper.loginToCustomerEntity(userRoot);
+            CustomerRegistrationEntity savedUserEntity = customerJpaRepository.save(userEntity);
+            userDataAccessMapper.customerEntityToUserRoot(savedUserEntity);
+        } else if (userRoot.getRoleAuthorithy().isRoleCompany()) {
+            CompanyRegistrationEntity userEntity = userDataAccessMapper.loginToCompanyEntity(userRoot);
+            CompanyRegistrationEntity savedUserEntity = companyJpaRepository.save(userEntity);
+            userDataAccessMapper.companyEntityToUserRoot(savedUserEntity);
+        }
+    }
+
+    @Override
     public Optional<UserRoot> findByEmail(Email email, UserRoot userRoot) throws UserNotFoundException {
         if (userRoot.getRoleAuthorithy().isRoleCustomer()) {
-            System.out.println("inside findByEmail and check if-else!");
             Optional<CustomerRegistrationEntity> userEntityOptional = customerJpaRepository.findByEmail(email.getValue());
             if (userEntityOptional.isEmpty()) {
                 return Optional.empty();
@@ -139,6 +151,21 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
+    public Optional<UserRoot> findByEmailForLogin(Email email) {
+        Optional<CustomerRegistrationEntity> customerOptional = customerJpaRepository.findByEmail(email.getValue());
+        System.out.println("Customer: " + customerOptional.isPresent());
+        if (customerOptional.isPresent()) {
+            return Optional.of(userDataAccessMapper.customerEntityToUserRoot(customerOptional.get()));
+        }
+        Optional<CompanyRegistrationEntity> companyOptional = companyJpaRepository.findByEmail(email.getValue());
+        if (companyOptional.isPresent()) {
+            System.out.println("Company: " + true);
+            return Optional.of(userDataAccessMapper.companyEntityToUserRoot(companyOptional.get()));
+        }
+        return Optional.empty();
+    }
+
+    @Override
     public List<RoleAuthorithy> findByAuthority(String name) {
         return List.of();
     }
@@ -146,5 +173,10 @@ public class UserRepositoryImpl implements UserRepository {
     @Override
     public List<Status> findByStatusAndRoleAuthority(Status status, RoleAuthorithy role) {
         return List.of();
+    }
+
+    @Override
+    public Optional<UserRoot> findByUsername(Email email) {
+        return Optional.empty();
     }
 }

@@ -12,11 +12,13 @@ import com.intellibucket.user.service.domain.core.valueObject.RoleAuthorithy;
 import com.intellibucket.user.service.domain.core.valueObject.Status;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 
 @SuperBuilder
 @Getter
 @Setter
+@ToString
 public class UserRoot extends AggregateRoot<UserID> {
     private final UserID userID;
     private final Address address;
@@ -32,7 +34,6 @@ public class UserRoot extends AggregateRoot<UserID> {
         status = Status.ACTIVE;
     }
 
-
     public void delete() {
         this.status = Status.DELETED;
     }
@@ -45,7 +46,6 @@ public class UserRoot extends AggregateRoot<UserID> {
         validatePassword();
         validateEmail();
     }
-
 
     private void validateEmail() throws UserDomainException {
         if (this.email == null || !email.isValid()) {
@@ -69,21 +69,9 @@ public class UserRoot extends AggregateRoot<UserID> {
         if (this.password == null || password.getValue().isEmpty()) {
             throw new UserDomainException("Password is not valid");
         }
-
-
     }
 
-    //FIXME nezer etmek lazimdir
-    public void userChangePassword(Password oldPassword, Password newPassword) throws UserDomainException {
-        if (!this.password.isEqual(oldPassword)) {
-            throw new UserDomainException("Old password is invalid!");
-        }
-
-        if (oldPassword.isEqual(newPassword)) {
-            throw new UserDomainException("New password cannot be the same as the old password!");
-        }
-
+    public void userChangePassword(Password newPassword) {
         this.password = newPassword;
     }
-
 }

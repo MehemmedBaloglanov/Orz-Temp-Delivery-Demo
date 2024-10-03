@@ -29,8 +29,9 @@ public class CompanyRegisterCommandHandler {
         if (optionalUserRoot.isPresent()) {
             throw new EmailAlreadyExistException("User already exist with email..: " + command.getEmail());
         }
-        UserRegisteredEvent userRegisteredEvent = userDomainService.companyRegistered(newUser);
-//        eventPublisher.publishEvent(userRegisteredEvent);
+//        UserRegisteredEvent userRegisteredEvent = userDomainService.companyRegistered(newUser);
+//        eventPublisher.publishUserRegisteredEvent(userRegisteredEvent);
+
         UserRoot savedUserRoot = userRepository.save(newUser);
         if (savedUserRoot == null) {
             throw new UserSavedException("User could not be saved: " + newUser.getUserID());

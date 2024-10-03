@@ -21,7 +21,7 @@ public final class Password {
         return new Password(value);
     }
 
-    public boolean isPasswordValid() {
+    public boolean isPasswordValid(String password) {
         return value != null &&
                 !value.isEmpty() &&
                 containsUpperCase(value) &&
@@ -51,13 +51,12 @@ public final class Password {
         return value == null;
     }
 
-    public boolean isEqual(Password otherPassword) {
-        return this.value.equals(otherPassword.getValue());
-    }
-
-    public static Password changePassword(Password oldPassword, String newPassword) {
-        if (oldPassword.isEqual(Password.of(newPassword))) {
-            throw new IllegalArgumentException("New password cannot be the same as the old password");
+    public static Password changePassword(String currentPassword, String oldPassword, String newPassword) {
+        if (!currentPassword.equals(oldPassword)) {
+            throw new IllegalArgumentException("Old password does not match!");
+        }
+        if (oldPassword.equals(newPassword)) {
+            throw new IllegalArgumentException("New password cannot be the same as the old password!");
         }
         return new Password(newPassword);
     }
