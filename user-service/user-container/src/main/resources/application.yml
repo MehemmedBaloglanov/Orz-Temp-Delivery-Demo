@@ -1,6 +1,7 @@
 logging:
   level:
-    root: error
+    #    root: info
+    com.intellibucket: debug
 spring:
   datasource:
     url: jdbc:mysql://localhost:3306/delivery
@@ -32,3 +33,14 @@ spring:
 #        format_sql: true # To format SQL queries nicely in the logs
 
 #        open-in-view: false
+
+env:
+  test:
+    current:
+      customer:
+        id: 01925279-9713-732a-b558-e2785fe6c07f
+
+      company:
+        id: 01925279-af65-7f45-b68a-6a48cbada2ee
+
+

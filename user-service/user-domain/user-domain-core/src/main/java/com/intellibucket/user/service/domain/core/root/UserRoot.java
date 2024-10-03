@@ -1,5 +1,6 @@
 package com.intellibucket.user.service.domain.core.root;
 
+import com.intelliacademy.orizonroute.identity.customer.CustomerID;
 import com.intelliacademy.orizonroute.identity.user.UserID;
 import com.intelliacademy.orizonroute.root.AggregateRoot;
 import com.intelliacademy.orizonroute.valueobjects.common.Email;
@@ -12,11 +13,13 @@ import com.intellibucket.user.service.domain.core.valueObject.RoleAuthorithy;
 import com.intellibucket.user.service.domain.core.valueObject.Status;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 
 @SuperBuilder
 @Getter
 @Setter
+@ToString
 public class UserRoot extends AggregateRoot<UserID> {
     private final UserID userID;
     private final Address address;
@@ -25,7 +28,10 @@ public class UserRoot extends AggregateRoot<UserID> {
     private Password password;
     private final Email email;
     private final PhoneNumber phoneNumber;
-    private final Username username;
+    private Username username;
+    private String firstName;
+    private String lastName;
+    private String companyName;
 
     public void initializeUser() {
         setId(UserID.random());

@@ -5,6 +5,7 @@ import com.intelliacademy.orizonroute.identity.user.PhoneNumberID;
 import com.intelliacademy.orizonroute.identity.user.UserID;
 import com.intelliacademy.orizonroute.valueobjects.common.Email;
 import com.intelliacademy.orizonroute.valueobjects.common.PhoneNumber;
+import com.intelliacademy.orizonroute.valueobjects.common.Username;
 import com.intellibucket.user.service.domain.core.root.UserRoot;
 import com.intellibucket.user.service.domain.core.valueObject.Address;
 import com.intellibucket.user.service.domain.core.valueObject.Password;
@@ -12,13 +13,16 @@ import com.intellibucket.user.service.repository.model.CompanyRegistrationEntity
 import com.intellibucket.user.service.repository.model.CustomerRegistrationEntity;
 import com.intellibucket.user.service.repository.model.PhoneNumberEntity;
 import com.intellibucket.user.service.repository.model.UserAddressEntity;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
+@Slf4j
 @Component
 public class UserDataAccessMapper {
     public CustomerRegistrationEntity userRootToCustomerEntity(UserRoot userRoot) {
+        log.debug("userRoot: {}", userRoot);
         return CustomerRegistrationEntity.builder()
-                .userEntityId(UserID.random().value())
+                .userEntityId(userRoot.getUserID().value())
                 .username(userRoot.getUsername().value())
                 .email(userRoot.getEmail().getValue())
                 .emailType(userRoot.getEmail().getType())
@@ -32,7 +36,8 @@ public class UserDataAccessMapper {
 
     public CompanyRegistrationEntity userRootToCompanyEntity(UserRoot userRoot) {
         return CompanyRegistrationEntity.builder()
-                .userEntityId(UserID.random().value())
+                .userEntityId(userRoot.getUserID().value())
+                .username(userRoot.getUsername().value())
                 .companyName(userRoot.getUsername().value())
                 .email(userRoot.getEmail().getValue())
                 .emailType(userRoot.getEmail().getType())
@@ -46,6 +51,7 @@ public class UserDataAccessMapper {
 
 public UserRoot customerEntityToUserRoot(CustomerRegistrationEntity userEntity) {
         return UserRoot.builder()
+                .username(Username.of(userEntity.getUsername()))
                 .userID(UserID.of(userEntity.getUserEntityId()))
                 .address(userJpaAdresstoAddress(userEntity.getAddress()))
                 .status(userEntity.getStatus())
@@ -58,9 +64,11 @@ public UserRoot customerEntityToUserRoot(CustomerRegistrationEntity userEntity) 
 
 public UserRoot companyEntityToUserRoot(CompanyRegistrationEntity userEntity) {
     return UserRoot.builder()
+            .username(Username.of(userEntity.getUsername()))
             .userID(UserID.of(userEntity.getUserEntityId()))
             .address(userJpaAdresstoAddress(userEntity.getAddress()))
             .status(userEntity.getStatus())
+            .companyName(userEntity.getCompanyName())
             .roleAuthorithy(userEntity.getRoleAuthority())
             .password(Password.of(userEntity.getPassword()))
             .email(Email.of(userEntity.getEmailType(),userEntity.getEmail()))

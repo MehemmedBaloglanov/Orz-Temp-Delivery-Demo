@@ -10,5 +10,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class UserDeleteCommand {
+    private String userID ;
     private String email;
 }

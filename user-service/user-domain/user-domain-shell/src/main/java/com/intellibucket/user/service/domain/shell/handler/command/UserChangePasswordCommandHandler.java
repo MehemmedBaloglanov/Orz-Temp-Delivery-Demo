@@ -22,27 +22,27 @@ public class UserChangePasswordCommandHandler {
     private final UserDomainService userDomainService;
 
     public void handle(UserChangePasswordCommand command) throws UserDomainException {
-        UserID userID = UserID.random(); // FIXME userID securityContextHolder'dan alinacaq
-        // id= SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-
-        Optional<UserRoot> byUserId = userRepository.findByUserId(userID);
-
-        if (byUserId.isEmpty()) {
-            throw new UserNotFoundException("user not found with id:" + userID);
-        }
-        UserRoot user = byUserId.get();
-
-        if (!user.getPassword().isEqual(Password.builder().value(command.getOldPassword()).build())) {
-            throw new PasswordValidationException("old password is invalid!");
-        }
-
-        Password newPassword = Password.builder().value(command.getNewPassword()).build();
-        //  user.userChangePassword(newPassword);
-        UserChangePasswordDomainEvent userChangePasswordDomainEvent = userDomainService.userChangePassword(user);
-
-        UserRoot savedUserRoot = userRepository.save(byUserId.get());
-        if (savedUserRoot == null) {
-            throw new UserSavedException("User could not be saved: " + user.getUserID());
-        }
+//        UserID userID = UserID.random(); // FIXME userID securityContextHolder'dan alinacaq
+//        // id= SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+//
+//        Optional<UserRoot> byUserId = userRepository.findByUserId(userID);
+//
+//        if (byUserId.isEmpty()) {
+//            throw new UserNotFoundException("user not found with id:" + userID);
+//        }
+//        UserRoot user = byUserId.get();
+//
+//        if (!user.getPassword().isEqual(Password.builder().value(command.getOldPassword()).build())) {
+//            throw new PasswordValidationException("old password is invalid!");
+//        }
+//
+//        Password newPassword = Password.builder().value(command.getNewPassword()).build();
+//        //  user.userChangePassword(newPassword);
+//        UserChangePasswordDomainEvent userChangePasswordDomainEvent = userDomainService.userChangePassword(user);
+//
+//        UserRoot savedUserRoot = userRepository.save(byUserId.get());
+//        if (savedUserRoot == null) {
+//            throw new UserSavedException("User could not be saved: " + user.getUserID());
+//        }
     }
 }

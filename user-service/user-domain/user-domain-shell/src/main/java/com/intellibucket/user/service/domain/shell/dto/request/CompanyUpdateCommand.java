@@ -10,6 +10,6 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class CompanyUpdateCommand extends AbstractUserCreateCommand {
+public class CompanyUpdateCommand {
     private String companyName;
 }

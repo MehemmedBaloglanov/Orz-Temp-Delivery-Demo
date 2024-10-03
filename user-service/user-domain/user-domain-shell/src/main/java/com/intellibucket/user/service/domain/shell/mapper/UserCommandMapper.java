@@ -1,5 +1,6 @@
 package com.intellibucket.user.service.domain.shell.mapper;
 
+import com.intelliacademy.orizonroute.identity.user.UserID;
 import com.intelliacademy.orizonroute.valueobjects.common.Email;
 import com.intelliacademy.orizonroute.valueobjects.common.PhoneNumber;
 import com.intelliacademy.orizonroute.valueobjects.common.Username;
@@ -14,6 +15,7 @@ public class UserCommandMapper {
     // CompanyRegisterCommand to UserRoot mapping
     public static UserRoot companyCreateCommandToUserRoot(CompanyCreateCommand command) {
         return UserRoot.builder()
+                .userID(UserID.random())
                 .username(Username.generate(command.getCompanyName()))
                 .email(Email.of(command.getEmailType(), command.getEmail()))
                 .password(Password.of(command.getPassword()))
@@ -27,6 +29,7 @@ public class UserCommandMapper {
     // CustomerRegisterCommand to UserRoot mapping
     public static UserRoot customerCreateCommandToUserRoot(CustomerCreateCommand command) {
         return UserRoot.builder()
+                .userID(UserID.random())
                 .username(Username.generate(command.getFirstName(), command.getLastName()))
                 .email(Email.of(command.getEmailType(), command.getEmail()))
                 .password(Password.of(command.getPassword()))
@@ -44,21 +47,15 @@ public class UserCommandMapper {
                 .build();
     }
 
-    public static UserRoot customerUpdateCommandToUserRoot(CustomerUpdateCommand command) {
-        return UserRoot.builder()
-                .username(Username.generate(command.getFirstName(), command.getLastName()))
-                .email(Email.of(command.getEmailType(), command.getEmail()))
-                .phoneNumber(PhoneNumber.of(command.getPhoneNumberType(), command.getCountryCode(), command.getPhoneNumber()))
-                .address(Address.of(command.getState(), command.getCountry(), command.getCity(), command.getStreet(), command.getPostalCode()))
-                .build();
+    public static UserRoot customerUpdateCommandToUserRoot(CustomerUpdateCommand command, UserRoot userRoot) {
+
+        userRoot.setFirstName(command.getFirstName());
+        userRoot.setLastName(command.getLastName());
+        return userRoot;
     }
 
-    public static UserRoot companyUpdateCommandToUserRoot(CompanyUpdateCommand command) {
-        return UserRoot.builder()
-                .username(Username.generate(command.getCompanyName()))
-                .email(Email.of(command.getEmailType(), command.getEmail()))
-                .phoneNumber(PhoneNumber.of(command.getPhoneNumberType(), command.getCountryCode(), command.getPhoneNumber()))
-                .address(Address.of(command.getState(), command.getCountry(), command.getCity(), command.getStreet(), command.getPostalCode()))
-                .build();
+    public static UserRoot companyUpdateCommandToUserRoot(CompanyUpdateCommand command, UserRoot userRoot) {
+        userRoot.setCompanyName(command.getCompanyName());
+        return userRoot;
     }
 }
