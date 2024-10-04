@@ -44,8 +44,8 @@ public class OrderEntity {
     @Enumerated(EnumType.STRING)
     private OrderCancellationJpaType cancellationType;
 
-    @Version
-    private int version;
+//    @Version
+//    private int version;
 
 
 }

@@ -33,6 +33,7 @@ public class OrderItemEntity {
 
     private BigDecimal subTotal;
 
+    @Enumerated(EnumType.STRING)
     private OrderItemJpaStatus status;
 
 }

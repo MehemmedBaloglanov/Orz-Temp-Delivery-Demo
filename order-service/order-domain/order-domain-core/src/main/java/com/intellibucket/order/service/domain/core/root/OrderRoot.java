@@ -43,11 +43,14 @@ public class OrderRoot extends AggregateRoot<OrderID> {
     }
 
     public OrderRoot initCancel(String failureMessage) throws OrderDomainException {
+        if (status.isCancelling() || status.isCancelled() || status.isCompleted()) {
+            throw new OrderDomainException("Order is already in cancel state!");
+        }
         if (cancelType.isCompany() && status.isApproved()) {
             throw new OrderDomainException("Order is not in correct state for the initCancel operation!");
         }
 
-        if (cancelType.isCustomer() && (status.isDelivering() || status.isCompleted() || status.isCancelled())) {
+        if (cancelType.isCustomer() && (status.isDelivering())) {
             throw new OrderDomainException("Order is not in correct state for the initCancel operation!");
         }
         this.failureMessage = failureMessage;
@@ -85,17 +88,8 @@ public class OrderRoot extends AggregateRoot<OrderID> {
     }
 
 
-    //when stock is ended return initCancel
-    public OrderRoot confirm() throws OrderDomainException {
-        if (!status.isApproved()) {
-            throw new OrderDomainException("Cannot confirm order");
-        }
-        this.status = OrderStatus.CONFIRMED;
-        return this;
-    }
-
     public OrderRoot prepared() throws OrderDomainException {
-        if (!status.isConfirmed()) {
+        if (!status.isApproved()) {
             throw new OrderDomainException("Cannot prepare order");
         }
         this.status = OrderStatus.PREPARED;

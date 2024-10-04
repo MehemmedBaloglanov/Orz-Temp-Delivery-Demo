@@ -32,7 +32,7 @@ public class OrderCompanyRefundMessagePublisher implements AbstractOrderCompanyR
     public void publish(OutboxMessage message, BiConsumer<OutboxMessage, OutboxStatus> outboxCallback) throws OrderDomainException {
         OrderCompanyRefundEventPayload payload = kafkaMessageHelper.getOrderEventPayload(message.getPayload(), OrderCompanyRefundEventPayload.class);
 
-        log.info("Received OrderCompanyRefundMessagePublisher for order id: {}", payload.getOrderId());
+        log.info("Received OrderCompanyRefundEventPayload for order id: {}", payload.getOrderId());
         try {
             CompanyOrderRefundRequestAvroModel avroModel = orderMessagePublisherDataMapper.orderCompanyRefundEventPayloadToCompanyOrderRefundRequestAvroModel(payload);
 
@@ -42,9 +42,9 @@ public class OrderCompanyRefundMessagePublisher implements AbstractOrderCompanyR
                     avroModel,
                     orderKafkaPublisherHelper.getCallback(avroModel, message, payload.getOrderId(), outboxCallback));
 
-            log.info("OrderCompanyRefundMessagePublisher sent to Kafka for order id: {}", payload.getOrderId());
+            log.info("OrderCompanyRefundEventPayload sent to Kafka for order id: {}", payload.getOrderId());
         } catch (Exception e) {
-            log.error("Error while sending OrderCompanyRefundMessagePublisher to kafka with order id: {}, error: {}", payload.getOrderId(), e.getMessage());
+            log.error("Error while sending OrderCompanyRefundEventPayload to kafka with order id: {}, error: {}", payload.getOrderId(), e.getMessage());
         }
     }
 }

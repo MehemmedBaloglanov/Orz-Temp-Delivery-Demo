@@ -3,12 +3,12 @@ package com.intellibucket.order.service.secondary.message.publisher.mapper;
 import com.intellibucket.kafka.order.avro.model.company.*;
 import com.intellibucket.kafka.order.avro.model.delivery.DeliveryAvroAddress;
 import com.intellibucket.kafka.order.avro.model.delivery.OrderStartDeliveryRequestAvroModel;
-import com.intellibucket.kafka.order.avro.model.payment.PaymentRefundAvroModel;
+import com.intellibucket.kafka.order.avro.model.payment.PaymentRefundRequestAvroModel;
 import com.intellibucket.order.service.domain.shell.outbox.model.payload.company.OrderCompanyApproveEventPayload;
 import com.intellibucket.order.service.domain.shell.outbox.model.payload.company.OrderCompanyApproveEventProduct;
 import com.intellibucket.order.service.domain.shell.outbox.model.payload.company.OrderCompanyRefundEventPayload;
-import com.intellibucket.order.service.domain.shell.outbox.model.payload.company.OrderCompletedEventProduct;
-import com.intellibucket.order.service.domain.shell.outbox.model.payload.delivery.OrderDeliveryCompletedEventPayload;
+import com.intellibucket.order.service.domain.shell.outbox.model.payload.completed.OrderCompletedEventPayload;
+import com.intellibucket.order.service.domain.shell.outbox.model.payload.completed.OrderCompletedEventProduct;
 import com.intellibucket.order.service.domain.shell.outbox.model.payload.delivery.OrderStartDeliveryEventAddress;
 import com.intellibucket.order.service.domain.shell.outbox.model.payload.delivery.OrderStartDeliveryEventPayload;
 import com.intellibucket.order.service.domain.shell.outbox.model.payload.payment.OrderPaymentRefundEventPayload;
@@ -17,16 +17,15 @@ import org.springframework.stereotype.Component;
 @Component
 public class OrderMessagePublisherDataMapper {
 
-    public PaymentRefundAvroModel orderPaymentRefundEventPayloadToPaymentRefundAvroModel(OrderPaymentRefundEventPayload payload) {
-        return PaymentRefundAvroModel.newBuilder()
+    public PaymentRefundRequestAvroModel orderPaymentRefundEventPayloadToPaymentRefundRequestAvroModel(OrderPaymentRefundEventPayload payload) {
+        return PaymentRefundRequestAvroModel.newBuilder()
                 .setOrderId(payload.getOrderId())
                 .setCreatedAt(payload.getCreatedAt().toInstant())
                 .setCustomerId(payload.getCustomerId())
-                .setPrice(payload.getPrice())
                 .build();
     }
 
-    public OrderCompletedRequestAvroModel orderCompetedEventToOrderCompletedRequestAvroModel(OrderDeliveryCompletedEventPayload payload) {
+    public OrderCompletedRequestAvroModel orderCompetedEventToOrderCompletedRequestAvroModel(OrderCompletedEventPayload payload) {
 
         return OrderCompletedRequestAvroModel.newBuilder()
                 .setOrderId(payload.getOrderId())
