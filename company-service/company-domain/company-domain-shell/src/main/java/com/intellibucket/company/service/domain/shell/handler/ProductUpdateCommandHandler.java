@@ -7,7 +7,7 @@ import com.intellibucket.company.service.domain.core.event.product.ProductPriceU
 import com.intellibucket.company.service.domain.core.exception.CompanyDomainException;
 import com.intellibucket.company.service.domain.core.root.ProductRoot;
 import com.intellibucket.company.service.domain.core.service.ProductDomainService;
-import com.intellibucket.company.service.domain.shell.dto.rest.command.ProductUpdateCommand;
+import com.intellibucket.company.service.domain.shell.dto.rest.command.product.ProductUpdateCommand;
 import com.intellibucket.company.service.domain.shell.port.output.repository.ProductRepositoryAdapter;
 import com.intellibucket.order.service.domain.shell.security.AbstractSecurityContextHolder;
 import lombok.RequiredArgsConstructor;
@@ -35,9 +35,9 @@ public class ProductUpdateCommandHandler {
 
         ProductRoot productRoot = productRootOptional.get();
         productRoot.updateName(command.getProductName());
-//        productRoot.setStockQuantity(command.getStockQuantity());
-//        Money money = Money.of(command.getPrice());
-//        productRoot.setPrice(money);
+        productRoot.updateStockQuantity(command.getStockQuantity());
+        Money money = Money.of(command.getPrice());
+        productRoot.updatePrice(money);
 
         ProductPriceUpdatedEvent productPriceUpdatedEvent = productDomainService.updateProduct(productRoot);
 

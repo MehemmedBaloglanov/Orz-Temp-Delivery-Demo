@@ -5,9 +5,8 @@ import com.intellibucket.company.service.domain.core.event.company.CompanySuspen
 import com.intellibucket.company.service.domain.core.exception.CompanyDomainException;
 import com.intellibucket.company.service.domain.core.root.CompanyRoot;
 import com.intellibucket.company.service.domain.core.service.CompanyDomainService;
-import com.intellibucket.company.service.domain.shell.dto.rest.command.CompanySuspendedCommand;
+import com.intellibucket.company.service.domain.shell.dto.rest.command.company.CompanySuspendedCommand;
 import com.intellibucket.company.service.domain.shell.port.output.repository.CompanyRepositoryAdapter;
-import com.intellibucket.order.service.domain.shell.security.AbstractSecurityContextHolder;
 import lombok.RequiredArgsConstructor;
 
 import java.util.Optional;

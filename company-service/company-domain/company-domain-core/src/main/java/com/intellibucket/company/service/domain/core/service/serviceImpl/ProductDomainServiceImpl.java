@@ -6,8 +6,7 @@ import com.intellibucket.company.service.domain.core.root.ProductRoot;
 import com.intellibucket.company.service.domain.core.service.ProductDomainService;
 
 import java.time.OffsetDateTime;
-
-import static com.intellibucket.constants.DomainConstants.ZONE_ID;
+import static com.intellibucket.domain.constants.DomainConstants.ZONE_ID;
 
 public class ProductDomainServiceImpl implements ProductDomainService {
 

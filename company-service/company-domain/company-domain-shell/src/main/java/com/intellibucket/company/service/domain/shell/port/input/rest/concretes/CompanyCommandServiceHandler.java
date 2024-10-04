@@ -1,7 +1,9 @@
 package com.intellibucket.company.service.domain.shell.port.input.rest.concretes;
 
 import com.intellibucket.company.service.domain.core.exception.CompanyDomainException;
-import com.intellibucket.company.service.domain.shell.dto.rest.command.*;
+import com.intellibucket.company.service.domain.shell.dto.rest.command.company.CompanyActiveCommand;
+import com.intellibucket.company.service.domain.shell.dto.rest.command.company.CompanyDeleteCommand;
+import com.intellibucket.company.service.domain.shell.dto.rest.command.company.CompanySuspendedCommand;
 import com.intellibucket.company.service.domain.shell.handler.*;
 import com.intellibucket.company.service.domain.shell.port.input.rest.abstracts.command.CompanyCommandServiceAdapter;
 import lombok.RequiredArgsConstructor;

@@ -1,9 +1,10 @@
 package com.intellibucket.order.service.primary.rest.command;
 
 import com.intellibucket.company.service.domain.core.exception.CompanyDomainException;
-import com.intellibucket.company.service.domain.shell.dto.rest.command.ProductCreateCommand;
-import com.intellibucket.company.service.domain.shell.dto.rest.command.ProductDeleteCommand;
-import com.intellibucket.company.service.domain.shell.dto.rest.command.ProductUpdateCommand;
+import com.intellibucket.company.service.domain.shell.dto.rest.command.product.ProductCreateCommand;
+import com.intellibucket.company.service.domain.shell.dto.rest.command.product.ProductDeleteCommand;
+import com.intellibucket.company.service.domain.shell.dto.rest.command.product.ProductStatusCommand;
+import com.intellibucket.company.service.domain.shell.dto.rest.command.product.ProductUpdateCommand;
 import com.intellibucket.company.service.domain.shell.dto.rest.response.ProductResponse;
 import com.intellibucket.company.service.domain.shell.port.input.rest.abstracts.command.ProductCommandServiceAdapter;
 import lombok.RequiredArgsConstructor;
@@ -25,10 +26,14 @@ public class ProductCommandController {
         return new ResponseEntity<>(productResponse, HttpStatus.CREATED);
     }
 
-    //PRODUCT UPDATE
-    @PostMapping("/command")
+    //PRODUCT NAME STOCKQUANTITY PRICE  UPDATE
+    @PutMapping("/command")
     public void updateProduct(@RequestBody ProductUpdateCommand command) throws CompanyDomainException {
         productCommandServiceAdapter.updateProduct(command);
+    }
+    @PutMapping ("/status")
+    public void changeStatus(@RequestBody ProductStatusCommand command) throws CompanyDomainException {
+        productCommandServiceAdapter.changeStatus(command);
     }
 
 
