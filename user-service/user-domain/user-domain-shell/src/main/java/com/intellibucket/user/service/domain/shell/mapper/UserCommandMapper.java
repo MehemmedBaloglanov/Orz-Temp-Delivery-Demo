@@ -15,6 +15,7 @@ public class UserCommandMapper {
     // CompanyRegisterCommand to UserRoot mapping
     public static UserRoot companyCreateCommandToUserRoot(CompanyCreateCommand command) {
         return UserRoot.builder()
+                .companyName(command.getCompanyName())
                 .userID(UserID.random())
                 .username(Username.generate(command.getCompanyName()))
                 .email(Email.of(command.getEmailType(), command.getEmail()))
@@ -30,6 +31,8 @@ public class UserCommandMapper {
     public static UserRoot customerCreateCommandToUserRoot(CustomerCreateCommand command) {
         return UserRoot.builder()
                 .userID(UserID.random())
+                .firstName(command.getFirstName())
+                .lastName(command.getLastName())
                 .username(Username.generate(command.getFirstName(), command.getLastName()))
                 .email(Email.of(command.getEmailType(), command.getEmail()))
                 .password(Password.of(command.getPassword()))

@@ -17,8 +17,6 @@ public interface UserRepository {
 
     UserRoot update(UserRoot userRoot) throws UserNotFoundException;
 
-    UserRoot delete(UserRoot userRoot) throws UserNotFoundException;
-
     UserRoot save(UserRoot userRoot);
 
     Optional<UserRoot> findByEmail(Email email, UserRoot userRoot) throws UserNotFoundException;

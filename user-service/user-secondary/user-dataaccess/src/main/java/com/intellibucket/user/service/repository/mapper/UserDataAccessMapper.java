@@ -23,6 +23,8 @@ public class UserDataAccessMapper {
         log.debug("userRoot: {}", userRoot);
         return CustomerRegistrationEntity.builder()
                 .userEntityId(userRoot.getUserID().value())
+                .lastName(userRoot.getLastName())
+                .firstName(userRoot.getFirstName())
                 .username(userRoot.getUsername().value())
                 .email(userRoot.getEmail().getValue())
                 .emailType(userRoot.getEmail().getType())
@@ -38,7 +40,7 @@ public class UserDataAccessMapper {
         return CompanyRegistrationEntity.builder()
                 .userEntityId(userRoot.getUserID().value())
                 .username(userRoot.getUsername().value())
-                .companyName(userRoot.getUsername().value())
+                .companyName(userRoot.getCompanyName())
                 .email(userRoot.getEmail().getValue())
                 .emailType(userRoot.getEmail().getType())
                 .password(userRoot.getPassword().getValue())
@@ -52,6 +54,8 @@ public class UserDataAccessMapper {
 public UserRoot customerEntityToUserRoot(CustomerRegistrationEntity userEntity) {
         return UserRoot.builder()
                 .username(Username.of(userEntity.getUsername()))
+                .firstName(userEntity.getFirstName())
+                .lastName(userEntity.getLastName())
                 .userID(UserID.of(userEntity.getUserEntityId()))
                 .address(userJpaAdresstoAddress(userEntity.getAddress()))
                 .status(userEntity.getStatus())

@@ -95,30 +95,6 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
-    public UserRoot delete(UserRoot userRoot) throws UserNotFoundException {
-        if (RoleAuthorithy.CUSTOMER.isRoleCustomer()) {
-            Optional<CustomerRegistrationEntity> user = customerJpaRepository.findById(userRoot.getUserID().value());
-
-            if (user.isEmpty()) {
-                throw new UserNotFoundException("User not found with ID: " + userRoot.getUserID().value());
-            } else {
-                CustomerRegistrationEntity userEntity = user.get();
-                customerJpaRepository.delete(userEntity);
-                return userDataAccessMapper.customerEntityToUserRoot(userEntity);
-            }
-        } else {
-            Optional<CompanyRegistrationEntity> user = companyJpaRepository.findById(userRoot.getUserID().value());
-            if (user.isEmpty()) {
-                throw new UserNotFoundException("User not found with ID: " + userRoot.getUserID().value());
-            } else {
-                CompanyRegistrationEntity userEntity = user.get();
-                companyJpaRepository.delete(userEntity);
-                return userDataAccessMapper.companyEntityToUserRoot(userEntity);
-            }
-        }
-    }
-
-    @Override
     public UserRoot save(UserRoot userRoot) {
         if (userRoot.getRoleAuthorithy().isRoleCustomer()) {
             CustomerRegistrationEntity userEntity = userDataAccessMapper.userRootToCustomerEntity(userRoot);

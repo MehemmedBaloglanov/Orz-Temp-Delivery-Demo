@@ -15,11 +15,12 @@ import org.springframework.stereotype.Service;
 public class UserCommandService implements UserCommandServicePort {
     private final CompanyRegisterCommandHandler companyRegisterCommandHandler;
     private final CustomerRegisterCommandHandler customerRegisterCommandHandler;
-    private final UserDeleteCommandHandler userDeleteCommandHandler;
+    private final CompanyDeleteCommandHandler companyDeleteCommandHandler;
     private final CustomerUpdateCommandHandler customerUpdateCommandHandler;
     private final UserLoginCommandHandler userLoginCommandHandler;
     private final UserChangePasswordCommandHandler userChangePasswordCommandHandler;
     private final CompanyUpdateCommandHandler companyUpdateCommandHandler;
+    private final CustomerDeleteCommandHandler customerDeleteCommandHandler;
 
     @Override
     public void companyRegistered(CompanyCreateCommand command) throws UserDomainException {
@@ -43,8 +44,13 @@ public class UserCommandService implements UserCommandServicePort {
     }
 
     @Override
-    public void deleteUser(UserDeleteCommand command) throws UserDomainException {
-        userDeleteCommandHandler.handle(command);
+    public void companyDelete(UserDeleteCommand command) throws UserDomainException {
+        companyDeleteCommandHandler.handle(command);
+    }
+
+    @Override
+    public void customerDelete(UserDeleteCommand command) throws UserDomainException {
+        customerDeleteCommandHandler.handle(command);
     }
 
     @Override
@@ -54,7 +60,7 @@ public class UserCommandService implements UserCommandServicePort {
 }
 
 //    @Override
-//    public void deleteUser(UserDeleteCommand command) throws UserDomainException {
+//    public void companyDelete(UserDeleteCommand command) throws UserDomainException {
 //        userDeleteCommandHandler.handle(command);
 //    }
 //

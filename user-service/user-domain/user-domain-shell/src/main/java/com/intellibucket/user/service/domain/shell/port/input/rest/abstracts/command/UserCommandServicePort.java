@@ -15,7 +15,9 @@ public interface UserCommandServicePort {
 
     void updateCompany(CompanyUpdateCommand command) throws UserNotFoundException, UserSavedException;
 
-    void deleteUser(UserDeleteCommand command) throws UserDomainException;
+    void companyDelete(UserDeleteCommand command) throws UserDomainException;
+
+    void customerDelete(UserDeleteCommand command) throws UserDomainException;
 
     void userLoggedIn(UserLoginCommand userLoginCommand,UserID userID) throws UserDomainException;
 //

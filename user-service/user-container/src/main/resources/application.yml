@@ -38,7 +38,7 @@ env:
   test:
     current:
       customer:
-        id: 01925279-9713-732a-b558-e2785fe6c07f
+        id: 019256c6-5f3a-7f72-96b5-e68bbaa7419d
 
       company:
         id: 01925279-af65-7f45-b68a-6a48cbada2ee

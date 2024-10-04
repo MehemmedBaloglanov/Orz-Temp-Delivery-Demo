@@ -8,7 +8,6 @@ import com.intellibucket.user.service.domain.shell.dto.request.*;
 import com.intellibucket.user.service.domain.shell.dto.response.EmptyResponse;
 import com.intellibucket.user.service.domain.shell.dto.response.UserLoginResponse;
 import com.intellibucket.user.service.domain.shell.port.input.rest.abstracts.command.UserCommandServicePort;
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -33,14 +32,14 @@ public class UserCommandController {
         return ResponseEntity.ok(response);
     }
 
-    @PostMapping("/updateCustomer")
+    @PostMapping("/update/Customer")
     public ResponseEntity<EmptyResponse> updateUser(@RequestBody  CustomerUpdateCommand command) throws UserNotFoundException, UserSavedException {
         abstractUserCommandService.updateCustomer(command);
         EmptyResponse response = EmptyResponse.builder().message("User updated successfully !").success(true).build();
         return ResponseEntity.ok(response);
     }
 
-    @PostMapping("/updateCompany")
+    @PostMapping("/update/Company")
     public ResponseEntity<EmptyResponse> updateUser(@RequestBody  CompanyUpdateCommand command) throws UserNotFoundException, UserSavedException {
         abstractUserCommandService.updateCompany(command);
         EmptyResponse response = EmptyResponse.builder().message("User updated successfully !").success(true).build();
@@ -48,11 +47,17 @@ public class UserCommandController {
     }
 
 
-//    @DeleteMapping("/{userId}")
-//    public ResponseEntity<EmptyResponse> deleteUser(@PathVariable UserID userID) throws UserDomainException {
-//        abstractUserCommandService.deleteUser(userID);
-//        return ResponseEntity.ok(EmptyResponse.builder().message("User deleted successfully !").success(true).build());
-//    }
+    @DeleteMapping("/delete/customer")
+    public ResponseEntity<EmptyResponse> deleteCustomer(@RequestBody UserDeleteCommand command) throws UserDomainException {
+        abstractUserCommandService.customerDelete(command);
+        return ResponseEntity.ok(EmptyResponse.builder().message("User deleted successfully !").success(true).build());
+    }
+
+    @DeleteMapping("/delete/company")
+    public ResponseEntity<EmptyResponse> deleteCompany(@RequestBody UserDeleteCommand command) throws UserDomainException {
+        abstractUserCommandService.companyDelete(command);
+        return ResponseEntity.ok(EmptyResponse.builder().message("User deleted successfully !").success(true).build());
+    }
 //
 //    @PostMapping("/{id}/change-password")
 //    public ResponseEntity<EmptyResponse> changePassword(@RequestBody UserChangePasswordCommand command) throws UserDomainException {
