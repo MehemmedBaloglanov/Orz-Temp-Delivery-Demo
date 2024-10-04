@@ -14,8 +14,6 @@ public interface OrderQueryServiceAdapter {
 
     List<OrderResponse> ordersByCustomer() throws OrderDomainException;
 
-    OrderResponse orderById(OrderID orderId);
-
-    List<OrderResponse> getUnassignOrders();
+    OrderResponse orderById(OrderID orderId) throws OrderDomainException;
 
 }
