@@ -2,8 +2,9 @@ package com.intellibucket.order.service.primary.rest.command;
 
 
 import com.intellibucket.company.service.domain.core.exception.CompanyDomainException;
-import com.intellibucket.company.service.domain.core.valueobject.CompanyAddress;
-import com.intellibucket.company.service.domain.shell.dto.rest.command.*;
+import com.intellibucket.company.service.domain.shell.dto.rest.command.company.CompanyActiveCommand;
+import com.intellibucket.company.service.domain.shell.dto.rest.command.company.CompanyDeleteCommand;
+import com.intellibucket.company.service.domain.shell.dto.rest.command.company.CompanySuspendedCommand;
 import com.intellibucket.company.service.domain.shell.port.input.rest.abstracts.command.CompanyCommandServiceAdapter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;

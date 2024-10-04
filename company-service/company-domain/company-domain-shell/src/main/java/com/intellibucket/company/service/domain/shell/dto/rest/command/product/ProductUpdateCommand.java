@@ -1,4 +1,4 @@
-package com.intellibucket.company.service.domain.shell.dto.rest.command;
+package com.intellibucket.company.service.domain.shell.dto.rest.command.product;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.intelliacademy.orizonroute.valueobjects.common.Money;

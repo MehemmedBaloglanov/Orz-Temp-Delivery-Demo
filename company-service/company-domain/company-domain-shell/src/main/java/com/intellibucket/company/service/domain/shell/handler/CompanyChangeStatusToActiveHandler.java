@@ -5,7 +5,7 @@ import com.intellibucket.company.service.domain.core.event.company.CompanyActiva
 import com.intellibucket.company.service.domain.core.exception.CompanyDomainException;
 import com.intellibucket.company.service.domain.core.root.CompanyRoot;
 import com.intellibucket.company.service.domain.core.service.CompanyDomainService;
-import com.intellibucket.company.service.domain.shell.dto.rest.command.CompanyActiveCommand;
+import com.intellibucket.company.service.domain.shell.dto.rest.command.company.CompanyActiveCommand;
 import com.intellibucket.company.service.domain.shell.port.output.repository.CompanyRepositoryAdapter;
 import lombok.RequiredArgsConstructor;
 

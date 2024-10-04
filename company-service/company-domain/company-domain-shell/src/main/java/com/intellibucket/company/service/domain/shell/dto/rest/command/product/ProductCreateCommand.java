@@ -1,4 +1,4 @@
-package com.intellibucket.company.service.domain.shell.dto.rest.command;
+package com.intellibucket.company.service.domain.shell.dto.rest.command.product;
 
 import com.intelliacademy.orizonroute.valueobjects.common.Money;
 import lombok.AllArgsConstructor;
@@ -11,8 +11,5 @@ import lombok.Getter;
 public class ProductCreateCommand {
     private final String name;
     private final Money price;
-    private final String quantity;
     private final String stockQuantity;
-
-
 }

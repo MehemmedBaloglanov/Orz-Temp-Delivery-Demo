@@ -1,12 +1,11 @@
 package com.intellibucket.company.service.domain.shell.handler;
 
 import com.intelliacademy.orizonroute.identity.company.CompanyID;
-import com.intellibucket.company.service.domain.core.event.company.CompanyActivatedEvent;
 import com.intellibucket.company.service.domain.core.event.company.CompanyAddressUpdateEvent;
 import com.intellibucket.company.service.domain.core.exception.CompanyDomainException;
 import com.intellibucket.company.service.domain.core.root.CompanyRoot;
 import com.intellibucket.company.service.domain.core.service.CompanyDomainService;
-import com.intellibucket.company.service.domain.shell.dto.rest.command.CompanyAddressUpdateCommand;
+import com.intellibucket.company.service.domain.shell.dto.rest.command.company.CompanyAddressUpdateCommand;
 import com.intellibucket.company.service.domain.shell.port.output.repository.CompanyRepositoryAdapter;
 import lombok.RequiredArgsConstructor;
 
