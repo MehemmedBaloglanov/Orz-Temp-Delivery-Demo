@@ -1,7 +1,8 @@
 package com.intellibucket.company.service.domain.shell.port.input.listener.abstracts;
 
+import com.intellibucket.company.service.domain.core.exception.CompanyDomainException;
 import com.intellibucket.company.service.domain.shell.dto.message.order.approve.ProductApproveResponse;
 
 public interface AbstractOrderApproveResponseMessageListener {
-    void approveOrder(ProductApproveResponse response);
+    void approveOrder(ProductApproveResponse response) throws CompanyDomainException;
 }

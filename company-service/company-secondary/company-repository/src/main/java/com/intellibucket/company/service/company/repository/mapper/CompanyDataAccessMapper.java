@@ -96,7 +96,7 @@ public class CompanyDataAccessMapper {
                 .name(entity.getName())
                 .companyID(CompanyID.of(entity.getCompanyId()))
                 .status(entity.getStatus())
-                .stockQuantity(entity.getQuantity())
+                .stockQuantity(entity.getStockQuantity())
                 .price(Money.of(entity.getPrice()))
                 .build();
     }

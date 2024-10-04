@@ -23,8 +23,10 @@ public class CompanyQueryServiceHandler implements CompanyQueryServiceAdapter {
     @Override
     public CompanyResponse getCompanyById(CompanyGetByIDQuery id) throws CompanyDomainException {
         CompanyID companyID = CompanyID.of(id.getCompanyId());
+
         CompanyRoot companyRoot = companyRepositoryAdapter.findById(companyID)
                 .orElseThrow(() -> new CompanyDomainException("Company cannot found with id: " +companyID));
+
         CompanyResponse companyResponse = companyDataMapper.mapCompanyRootToCompanyResponse(companyRoot);
         return companyResponse;
     }
