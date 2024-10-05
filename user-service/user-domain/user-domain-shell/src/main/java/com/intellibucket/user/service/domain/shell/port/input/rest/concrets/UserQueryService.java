@@ -1,39 +1,28 @@
 package com.intellibucket.user.service.domain.shell.port.input.rest.concrets;
 
-import com.intelliacademy.orizonroute.identity.user.UserID;
 import com.intellibucket.user.service.domain.core.root.UserRoot;
-import com.intellibucket.user.service.domain.core.valueObject.RoleAuthorithy;
-import com.intellibucket.user.service.domain.core.valueObject.Status;
+import com.intellibucket.user.service.domain.shell.dto.query.FetchUserByIdCommand;
+import com.intellibucket.user.service.domain.shell.handler.query.FetchByIdQuery;
+import com.intellibucket.user.service.domain.shell.handler.query.FetchByStatusAndRoleQuery;
 import com.intellibucket.user.service.domain.shell.port.input.rest.abstracts.query.UserQueryServicePort;
-import com.intellibucket.user.service.domain.shell.port.output.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
 public class UserQueryService implements UserQueryServicePort {
-    private final UserRepository userRepository;
+    private final FetchByStatusAndRoleQuery fetchByStatusAndRoleQuery;
+    private final FetchByIdQuery fetchByIdQuery;
+
+//    @Override
+//    public List<UserRoot> getUsersByStatusAndByRole(FetchUsersByRoleAndAuthorityCommand command) {
+//        return fetchByStatusAndRole.handle(command);
+//    }
 
     @Override
-    public List<RoleAuthorithy> getAllCustomers() {
-        return userRepository.findByAuthority(RoleAuthorithy.CUSTOMER.name());
-    }
-
-    @Override
-    public List<RoleAuthorithy> getAllCompanies() {
-        return userRepository.findByAuthority(RoleAuthorithy.COMPANY.name());
-    }
-
-    @Override
-    public List<Status> getUsersByStatusAndByRole(Status status, RoleAuthorithy role) {
-        return userRepository.findByStatusAndRoleAuthority(status, role);
-    }
-
-    @Override
-    public Optional<UserRoot> findByUserId(UserID userID) {
-        return Optional.empty();
+    public Optional<UserRoot> findByUserId(FetchUserByIdCommand command) {
+        return fetchByIdQuery.handle(command);
     }
 }

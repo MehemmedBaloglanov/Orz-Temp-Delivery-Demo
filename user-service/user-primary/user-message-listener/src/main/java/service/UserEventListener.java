@@ -15,6 +15,6 @@ public class UserEventListener {
 
         OffsetDateTime createdAt = event.getCreatedAt();
 
-        System.out.println("Received event is: " + userRoot + " at " + createdAt);
+        System.out.println("Received event: " + userRoot + " at " + createdAt);
     }
 }

@@ -54,4 +54,8 @@ public class BaseID<ID> {
     public String toString() {
         return uuid.toString();
     }
+
+    public ID getId() {
+        return this.uuid;
+    }
 }

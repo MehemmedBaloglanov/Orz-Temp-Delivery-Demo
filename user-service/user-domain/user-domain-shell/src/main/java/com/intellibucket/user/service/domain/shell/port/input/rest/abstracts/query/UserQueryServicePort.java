@@ -1,19 +1,12 @@
 package com.intellibucket.user.service.domain.shell.port.input.rest.abstracts.query;
 
-import com.intelliacademy.orizonroute.identity.user.UserID;
 import com.intellibucket.user.service.domain.core.root.UserRoot;
-import com.intellibucket.user.service.domain.core.valueObject.RoleAuthorithy;
-import com.intellibucket.user.service.domain.core.valueObject.Status;
+import com.intellibucket.user.service.domain.shell.dto.query.FetchUserByIdCommand;
 
-import java.util.List;
 import java.util.Optional;
 
 public interface UserQueryServicePort {
-    List<RoleAuthorithy> getAllCustomers();
+//    List<UserRoot> getUsersByStatusAndByRole(FetchUsersByRoleAndAuthorityCommand command);
 
-    List<RoleAuthorithy> getAllCompanies();
-
-    List<Status> getUsersByStatusAndByRole(Status status, RoleAuthorithy role);
-
-    Optional<UserRoot> findByUserId(UserID userID);
+    Optional<UserRoot> findByUserId(FetchUserByIdCommand command);
 }

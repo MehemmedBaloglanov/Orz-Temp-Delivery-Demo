@@ -11,7 +11,6 @@ import com.intellibucket.user.service.domain.shell.mapper.UserCommandMapper;
 import com.intellibucket.user.service.domain.shell.port.output.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
-import publisher.KafkaEventPublisher;
 
 import java.util.Optional;
 
@@ -20,7 +19,6 @@ import java.util.Optional;
 public class CustomerUpdateCommandHandler {
     private final UserRepository userRepository;
     private final UserDomainService userDomainService;
-    private final KafkaEventPublisher eventPublisher;
 //    private final AbstractSecurityContextHolder securityContextHolder;
 
     public void handle(CustomerUpdateCommand command) throws UserNotFoundException, UserSavedException {
@@ -34,7 +32,6 @@ public class CustomerUpdateCommandHandler {
             throw new UserNotFoundException("User not found with ID" + userID.value());
         }
         UserUpdatedDomainEvent userUpdatedDomainEvent = userDomainService.userUpdated(userUpdate);
-        eventPublisher.publishUserUpdatedEvent(userUpdatedDomainEvent);
 
         UserRoot savedUserRoot = userRepository.save(userUpdate);
         if (savedUserRoot == null) {
