@@ -20,6 +20,8 @@ public interface UserCommandServicePort {
     void customerDelete(UserDeleteCommand command) throws UserDomainException;
 
     void userLoggedIn(UserLoginCommand userLoginCommand,UserID userID) throws UserDomainException;
-//
-//    void changePassword(UserChangePasswordCommand userChangePasswordCommand) throws UserDomainException;
+
+    void customerChangePassword(UserChangePasswordCommand command) throws UserDomainException;
+
+    void companyChangePassword(UserChangePasswordCommand command) throws UserDomainException;
 }

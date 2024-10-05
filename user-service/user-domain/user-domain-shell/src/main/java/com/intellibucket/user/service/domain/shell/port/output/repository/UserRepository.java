@@ -12,8 +12,8 @@ import java.util.Optional;
 
 public interface UserRepository {
     Optional<UserRoot> findByCustomerId(UserID userId);
-    Optional<UserRoot> findByCompanyId(UserID userId);
 
+    Optional<UserRoot> findByCompanyId(UserID userId);
 
     UserRoot update(UserRoot userRoot) throws UserNotFoundException;
 
