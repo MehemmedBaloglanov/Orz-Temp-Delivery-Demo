@@ -61,4 +61,10 @@ public class UserCommandMapper {
         userRoot.setCompanyName(command.getCompanyName());
         return userRoot;
     }
+
+    public static UserRoot userChangePasswordCommandToUserRoot(UserChangePasswordCommand command) {
+        return UserRoot.builder()
+                .password(Password.of(command.getNewPassword()))
+                .build();
+    }
 }
