@@ -27,12 +27,12 @@ public class CustomerChangePasswordCommandHandler {
     public void handle(UserChangePasswordCommand command) throws UserDomainException {
         UserID customerUserID = securityContextHolder.currentCustomerID();
 
-        Optional<UserRoot> userRootOptional = userRepository.findByCustomerId(customerUserID);
-        if (userRootOptional.isEmpty()) {
+        Optional<UserRoot> userRoot = userRepository.findByCustomerId(customerUserID);
+        if (userRoot.isEmpty()) {
             throw new UserNotFoundException("User not found with ID: " + customerUserID);
         }
 
-        UserRoot user = userRootOptional.get();
+        UserRoot user = userRoot.get();
 
         Password oldPassword = Password.builder().value(command.getOldPassword()).build();
         Password newPassword = Password.builder().value(command.getNewPassword()).build();

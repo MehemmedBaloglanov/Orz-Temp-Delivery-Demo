@@ -28,12 +28,12 @@ public class CompanyChangePasswordCommandHandler {
 
         UserID currentCompanyID = securityContextHolder.currentCompanyID();
 
-        Optional<UserRoot> userRootOptional = userRepository.findByCompanyId(currentCompanyID);
-        if (userRootOptional.isEmpty()) {
+        Optional<UserRoot> userRoot = userRepository.findByCompanyId(currentCompanyID);
+        if (userRoot.isEmpty()) {
             throw new UserNotFoundException("User not found with ID: " + currentCompanyID);
         }
 
-        UserRoot user = userRootOptional.get();
+        UserRoot user = userRoot.get();
 
         Password oldPassword = Password.builder().value(command.getOldPassword()).build();
         Password newPassword = Password.builder().value(command.getNewPassword()).build();
