@@ -65,34 +65,34 @@ public class UserRepositoryImpl implements UserRepository {
 
 
 
-    @Override
-    public UserRoot update(UserRoot userRoot) throws UserNotFoundException {
-        if (RoleAuthorithy.CUSTOMER.isRoleCustomer()) {
-            Optional<CustomerRegistrationEntity> user = customerJpaRepository.findById(userRoot.getUserID().value());
-
-            if (user.isEmpty()) {
-                throw new UserNotFoundException("User not found with ID: " + userRoot.getUserID());
-            } else {
-                CustomerRegistrationEntity userEntity = user.get();
-                customerJpaRepository.save(userEntity);
-                return userDataAccessMapper.customerEntityToUserRoot(userEntity);
-            }
-        } else if (RoleAuthorithy.COMPANY.isRoleCompany()) {
-
-            Optional<CompanyRegistrationEntity> user = companyJpaRepository.findById(userRoot.getUserID().value());
-
-            if (user.isEmpty()) {
-                throw new UserNotFoundException("User not found with ID: " + userRoot.getUserID());
-            } else {
-                CompanyRegistrationEntity userEntity = user.get();
-                companyJpaRepository.save(userEntity);
-                return userDataAccessMapper.companyEntityToUserRoot(userEntity);
-            }
-
-        }
-
-        return userRoot;
-    }
+//    @Override
+//    public UserRoot update(UserRoot userRoot) throws UserNotFoundException {
+//        if (RoleAuthorithy.CUSTOMER.isRoleCustomer()) {
+//            Optional<CustomerRegistrationEntity> user = customerJpaRepository.findById(userRoot.getUserID().value());
+//
+//            if (user.isEmpty()) {
+//                throw new UserNotFoundException("User not found with ID: " + userRoot.getUserID());
+//            } else {
+//                CustomerRegistrationEntity userEntity = user.get();
+//                customerJpaRepository.save(userEntity);
+//                return userDataAccessMapper.customerEntityToUserRoot(userEntity);
+//            }
+//        } else if (RoleAuthorithy.COMPANY.isRoleCompany()) {
+//
+//            Optional<CompanyRegistrationEntity> user = companyJpaRepository.findById(userRoot.getUserID().value());
+//
+//            if (user.isEmpty()) {
+//                throw new UserNotFoundException("User not found with ID: " + userRoot.getUserID());
+//            } else {
+//                CompanyRegistrationEntity userEntity = user.get();
+//                companyJpaRepository.save(userEntity);
+//                return userDataAccessMapper.companyEntityToUserRoot(userEntity);
+//            }
+//
+//        }
+//
+//        return userRoot;
+//    }
 
     @Override
     public UserRoot save(UserRoot userRoot) {

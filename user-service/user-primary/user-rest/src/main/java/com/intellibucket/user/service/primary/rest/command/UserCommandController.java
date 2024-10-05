@@ -1,12 +1,10 @@
 package com.intellibucket.user.service.primary.rest.command;
 
-import com.intelliacademy.orizonroute.identity.user.UserID;
 import com.intellibucket.user.service.domain.core.exception.UserDomainException;
 import com.intellibucket.user.service.domain.core.exception.user.UserNotFoundException;
 import com.intellibucket.user.service.domain.core.exception.user.UserSavedException;
 import com.intellibucket.user.service.domain.shell.dto.request.*;
 import com.intellibucket.user.service.domain.shell.dto.response.EmptyResponse;
-import com.intellibucket.user.service.domain.shell.dto.response.UserLoginResponse;
 import com.intellibucket.user.service.domain.shell.port.input.rest.abstracts.command.UserCommandServicePort;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -73,11 +71,16 @@ public class UserCommandController {
         return ResponseEntity.ok(response);
     }
 
-    @PostMapping("/login/{userId}")
-    public ResponseEntity<UserLoginResponse> loginUser(@RequestBody UserLoginCommand command,String userId) throws UserDomainException {
-        UserID userID1 = UserID.of(userId);
-        abstractUserCommandService.userLoggedIn(command,userID1);
-        UserLoginResponse response = new UserLoginResponse();
+    @PostMapping("/customer/login")
+    public ResponseEntity<EmptyResponse> customerLogin(@RequestBody UserLoginCommand command) throws UserDomainException {
+        abstractUserCommandService.customerLogin(command);
+        EmptyResponse response = EmptyResponse.builder().message("User deleted successfully !").success(true).build();
         return ResponseEntity.ok(response);
    }
+    @PostMapping("/company/login")
+    public ResponseEntity<EmptyResponse> companyLogin(@RequestBody UserLoginCommand command) throws UserDomainException {
+        abstractUserCommandService.companyLogin(command);
+        EmptyResponse response = EmptyResponse.builder().message("User deleted successfully !").success(true).build();
+        return ResponseEntity.ok(response);
+    }
 }

@@ -20,20 +20,22 @@ import java.util.Optional;
 
 @Component
 @RequiredArgsConstructor
-public class UserLoginCommandHandler {
+public class CompanyLoginCommandHandler {
     private final UserRepository userRepository;
     private final UserDomainService userDomainService;
     private final AbstractSecurityContextHolder securityContextHolder;
 
     @Transactional
     public void handle(UserLoginCommand command) throws UserDomainException {
-        UserID currentUserId = securityContextHolder.currentCompanyID();
+
+        UserID companyUserId = securityContextHolder.currentCompanyID();
+
         UserRoot userFromCommand = UserCommandMapper.userLoginCommandToUserRoot(command);
 
-        Optional<UserRoot> userRootOptional = userRepository.findByEmail(userFromCommand.getEmail(), userFromCommand);
+        Optional<UserRoot> userRootOptional = userRepository.findByCompanyId(companyUserId);
 
         if (userRootOptional.isEmpty()) {
-            throw new UserNotFoundException("User not found with email! " + command.getEmail());
+            throw new UserNotFoundException("User not found with UserId! " + companyUserId);
         }
 
         UserRoot user = userRootOptional.get();

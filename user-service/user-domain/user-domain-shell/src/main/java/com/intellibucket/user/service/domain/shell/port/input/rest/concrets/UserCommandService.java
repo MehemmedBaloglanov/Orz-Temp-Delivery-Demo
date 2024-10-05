@@ -1,6 +1,5 @@
 package com.intellibucket.user.service.domain.shell.port.input.rest.concrets;
 
-import com.intelliacademy.orizonroute.identity.user.UserID;
 import com.intellibucket.user.service.domain.core.exception.UserDomainException;
 import com.intellibucket.user.service.domain.core.exception.user.UserNotFoundException;
 import com.intellibucket.user.service.domain.core.exception.user.UserSavedException;
@@ -17,11 +16,12 @@ public class UserCommandService implements UserCommandServicePort {
     private final CustomerRegisterCommandHandler customerRegisterCommandHandler;
     private final CompanyDeleteCommandHandler companyDeleteCommandHandler;
     private final CustomerUpdateCommandHandler customerUpdateCommandHandler;
-    private final UserLoginCommandHandler userLoginCommandHandler;
+    private final CustomerLoginCommandHandler customerLoginCommandHandler;
     private final CustomerChangePasswordCommandHandler customerChangePasswordCommandHandler;
     private final CompanyUpdateCommandHandler companyUpdateCommandHandler;
     private final CustomerDeleteCommandHandler customerDeleteCommandHandler;
     private final CompanyChangePasswordCommandHandler companyChangePasswordCommandHandler;
+    private final CompanyLoginCommandHandler companyLoginCommandHandler;
 
     @Override
     public void companyRegistered(CompanyCreateCommand command) throws UserDomainException {
@@ -55,8 +55,13 @@ public class UserCommandService implements UserCommandServicePort {
     }
 
     @Override
-    public void userLoggedIn(UserLoginCommand userLoginCommand, UserID userID) throws UserDomainException {
-      userLoginCommandHandler.handle(userLoginCommand);
+    public void customerLogin(UserLoginCommand command) throws UserDomainException {
+      customerLoginCommandHandler.handle(command);
+    }
+
+    @Override
+    public void companyLogin(UserLoginCommand command) throws UserDomainException {
+       companyLoginCommandHandler.handle(command);
     }
 
     @Override

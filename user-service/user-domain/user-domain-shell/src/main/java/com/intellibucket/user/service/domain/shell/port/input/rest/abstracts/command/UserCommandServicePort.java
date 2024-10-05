@@ -1,6 +1,5 @@
 package com.intellibucket.user.service.domain.shell.port.input.rest.abstracts.command;
 
-import com.intelliacademy.orizonroute.identity.user.UserID;
 import com.intellibucket.user.service.domain.core.exception.UserDomainException;
 import com.intellibucket.user.service.domain.core.exception.user.UserNotFoundException;
 import com.intellibucket.user.service.domain.core.exception.user.UserSavedException;
@@ -19,7 +18,9 @@ public interface UserCommandServicePort {
 
     void customerDelete(UserDeleteCommand command) throws UserDomainException;
 
-    void userLoggedIn(UserLoginCommand userLoginCommand,UserID userID) throws UserDomainException;
+    void customerLogin(UserLoginCommand userLoginCommand) throws UserDomainException;
+
+    void companyLogin(UserLoginCommand userLoginCommand) throws UserDomainException;
 
     void customerChangePassword(UserChangePasswordCommand command) throws UserDomainException;
 
