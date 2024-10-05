@@ -58,15 +58,21 @@ public class UserCommandController {
         abstractUserCommandService.companyDelete(command);
         return ResponseEntity.ok(EmptyResponse.builder().message("User deleted successfully !").success(true).build());
     }
-//
-//    @PostMapping("/{id}/change-password")
-//    public ResponseEntity<EmptyResponse> changePassword(@RequestBody UserChangePasswordCommand command) throws UserDomainException {
-////        UserID userID = UserID.of(id); //FIXME abstractSecurity holderdan al.
-//        abstractUserCommandService.changePassword(command);
-//        EmptyResponse response = EmptyResponse.builder().message("User deleted successfully !").success(true).build();
-//        return ResponseEntity.ok(response);
-//    }
-//
+
+    @PostMapping("/customer/change/password")
+    public ResponseEntity<EmptyResponse> customerChangePassword(@RequestBody UserChangePasswordCommand command) throws UserDomainException {
+        abstractUserCommandService.customerChangePassword(command);
+        EmptyResponse response = EmptyResponse.builder().message("User deleted successfully !").success(true).build();
+        return ResponseEntity.ok(response);
+    }
+
+    @PostMapping("/company/change/password")
+    public ResponseEntity<EmptyResponse> companyChangePassword(@RequestBody UserChangePasswordCommand command) throws UserDomainException {
+        abstractUserCommandService.companyChangePassword(command);
+        EmptyResponse response = EmptyResponse.builder().message("User deleted successfully !").success(true).build();
+        return ResponseEntity.ok(response);
+    }
+
     @PostMapping("/login/{userId}")
     public ResponseEntity<UserLoginResponse> loginUser(@RequestBody UserLoginCommand command,String userId) throws UserDomainException {
         UserID userID1 = UserID.of(userId);

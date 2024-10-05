@@ -18,9 +18,10 @@ public class UserCommandService implements UserCommandServicePort {
     private final CompanyDeleteCommandHandler companyDeleteCommandHandler;
     private final CustomerUpdateCommandHandler customerUpdateCommandHandler;
     private final UserLoginCommandHandler userLoginCommandHandler;
-    private final UserChangePasswordCommandHandler userChangePasswordCommandHandler;
+    private final CustomerChangePasswordCommandHandler customerChangePasswordCommandHandler;
     private final CompanyUpdateCommandHandler companyUpdateCommandHandler;
     private final CustomerDeleteCommandHandler customerDeleteCommandHandler;
+    private final CompanyChangePasswordCommandHandler companyChangePasswordCommandHandler;
 
     @Override
     public void companyRegistered(CompanyCreateCommand command) throws UserDomainException {
@@ -57,20 +58,15 @@ public class UserCommandService implements UserCommandServicePort {
     public void userLoggedIn(UserLoginCommand userLoginCommand, UserID userID) throws UserDomainException {
       userLoginCommandHandler.handle(userLoginCommand);
     }
+
+    @Override
+    public void customerChangePassword(UserChangePasswordCommand command) throws UserDomainException {
+        customerChangePasswordCommandHandler.handle(command);
+    }
+
+    @Override
+    public void companyChangePassword(UserChangePasswordCommand command) throws UserDomainException {
+        companyChangePasswordCommandHandler.handle(command);
+    }
 }
 
-//    @Override
-//    public void companyDelete(UserDeleteCommand command) throws UserDomainException {
-//        userDeleteCommandHandler.handle(command);
-//    }
-//
-//    @Override
-//    public void userLoggedIn(UserLoginCommand command) throws UserDomainException {
-//        userLoginCommandHandler.handle(command);
-//    }
-//
-//    @Override
-//    public void changePassword(UserChangePasswordCommand command) throws UserDomainException {
-//        userChangePasswordCommandHandler.handle(command);
-//
-//    }

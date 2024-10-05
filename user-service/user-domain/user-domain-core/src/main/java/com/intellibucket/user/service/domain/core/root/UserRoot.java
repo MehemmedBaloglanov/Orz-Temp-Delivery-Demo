@@ -1,6 +1,5 @@
 package com.intellibucket.user.service.domain.core.root;
 
-import com.intelliacademy.orizonroute.identity.customer.CustomerID;
 import com.intelliacademy.orizonroute.identity.user.UserID;
 import com.intelliacademy.orizonroute.root.AggregateRoot;
 import com.intelliacademy.orizonroute.valueobjects.common.Email;
@@ -79,8 +78,7 @@ public class UserRoot extends AggregateRoot<UserID> {
 
     }
 
-    //FIXME nezer etmek lazimdir
-    public void userChangePassword(Password oldPassword, Password newPassword) throws UserDomainException {
+    public void changePassword(Password oldPassword, Password newPassword) throws UserDomainException {
         if (!this.password.isEqual(oldPassword)) {
             throw new UserDomainException("Old password is invalid!");
         }
