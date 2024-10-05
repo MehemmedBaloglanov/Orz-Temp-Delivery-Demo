@@ -1,4 +1,4 @@
-package com.intellibucket.user.service.configuration.jpa;
+package com.intellibucket.user.service.configuration.bean;
 
 import com.intellibucket.user.service.domain.shell.port.output.repository.UserRepository;
 import com.intellibucket.user.service.repository.adapter.UserRepositoryImpl;

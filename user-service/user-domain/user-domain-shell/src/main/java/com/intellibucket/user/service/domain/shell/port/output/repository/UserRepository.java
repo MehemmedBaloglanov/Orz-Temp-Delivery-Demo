@@ -22,4 +22,6 @@ public interface UserRepository {
     List<RoleAuthorithy> findByAuthority(String name);
 
     List<Status> findByStatusAndRoleAuthority(Status status, RoleAuthorithy role);
+
+    Optional<UserRoot> findByUserId(UserID userId);
 }

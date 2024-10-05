@@ -140,4 +140,9 @@ public class UserRepositoryImpl implements UserRepository {
     public List<Status> findByStatusAndRoleAuthority(Status status, RoleAuthorithy role) {
         return List.of();
     }
+
+    @Override
+    public Optional<UserRoot> findByUserId(UserID userId) {
+        return Optional.empty();
+    }
 }

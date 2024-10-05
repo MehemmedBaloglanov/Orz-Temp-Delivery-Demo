@@ -1,9 +1,22 @@
 logging:
   level:
-    #    root: info
-    com.intellibucket: debug
+    root: error
+#    com.intellibucket: error
 spring:
+  mail:
+    properties:
+      mail:
+        smtp:
+          starttls:
+            enable: true
+          auth: true
+    host: smtp.gmail.com
+    port: 587
+    username: orucmollaev@gmail.com
+    password: yhnn aotx gnwq vkjh
   datasource:
+    hikari:
+      connection-timeout: 30000
     url: jdbc:mysql://localhost:3306/delivery
     username: root
     password: qwerty1212
@@ -17,6 +30,12 @@ spring:
     open-in-view: false
   main:
     allow-circular-references: true
+issue:
+  key: WmFxYXRhbGExOTkwMjAxODIwMTkyMDIyTWFoaXJBeWxpbjkwT3g5NjJIYXlhbGxlckFtZXJpa2FIYXlhdGxhcg==
+security:
+  jwt:
+    expiration-time: 3600000
+
 #spring:
 #  datasource:
 #    url: jdbc:postgresql://localhost:5432/delivery
@@ -41,6 +60,6 @@ env:
         id: 019256c6-5f3a-7f72-96b5-e68bbaa7419d
 
       company:
-        id: 01925279-af65-7f45-b68a-6a48cbada2ee
+        id: 01925e1b-436c-7450-b17a-2f9f6a2da2fa
 
 
