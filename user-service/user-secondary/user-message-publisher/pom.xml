@@ -24,6 +24,10 @@
             <artifactId>spring-kafka</artifactId>
             <version>3.2.3</version>
         </dependency>
+        <dependency>
+            <groupId>com.intellibucket</groupId>
+            <artifactId>user-domain-shell</artifactId>
+        </dependency>
     </dependencies>
     <modelVersion>4.0.0</modelVersion>
 

@@ -1,4 +1,4 @@
-package com.intellibucket.user.service.configuration.security;
+package com.intellibucket.user.service.domain.shell.authentication.config;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -33,7 +33,7 @@ public class SecurityConfiguration {
                     request
                             .requestMatchers(HttpMethod.POST, "/api/1.0/users/login", "/api/1.0/users/register/customer", "/api/1.0/users/register/company", "/swagger-ui.html").permitAll()
                             .requestMatchers(HttpMethod.POST, "/api/1.0/users/change-password", "/api/1.0/users/{delete}").hasAnyRole("CUSTOMER", "COMPANY", "ADMIN")
-                            .anyRequest().authenticated();
+                            .anyRequest().permitAll();
                 })
                 .sessionManagement(x -> x.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authenticationProvider(authenticationProvider())

@@ -10,7 +10,6 @@ import com.intellibucket.user.service.domain.shell.dto.request.UserDeleteCommand
 import com.intellibucket.user.service.domain.shell.port.output.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
-import publisher.KafkaEventPublisher;
 
 import java.util.Optional;
 
@@ -19,7 +18,6 @@ import java.util.Optional;
 public class UserDeleteCommandHandler {
     private final UserRepository userRepository;
     private final UserDomainService userDomainService;
-    private final KafkaEventPublisher eventPublisher;
 
     public void handle(UserDeleteCommand command) throws UserDomainException {
         UserID userID = UserID.of(command.getEmail());
@@ -30,7 +28,6 @@ public class UserDeleteCommandHandler {
         }
 
         UserDeletedDomainEvent userDeletedDomainEvent = userDomainService.userDeleted(userRoot.get());
-        eventPublisher.publishUserDeletedEvent(userDeletedDomainEvent);
 
         userRepository.delete(userRoot.get());
     }

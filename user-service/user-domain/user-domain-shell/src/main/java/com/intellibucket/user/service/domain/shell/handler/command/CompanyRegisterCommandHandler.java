@@ -8,11 +8,13 @@ import com.intellibucket.user.service.domain.core.root.UserRoot;
 import com.intellibucket.user.service.domain.core.service.port.UserDomainService;
 import com.intellibucket.user.service.domain.shell.dto.request.CompanyCreateCommand;
 import com.intellibucket.user.service.domain.shell.mapper.UserCommandMapper;
+import com.intellibucket.user.service.domain.shell.notification.EmailService;
+import com.intellibucket.user.service.domain.shell.port.output.publisher.EventPublisher;
 import com.intellibucket.user.service.domain.shell.port.output.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
-import publisher.KafkaEventPublisher;
 
+import java.time.OffsetDateTime;
 import java.util.Optional;
 
 @Component
@@ -20,7 +22,8 @@ import java.util.Optional;
 public class CompanyRegisterCommandHandler {
     private final UserRepository userRepository;
     private final UserDomainService userDomainService;
-    private final KafkaEventPublisher eventPublisher;
+    private final EventPublisher eventPublisher;
+    private final EmailService emailService;
 
     public void handle(CompanyCreateCommand command) throws UserDomainException {
         UserRoot newUser = UserCommandMapper.companyCreateCommandToUserRoot(command);
@@ -29,12 +32,14 @@ public class CompanyRegisterCommandHandler {
         if (optionalUserRoot.isPresent()) {
             throw new EmailAlreadyExistException("User already exist with email..: " + command.getEmail());
         }
-//        UserRegisteredEvent userRegisteredEvent = userDomainService.companyRegistered(newUser);
-//        eventPublisher.publishUserRegisteredEvent(userRegisteredEvent);
 
         UserRoot savedUserRoot = userRepository.save(newUser);
+        emailService.sendRegisteringMessage(command.getEmail(), command.getCompanyName());
         if (savedUserRoot == null) {
             throw new UserSavedException("User could not be saved: " + newUser.getUserID());
         }
+
+        UserRegisteredEvent userRegisteredEvent = userDomainService.companyRegistered(newUser);
+        eventPublisher.publishUserRegisteredEvent(userRegisteredEvent);
     }
 } //outbox-a save et userRegisteredEvent, sonra scheduler ile mueyyen vaxtdan bir meulumarlari cekib kafkaya push et

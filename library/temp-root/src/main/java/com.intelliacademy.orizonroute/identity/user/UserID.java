@@ -21,4 +21,8 @@ public class UserID extends BaseID<UUID> {
     public static UserID random() {
         return new UserID(UUIDv7.randomUUID());
     }
+
+    public UUID getId() {
+        return super.getId();
+    }
 }

@@ -14,7 +14,6 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
-import publisher.KafkaEventPublisher;
 
 import java.util.ArrayList;
 import java.util.Optional;
@@ -24,7 +23,6 @@ import java.util.Optional;
 public class UserLoginCommandHandler {
     private final UserRepository userRepository;
     private final UserDomainService userDomainService;
-    private final KafkaEventPublisher eventPublisher;
 
     public void handle(UserLoginCommand command) throws UserDomainException {
         UserRoot userFromCommand = UserCommandMapper.userLoginCommandToUserRoot(command);

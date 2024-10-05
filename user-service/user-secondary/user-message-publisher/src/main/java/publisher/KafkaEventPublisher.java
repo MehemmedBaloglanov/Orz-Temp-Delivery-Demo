@@ -1,11 +1,12 @@
 package publisher;
 
 import com.intellibucket.user.service.domain.core.event.*;
+import com.intellibucket.user.service.domain.shell.port.output.publisher.EventPublisher;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Component;
 
 @Component
-public class KafkaEventPublisher {
+public class KafkaEventPublisher implements EventPublisher {
     private final KafkaTemplate<String, UserDomainEvent> kafkaTemplate;
 
     public KafkaEventPublisher(KafkaTemplate<String, UserDomainEvent> kafkaTemplate) {
