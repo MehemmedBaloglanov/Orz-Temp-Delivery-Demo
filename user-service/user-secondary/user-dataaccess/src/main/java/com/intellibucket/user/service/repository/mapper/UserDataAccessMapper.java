@@ -13,13 +13,18 @@ import com.intellibucket.user.service.repository.model.CompanyRegistrationEntity
 import com.intellibucket.user.service.repository.model.CustomerRegistrationEntity;
 import com.intellibucket.user.service.repository.model.PhoneNumberEntity;
 import com.intellibucket.user.service.repository.model.UserAddressEntity;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
+@Slf4j
 @Component
 public class UserDataAccessMapper {
     public CustomerRegistrationEntity userRootToCustomerEntity(UserRoot userRoot) {
+        log.debug("userRoot: {}", userRoot);
         return CustomerRegistrationEntity.builder()
-                .userEntityId(UserID.random().value())
+                .userEntityId(userRoot.getUserID().value())
+                .lastName(userRoot.getLastName())
+                .firstName(userRoot.getFirstName())
                 .username(userRoot.getUsername().value())
                 .email(userRoot.getEmail().getValue())
                 .emailType(userRoot.getEmail().getType())
@@ -27,49 +32,53 @@ public class UserDataAccessMapper {
                 .status(userRoot.getStatus())
                 .roleAuthority(userRoot.getRoleAuthorithy())
                 .address(addressToUserJpaAddress(userRoot.getAddress()))
-                .phoneNumberEntity(phoneNumberToPhoneNumberEntity(userRoot.getPhoneNumber().validate()))
+                .phoneNumberEntity(phoneNumberToPhoneNumberEntity(userRoot.getPhoneNumber()))
                 .build();
     }
 
     public CompanyRegistrationEntity userRootToCompanyEntity(UserRoot userRoot) {
         return CompanyRegistrationEntity.builder()
-                .userEntityId(UserID.random().value())
-                .companyName(userRoot.getUsername().value())
+                .userEntityId(userRoot.getUserID().value())
+                .username(userRoot.getUsername().value())
+                .companyName(userRoot.getCompanyName())
                 .email(userRoot.getEmail().getValue())
                 .emailType(userRoot.getEmail().getType())
                 .password(userRoot.getPassword().getValue())
                 .status(userRoot.getStatus())
                 .roleAuthority(userRoot.getRoleAuthorithy())
                 .address(addressToUserJpaAddress(userRoot.getAddress()))
-                .phoneNumberEntity(phoneNumberToPhoneNumberEntity(userRoot.getPhoneNumber().validate()))
+                .phoneNumberEntity(phoneNumberToPhoneNumberEntity(userRoot.getPhoneNumber()))
                 .build();
     }
 
-    public UserRoot customerEntityToUserRoot(CustomerRegistrationEntity userEntity) {
+public UserRoot customerEntityToUserRoot(CustomerRegistrationEntity userEntity) {
         return UserRoot.builder()
-                .username(Username.generate(userEntity.getUsername()))
+                .username(Username.of(userEntity.getUsername()))
+                .firstName(userEntity.getFirstName())
+                .lastName(userEntity.getLastName())
                 .userID(UserID.of(userEntity.getUserEntityId()))
                 .address(userJpaAdresstoAddress(userEntity.getAddress()))
                 .status(userEntity.getStatus())
                 .roleAuthorithy(userEntity.getRoleAuthority())
                 .password(Password.of(userEntity.getPassword()))
-                .email(Email.of(userEntity.getEmailType(), userEntity.getEmail()))
+                .email(Email.of(userEntity.getEmailType(),userEntity.getEmail()))
                 .phoneNumber(phoneNumberEntityToPhoneNumber(userEntity.getPhoneNumberEntity()))
                 .build();
     }
 
-    public UserRoot companyEntityToUserRoot(CompanyRegistrationEntity userEntity) {
-        return UserRoot.builder()
-                .username(Username.generate(userEntity.getCompanyName()))
-                .userID(UserID.of(userEntity.getUserEntityId()))
-                .address(userJpaAdresstoAddress(userEntity.getAddress()))
-                .status(userEntity.getStatus())
-                .roleAuthorithy(userEntity.getRoleAuthority())
-                .password(Password.of(userEntity.getPassword()))
-                .email(Email.of(userEntity.getEmailType(), userEntity.getEmail()))
-                .phoneNumber(phoneNumberEntityToPhoneNumber(userEntity.getPhoneNumberEntity()))
-                .build();
-    }
+public UserRoot companyEntityToUserRoot(CompanyRegistrationEntity userEntity) {
+    return UserRoot.builder()
+            .username(Username.of(userEntity.getUsername()))
+            .userID(UserID.of(userEntity.getUserEntityId()))
+            .address(userJpaAdresstoAddress(userEntity.getAddress()))
+            .status(userEntity.getStatus())
+            .companyName(userEntity.getCompanyName())
+            .roleAuthorithy(userEntity.getRoleAuthority())
+            .password(Password.of(userEntity.getPassword()))
+            .email(Email.of(userEntity.getEmailType(),userEntity.getEmail()))
+            .phoneNumber(phoneNumberEntityToPhoneNumber(userEntity.getPhoneNumberEntity()))
+            .build();
+}
 
     public Address userJpaAdresstoAddress(UserAddressEntity address) {
         return Address.builder()
@@ -93,11 +102,11 @@ public class UserDataAccessMapper {
     }
 
     public PhoneNumber phoneNumberEntityToPhoneNumber(PhoneNumberEntity phoneNumber) {
-        return PhoneNumber.builder()
-                .number(phoneNumber.getNumber())
-                .countryCode(phoneNumber.getCountryCode())
-                .type(phoneNumber.getType())
-                .build();
+    return PhoneNumber.builder()
+            .number(phoneNumber.getNumber())
+            .countryCode(phoneNumber.getCountryCode())
+            .type(phoneNumber.getType())
+            .build();
     }
 
     public PhoneNumberEntity phoneNumberToPhoneNumberEntity(PhoneNumber phoneNumber) {
@@ -106,34 +115,6 @@ public class UserDataAccessMapper {
                 .number(phoneNumber.getNumber())
                 .countryCode(phoneNumber.getCountryCode())
                 .type(phoneNumber.getType())
-                .build();
-    }
-
-    public CompanyRegistrationEntity loginToCompanyEntity(UserRoot userRoot) {
-        return CompanyRegistrationEntity.builder()
-                .email(userRoot.getEmail().getValue())
-                .emailType(userRoot.getEmail().getType())
-                .password(userRoot.getPassword().getValue())
-                .build();
-    }
-
-    public CustomerRegistrationEntity loginToCustomerEntity(UserRoot userRoot) {
-        return CustomerRegistrationEntity.builder()
-                .email(userRoot.getEmail().getValue())
-                .emailType(userRoot.getEmail().getType())
-                .password(userRoot.getPassword().getValue())
-                .build();
-    }
-    public UserRoot loginCustomerToUserRoot(CustomerRegistrationEntity userEntity) {
-        return UserRoot.builder()
-                .password(Password.of(userEntity.getPassword()))
-                .email(Email.of(userEntity.getEmailType(), userEntity.getEmail()))
-                .build();
-    }
-    public UserRoot loginCompanyToUserRoot(CompanyRegistrationEntity userEntity) {
-        return UserRoot.builder()
-                .password(Password.of(userEntity.getPassword()))
-                .email(Email.of(userEntity.getEmailType(), userEntity.getEmail()))
                 .build();
     }
 }

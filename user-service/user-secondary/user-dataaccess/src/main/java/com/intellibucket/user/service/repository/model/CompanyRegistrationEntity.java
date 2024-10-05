@@ -25,4 +25,5 @@ public class CompanyRegistrationEntity extends BaseUserEntity {
     @Size(min = 4, max = 50)
     @Pattern(regexp = "^[a-zA-Z0-9_]*$")
     String companyName;
+    String username;
 }

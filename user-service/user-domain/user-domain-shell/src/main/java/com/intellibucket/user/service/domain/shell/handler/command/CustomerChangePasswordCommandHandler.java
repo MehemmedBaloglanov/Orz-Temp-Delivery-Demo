@@ -1,47 +1,53 @@
 package com.intellibucket.user.service.domain.shell.handler.command;
 
 import com.intelliacademy.orizonroute.identity.user.UserID;
-import com.intellibucket.user.service.domain.core.event.UserUpdatedDomainEvent;
+import com.intellibucket.user.service.domain.core.event.UserChangePasswordDomainEvent;
+import com.intellibucket.user.service.domain.core.exception.UserDomainException;
+import com.intellibucket.user.service.domain.core.exception.password.PasswordValidationException;
 import com.intellibucket.user.service.domain.core.exception.user.UserNotFoundException;
 import com.intellibucket.user.service.domain.core.exception.user.UserSavedException;
 import com.intellibucket.user.service.domain.core.root.UserRoot;
 import com.intellibucket.user.service.domain.core.service.port.UserDomainService;
-import com.intellibucket.user.service.domain.shell.dto.request.CustomerUpdateCommand;
-import com.intellibucket.user.service.domain.shell.mapper.UserCommandMapper;
+import com.intellibucket.user.service.domain.core.valueObject.Password;
+import com.intellibucket.user.service.domain.shell.dto.request.UserChangePasswordCommand;
 import com.intellibucket.user.service.domain.shell.port.output.repository.UserRepository;
 import com.intellibucket.user.service.domain.shell.security.AbstractSecurityContextHolder;
-import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 import java.util.Optional;
 
-@Slf4j
 @Component
 @RequiredArgsConstructor
-public class CustomerUpdateCommandHandler {
+public class CustomerChangePasswordCommandHandler {
     private final UserRepository userRepository;
     private final UserDomainService userDomainService;
     private final AbstractSecurityContextHolder securityContextHolder;
 
-    @Transactional
-    public void handle(CustomerUpdateCommand command) throws UserNotFoundException, UserSavedException {
+    public void handle(UserChangePasswordCommand command) throws UserDomainException {
         UserID customerUserID = securityContextHolder.currentCustomerID();
-
 
         Optional<UserRoot> userRoot = userRepository.findByCustomerId(customerUserID);
         if (userRoot.isEmpty()) {
             throw new UserNotFoundException("User not found with ID: " + customerUserID);
         }
 
-        UserRoot userUpdate = UserCommandMapper.customerUpdateCommandToUserRoot(command, userRoot.get());
+        UserRoot user = userRoot.get();
+
+        Password oldPassword = Password.builder().value(command.getOldPassword()).build();
+        Password newPassword = Password.builder().value(command.getNewPassword()).build();
+
+        user.changePassword(oldPassword, newPassword);
 
 
-        UserUpdatedDomainEvent userUpdatedDomainEvent = userDomainService.userUpdated(userUpdate);
-        UserRoot savedUserRoot = userRepository.save(userUpdate);
+        UserChangePasswordDomainEvent userChangePasswordDomainEvent = userDomainService.userChangePassword(user);
+
+
+        UserRoot savedUserRoot = userRepository.save(user);
         if (savedUserRoot == null) {
-            throw new UserSavedException("User could not be saved: " + userUpdate.getUserID());
+            throw new UserSavedException("User could not be saved: " + user.getUserID());
         }
     }
 }
+
+
