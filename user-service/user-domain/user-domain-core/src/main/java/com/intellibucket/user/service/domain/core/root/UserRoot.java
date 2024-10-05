@@ -27,12 +27,16 @@ public class UserRoot extends AggregateRoot<UserID> {
     private Password password;
     private final Email email;
     private final PhoneNumber phoneNumber;
-    private final Username username;
+    private Username username;
+    private String firstName;
+    private String lastName;
+    private String companyName;
 
     public void initializeUser() {
         setId(UserID.random());
         status = Status.ACTIVE;
     }
+
 
     public void delete() {
         this.status = Status.DELETED;
@@ -46,6 +50,7 @@ public class UserRoot extends AggregateRoot<UserID> {
         validatePassword();
         validateEmail();
     }
+
 
     private void validateEmail() throws UserDomainException {
         if (this.email == null || !email.isValid()) {
@@ -69,9 +74,20 @@ public class UserRoot extends AggregateRoot<UserID> {
         if (this.password == null || password.getValue().isEmpty()) {
             throw new UserDomainException("Password is not valid");
         }
+
+
     }
 
-    public void userChangePassword(Password newPassword) {
+    public void changePassword(Password oldPassword, Password newPassword) throws UserDomainException {
+        if (!this.password.isEqual(oldPassword)) {
+            throw new UserDomainException("Old password is invalid!");
+        }
+
+        if (oldPassword.isEqual(newPassword)) {
+            throw new UserDomainException("New password cannot be the same as the old password!");
+        }
+
         this.password = newPassword;
     }
+
 }

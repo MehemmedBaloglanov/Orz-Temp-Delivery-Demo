@@ -8,27 +8,32 @@ import com.intellibucket.user.service.domain.core.root.UserRoot;
 import com.intellibucket.user.service.domain.core.service.port.UserDomainService;
 import com.intellibucket.user.service.domain.shell.dto.request.UserDeleteCommand;
 import com.intellibucket.user.service.domain.shell.port.output.repository.UserRepository;
+import com.intellibucket.user.service.domain.shell.security.AbstractSecurityContextHolder;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
 @Component
 @RequiredArgsConstructor
-public class UserDeleteCommandHandler {
+public class CompanyDeleteCommandHandler {
     private final UserRepository userRepository;
     private final UserDomainService userDomainService;
+    private final AbstractSecurityContextHolder securityContextHolder;
 
+    @Transactional
     public void handle(UserDeleteCommand command) throws UserDomainException {
-        UserID userID = UserID.of(command.getEmail());
-        Optional<UserRoot> userRoot = userRepository.findByUserId(userID);
+        UserID companyID = securityContextHolder.currentCompanyID();
+
+        Optional<UserRoot> userRoot = userRepository.findByCompanyId(companyID);
 
         if (userRoot.isEmpty()) {
-            throw new UserNotFoundException("User not found with id: " + userID.value());
+            throw new UserNotFoundException("User not found with id: " + companyID);
         }
 
         UserDeletedDomainEvent userDeletedDomainEvent = userDomainService.userDeleted(userRoot.get());
 
-        userRepository.delete(userRoot.get());
+        userRepository.save(userRoot.get());
     }
-}
+    }

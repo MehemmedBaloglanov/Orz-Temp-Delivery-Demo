@@ -1,13 +1,15 @@
 package com.intellibucket.user.service.domain.shell.dto.request;
 
+import com.intellibucket.user.service.domain.core.root.UserRoot;
+import com.intellibucket.user.service.domain.core.valueObject.Password;
 import lombok.*;
-import lombok.experimental.FieldDefaults;
 
-@Data
+@Getter
 @Builder
 @AllArgsConstructor
-@FieldDefaults(level = AccessLevel.PRIVATE)
+@NoArgsConstructor
+@ToString
 public class UserChangePasswordCommand {
-    String oldPassword;
-    String newPassword;
+    private String oldPassword;
+    private String newPassword;
 }

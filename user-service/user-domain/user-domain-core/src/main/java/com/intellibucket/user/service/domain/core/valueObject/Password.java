@@ -51,6 +51,10 @@ public final class Password {
         return value == null;
     }
 
+    public boolean isEqual(Password otherPassword) {
+        return this.value.equals(otherPassword.getValue());
+    }
+
     public static Password changePassword(String currentPassword, String oldPassword, String newPassword) {
         if (!currentPassword.equals(oldPassword)) {
             throw new IllegalArgumentException("Old password does not match!");

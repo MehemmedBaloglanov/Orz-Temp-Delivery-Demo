@@ -1,6 +1,7 @@
 logging:
   level:
     root: error
+#    com.intellibucket: error
 spring:
   mail:
     properties:
@@ -51,3 +52,14 @@ security:
 #        format_sql: true # To format SQL queries nicely in the logs
 
 #        open-in-view: false
+
+env:
+  test:
+    current:
+      customer:
+        id: 019256c6-5f3a-7f72-96b5-e68bbaa7419d
+
+      company:
+        id: 01925e1b-436c-7450-b17a-2f9f6a2da2fa
+
+

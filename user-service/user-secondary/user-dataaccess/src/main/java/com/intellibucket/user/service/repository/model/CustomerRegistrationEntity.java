@@ -21,4 +21,6 @@ public class CustomerRegistrationEntity extends BaseUserEntity {
     @NotEmpty
     @Size(min = 3, max = 25)
     private String username;
+    private String lastName;
+    private String firstName;
 }
