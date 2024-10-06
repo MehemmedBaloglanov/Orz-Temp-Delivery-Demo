@@ -14,24 +14,27 @@
         <module name="kafka-consumer" />
         <module name="cart-message-listener" />
         <module name="order-message-listener" />
-        <module name="orizon-http" />
         <module name="company-container" />
         <module name="company-domain-shell" />
         <module name="order-domain-shell" />
         <module name="cart-rest" />
         <module name="temp-root" />
         <module name="order-domain-core" />
+        <module name="saga" />
+        <module name="mock-delivery-service" />
         <module name="user-message-listener" />
         <module name="company-rest" />
         <module name="cart-repository" />
         <module name="orizon-util" />
         <module name="company-service-connector" />
+        <module name="mock-company-service" />
         <module name="order-rest" />
         <module name="company-message-publisher" />
         <module name="kafka-producer" />
         <module name="company-domain-core" />
         <module name="company-repository" />
         <module name="user-rest" />
+        <module name="outbox" />
         <module name="user-container" />
         <module name="order-container" />
         <module name="order-message-publisher" />
@@ -42,12 +45,15 @@
         <module name="cart-domain-shell" />
         <module name="kafka-avro" />
         <module name="cart-service-connector" />
+        <module name="user-service-connector" />
         <module name="user-domain-core" />
         <module name="user-repository" />
+        <module name="mock-payment-service" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="order-dataaccess" target="17" />
+      <module name="orizon-http" target="17" />
       <module name="user-dataaccess" target="17" />
     </bytecodeTargetLevel>
   </component>

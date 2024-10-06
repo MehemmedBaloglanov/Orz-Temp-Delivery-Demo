@@ -2,10 +2,12 @@ package com.intellibucket.order.service.domain.core.valueobject;
 
 import lombok.Builder;
 import lombok.Getter;
+import lombok.ToString;
 
-@Builder
 @Getter
-public class OrderAddress {
+@Builder
+@ToString
+public final class OrderAddress {
     private final String street;
     private final String city;
     private final String state;

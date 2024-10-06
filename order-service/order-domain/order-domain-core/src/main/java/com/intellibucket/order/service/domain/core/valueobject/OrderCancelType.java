@@ -1,7 +1,7 @@
 package com.intellibucket.order.service.domain.core.valueobject;
 
 public enum OrderCancelType {
-    SYSTEM, COMPANY, CUSTOMER;
+    SYSTEM, CUSTOMER, COMPANY;
 
     public Boolean isSystem() {
         return this == OrderCancelType.SYSTEM;
