@@ -35,13 +35,17 @@ services:
     networks:
       - kafka-network
 
-  kafka-manager:
-    image: hlebalbau/kafka-manager:stable
-    restart: always
+  kafka-ui:
+    container_name: kafka-ui
+    image: provectuslabs/kafka-ui
     ports:
-      - "9000:9000"
+      - "9090:8080"
+    depends_on:
+      - kafka-broker
     environment:
-      ZK_HOSTS: zookeeper:2181
+      KAFKA_CLUSTERS_0_NAME: broker-1
+      KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS: kafka-broker:9092
+      DYNAMIC_CONFIG_ENABLED: "true"
     networks:
       - kafka-network
 
