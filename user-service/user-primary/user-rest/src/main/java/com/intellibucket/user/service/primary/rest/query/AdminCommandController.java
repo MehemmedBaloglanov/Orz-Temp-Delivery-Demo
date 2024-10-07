@@ -5,12 +5,10 @@ import com.intellibucket.user.service.domain.core.root.UserRoot;
 import com.intellibucket.user.service.domain.core.valueObject.RoleAuthorithy;
 import com.intellibucket.user.service.domain.core.valueObject.Status;
 import com.intellibucket.user.service.domain.shell.dto.query.FetchUserByIdCommand;
+import com.intellibucket.user.service.domain.shell.dto.query.FetchUsersByStatusAndRoleCommand;
 import com.intellibucket.user.service.domain.shell.port.input.rest.abstracts.query.UserQueryServicePort;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
@@ -18,7 +16,7 @@ import java.util.UUID;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/admin")
+@RequestMapping("/api/1.0/admin")
 public class AdminCommandController {
     private final UserQueryServicePort adminCommandService;
 
@@ -29,9 +27,9 @@ public class AdminCommandController {
         return adminCommandService.findByUserId(command);
     }
 
-    @GetMapping("/fetchUserByStatusAndRole/{role}/{status}")
-    public List<UserRoot> fetchUserByStatusAndRole(@PathVariable("role") RoleAuthorithy roleAuthorithy, @PathVariable("status") Status status) {
-//        FetchUsersByRoleAndAuthorityCommand command = new FetchUsersByRoleAndAuthorityCommand();
-        return null; //adminCommandService.getUsersByStatusAndByRole(command);
+    @GetMapping("/fetchUserByStatusAndRole")
+    public List<UserRoot> fetchUserByStatusAndRole(@RequestParam("role") RoleAuthorithy roleAuthorithy, @RequestParam("status") Status status) {
+        FetchUsersByStatusAndRoleCommand command = new FetchUsersByStatusAndRoleCommand(roleAuthorithy.name(), status.name());
+        return adminCommandService.getUsersByStatusAndByRole(command);
     }
 }

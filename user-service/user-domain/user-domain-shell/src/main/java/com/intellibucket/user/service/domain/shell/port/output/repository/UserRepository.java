@@ -19,9 +19,7 @@ public interface UserRepository {
 
     Optional<UserRoot> findByEmail(Email email, UserRoot userRoot) throws UserNotFoundException;
 
-    List<RoleAuthorithy> findByAuthority(String name);
-
-    List<Status> findByStatusAndRoleAuthority(Status status, RoleAuthorithy role);
+    List<UserRoot> findByStatusAndRoleAuthority(Status status, RoleAuthorithy role);
 
     Optional<UserRoot> findByUserId(UserID userId);
 }
