@@ -2,7 +2,6 @@ package com.intellibucket.company.service.message.listener.kafka;
 
 import com.intellibucket.company.service.domain.core.exception.CompanyDomainException;
 import com.intellibucket.company.service.domain.shell.dto.message.order.approve.ProductApproveResponse;
-import com.intellibucket.company.service.domain.shell.port.input.listener.ProductStockUpdateMessageListener;
 import com.intellibucket.company.service.domain.shell.port.input.listener.abstracts.AbstractOrderApproveResponseMessageListener;
 import com.intellibucket.company.service.message.listener.mapper.CompanyMessagePublisherDataMapper;
 import com.intellibucket.kafka.config.consumer.KafkaConsumer;
@@ -40,6 +39,5 @@ public class ProductStockUpdateKafkaListener implements KafkaConsumer<CompanyOrd
                 log.error(e.getMessage());
             }
         });
-
     }
 }

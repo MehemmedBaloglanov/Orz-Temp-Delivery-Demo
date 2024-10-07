@@ -31,6 +31,7 @@ public class ProductCommandController {
     public void updateProduct(@RequestBody ProductUpdateCommand command) throws CompanyDomainException {
         productCommandServiceAdapter.updateProduct(command);
     }
+
     @PutMapping ("/status")
     public void changeStatus(@RequestBody ProductStatusCommand command) throws CompanyDomainException {
         productCommandServiceAdapter.changeStatus(command);
@@ -43,9 +44,5 @@ public class ProductCommandController {
         productCommandServiceAdapter.deleteProduct(command);
     }
 
-
-    //todo 1)changeDelete 2)changeActive 3)changeOutOfStock
-    //updatePrice
-    //update stockQuantity
 
 }
