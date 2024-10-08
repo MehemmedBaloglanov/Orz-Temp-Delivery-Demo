@@ -10,6 +10,4 @@ services:
     expose:
       - 9114
     volumes:
-      - './volumes/postgresql/data:/var/lib/postgresql/data'
-volumes:
-  order-volume:
+      - ./volumes/postgres/company:/var/lib/postgresql/data

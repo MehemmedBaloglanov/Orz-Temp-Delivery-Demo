@@ -16,7 +16,6 @@ public class ProductResponse {
     private CompanyResponse company;
     private Money price;
     private Integer quantity;
-
     private ProductStatus status;
 
 }

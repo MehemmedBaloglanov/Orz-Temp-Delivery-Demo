@@ -6,8 +6,8 @@ import com.intelliacademy.orizonroute.valueobjects.common.ValueObject;
 public enum CompanyStatus {
     DRAFT,
     ACTIVE,
-    BANNED,
-    DISABLED;
+    DELETED,
+    SUSPENDED;
 
 
 
@@ -19,12 +19,12 @@ public enum CompanyStatus {
         return this == ACTIVE;
     }
 
-    public Boolean isBanned() {
-        return this == BANNED;
+    public Boolean isDeleted() {
+        return this == DELETED;
     }
 
-    public Boolean isDisabled() {
-        return this == DISABLED;
+    public Boolean isSuspended() {
+        return this == SUSPENDED;
     }
 }
 

@@ -6,70 +6,63 @@ import com.intelliacademy.orizonroute.root.AggregateRoot;
 import com.intelliacademy.orizonroute.valueobjects.common.Money;
 import com.intellibucket.company.service.domain.core.exception.ValidateException;
 import com.intellibucket.company.service.domain.core.valueobject.ProductStatus;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
 @SuperBuilder
-@Setter
 @Getter
 public class ProductRoot extends AggregateRoot<ProductID> {
     private String name;
-    private String description;
     private Money price;
     private CompanyID companyID;
-    private Integer quantity;
-    private StockRoot stock;
+    private Integer stockQuantity;
     private ProductStatus status;
-
 
     public ProductRoot initialize() throws ValidateException {
         super.setId(ProductID.random());
-        if(status == null) {
-            status = ProductStatus.DRAFT;
-        }
+        status = ProductStatus.DRAFT;
         validateProduct();
         return this;
     }
 
+
+    //----------------------------------->VALIDATE FIELDS
+
     private void validateProduct() throws ValidateException {
         validateName();
         validatePrice();
-        validateQuantity();
+        validateStockQuantity();
         validateCompanyID();
-        validateStock();
     }
 
-    public void validateName() throws ValidateException {
-        if (name == null || name.isBlank()) {
-            throw new ValidateException("Name cannot be empty or blank");
+    private void validateName() throws ValidateException {
+        if (name == null || name.isEmpty()) {
+            throw new ValidateException("Name cannot be empty or blank.");
         }
     }
 
-    public void validatePrice() throws ValidateException {
+    private void validatePrice() throws ValidateException {
         if (price == null || price.isNil()) {
-            throw new ValidateException("Price cannot be null or blank");
+            throw new ValidateException("Price cannot be null or zero.");
         }
     }
 
-    public void validateQuantity() throws ValidateException {
-        if (quantity == null || quantity <= 0) {
-            throw new ValidateException("Quantity must be greater than zero");
+
+    private void validateCompanyID() throws ValidateException {
+        if (companyID == null) {
+            throw new ValidateException("CompanyID cannot be null.");
         }
     }
 
-    public void validateCompanyID() throws ValidateException {
-        if(companyID==null){
-            throw new ValidateException("CompanyID cannot be null");
+    private void validateStockQuantity() throws ValidateException {
+        if (stockQuantity == null || stockQuantity < 0) {
+            throw new ValidateException("StockQuantity cannot be null or negative.");
         }
     }
 
-    public void validateStock() throws ValidateException {
-        if(stock==null){
-            throw new ValidateException("Stock cannot be null");
-        }
-    }
+
+    //----------------------------------->UPDATE PRODUCT STATUS
 
     public ProductRoot activate() throws ValidateException {
         if (status.isActive()) {
@@ -80,18 +73,62 @@ public class ProductRoot extends AggregateRoot<ProductID> {
     }
 
     public ProductRoot delete() throws ValidateException {
-        if(status.isDeleted()){
-            throw new ValidateException("This product is already delete");
+        if (status.isDeleted()) {
+            throw new ValidateException("The product is already deleted.");
         }
-        this.status=ProductStatus.DELETED;
+        this.status = ProductStatus.DELETED;
         return this;
     }
 
     public ProductRoot outOfStock() throws ValidateException {
         if (status.isOutOfStock()) {
-            throw new ValidateException("The product is already in OUT_OF_STOCK status.");
+            throw new ValidateException("The product is already OUT_OF_STOCK.");
         }
         this.status = ProductStatus.OUT_OF_STOCK;
+        return this;
+    }
+
+
+    //----------------------------->DECREASE AND INCREASE METHODS
+
+
+    public ProductRoot decreaseStockQuantity(Integer amount) throws ValidateException {
+        if (amount == null || amount <= 0) {
+            throw new ValidateException("Decrease amount must be greater than zero.");
+        }
+        if (this.stockQuantity - amount < 0) {
+            throw new ValidateException("Stock quantity cannot be less than zero.");
+        }
+        this.stockQuantity -= amount;
+        return this;
+    }
+
+    public ProductRoot increaseStockQuantity(Integer amount) throws ValidateException {
+        if (amount == null || amount <= 0) {
+            throw new ValidateException("Increase stock quantity must be greater than zero.");
+        }
+        if (this.stockQuantity + amount < 0) {
+            throw new ValidateException("StockQuantity cannot be less than zero.");
+        }
+        this.stockQuantity += amount;
+        return this;
+    }
+
+    public ProductRoot updateName(String name) throws ValidateException {
+        validateName();
+        this.name=name;
+        return this;
+    }
+
+    public ProductRoot updatePrice(Money price) throws ValidateException {
+        validatePrice();
+        this.price = price;
+        return this;
+    }
+
+    public ProductRoot updateStockQuantity(Integer stockQuantity) throws ValidateException {
+        validateStockQuantity();
+        this.stockQuantity = stockQuantity;
         return this;
     }
 }

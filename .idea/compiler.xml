@@ -14,6 +14,7 @@
         <module name="kafka-consumer" />
         <module name="cart-message-listener" />
         <module name="order-message-listener" />
+        <module name="orizon-http" />
         <module name="company-container" />
         <module name="company-domain-shell" />
         <module name="order-domain-shell" />
@@ -26,6 +27,7 @@
         <module name="company-rest" />
         <module name="cart-repository" />
         <module name="orizon-util" />
+        <module name="user-dataaccess" />
         <module name="company-service-connector" />
         <module name="mock-company-service" />
         <module name="order-rest" />
@@ -54,7 +56,8 @@
     <bytecodeTargetLevel>
       <module name="order-dataaccess" target="17" />
       <module name="orizon-http" target="17" />
-      <module name="user-dataaccess" target="17" />
+      <module name="payment-service" target="17" />
+      <module name="user-repository" target="17" />
     </bytecodeTargetLevel>
   </component>
 </project>
