@@ -7,8 +7,7 @@ import org.springframework.context.annotation.ScopedProxyMode;
 @Scope(value = "request", proxyMode = ScopedProxyMode.TARGET_CLASS)
 public interface AbstractSecurityContextHolder {
 
-    UserID currentCustomerID();
+    UserID currentUserID();
 
-    UserID currentCompanyID();
 }
 

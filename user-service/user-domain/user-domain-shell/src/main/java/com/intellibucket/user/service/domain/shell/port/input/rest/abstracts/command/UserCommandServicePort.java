@@ -10,19 +10,12 @@ public interface UserCommandServicePort {
 
     void customerRegistered(CustomerCreateCommand customerCreateCommand) throws UserDomainException;
 
-    void updateCustomer(CustomerUpdateCommand command) throws UserNotFoundException, UserSavedException;
+    void userUpdate(CustomerUpdateCommand command) throws UserNotFoundException, UserSavedException;
 
-    void updateCompany(CompanyUpdateCommand command) throws UserNotFoundException, UserSavedException;
+    void userDelete(UserDeleteCommand command) throws UserDomainException;
 
-    void companyDelete(UserDeleteCommand command) throws UserDomainException;
+    void userLogin(UserLoginCommand userLoginCommand) throws UserDomainException;
 
-    void customerDelete(UserDeleteCommand command) throws UserDomainException;
 
-    void customerLogin(UserLoginCommand userLoginCommand) throws UserDomainException;
-
-    void companyLogin(UserLoginCommand userLoginCommand) throws UserDomainException;
-
-    void customerChangePassword(UserChangePasswordCommand command) throws UserDomainException;
-
-    void companyChangePassword(UserChangePasswordCommand command) throws UserDomainException;
+    void userChangePassword(UserChangePasswordCommand command) throws UserDomainException;
 }

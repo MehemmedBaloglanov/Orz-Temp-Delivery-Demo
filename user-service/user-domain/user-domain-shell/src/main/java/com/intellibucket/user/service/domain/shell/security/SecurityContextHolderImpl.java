@@ -12,17 +12,9 @@ public class SecurityContextHolderImpl implements AbstractSecurityContextHolder 
     @Value("${env.test.current.customer.id}")
     private String testCurrentCustomerId;
 
-    @Value("${env.test.current.company.id}")
-    private String testCurrentCompanyId;
-
 
     @Override
-    public UserID currentCustomerID() {
+    public UserID currentUserID() {
         return UserID.of(testCurrentCustomerId);
-    }
 
-    @Override
-    public UserID currentCompanyID() {
-        return UserID.of(testCurrentCompanyId);
-    }
-}
+    }}
