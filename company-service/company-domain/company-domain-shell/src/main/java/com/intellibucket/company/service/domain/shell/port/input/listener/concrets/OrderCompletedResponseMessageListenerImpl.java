@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class AbstractOrderCompletedResponseMessageListenerImpl implements AbstractOrderCompletedResponseMessageListener {
+public class OrderCompletedResponseMessageListenerImpl implements AbstractOrderCompletedResponseMessageListener {
     private final OrderCompletedMessageHandler orderCompletedMessageHandler;
     @Override
     public void completeOrder(OrderCompletedResponse response) throws CompanyDomainException {

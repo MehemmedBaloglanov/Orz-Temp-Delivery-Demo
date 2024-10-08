@@ -2,9 +2,7 @@ package com.intellibucket.company.service.domain.shell.handler;
 
 import com.intelliacademy.orizonroute.identity.company.CompanyID;
 import com.intelliacademy.orizonroute.identity.order.product.ProductID;
-import com.intelliacademy.orizonroute.valueobjects.common.Money;
 import com.intellibucket.company.service.domain.core.event.product.ProductActivatedEvent;
-import com.intellibucket.company.service.domain.core.event.product.ProductPriceUpdatedEvent;
 import com.intellibucket.company.service.domain.core.exception.CompanyDomainException;
 import com.intellibucket.company.service.domain.core.root.ProductRoot;
 import com.intellibucket.company.service.domain.core.service.ProductDomainService;
