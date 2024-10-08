@@ -26,39 +26,6 @@ public class UserRepositoryImpl implements UserRepository {
     private final CustomerJpaRepository customerJpaRepository;
     private final CompanyJpaRepository companyJpaRepository;
 
-    @Override
-    public Optional<UserRoot> findByCompanyId(UserID userId) {
-        if (RoleAuthorithy.COMPANY.isRoleCompany()) {
-            Optional<CompanyRegistrationEntity> user = companyJpaRepository.findById(userId.value());
-            if (user.isEmpty()) {
-                log.warn("Company not found for ID: {}", userId.value());
-                return Optional.empty();
-            } else {
-                CompanyRegistrationEntity userEntity = user.get();
-                return Optional.of(userDataAccessMapper.companyEntityToUserRoot(userEntity));
-            }
-        }
-        return Optional.empty();
-    }
-
-    @Override
-    public Optional<UserRoot> findByCustomerId(UserID userId) {
-        log.info("Fetching user with ID: {}", userId.value());
-
-        if (RoleAuthorithy.CUSTOMER.isRoleCustomer()) {
-            Optional<CustomerRegistrationEntity> user = customerJpaRepository.findById(userId.value());
-
-            if (user.isEmpty()) {
-                log.warn("Customer not found for ID: {}", userId.value());
-                return Optional.empty();
-            } else {
-                CustomerRegistrationEntity userEntity = user.get();
-                return Optional.of(userDataAccessMapper.customerEntityToUserRoot(userEntity));
-            }
-        }
-        log.warn("User ID {} not found for any role", userId.value());
-        return Optional.empty();
-    }
 
     @Override
     public UserRoot save(UserRoot userRoot) {

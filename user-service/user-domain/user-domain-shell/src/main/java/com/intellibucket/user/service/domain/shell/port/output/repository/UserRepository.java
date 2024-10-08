@@ -11,9 +11,6 @@ import java.util.List;
 import java.util.Optional;
 
 public interface UserRepository {
-    Optional<UserRoot> findByCustomerId(UserID userId);
-
-    Optional<UserRoot> findByCompanyId(UserID userId);
 
     UserRoot save(UserRoot userRoot);
 

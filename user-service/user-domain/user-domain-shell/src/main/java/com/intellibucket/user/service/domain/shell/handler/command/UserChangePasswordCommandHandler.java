@@ -19,22 +19,22 @@ import java.util.Optional;
 
 @Component
 @RequiredArgsConstructor
-public class CustomerChangePasswordCommandHandler {
+public class UserChangePasswordCommandHandler {
     private final UserRepository userRepository;
     private final EventPublisher eventPublisher;
     private final UserDomainService userDomainService;
     private final AbstractSecurityContextHolder securityContextHolder;
 
     public void handle(UserChangePasswordCommand command) throws UserDomainException {
-        UserID customerUserID = securityContextHolder.currentCustomerID();
 
-        Optional<UserRoot> userRoot = userRepository.findByCustomerId(customerUserID);
+        UserID userID = securityContextHolder.currentUserID();
+
+        Optional<UserRoot> userRoot = userRepository.findByUserId(userID);
         if (userRoot.isEmpty()) {
-            throw new UserNotFoundException("User not found with ID: " + customerUserID);
+            throw new UserNotFoundException("User not found with ID: " + userID);
         }
-
         UserRoot user = userRoot.get();
-
+        // ADD Change password method to check
         Password oldPassword = Password.builder().value(command.getOldPassword()).build();
         Password newPassword = Password.builder().value(command.getNewPassword()).build();
 

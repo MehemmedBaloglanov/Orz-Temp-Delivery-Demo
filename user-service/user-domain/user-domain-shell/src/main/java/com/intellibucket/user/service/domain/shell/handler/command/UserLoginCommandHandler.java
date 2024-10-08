@@ -21,7 +21,7 @@ import java.util.Optional;
 
 @Component
 @RequiredArgsConstructor
-public class CompanyLoginCommandHandler {
+public class UserLoginCommandHandler {
     private final UserRepository userRepository;
     private final EventPublisher eventPublisher;
     private final UserDomainService userDomainService;
@@ -30,14 +30,14 @@ public class CompanyLoginCommandHandler {
     @Transactional
     public void handle(UserLoginCommand command) throws UserDomainException {
 
-        UserID companyUserId = securityContextHolder.currentCompanyID();
+        UserID userID = securityContextHolder.currentUserID();
 
         UserRoot userFromCommand = UserCommandMapper.userLoginCommandToUserRoot(command);
 
-        Optional<UserRoot> userRootOptional = userRepository.findByCompanyId(companyUserId);
+        Optional<UserRoot> userRootOptional = userRepository.findByUserId(userID);
 
         if (userRootOptional.isEmpty()) {
-            throw new UserNotFoundException("User not found with UserId! " + companyUserId);
+            throw new UserNotFoundException("User not found with UserId! " + userID);
         }
         UserLoggedInDomainEvent userLoggedInDomainEvent = userDomainService.userLoggedIn(userFromCommand);
         eventPublisher.publishUserLoggedInEvent(userLoggedInDomainEvent);

@@ -18,7 +18,7 @@ import java.util.Optional;
 
 @Component
 @RequiredArgsConstructor
-public class CustomerDeleteCommandHandler {
+public class UserDeleteCommandHandler {
     private final UserRepository userRepository;
     private final EventPublisher eventPublisher;
     private final UserDomainService userDomainService;
@@ -26,13 +26,12 @@ public class CustomerDeleteCommandHandler {
 
     @Transactional
     public void handle(UserDeleteCommand command) throws UserDomainException {
+        UserID userID = securityContextHolder.currentUserID();
 
-        UserID customerID = securityContextHolder.currentCustomerID();
-
-        Optional<UserRoot> userRoot = userRepository.findByCustomerId(customerID);
+        Optional<UserRoot> userRoot = userRepository.findByUserId(userID);
 
         if (userRoot.isEmpty()) {
-            throw new UserNotFoundException("User not found with id: " + customerID);
+            throw new UserNotFoundException("User not found with id: " + userID);
         }
 
         UserDeletedDomainEvent userDeletedDomainEvent = userDomainService.userDeleted(userRoot.get());
