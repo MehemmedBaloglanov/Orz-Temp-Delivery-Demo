@@ -1,12 +1,22 @@
 package com.intellibucket.company.service.domain.core.valueobject;
 
 import com.intelliacademy.orizonroute.valueobjects.common.ValueObject;
+import lombok.Builder;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 
+import java.util.Objects;
+
+@Getter
 @ValueObject
-public record CompanyAddress(String city, String street, String address) {
+@Builder
+@RequiredArgsConstructor
+public final class CompanyAddress {
+    private final String city;
+    private final String street;
+    private final String address;
 
-        public Boolean isValid() {
+    public Boolean isValid() {
 
         return city != null
                 && street != null
@@ -16,4 +26,5 @@ public record CompanyAddress(String city, String street, String address) {
                 && !address.isEmpty();
 
     }
+
 }

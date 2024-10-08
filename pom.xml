@@ -9,11 +9,31 @@
     <version>1.0-SNAPSHOT</version>
     <packaging>pom</packaging>
 
+
     <repositories>
         <repository>
             <id>confluent</id>
             <url>https://packages.confluent.io/maven/</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
         </repository>
+
+        <repository>
+            <id>central</id>
+            <url>https://repo.maven.apache.org/maven2</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </repository>
+
+
     </repositories>
 
     <properties>
@@ -33,6 +53,10 @@
         <module>user-service</module>
         <module>cart-service</module>
         <module>library</module>
+        <module>order-service/order-secondary/user-service-connector</module>
+        <module>mock-payment-service</module>
+        <module>mock-company-service</module>
+        <module>mock-delivery-service</module>
     </modules>
 
     <dependencyManagement>
@@ -74,6 +98,14 @@
                 <groupId>io.confluent</groupId>
                 <artifactId>kafka-avro-serializer</artifactId>
                 <version>7.0.1</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>2023.0.3</version> <!-- Spring Boot 3.x sürümü için uygun olan versiyon -->
+                <type>pom</type>
+                <scope>import</scope>
             </dependency>
 
             <!--      Library      -->
@@ -154,7 +186,7 @@
                 <scope>compile</scope>
             </dependency>
 
-<!--            User Service-->
+            <!--            User Service-->
             <dependency>
                 <groupId>com.intellibucket</groupId>
                 <artifactId>user-container</artifactId>
@@ -191,7 +223,7 @@
                 <version>${user-service.version}</version>
             </dependency>
 
-<!--            CompanyService-->
+            <!--            CompanyService-->
             <dependency>
                 <groupId>com.intellibucket</groupId>
                 <artifactId>company-container</artifactId>
@@ -236,8 +268,8 @@
             <dependency>
                 <groupId>org.springframework.cloud</groupId>
                 <artifactId>spring-cloud-starter-openfeign</artifactId>
+                <version>3.1.5</version>
             </dependency>
-
 
         </dependencies>
     </dependencyManagement>
@@ -251,12 +283,14 @@
             <version>${lombok.version}</version>
         </dependency>
 
+
     </dependencies>
 
 
     <build>
         <plugins>
             <plugin>
+
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>${maven-compiler-plugin.version}</version>

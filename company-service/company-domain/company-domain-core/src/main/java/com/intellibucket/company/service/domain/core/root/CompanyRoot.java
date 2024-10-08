@@ -3,19 +3,21 @@ package com.intellibucket.company.service.domain.core.root;
 import com.intelliacademy.orizonroute.identity.company.CompanyID;
 import com.intelliacademy.orizonroute.root.AggregateRoot;
 import com.intelliacademy.orizonroute.valueobjects.common.Money;
+import com.intelliacademy.orizonroute.valueobjects.common.Username;
 import com.intellibucket.company.service.domain.core.exception.ValidateException;
 import com.intellibucket.company.service.domain.core.valueobject.CompanyAddress;
 import com.intellibucket.company.service.domain.core.valueobject.CompanyStatus;
 import lombok.Builder;
+import lombok.Getter;
 import lombok.experimental.SuperBuilder;
 
 import java.util.List;
 
 @SuperBuilder
+@Getter
 public class CompanyRoot extends AggregateRoot<CompanyID> {
 
-    private String name;
-    private String description;
+    private Username companyName;
     private CompanyAddress address;
     private CompanyStatus status;
     private List<ProductRoot> products;
@@ -25,13 +27,8 @@ public class CompanyRoot extends AggregateRoot<CompanyID> {
 
     public CompanyRoot initialize() throws ValidateException {
         super.setId(CompanyID.random());
-
-        if (status == null) {
-            status = CompanyStatus.DRAFT;
-        }
-        if (balance == null) {
-            balance = Money.of(0);
-        }
+        status = CompanyStatus.DRAFT;
+        balance=Money.ZERO;
         validateCompany();
         return this;
     }
@@ -42,19 +39,13 @@ public class CompanyRoot extends AggregateRoot<CompanyID> {
     public void validateCompany() throws ValidateException {
         validateAddress();
         validateName();
-        validateDescription();
         validateProducts();
         validateBalance();
     }
 
-    private void validateDescription() throws ValidateException {
-        if (description == null || description.trim().isEmpty()) {
-            throw new ValidateException("Description cannot be null or empty");
-        }
-    }
 
     private void validateName() throws ValidateException {
-        if (name == null || name.trim().isEmpty()) {
+        if (companyName.value() == null || companyName.value().isEmpty()) {
             throw new ValidateException("Name cannot be null or empty");
         }
     }
@@ -65,7 +56,6 @@ public class CompanyRoot extends AggregateRoot<CompanyID> {
         }
     }
 
-    //todo: isGreaterThanZero() validate i duzgundurmu?
     private void validateBalance() throws ValidateException {
         if (balance == null || !balance.isGreaterThanZero()) {
             throw new ValidateException("Balance cannot be null or negative");
@@ -99,7 +89,6 @@ public class CompanyRoot extends AggregateRoot<CompanyID> {
         return this;
     }
 
-    //todo: burda diable methodunu suspended olaraq deyisdirdim duzgundurmu?
     public CompanyRoot suspend() throws ValidateException {
         if (!status.isActive() || status.isDeleted()) {
             throw new ValidateException("Only active companies can be suspended, and deleted companies cannot be suspended.");
@@ -112,11 +101,11 @@ public class CompanyRoot extends AggregateRoot<CompanyID> {
 
     //------------------------------------->UPDATE OTHER FIELDS
 
-    public CompanyRoot changeDescription(String newDescription) throws ValidateException {
-        if (newDescription == null || newDescription.trim().isEmpty()) {
-            throw new ValidateException("New description cannot be null or empty");
+    public CompanyRoot changeName(Username newName) throws ValidateException {
+        if(newName.value() == null || newName.value().isEmpty()) {
+            throw new ValidateException("Name cannot be null or empty");
         }
-        this.description = newDescription;
+        this.companyName = newName;
         return this;
     }
 
@@ -128,7 +117,6 @@ public class CompanyRoot extends AggregateRoot<CompanyID> {
         return this;
     }
 
-    //todo: isGreaterThanZero() validate i duzgundurmu?
     public CompanyRoot updateBalance(Money newBalance) throws ValidateException {
         if (newBalance == null || !newBalance.isGreaterThanZero()) {
             throw new ValidateException("Balance cannot be null or negative");
@@ -139,7 +127,7 @@ public class CompanyRoot extends AggregateRoot<CompanyID> {
 
 
     //------------------------------------->PRODUCT ADD AND REMOVE
-    //todo: Burda biz ProductRoot u elave elemeliyik yoxsa ProductRoot -u onu tam emin deyilem
+
     public CompanyRoot addProduct(ProductRoot product) throws ValidateException {
         if (product == null) {
             throw new ValidateException("Product cannot be null.");

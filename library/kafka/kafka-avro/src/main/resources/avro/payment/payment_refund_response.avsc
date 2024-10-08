@@ -1,0 +1,38 @@
+{
+  "namespace": "com.intellibucket.kafka.order.avro.model.payment",
+  "type": "record",
+  "name": "PaymentRefundResponseAvroModel",
+  "fields": [
+    {
+      "name": "orderId",
+      "type": {
+        "type": "string",
+        "logicalType": "uuid"
+      }
+    },
+    {
+      "name": "failureMessage",
+      "type": {
+        "type": "string"
+      }
+    },
+    {
+      "name": "createdAt",
+      "type": {
+        "type": "long",
+        "logicalType": "timestamp-millis"
+      }
+    },
+    {
+      "name": "status",
+      "type": {
+        "type": "enum",
+        "name": "PaymentRefundAvroStatus",
+        "symbols": [
+          "COMPLETED",
+          "FAILED"
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,13 @@
+services:
+  postgres-company:
+    container_name: postgres-company
+    image: postgres:16
+    ports:
+      - "9115:5432"
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=admin
+    expose:
+      - 9115
+    volumes:
+      - ./volumes/postgres/company:/var/lib/postgresql/data

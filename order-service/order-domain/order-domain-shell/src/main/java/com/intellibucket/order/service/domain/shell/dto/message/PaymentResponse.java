@@ -7,21 +7,18 @@ import lombok.Getter;
 
 import java.math.BigDecimal;
 import java.time.Instant;
-import java.util.List;
+import java.util.UUID;
 
 @Getter
 @Builder
 @AllArgsConstructor
 public class PaymentResponse {
 
-    private String id;
-    private String sagaId;
-    private String orderId;
-    private String paymentId;
-    private String customerId;
+    private UUID orderId;
+    private UUID paymentId;
     private BigDecimal price;
     private Instant createdAt;
-    private PaymentStatus paymentStatus;
+    private PaymentStatus status;
     private String failureMessage;
 
 }
