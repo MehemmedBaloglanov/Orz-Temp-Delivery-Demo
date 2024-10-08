@@ -31,8 +31,6 @@ public class OrderPrepareCommandHandler {
     private final OrderDomainService orderDomainService;
     private final OrderRepositoryHelper orderRepositoryHelper;
     private final AbstractSecurityContextHolder securityContextHolder;
-    private final OrderShellDataMapper orderShellDataMapper;
-    private final OrderOutboxHelper orderOutboxHelper;
     private final OrderShellHelper orderShellHelper;
 
     @Transactional
@@ -56,13 +54,11 @@ public class OrderPrepareCommandHandler {
             throw new OrderDomainException("OrderItem with id: " + orderItemId + " is not in company ID");
         }
 
-        orderItemRoot.prepare();
+        orderItemRoot.prepared();
 
-        if (orderRoot.getItems().stream().noneMatch(orderItem -> orderItem.getOrderItemStatus() != OrderItemStatus.CONFIRMED)) {
+        if (orderRoot.getItems().stream().allMatch(orderItem -> orderItem.getOrderItemStatus().isPrepared())) {
             log.info("Order with id: {} is all items confirmed", orderId);
-            StartDeliveryOrderEvent startDeliveryOrderEvent = orderDomainService.preparedOrder(orderRoot);
-            OrderStartDeliveryEventPayload orderStartDeliveryEventPayload = orderShellDataMapper.startDeliveryOrderEventToOrderStartDeliveryEventPayload(startDeliveryOrderEvent);
-            orderOutboxHelper.createAndSaveOutboxMessage(orderStartDeliveryEventPayload, orderId, ORDER_START_DELIVERY_SAGA_NAME);
+            orderDomainService.preparedOrder(orderRoot);
         }
         orderRepositoryHelper.saveOrder(orderRoot);
     }

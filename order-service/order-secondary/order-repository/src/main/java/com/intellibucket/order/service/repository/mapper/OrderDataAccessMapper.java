@@ -43,7 +43,6 @@ public class OrderDataAccessMapper {
                 .price(orderRoot.getPrice().getAmount())
                 .items(orderItemRootToOrderItemEntity(orderRoot.getItems()))
                 .orderStatus(orderRepositoryDataHelper.orderStatusToOrderJpaStatus(orderRoot.getStatus()))
-                .version(orderRoot.getVersion().toShort())
                 .createdAt(orderRoot.getCreatedAt())
                 .failureMessage(orderRoot.getFailureMessage())
                 .cancellationType(orderRoot.getCancelType() == null ? null : orderRepositoryDataHelper.orderCancelTypeToOrderCancellationJpaType(orderRoot.getCancelType()))

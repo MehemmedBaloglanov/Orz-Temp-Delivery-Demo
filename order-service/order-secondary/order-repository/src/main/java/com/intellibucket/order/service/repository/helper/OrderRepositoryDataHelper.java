@@ -24,7 +24,6 @@ public class OrderRepositoryDataHelper {
             case CANCELLING -> OrderJpaStatus.CANCELLING;
             case CANCELLED -> OrderJpaStatus.CANCELLED;
             case PAID -> OrderJpaStatus.PAID;
-            case CONFIRMED -> OrderJpaStatus.CONFIRMED;
             case PREPARED -> OrderJpaStatus.PREPARED;
             case DELIVERING -> OrderJpaStatus.DELIVERING;
             default -> throw new OrderDomainException("Unsupported OrderStatus: " + orderStatus);
@@ -39,7 +38,6 @@ public class OrderRepositoryDataHelper {
             case CANCELLING -> OrderStatus.CANCELLING;
             case CANCELLED -> OrderStatus.CANCELLED;
             case PAID -> OrderStatus.PAID;
-            case CONFIRMED -> OrderStatus.CONFIRMED;
             case PREPARED -> OrderStatus.PREPARED;
             case DELIVERING -> OrderStatus.DELIVERING;
             default -> throw new OrderDomainException("Unsupported OrderStatus: " + orderStatus);

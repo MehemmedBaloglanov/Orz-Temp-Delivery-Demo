@@ -42,9 +42,9 @@ public class CompanyDataAccessMapper {
 
     private CompanyJpaAddress mapCompanyAddressToCompanyJpaAddress(CompanyAddress address) {
         return CompanyJpaAddress.builder()
-                .city(address.city())
-                .street(address.street())
-                .address(address.street())
+                .city(address.getCity())
+                .street(address.getStreet())
+                .address(address.getAddress())
                 .build();
     }
 

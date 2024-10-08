@@ -6,7 +6,7 @@ import com.intellibucket.kafka.order.avro.model.company.OrderCompletedRequestAvr
 import com.intellibucket.order.service.domain.core.exception.OrderDomainException;
 import com.intellibucket.order.service.domain.shell.config.OrderServiceConfigData;
 import com.intellibucket.order.service.domain.shell.outbox.model.OutboxMessage;
-import com.intellibucket.order.service.domain.shell.outbox.model.payload.delivery.OrderDeliveryCompletedEventPayload;
+import com.intellibucket.order.service.domain.shell.outbox.model.payload.completed.OrderCompletedEventPayload;
 import com.intellibucket.order.service.domain.shell.port.output.publisher.AbstractOrderCompletedEventPublisher;
 import com.intellibucket.order.service.secondary.message.publisher.helper.OrderKafkaPublisherHelper;
 import com.intellibucket.order.service.secondary.message.publisher.mapper.OrderMessagePublisherDataMapper;
@@ -30,23 +30,23 @@ public class OrderCompletedEventPublisher implements AbstractOrderCompletedEvent
 
     @Override
     public void publish(OutboxMessage message, BiConsumer<OutboxMessage, OutboxStatus> outboxCallback) throws OrderDomainException {
-        OrderDeliveryCompletedEventPayload payload = kafkaMessageHelper.getOrderEventPayload(message.getPayload(), OrderDeliveryCompletedEventPayload.class);
+        OrderCompletedEventPayload payload = kafkaMessageHelper.getOrderEventPayload(message.getPayload(), OrderCompletedEventPayload.class);
 
-        log.info("Received OrderCompletedEventPublisher for order id: {}", payload.getOrderId());
+        log.info("Received OrderDeliveryCompletedEventPayload for order id: {}", payload.getOrderId());
 
         try {
             OrderCompletedRequestAvroModel orderCompletedRequestAvroModel = orderMessagePublisherDataMapper.orderCompetedEventToOrderCompletedRequestAvroModel(payload);
             kafkaProducer.send(
-                    orderServiceConfigData.getCompleteOrderRequestTopicName(),
+                    orderServiceConfigData.getOrderCompletedTopicName(),
                     UUID.randomUUID().toString(),
                     orderCompletedRequestAvroModel,
                     orderKafkaPublisherHelper.getCallback(orderCompletedRequestAvroModel, message, payload.getOrderId(), outboxCallback));
 
-            log.info("OrderCompletedEventPublisher sent to Kafka for order id: {}", payload.getOrderId());
+            log.info("OrderDeliveryCompletedEventPayload sent to Kafka for order id: {}", payload.getOrderId());
 
         } catch (Exception e) {
 
-            log.error("Error while sending OrderCompletedEventPublisher to kafka with order id: {}, error: {}", payload.getOrderId(), e.getMessage());
+            log.error("Error while sending OrderDeliveryCompletedEventPayload to kafka with order id: {}, error: {}", payload.getOrderId(), e.getMessage());
         }
     }
 }

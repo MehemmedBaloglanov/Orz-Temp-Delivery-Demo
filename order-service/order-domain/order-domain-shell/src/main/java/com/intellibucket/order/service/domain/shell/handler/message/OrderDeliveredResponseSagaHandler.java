@@ -10,7 +10,7 @@ import com.intellibucket.order.service.domain.shell.dto.message.DeliveryResponse
 import com.intellibucket.order.service.domain.shell.helper.OrderOutboxHelper;
 import com.intellibucket.order.service.domain.shell.helper.OrderRepositoryHelper;
 import com.intellibucket.order.service.domain.shell.mapper.OrderShellDataMapper;
-import com.intellibucket.order.service.domain.shell.outbox.model.payload.company.OrderCompletedEventPayload;
+import com.intellibucket.order.service.domain.shell.outbox.model.payload.completed.OrderCompletedEventPayload;
 import com.intellibucket.order.service.domain.shell.outbox.model.payload.payment.OrderPaymentRefundEventPayload;
 import com.intellibucket.saga.SagaStep;
 import lombok.RequiredArgsConstructor;

@@ -2,7 +2,7 @@ package com.intellibucket.order.service.secondary.message.publisher.kafka;
 
 import com.intellibucket.kafka.config.producer.KafkaMessageHelper;
 import com.intellibucket.kafka.config.producer.KafkaProducer;
-import com.intellibucket.kafka.order.avro.model.payment.PaymentRefundAvroModel;
+import com.intellibucket.kafka.order.avro.model.payment.PaymentRefundRequestAvroModel;
 import com.intellibucket.order.service.domain.core.exception.OrderDomainException;
 import com.intellibucket.order.service.domain.shell.config.OrderServiceConfigData;
 import com.intellibucket.order.service.domain.shell.outbox.model.OutboxMessage;
@@ -25,7 +25,7 @@ public class OrderPaymentRefundMessagePublisher implements AbstractOrderPaymentR
 
     private final KafkaMessageHelper kafkaMessageHelper;
     private final OrderKafkaPublisherHelper orderKafkaPublisherHelper;
-    private final KafkaProducer<String, PaymentRefundAvroModel> kafkaProducer;
+    private final KafkaProducer<String, PaymentRefundRequestAvroModel> kafkaProducer;
     private final OrderMessagePublisherDataMapper orderMessagePublisherDataMapper;
     private final OrderServiceConfigData orderServiceConfigData;
 
@@ -33,19 +33,19 @@ public class OrderPaymentRefundMessagePublisher implements AbstractOrderPaymentR
     public void publish(OutboxMessage message, BiConsumer<OutboxMessage, OutboxStatus> outboxCallback) throws OrderDomainException {
         OrderPaymentRefundEventPayload payload = kafkaMessageHelper.getOrderEventPayload(message.getPayload(), OrderPaymentRefundEventPayload.class);
 
-        log.info("Received OrderPaymentRefundMessagePublisher for order id: {}", payload.getOrderId());
+        log.info("Received OrderPaymentRefundEventPayload for order id: {}", payload.getOrderId());
         try {
-            PaymentRefundAvroModel avroModel = orderMessagePublisherDataMapper.orderPaymentRefundEventPayloadToPaymentRefundAvroModel(payload);
+            PaymentRefundRequestAvroModel avroModel = orderMessagePublisherDataMapper.orderPaymentRefundEventPayloadToPaymentRefundRequestAvroModel(payload);
 
             kafkaProducer.send(
-                    orderServiceConfigData.getPaymentRefundRequestTopicName(),
+                    orderServiceConfigData.getPaymentRefundTopicName(),
                     UUID.randomUUID().toString(),
                     avroModel,
                     orderKafkaPublisherHelper.getCallback(avroModel, message, payload.getOrderId(), outboxCallback));
 
-            log.info("OrderPaymentRefundMessagePublisher sent to Kafka for order id: {}", payload.getOrderId());
+            log.info("OrderPaymentRefundEventPayload sent to Kafka for order id: {}", payload.getOrderId());
         } catch (Exception e) {
-            log.error("Error while sending OrderPaymentRefundMessagePublisher to kafka with order id: {}, error: {}", payload.getOrderId(), e.getMessage());
+            log.error("Error while sending OrderPaymentRefundEventPayload to kafka with order id: {}, error: {}", payload.getOrderId(), e.getMessage());
         }
 
 

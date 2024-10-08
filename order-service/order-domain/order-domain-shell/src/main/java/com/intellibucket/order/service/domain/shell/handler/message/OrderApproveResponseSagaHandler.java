@@ -17,6 +17,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import static com.intellibucket.saga.order.SagaConstants.ORDER_COMPANY_REFUND_SAGA_NAME;
+import static com.intellibucket.saga.order.SagaConstants.ORDER_PAYMENT_REFUND_SAGA_NAME;
 
 
 @Slf4j
@@ -31,8 +32,10 @@ public class OrderApproveResponseSagaHandler implements SagaStep<ApproveResponse
     @Override
     @Transactional
     public void process(ApproveResponse data) throws OrderDomainException {
+        log.debug("Approving order {} for approval", data.getOrderId());
         OrderID orderID = OrderID.of(data.getOrderId());
         OrderRoot orderRoot = orderRepositoryHelper.findOrderById(orderID);
+        log.trace("Order found: {}", orderRoot);
         orderDomainService.approveOrder(orderRoot);
         orderRepositoryHelper.saveOrder(orderRoot);
 
@@ -41,12 +44,20 @@ public class OrderApproveResponseSagaHandler implements SagaStep<ApproveResponse
     @Override
     @Transactional
     public void rollback(ApproveResponse data) throws OrderDomainException {
+        log.debug("Rolling back order approve for order {}", data.getOrderId());
+
         OrderID orderID = OrderID.of(data.getOrderId());
         OrderRoot orderRoot = orderRepositoryHelper.findOrderById(orderID);
+        log.trace("Order found: {}", orderRoot);
+
         OrderCancelledEvent orderCancelledEvent = orderDomainService.orderPaymentCancel(orderRoot, data.getFailureMessage());
+        log.trace("Order cancelled event: {}", orderCancelledEvent);
+
         orderRepositoryHelper.saveOrder(orderRoot);
         OrderPaymentRefundEventPayload orderCancelledEventPayload = orderShellDataMapper.orderCancelledEventToOrderPaymentCancelEventPayload(orderCancelledEvent);
-        orderOutboxHelper.createAndSaveOutboxMessage(orderCancelledEventPayload, orderID, ORDER_COMPANY_REFUND_SAGA_NAME);
+        log.trace("Outbox message created: {}", orderCancelledEventPayload);
+        orderOutboxHelper.createAndSaveOutboxMessage(orderCancelledEventPayload, orderID, ORDER_PAYMENT_REFUND_SAGA_NAME);
+
 
     }
 

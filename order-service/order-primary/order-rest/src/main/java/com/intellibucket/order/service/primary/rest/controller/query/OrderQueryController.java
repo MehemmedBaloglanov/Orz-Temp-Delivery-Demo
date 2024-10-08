@@ -24,7 +24,7 @@ public class OrderQueryController {
     private final OrderQueryServiceAdapter orderQueryServiceAdapter;
 
     @GetMapping("/{orderId}")
-    public ResponseEntity<OrderResponse> getOrderById(@PathVariable UUID orderId) {
+    public ResponseEntity<OrderResponse> getOrderById(@PathVariable UUID orderId) throws OrderDomainException {
         OrderResponse orderResponse = orderQueryServiceAdapter.orderById(OrderID.of(orderId));
         return ResponseEntity.ok(orderResponse);
     }
@@ -38,13 +38,6 @@ public class OrderQueryController {
     @GetMapping("/track")
     public ResponseEntity<TrackOrderResponse> trackOrder(OrderTrackingQuery orderTrackingQuery) throws OrderDomainException {
         TrackOrderResponse response = orderQueryServiceAdapter.trackOrder(orderTrackingQuery);
-        return ResponseEntity.ok(response);
-    }
-
-    //TODO company- aid controller
-    @GetMapping("/unassigned")
-    public ResponseEntity<List<OrderResponse>> getUnassignOrder() {
-        List<OrderResponse> response = orderQueryServiceAdapter.getUnassignOrders();
         return ResponseEntity.ok(response);
     }
 

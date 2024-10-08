@@ -54,7 +54,9 @@
         <module>cart-service</module>
         <module>library</module>
         <module>order-service/order-secondary/user-service-connector</module>
-        <module>payment-service</module>
+        <module>mock-payment-service</module>
+        <module>mock-company-service</module>
+        <module>mock-delivery-service</module>
     </modules>
 
     <dependencyManagement>

@@ -1,0 +1,28 @@
+{
+  "namespace": "com.intellibucket.kafka.order.avro.model.payment",
+  "type": "record",
+  "name": "PaymentRefundRequestAvroModel",
+  "fields": [
+    {
+      "name": "customerId",
+      "type": {
+        "type": "string",
+        "logicalType": "uuid"
+      }
+    },
+    {
+      "name": "orderId",
+      "type": {
+        "type": "string",
+        "logicalType": "uuid"
+      }
+    },
+    {
+      "name": "createdAt",
+      "type": {
+        "type": "long",
+        "logicalType": "timestamp-millis"
+      }
+    }
+  ]
+}

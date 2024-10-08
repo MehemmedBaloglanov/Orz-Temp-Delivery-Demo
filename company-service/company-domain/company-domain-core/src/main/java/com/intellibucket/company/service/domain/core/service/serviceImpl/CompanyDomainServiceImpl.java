@@ -10,7 +10,7 @@ import com.intellibucket.company.service.domain.core.valueobject.CompanyAddress;
 
 import java.time.OffsetDateTime;
 
-import static com.intellibucket.constants.DomainConstants.ZONE_ID;
+import static com.intellibucket.domain.constants.DomainConstants.ZONE_ID;
 
 
 public class CompanyDomainServiceImpl implements CompanyDomainService {

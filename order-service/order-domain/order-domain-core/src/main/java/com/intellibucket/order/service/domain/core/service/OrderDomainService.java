@@ -31,11 +31,10 @@ public interface OrderDomainService {
 
     void orderCancel(OrderRoot orderRoot, String failureMessage) throws OrderDomainException;
 
-    void confirmOrder(OrderRoot orderRoot) throws OrderDomainException;
-
-    StartDeliveryOrderEvent preparedOrder(OrderRoot orderRoot) throws OrderDomainException;
+    void preparedOrder(OrderRoot orderRoot) throws OrderDomainException;
 
     OrderCompletedEvent orderComplete(OrderRoot orderRoot) throws OrderDomainException;
 
 
+    StartDeliveryOrderEvent startDelivery(OrderRoot orderRoot) throws OrderDomainException;
 }
