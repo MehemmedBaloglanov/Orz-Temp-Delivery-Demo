@@ -9,12 +9,11 @@ import org.springframework.stereotype.Component;
 @Component
 public class SecurityContextHolderImpl implements AbstractSecurityContextHolder {
 
-    @Value("${env.test.current.customer.id}")
-    private String testCurrentCustomerId;
-
+    @Value("${env.test.current.user.id}")
+    private String testCurrentUserId;
 
     @Override
     public UserID currentUserID() {
-        return UserID.of(testCurrentCustomerId);
-
-    }}
+        return UserID.of(testCurrentUserId);
+    }
+}
