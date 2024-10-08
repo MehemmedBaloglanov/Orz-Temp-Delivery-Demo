@@ -52,11 +52,12 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="library" target="17" />
+      <module name="mock-company-service" target="17" />
+      <module name="mock-delivery-service" target="17" />
+      <module name="mock-payment-service" target="17" />
       <module name="order-dataaccess" target="17" />
       <module name="orizon-http" target="17" />
       <module name="user-repository" target="17" />
-      <module name="user-secondary" target="17" />
     </bytecodeTargetLevel>
   </component>
 </project>
