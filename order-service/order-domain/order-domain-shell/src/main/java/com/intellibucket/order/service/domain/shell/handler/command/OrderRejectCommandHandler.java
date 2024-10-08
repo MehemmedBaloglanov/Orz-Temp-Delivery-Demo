@@ -52,15 +52,11 @@ public class OrderRejectCommandHandler {
         }
 
         OrderRoot orderRoot = orderRepositoryHelper.findOrderById(orderId);
-
         OrderItemRoot orderItemRoot = orderShellHelper.findOrderItemRootInOrderRoot(orderRoot, orderItemId);
-
         if (!orderItemRoot.getCompanyID().equals(companyID)) {
             log.error("Order with id: {} OrderItem with id: {} authorization not valid: OrderCompanyId: {}, current CompanyId: {}", orderId, orderItemId, companyID, orderItemRoot.getCompanyID());
             throw new OrderDomainException("OrderItem with id: " + orderItemId + " is not in company ID");
         }
-
-        orderItemRoot.reject();
 
         OrderCancelledEvent orderCancelledEvent = orderDomainService.orderCompanyCancel(orderRoot, orderItemRoot, command.getRejectMessage());
         orderRepositoryHelper.saveOrder(orderCancelledEvent.getOrderRoot());

@@ -67,6 +67,12 @@
     <file url="file://$PROJECT_DIR$/library/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/library/temp-root/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/library/temp-root/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/mock-company-service/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/mock-company-service/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/mock-delivery-service/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/mock-delivery-service/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/mock-payment-service/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/mock-payment-service/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/order-service/order-container/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/order-service/order-container/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/order-service/order-domain/order-domain-core/src/main/java" charset="UTF-8" />
@@ -97,8 +103,6 @@
     <file url="file://$PROJECT_DIR$/order-service/order-secondary/user-service-connector/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/order-service/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/order-service/src/main/resources" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/payment-service/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/payment-service/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/user-service/src/main/java" charset="UTF-8" />

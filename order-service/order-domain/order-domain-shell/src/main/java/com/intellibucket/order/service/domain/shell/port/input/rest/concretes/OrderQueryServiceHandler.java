@@ -5,7 +5,6 @@ import com.intellibucket.order.service.domain.core.exception.OrderDomainExceptio
 import com.intellibucket.order.service.domain.shell.dto.rest.query.OrderTrackingQuery;
 import com.intellibucket.order.service.domain.shell.dto.rest.response.OrderResponse;
 import com.intellibucket.order.service.domain.shell.dto.rest.response.TrackOrderResponse;
-import com.intellibucket.order.service.domain.shell.handler.query.OrderCompanyUnassignedQueryHandler;
 import com.intellibucket.order.service.domain.shell.handler.query.OrderGetAllQueryHandler;
 import com.intellibucket.order.service.domain.shell.handler.query.OrderSingleFetchQueryHandler;
 import com.intellibucket.order.service.domain.shell.handler.query.OrderTrackQueryHandler;
@@ -21,7 +20,6 @@ public class OrderQueryServiceHandler implements OrderQueryServiceAdapter {
     private final OrderTrackQueryHandler orderTrackQueryHandler;
     private final OrderGetAllQueryHandler orderGetAllQueryHandler;
     private final OrderSingleFetchQueryHandler orderSingleFetchQueryHandler;
-    private final OrderCompanyUnassignedQueryHandler orderCompanyUnassignedQueryHandler;
 
     @Override
     public TrackOrderResponse trackOrder(OrderTrackingQuery orderTrackingQuery) throws OrderDomainException {
@@ -34,12 +32,7 @@ public class OrderQueryServiceHandler implements OrderQueryServiceAdapter {
     }
 
     @Override
-    public OrderResponse orderById(OrderID orderId) {
+    public OrderResponse orderById(OrderID orderId) throws OrderDomainException {
         return orderSingleFetchQueryHandler.handle(orderId);
-    }
-
-    @Override
-    public List<OrderResponse> getUnassignOrders() {
-        return orderCompanyUnassignedQueryHandler.handle();
     }
 }

@@ -34,7 +34,7 @@ public class OrderStartDeliveryEventPublisher implements AbstractOrderStartDeliv
     public void publish(OutboxMessage message, BiConsumer<OutboxMessage, OutboxStatus> outboxCallback) throws OrderDomainException {
         OrderStartDeliveryEventPayload payload = kafkaMessageHelper.getOrderEventPayload(message.getPayload(), OrderStartDeliveryEventPayload.class);
 
-        log.info("Received OrderStartDeliveryEventOutboxMessage for order id: {}", payload.getOrderId());
+        log.info("Received OrderStartDeliveryEventPayload for order id: {}", payload.getOrderId());
 
         try {
             OrderStartDeliveryRequestAvroModel avroModel = orderMessagePublisherDataMapper.orderPaymentEventToOrderStartDeliveryRequestAvroModel(payload);
@@ -44,10 +44,10 @@ public class OrderStartDeliveryEventPublisher implements AbstractOrderStartDeliv
                     UUID.randomUUID().toString(),
                     avroModel,
                     orderKafkaPublisherHelper.getCallback(avroModel, message, payload.getOrderId(), outboxCallback));
-            log.info("OrderStartDeliveryEventOutboxMessage sent to Kafka for order id: {}", payload.getOrderId());
+            log.info("OrderStartDeliveryEventPayload sent to Kafka for order id: {}", payload.getOrderId());
 
         } catch (Exception e) {
-            log.error("Error while sending OrderStartDeliveryEventOutboxMessage to kafka with order id: {}, error: {}", payload.getOrderId(), e.getMessage());
+            log.error("Error while sending OrderStartDeliveryEventPayload to kafka with order id: {}, error: {}", payload.getOrderId(), e.getMessage());
         }
 
 

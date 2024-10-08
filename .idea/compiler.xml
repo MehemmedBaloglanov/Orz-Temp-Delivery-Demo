@@ -18,15 +18,16 @@
         <module name="company-domain-shell" />
         <module name="order-domain-shell" />
         <module name="cart-rest" />
-        <module name="payment-service" />
         <module name="temp-root" />
         <module name="order-domain-core" />
         <module name="saga" />
+        <module name="mock-delivery-service" />
         <module name="user-message-listener" />
         <module name="company-rest" />
         <module name="cart-repository" />
         <module name="orizon-util" />
         <module name="company-service-connector" />
+        <module name="mock-company-service" />
         <module name="order-rest" />
         <module name="company-message-publisher" />
         <module name="kafka-producer" />
@@ -47,6 +48,7 @@
         <module name="user-service-connector" />
         <module name="user-domain-core" />
         <module name="user-repository" />
+        <module name="mock-payment-service" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>

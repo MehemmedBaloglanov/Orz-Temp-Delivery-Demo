@@ -32,7 +32,7 @@ public class OrderApproveMessagePublisher implements AbstractOrderApproveEventPu
     public void publish(OutboxMessage message, BiConsumer<OutboxMessage, OutboxStatus> outboxCallback) throws OrderDomainException {
         OrderCompanyApproveEventPayload payload = kafkaMessageHelper.getOrderEventPayload(message.getPayload(), OrderCompanyApproveEventPayload.class);
 
-        log.info("Received OrderApproveMessagePublisher for order id: {}", payload.getOrderId());
+        log.info("Received OrderCompanyApproveEventPayload for order id: {}", payload.getOrderId());
         try {
             CompanyOrderApproveRequestAvroModel avroModel = orderMessagePublisherDataMapper.orderCompanyApproveEventToCompanyOrderApproveRequestAvroModel(payload);
 
@@ -42,9 +42,9 @@ public class OrderApproveMessagePublisher implements AbstractOrderApproveEventPu
                     avroModel,
                     orderKafkaPublisherHelper.getCallback(avroModel, message, payload.getOrderId(), outboxCallback));
 
-            log.info("OrderApproveMessagePublisher sent to Kafka for order id: {}", payload.getOrderId());
+            log.info("OrderCompanyApproveEventPayload sent to Kafka for order id: {}", payload.getOrderId());
         } catch (Exception e) {
-            log.error("Error while sending OrderApproveMessagePublisher to kafka with order id: {}, error: {}", payload.getOrderId(), e.getMessage());
+            log.error("Error while sending OrderCompanyApproveEventPayload to kafka with order id: {}, error: {}", payload.getOrderId(), e.getMessage());
         }
     }
 }

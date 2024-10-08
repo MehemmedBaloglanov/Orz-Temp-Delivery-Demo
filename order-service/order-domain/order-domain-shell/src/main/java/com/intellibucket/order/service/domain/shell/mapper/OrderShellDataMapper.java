@@ -13,6 +13,8 @@ import com.intellibucket.order.service.domain.shell.dto.rest.response.OrderItemR
 import com.intellibucket.order.service.domain.shell.dto.rest.response.OrderResponse;
 import com.intellibucket.order.service.domain.shell.dto.rest.response.TrackOrderResponse;
 import com.intellibucket.order.service.domain.shell.outbox.model.payload.company.*;
+import com.intellibucket.order.service.domain.shell.outbox.model.payload.completed.OrderCompletedEventPayload;
+import com.intellibucket.order.service.domain.shell.outbox.model.payload.completed.OrderCompletedEventProduct;
 import com.intellibucket.order.service.domain.shell.outbox.model.payload.delivery.OrderStartDeliveryEventAddress;
 import com.intellibucket.order.service.domain.shell.outbox.model.payload.delivery.OrderStartDeliveryEventPayload;
 import com.intellibucket.order.service.domain.shell.outbox.model.payload.payment.OrderPaymentRefundEventPayload;
