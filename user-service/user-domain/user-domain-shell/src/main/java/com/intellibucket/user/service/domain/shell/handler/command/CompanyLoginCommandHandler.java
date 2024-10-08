@@ -10,6 +10,7 @@ import com.intellibucket.user.service.domain.core.service.port.UserDomainService
 import com.intellibucket.user.service.domain.core.valueObject.Password;
 import com.intellibucket.user.service.domain.shell.dto.request.UserLoginCommand;
 import com.intellibucket.user.service.domain.shell.mapper.UserCommandMapper;
+import com.intellibucket.user.service.domain.shell.port.output.publisher.EventPublisher;
 import com.intellibucket.user.service.domain.shell.port.output.repository.UserRepository;
 import com.intellibucket.user.service.domain.shell.security.AbstractSecurityContextHolder;
 import jakarta.transaction.Transactional;
@@ -22,6 +23,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class CompanyLoginCommandHandler {
     private final UserRepository userRepository;
+    private final EventPublisher eventPublisher;
     private final UserDomainService userDomainService;
     private final AbstractSecurityContextHolder securityContextHolder;
 
@@ -37,6 +39,8 @@ public class CompanyLoginCommandHandler {
         if (userRootOptional.isEmpty()) {
             throw new UserNotFoundException("User not found with UserId! " + companyUserId);
         }
+        UserLoggedInDomainEvent userLoggedInDomainEvent = userDomainService.userLoggedIn(userFromCommand);
+        eventPublisher.publishUserLoggedInEvent(userLoggedInDomainEvent);
 
         UserRoot user = userRootOptional.get();
 
@@ -44,8 +48,5 @@ public class CompanyLoginCommandHandler {
         if (!user.getPassword().equals(inputPassword)) {
             throw new PasswordValidationException("Invalid credentials!");
         }
-
-
-        UserLoggedInDomainEvent userLoggedInDomainEvent = userDomainService.userLoggedIn(userFromCommand);
     }
 }

@@ -8,6 +8,7 @@ import com.intellibucket.user.service.domain.core.root.UserRoot;
 import com.intellibucket.user.service.domain.core.service.port.UserDomainService;
 import com.intellibucket.user.service.domain.shell.dto.request.CustomerUpdateCommand;
 import com.intellibucket.user.service.domain.shell.mapper.UserCommandMapper;
+import com.intellibucket.user.service.domain.shell.port.output.publisher.EventPublisher;
 import com.intellibucket.user.service.domain.shell.port.output.repository.UserRepository;
 import com.intellibucket.user.service.domain.shell.security.AbstractSecurityContextHolder;
 import jakarta.transaction.Transactional;
@@ -22,13 +23,13 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class CustomerUpdateCommandHandler {
     private final UserRepository userRepository;
+    private final EventPublisher eventPublisher;
     private final UserDomainService userDomainService;
     private final AbstractSecurityContextHolder securityContextHolder;
 
     @Transactional
     public void handle(CustomerUpdateCommand command) throws UserNotFoundException, UserSavedException {
         UserID customerUserID = securityContextHolder.currentCustomerID();
-
 
         Optional<UserRoot> userRoot = userRepository.findByCustomerId(customerUserID);
         if (userRoot.isEmpty()) {
@@ -37,8 +38,9 @@ public class CustomerUpdateCommandHandler {
 
         UserRoot userUpdate = UserCommandMapper.customerUpdateCommandToUserRoot(command, userRoot.get());
 
-
         UserUpdatedDomainEvent userUpdatedDomainEvent = userDomainService.userUpdated(userUpdate);
+        eventPublisher.publishUserUpdatedEvent(userUpdatedDomainEvent);
+
         UserRoot savedUserRoot = userRepository.save(userUpdate);
         if (savedUserRoot == null) {
             throw new UserSavedException("User could not be saved: " + userUpdate.getUserID());

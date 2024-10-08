@@ -30,20 +30,19 @@ public class UserCommandController {
         return ResponseEntity.ok(response);
     }
 
-    @PostMapping("/update/Customer")
-    public ResponseEntity<EmptyResponse> updateUser(@RequestBody  CustomerUpdateCommand command) throws UserNotFoundException, UserSavedException {
+    @PostMapping("/update/customer")
+    public ResponseEntity<EmptyResponse> updateUser(@RequestBody CustomerUpdateCommand command) throws UserNotFoundException, UserSavedException {
         abstractUserCommandService.updateCustomer(command);
         EmptyResponse response = EmptyResponse.builder().message("User updated successfully !").success(true).build();
         return ResponseEntity.ok(response);
     }
 
-    @PostMapping("/update/Company")
-    public ResponseEntity<EmptyResponse> updateUser(@RequestBody  CompanyUpdateCommand command) throws UserNotFoundException, UserSavedException {
+    @PostMapping("/update/company")
+    public ResponseEntity<EmptyResponse> updateUser(@RequestBody CompanyUpdateCommand command) throws UserNotFoundException, UserSavedException {
         abstractUserCommandService.updateCompany(command);
         EmptyResponse response = EmptyResponse.builder().message("User updated successfully !").success(true).build();
         return ResponseEntity.ok(response);
     }
-
 
     @DeleteMapping("/delete/customer")
     public ResponseEntity<EmptyResponse> deleteCustomer(@RequestBody UserDeleteCommand command) throws UserDomainException {
@@ -60,27 +59,28 @@ public class UserCommandController {
     @PostMapping("/customer/change/password")
     public ResponseEntity<EmptyResponse> customerChangePassword(@RequestBody UserChangePasswordCommand command) throws UserDomainException {
         abstractUserCommandService.customerChangePassword(command);
-        EmptyResponse response = EmptyResponse.builder().message("User deleted successfully !").success(true).build();
+        EmptyResponse response = EmptyResponse.builder().message("User changed password successfully !").success(true).build();
         return ResponseEntity.ok(response);
     }
 
     @PostMapping("/company/change/password")
     public ResponseEntity<EmptyResponse> companyChangePassword(@RequestBody UserChangePasswordCommand command) throws UserDomainException {
         abstractUserCommandService.companyChangePassword(command);
-        EmptyResponse response = EmptyResponse.builder().message("User deleted successfully !").success(true).build();
+        EmptyResponse response = EmptyResponse.builder().message("User changed password successfully !").success(true).build();
         return ResponseEntity.ok(response);
     }
 
     @PostMapping("/customer/login")
     public ResponseEntity<EmptyResponse> customerLogin(@RequestBody UserLoginCommand command) throws UserDomainException {
         abstractUserCommandService.customerLogin(command);
-        EmptyResponse response = EmptyResponse.builder().message("User deleted successfully !").success(true).build();
+        EmptyResponse response = EmptyResponse.builder().message("User signed in successfully !").success(true).build();
         return ResponseEntity.ok(response);
-   }
+    }
+
     @PostMapping("/company/login")
     public ResponseEntity<EmptyResponse> companyLogin(@RequestBody UserLoginCommand command) throws UserDomainException {
         abstractUserCommandService.companyLogin(command);
-        EmptyResponse response = EmptyResponse.builder().message("User deleted successfully !").success(true).build();
+        EmptyResponse response = EmptyResponse.builder().message("User signed in successfully !").success(true).build();
         return ResponseEntity.ok(response);
     }
 }

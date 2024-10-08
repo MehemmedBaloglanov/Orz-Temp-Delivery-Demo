@@ -18,5 +18,4 @@ public interface UserDomainService {
 
     UserUpdatedDomainEvent userUpdated(UserRoot userRoot);
 
-//    List<UserRoot> findByUserId(UserID userID);
 }

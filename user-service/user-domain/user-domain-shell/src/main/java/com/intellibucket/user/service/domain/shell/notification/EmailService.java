@@ -15,10 +15,11 @@ public class EmailService {
         message.setTo(toUserEmail);
         message.setSubject("Welcome to our platform! ");
         message.setText("Hello " + username + "," +
-                "\n\nThank you for registering with us! We are thrilled to have you onboard. \n" +
-                "Feel free to explore all features and services we offer.\n" +
+                "\n\nThank you for registering with us! We are thrilled to have you onboard. " +
+                "Feel free to explore all features and services we offer.\n\n" +
                 "We look forward to being a part of your journey.\n\n" +
-                "Best regards, \n\n" +
+                "If you encounter any issues, please contact the Orizon support team by emailing support@delivery.com. \n\n" +
+                "Best regards, \n" +
                 "The Orizon Team.");
         emailSender.send(message);
     }

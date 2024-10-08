@@ -7,6 +7,7 @@ import com.intellibucket.user.service.domain.core.exception.user.UserNotFoundExc
 import com.intellibucket.user.service.domain.core.root.UserRoot;
 import com.intellibucket.user.service.domain.core.service.port.UserDomainService;
 import com.intellibucket.user.service.domain.shell.dto.request.UserDeleteCommand;
+import com.intellibucket.user.service.domain.shell.port.output.publisher.EventPublisher;
 import com.intellibucket.user.service.domain.shell.port.output.repository.UserRepository;
 import com.intellibucket.user.service.domain.shell.security.AbstractSecurityContextHolder;
 import lombok.RequiredArgsConstructor;
@@ -19,6 +20,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class CustomerDeleteCommandHandler {
     private final UserRepository userRepository;
+    private final EventPublisher eventPublisher;
     private final UserDomainService userDomainService;
     private final AbstractSecurityContextHolder securityContextHolder;
 
@@ -34,6 +36,7 @@ public class CustomerDeleteCommandHandler {
         }
 
         UserDeletedDomainEvent userDeletedDomainEvent = userDomainService.userDeleted(userRoot.get());
+        eventPublisher.publishUserDeletedEvent(userDeletedDomainEvent);
 
         userRepository.save(userRoot.get());
     }

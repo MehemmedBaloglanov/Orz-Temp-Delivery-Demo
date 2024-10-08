@@ -3,13 +3,13 @@ package com.intellibucket.user.service.domain.shell.handler.command;
 import com.intelliacademy.orizonroute.identity.user.UserID;
 import com.intellibucket.user.service.domain.core.event.UserChangePasswordDomainEvent;
 import com.intellibucket.user.service.domain.core.exception.UserDomainException;
-import com.intellibucket.user.service.domain.core.exception.password.PasswordValidationException;
 import com.intellibucket.user.service.domain.core.exception.user.UserNotFoundException;
 import com.intellibucket.user.service.domain.core.exception.user.UserSavedException;
 import com.intellibucket.user.service.domain.core.root.UserRoot;
 import com.intellibucket.user.service.domain.core.service.port.UserDomainService;
 import com.intellibucket.user.service.domain.core.valueObject.Password;
 import com.intellibucket.user.service.domain.shell.dto.request.UserChangePasswordCommand;
+import com.intellibucket.user.service.domain.shell.port.output.publisher.EventPublisher;
 import com.intellibucket.user.service.domain.shell.port.output.repository.UserRepository;
 import com.intellibucket.user.service.domain.shell.security.AbstractSecurityContextHolder;
 import lombok.RequiredArgsConstructor;
@@ -21,6 +21,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class CompanyChangePasswordCommandHandler {
     private final UserRepository userRepository;
+    private final EventPublisher eventPublisher;
     private final UserDomainService userDomainService;
     private final AbstractSecurityContextHolder securityContextHolder;
 
@@ -32,17 +33,15 @@ public class CompanyChangePasswordCommandHandler {
         if (userRoot.isEmpty()) {
             throw new UserNotFoundException("User not found with ID: " + currentCompanyID);
         }
-
         UserRoot user = userRoot.get();
-
+        // ADD Change password method to check
         Password oldPassword = Password.builder().value(command.getOldPassword()).build();
         Password newPassword = Password.builder().value(command.getNewPassword()).build();
 
         user.changePassword(oldPassword, newPassword);
 
-
         UserChangePasswordDomainEvent userChangePasswordDomainEvent = userDomainService.userChangePassword(user);
-
+        eventPublisher.publishUserChangePasswordEvent(userChangePasswordDomainEvent);
 
         UserRoot savedUserRoot = userRepository.save(user);
         if (savedUserRoot == null) {

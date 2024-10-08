@@ -1,6 +1,5 @@
 package com.intellibucket.user.service.domain.shell.dto.query;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.intelliacademy.orizonroute.identity.user.UserID;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -13,6 +12,5 @@ import lombok.experimental.FieldDefaults;
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class FetchUserByIdCommand {
-//    @JsonProperty("id")
     UserID userId;
 }
