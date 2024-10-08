@@ -14,14 +14,10 @@ import org.springframework.stereotype.Service;
 public class UserCommandService implements UserCommandServicePort {
     private final CompanyRegisterCommandHandler companyRegisterCommandHandler;
     private final CustomerRegisterCommandHandler customerRegisterCommandHandler;
-    private final CompanyDeleteCommandHandler companyDeleteCommandHandler;
-    private final CustomerUpdateCommandHandler customerUpdateCommandHandler;
-    private final CustomerLoginCommandHandler customerLoginCommandHandler;
-    private final CustomerChangePasswordCommandHandler customerChangePasswordCommandHandler;
-    private final CompanyUpdateCommandHandler companyUpdateCommandHandler;
-    private final CustomerDeleteCommandHandler customerDeleteCommandHandler;
-    private final CompanyChangePasswordCommandHandler companyChangePasswordCommandHandler;
-    private final CompanyLoginCommandHandler companyLoginCommandHandler;
+    private final UserDeleteCommandHandler userDeleteCommandHandler;
+    private final UserUpdateCommandHandler userUpdateCommandHandler;
+    private final UserChangePasswordCommandHandler userChangePasswordCommandHandler;
+    private final UserLoginCommandHandler userLoginCommandHandler;
 
     @Override
     public void companyRegistered(CompanyCreateCommand command) throws UserDomainException {
@@ -34,44 +30,28 @@ public class UserCommandService implements UserCommandServicePort {
     }
 
     @Override
-    public void updateCustomer(CustomerUpdateCommand command) throws UserNotFoundException, UserSavedException {
-        customerUpdateCommandHandler.handle(command);
+    public void userUpdate(CustomerUpdateCommand command) throws UserNotFoundException, UserSavedException {
+        userUpdateCommandHandler.handle(command);
 
     }
 
-    @Override
-    public void updateCompany(CompanyUpdateCommand command) throws UserNotFoundException, UserSavedException {
-        companyUpdateCommandHandler.handle(command);
-    }
 
     @Override
-    public void companyDelete(UserDeleteCommand command) throws UserDomainException {
-        companyDeleteCommandHandler.handle(command);
+    public void userDelete(UserDeleteCommand command) throws UserDomainException {
+        userDeleteCommandHandler.handle(command);
     }
 
-    @Override
-    public void customerDelete(UserDeleteCommand command) throws UserDomainException {
-        customerDeleteCommandHandler.handle(command);
-    }
+
 
     @Override
-    public void customerLogin(UserLoginCommand command) throws UserDomainException {
-      customerLoginCommandHandler.handle(command);
+    public void userLogin(UserLoginCommand command) throws UserDomainException {
+       userLoginCommandHandler.handle(command);
     }
 
-    @Override
-    public void companyLogin(UserLoginCommand command) throws UserDomainException {
-       companyLoginCommandHandler.handle(command);
-    }
 
     @Override
-    public void customerChangePassword(UserChangePasswordCommand command) throws UserDomainException {
-        customerChangePasswordCommandHandler.handle(command);
-    }
-
-    @Override
-    public void companyChangePassword(UserChangePasswordCommand command) throws UserDomainException {
-        companyChangePasswordCommandHandler.handle(command);
+    public void userChangePassword(UserChangePasswordCommand command) throws UserDomainException {
+        userChangePasswordCommandHandler.handle(command);
     }
 }
 
