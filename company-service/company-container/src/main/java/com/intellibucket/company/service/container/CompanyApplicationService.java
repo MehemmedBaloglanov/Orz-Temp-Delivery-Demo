@@ -16,6 +16,6 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 @EnableJpaRepositories("com.intellibucket.company.service.company.repository.repository")
 public class CompanyApplicationService {
     public static void main(String[] args) {
-        SpringApplication.run(CompanyApplicationService.class,args);
+        SpringApplication.run(CompanyApplicationService.class, args);
     }
 }
