@@ -15,7 +15,7 @@ public class OrderRefundApproveResponseMessageListenerImpl implements AbstractOr
 
 
     @Override
-    public void refundOrder(OrderRefundResponseProduct refundResponseProduct) throws CompanyDomainException {
+    public void refundOrder(OrderRefundResponseProduct refundResponseProduct)  {
         orderRefundMessageHandler.handle(refundResponseProduct);
     }
 }

@@ -18,22 +18,18 @@ import java.util.List;
 @Component
 @RequiredArgsConstructor
 public class ProductStockIncreaseKafkaListener implements KafkaConsumer<CompanyOrderRefundRequestAvroModel> {
-    private final CompanyMessageListenerDataMapper companyMessagePublisherDataMapper;
+    private final CompanyMessageListenerDataMapper companyMessageListenerDataMapper;
     private final AbstractOrderRefundResponseMessageListener orderRefundResponseMessageListener;
 
-    //todo burda niye orderCompanyRefundResponsu qebul elemir?
     @Override
     public void receive(@Payload List<CompanyOrderRefundRequestAvroModel> messages,
                         @Header(KafkaHeaders.RECEIVED_KEY) List<String> keys,
                         @Header(KafkaHeaders.RECEIVED_PARTITION) List<Integer> partitions,
                         @Header(KafkaHeaders.OFFSET) List<Long> offsets) {
         messages.forEach(message -> {
-            OrderCompanyRefundResponse  orderCompanyRefundResponse = companyMessagePublisherDataMapper.companyOrderRefundRequestAvroModelToOrderRefundResponse(message);
-//            try{
-//                orderRefundResponseMessageListener.refundOrder(orderCompanyRefundResponse);
-//            }catch (CompanyDomainException e){
-//                log.error(e.getMessage());
-//            }
+            OrderCompanyRefundResponse orderCompanyRefundResponse = companyMessageListenerDataMapper.companyOrderRefundRequestAvroModelToOrderRefundResponse(message);
+            orderCompanyRefundResponse.getProducts().forEach(orderRefundResponseMessageListener::refundOrder
+            );
         });
     }
 }

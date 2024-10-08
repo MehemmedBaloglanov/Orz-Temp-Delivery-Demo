@@ -4,5 +4,5 @@ import com.intellibucket.company.service.domain.core.exception.CompanyDomainExce
 import com.intellibucket.company.service.domain.shell.dto.message.order.refund.OrderRefundResponseProduct;
 
 public interface AbstractOrderRefundResponseMessageListener {
-    void refundOrder(OrderRefundResponseProduct refundResponseProduct) throws CompanyDomainException;
+    void refundOrder(OrderRefundResponseProduct refundResponseProduct);
 }
