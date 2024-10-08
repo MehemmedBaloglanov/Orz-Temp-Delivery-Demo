@@ -8,6 +8,7 @@ import com.intellibucket.order.service.domain.shell.dto.connectors.company.Compa
 import com.intellibucket.order.service.domain.shell.dto.connectors.company.ProductResponse;
 import com.intellibucket.order.service.domain.shell.dto.connectors.company.ProductStatus;
 import com.intellibucket.order.service.domain.shell.port.output.connector.AbstractCompanyServiceConnector;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
@@ -15,9 +16,30 @@ import java.util.List;
 
 @Component
 public class CompanyServiceConnector implements AbstractCompanyServiceConnector {
+    private final CompanyClient companyClient;
+
+    @Autowired
+    public CompanyServiceConnector(CompanyClient companyClient) {
+        this.companyClient = companyClient;
+    }
+    public CompanyResponse getCompanyById(String companyId) {
+
+        return companyClient.getCompanyById(companyId);
+    }
+
+//    public CompanyResponse createCompany(CompanyRequest companyRequest) {
+//
+//        return companyClient.createCompany(companyRequest);
+//    }
+
+
     @Override
     public ProductResponse getProductInformation(ProductID productID) {
-        return null;
+        // Call the company client to get product information by productID
+        ProductResponse productResponse = companyClient.getProductById(productID);
+
+        // Assuming some post-processing if needed, or return the response directly
+        return productResponse;
     }
 
     @Override
