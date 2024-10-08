@@ -3,7 +3,6 @@ package com.intellibucket.company.service.domain.shell.handler;
 import com.intelliacademy.orizonroute.identity.order.product.ProductID;
 import com.intellibucket.company.service.domain.core.exception.ProductNotFoundException;
 import com.intellibucket.company.service.domain.core.root.ProductRoot;
-import com.intellibucket.company.service.domain.core.service.ProductDomainService;
 import com.intellibucket.company.service.domain.shell.dto.rest.query.ProductGetByIdQuery;
 import com.intellibucket.company.service.domain.shell.dto.rest.response.ProductResponse;
 import com.intellibucket.company.service.domain.shell.mapper.ProductShellDataMapper;

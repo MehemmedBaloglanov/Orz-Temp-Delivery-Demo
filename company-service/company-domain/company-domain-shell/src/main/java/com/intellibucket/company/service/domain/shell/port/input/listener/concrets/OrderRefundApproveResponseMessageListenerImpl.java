@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class AbstractOrderRefundApproveResponseMessageListenerImpl implements AbstractOrderRefundResponseMessageListener {
+public class OrderRefundApproveResponseMessageListenerImpl implements AbstractOrderRefundResponseMessageListener {
 
     private final OrderRefundMessageHandler orderRefundMessageHandler;
 

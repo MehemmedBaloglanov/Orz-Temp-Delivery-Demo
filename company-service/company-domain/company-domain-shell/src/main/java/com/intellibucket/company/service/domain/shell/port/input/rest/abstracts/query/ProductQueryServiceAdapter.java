@@ -1,6 +1,5 @@
 package com.intellibucket.company.service.domain.shell.port.input.rest.abstracts.query;
 
-import com.intellibucket.company.service.domain.core.exception.CompanyDomainException;
 import com.intellibucket.company.service.domain.core.exception.ProductNotFoundException;
 import com.intellibucket.company.service.domain.shell.dto.rest.connector.ProductResponseForOrder;
 import com.intellibucket.company.service.domain.shell.dto.rest.query.ProductGetByIdQuery;

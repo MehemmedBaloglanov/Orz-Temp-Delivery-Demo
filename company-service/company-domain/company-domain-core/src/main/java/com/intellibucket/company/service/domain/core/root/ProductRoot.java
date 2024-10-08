@@ -1,13 +1,11 @@
 package com.intellibucket.company.service.domain.core.root;
 
-import com.intelliacademy.orizonroute.identity.company.CompanyID;
 import com.intelliacademy.orizonroute.identity.order.product.ProductID;
 import com.intelliacademy.orizonroute.root.AggregateRoot;
 import com.intelliacademy.orizonroute.valueobjects.common.Money;
 import com.intellibucket.company.service.domain.core.exception.ValidateException;
 import com.intellibucket.company.service.domain.core.valueobject.ProductStatus;
 import lombok.Getter;
-import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
 @SuperBuilder
@@ -15,7 +13,7 @@ import lombok.experimental.SuperBuilder;
 public class ProductRoot extends AggregateRoot<ProductID> {
     private String name;
     private Money price;
-    private CompanyID companyID;
+//    private CompanyID companyID;
     private Integer stockQuantity;
     private ProductStatus status;
 
@@ -33,7 +31,7 @@ public class ProductRoot extends AggregateRoot<ProductID> {
         validateName();
         validatePrice();
         validateStockQuantity();
-        validateCompanyID();
+//        validateCompanyID();
     }
 
     private void validateName() throws ValidateException {
@@ -49,11 +47,11 @@ public class ProductRoot extends AggregateRoot<ProductID> {
     }
 
 
-    private void validateCompanyID() throws ValidateException {
-        if (companyID == null) {
-            throw new ValidateException("CompanyID cannot be null.");
-        }
-    }
+//    private void validateCompanyID() throws ValidateException {
+//        if (companyID == null) {
+//            throw new ValidateException("CompanyID cannot be null.");
+//        }
+//    }
 
     private void validateStockQuantity() throws ValidateException {
         if (stockQuantity == null || stockQuantity < 0) {
