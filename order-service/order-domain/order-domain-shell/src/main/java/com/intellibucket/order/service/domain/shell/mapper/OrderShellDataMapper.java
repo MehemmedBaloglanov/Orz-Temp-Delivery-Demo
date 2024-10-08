@@ -7,6 +7,10 @@ import com.intellibucket.order.service.domain.core.event.StartDeliveryOrderEvent
 import com.intellibucket.order.service.domain.core.root.OrderItemRoot;
 import com.intellibucket.order.service.domain.core.root.OrderRoot;
 import com.intellibucket.order.service.domain.core.valueobject.OrderAddress;
+import com.intellibucket.order.service.domain.shell.dto.connectors.cart.CartResponse;
+import com.intellibucket.order.service.domain.shell.dto.connectors.cart.CartResponseProduct;
+import com.intellibucket.order.service.domain.shell.dto.connectors.company.request.CompanyRequest;
+import com.intellibucket.order.service.domain.shell.dto.connectors.company.request.CompanyRequestProduct;
 import com.intellibucket.order.service.domain.shell.dto.connectors.user.UserAddress;
 import com.intellibucket.order.service.domain.shell.dto.rest.response.OrderAddressResponse;
 import com.intellibucket.order.service.domain.shell.dto.rest.response.OrderItemResponse;
@@ -21,6 +25,7 @@ import com.intellibucket.order.service.domain.shell.outbox.model.payload.payment
 import org.springframework.stereotype.Component;
 
 import java.time.OffsetDateTime;
+import java.util.List;
 
 import static com.intellibucket.domain.constants.DomainConstants.ZONE_ID;
 
@@ -154,5 +159,20 @@ public class OrderShellDataMapper {
                 .productId(orderItemRoot.getProductID().value())
                 .quantity(orderItemRoot.getQuantity())
                 .build();
+    }
+
+    public CompanyRequest cartResponseToCompanyResponse(CartResponse item) {
+        return CompanyRequest.builder()
+                .companyID(item.getCompanyID())
+                .products(item.getProducts().stream().map(this::cartResponseProductToCompanyResponseProduct).toList())
+                .build();
+    }
+
+    public CompanyRequestProduct cartResponseProductToCompanyResponseProduct(CartResponseProduct cartResponseProduct) {
+        return CompanyRequestProduct.builder()
+                .productID(cartResponseProduct.getProductId())
+                .quantity(cartResponseProduct.getQuantity())
+                .build();
+
     }
 }
