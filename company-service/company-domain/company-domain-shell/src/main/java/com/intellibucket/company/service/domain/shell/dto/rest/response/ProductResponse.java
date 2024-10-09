@@ -22,8 +22,8 @@ public class ProductResponse {
 
     private final Money price;
 
-    @JsonProperty("company_id")
-    private final String companyId;
+//    @JsonProperty("company_id")
+//    private final String companyId;
 
     @JsonProperty("stock_quantity")
     private final Integer stockQuantity;

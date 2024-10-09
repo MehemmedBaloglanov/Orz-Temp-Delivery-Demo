@@ -1,26 +1,19 @@
 package com.intellibucket.company.service.domain.shell.handler.message;
 
 import com.intelliacademy.orizonroute.identity.order.product.ProductID;
-import com.intellibucket.company.service.domain.core.exception.CompanyDomainException;
 import com.intellibucket.company.service.domain.core.root.ProductRoot;
 import com.intellibucket.company.service.domain.shell.dto.message.order.refund.OrderRefundResponseProduct;
 import com.intellibucket.company.service.domain.shell.outbox.helper.CompanyOutboxHelper;
-import com.intellibucket.company.service.domain.shell.outbox.model.payload.ProductApprovePayload;
-import com.intellibucket.company.service.domain.shell.outbox.model.payload.ProductRefundPayload;
 import com.intellibucket.company.service.domain.shell.port.output.repository.ProductRepositoryAdapter;
-import com.intellibucket.order.service.domain.core.valueobject.ApproveStatus;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.math.BigDecimal;
-import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import static com.intellibucket.company.service.domain.shell.config.CompanyConstants.ORDER_REFUND_SAGA_NAME;
 
 @Slf4j
 @Component
@@ -31,7 +24,7 @@ public class OrderRefundMessageHandler {
     private final CompanyOutboxHelper companyOutboxHelper;
 
     @Transactional
-    public void handle(OrderRefundResponseProduct refundResponseProduct) throws CompanyDomainException {
+    public void handle(OrderRefundResponseProduct refundResponseProduct) {
         List<String> failureMessages = new ArrayList<>();
 
         ProductID productID = ProductID.of(refundResponseProduct.getProductId());
@@ -53,13 +46,5 @@ public class OrderRefundMessageHandler {
             }
         }
 
-        BigDecimal refundAmount = refundResponseProduct.getPrice();
-
-        ProductRefundPayload productRefundPayload = ProductRefundPayload.builder()
-                .customerId(refundResponseProduct.getCompanyId())
-                .refundAmount(refundAmount)
-                .createdAt(Instant.now())
-                .build();
-        companyOutboxHelper.createAndSaveOutboxMessage(productRefundPayload, ORDER_REFUND_SAGA_NAME);
     }
 }

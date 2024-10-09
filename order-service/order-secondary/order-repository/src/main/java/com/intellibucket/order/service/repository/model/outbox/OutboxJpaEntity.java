@@ -1,8 +1,6 @@
 package com.intellibucket.order.service.repository.model.outbox;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.OffsetDateTime;
@@ -22,8 +20,10 @@ public class OutboxJpaEntity {
 
     private String sagaName;
 
+//    @Column(columnDefinition = "text")
     private String payload;
 
+    @Enumerated(EnumType.STRING)
     private OutboxJpaStatus outboxStatus;
 
     private OffsetDateTime createdAt;

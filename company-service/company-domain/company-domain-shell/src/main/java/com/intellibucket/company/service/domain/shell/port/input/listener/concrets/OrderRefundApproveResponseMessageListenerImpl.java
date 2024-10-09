@@ -9,13 +9,13 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class AbstractOrderRefundApproveResponseMessageListenerImpl implements AbstractOrderRefundResponseMessageListener {
+public class OrderRefundApproveResponseMessageListenerImpl implements AbstractOrderRefundResponseMessageListener {
 
     private final OrderRefundMessageHandler orderRefundMessageHandler;
 
 
     @Override
-    public void refundOrder(OrderRefundResponseProduct refundResponseProduct) throws CompanyDomainException {
+    public void refundOrder(OrderRefundResponseProduct refundResponseProduct)  {
         orderRefundMessageHandler.handle(refundResponseProduct);
     }
 }

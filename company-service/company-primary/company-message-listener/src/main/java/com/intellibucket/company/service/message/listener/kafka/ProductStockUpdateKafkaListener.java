@@ -3,7 +3,7 @@ package com.intellibucket.company.service.message.listener.kafka;
 import com.intellibucket.company.service.domain.core.exception.CompanyDomainException;
 import com.intellibucket.company.service.domain.shell.dto.message.order.approve.ProductApproveResponse;
 import com.intellibucket.company.service.domain.shell.port.input.listener.abstracts.AbstractOrderApproveResponseMessageListener;
-import com.intellibucket.company.service.message.listener.mapper.CompanyMessagePublisherDataMapper;
+import com.intellibucket.company.service.message.listener.mapper.CompanyMessageListenerDataMapper;
 import com.intellibucket.kafka.config.consumer.KafkaConsumer;
 import com.intellibucket.kafka.order.avro.model.company.CompanyOrderApproveRequestAvroModel;
 import lombok.RequiredArgsConstructor;
@@ -20,7 +20,7 @@ import java.util.List;
 @Component
 @RequiredArgsConstructor
 public class ProductStockUpdateKafkaListener implements KafkaConsumer<CompanyOrderApproveRequestAvroModel> {
-    private final CompanyMessagePublisherDataMapper companyMessagePublisherDataMapper;
+    private final CompanyMessageListenerDataMapper companyMessagePublisherDataMapper;
     private final AbstractOrderApproveResponseMessageListener abstractOrderApproveResponseMessageListener;
 
     @Override

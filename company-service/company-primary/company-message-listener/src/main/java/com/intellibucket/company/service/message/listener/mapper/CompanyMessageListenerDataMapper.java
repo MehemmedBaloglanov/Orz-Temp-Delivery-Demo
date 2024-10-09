@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Component
-public class CompanyMessagePublisherDataMapper {
+public class CompanyMessageListenerDataMapper {
 
     public ProductApproveResponse productStockUpdateRequestAvroModelToOrderProductsResponse(CompanyOrderApproveRequestAvroModel message) {
         return ProductApproveResponse.builder()
