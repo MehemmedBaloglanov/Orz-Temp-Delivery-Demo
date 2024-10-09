@@ -10,7 +10,7 @@ import lombok.Builder;
 @Builder
 @ValueObject
 public sealed class PhoneNumber permits PhoneNumber.Nil {
-        public static final String WITHOUT_COUNTRY_CODE_PHONE_NUMBER_EXP = "^[0-9]{8,15}$";
+    public static final String WITHOUT_COUNTRY_CODE_PHONE_NUMBER_EXP = "^[0-9]{8,15}$";
     public static final String COUNTRY_CODE_EXP = "^[0-9]{1,3}$";
     private final PhoneNumberType type;
     private final String countryCode;
@@ -39,8 +39,8 @@ public sealed class PhoneNumber permits PhoneNumber.Nil {
     }
 
     public static PhoneNumber of(PhoneNumberType type, String countryCode, String phoneNumber) {
-        if (phoneNumber == null || phoneNumber.isEmpty())
-            throw new IllegalArgumentException("Phone number cannot be null or empty");
+        if (phoneNumber == null || phoneNumber.isEmpty() || countryCode == null || countryCode.isEmpty())
+            throw new IllegalArgumentException("Phone number or country code cannot be null or empty");
         return new PhoneNumber(type, countryCode, phoneNumber);
     }
 
@@ -79,7 +79,7 @@ public sealed class PhoneNumber permits PhoneNumber.Nil {
 
     public static final class Nil extends PhoneNumber {
         private Nil() {
-            super(PhoneNumberType.NONE, "","");
+            super(PhoneNumberType.NONE, "", "");
         }
 
         @Override
