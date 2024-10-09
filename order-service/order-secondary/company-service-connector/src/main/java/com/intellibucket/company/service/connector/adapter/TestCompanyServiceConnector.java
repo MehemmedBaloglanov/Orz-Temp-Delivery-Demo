@@ -32,7 +32,7 @@ public class TestCompanyServiceConnector implements AbstractCompanyServiceConnec
 
     @Override
     public List<ProductResponse> getProductsInformation(List<CompanyRequest> productIDs) {
-        ProductResponse productResponse = ProductResponse.builder()
+        ProductResponse productResponse3 = ProductResponse.builder()
                 .price(Money.of(BigDecimal.valueOf(10)))
                 .companyId(CompanyID.of("01924d1f-a2f8-7825-9730-15ef6d4738"))
                 .productId(ProductID.of("97776160-6622-4544-8632-7516546485"))
@@ -41,6 +41,24 @@ public class TestCompanyServiceConnector implements AbstractCompanyServiceConnec
                 .companyStatus(CompanyStatus.ACTIVE)
                 .build();
 
-        return List.of(productResponse);
+        ProductResponse productResponse1 = ProductResponse.builder()
+                .price(Money.of(BigDecimal.valueOf(10)))
+                .companyId(CompanyID.of("01924d1f-a2f8-7825-9730-15ef6d4738"))
+                .productId(ProductID.of("97776160-6622-4544-8632-7516546485"))
+                .quantity(500)
+                .productStatus(ProductStatus.ACTIVE)
+                .companyStatus(CompanyStatus.ACTIVE)
+                .build();
+
+        ProductResponse productResponse2 = ProductResponse.builder()
+                .price(Money.of(BigDecimal.valueOf(10)))
+                .companyId(CompanyID.of("01924d1f-a2f8-7825-9730-15ef6d4738"))
+                .productId(ProductID.of("97776160-6622-4544-8632-7516546485"))
+                .quantity(500)
+                .productStatus(ProductStatus.ACTIVE)
+                .companyStatus(CompanyStatus.ACTIVE)
+                .build();
+
+        return List.of(productResponse2, productResponse1, productResponse3);
     }
 }

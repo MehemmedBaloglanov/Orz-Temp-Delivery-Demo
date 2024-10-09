@@ -1,4 +1,4 @@
-package com.intellibucket.cart.service.connector.service;
+package com.intellibucket.cart.service.connector.service.adapter;
 
 import com.intelliacademy.orizonroute.identity.company.CompanyID;
 import com.intelliacademy.orizonroute.identity.customer.CustomerID;
@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 
 @Component
-public class CartServiceConnector implements AbstractCartServiceConnector {
+public class TestCartServiceConnector implements AbstractCartServiceConnector {
     @Override
     public List<CartResponse> getUserCart(CustomerID customerID) {
 
