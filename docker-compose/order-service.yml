@@ -1,0 +1,13 @@
+services:
+  postgres-order:
+    container_name: postgres-order
+    image: postgres:16
+    ports:
+      - "9114:5432"
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=admin
+    expose:
+      - 9114
+    volumes:
+      - ./volumes/postgres/company:/var/lib/postgresql/data

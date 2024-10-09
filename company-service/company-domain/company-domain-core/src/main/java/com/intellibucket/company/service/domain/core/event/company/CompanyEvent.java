@@ -1,7 +1,7 @@
 package com.intellibucket.company.service.domain.core.event.company;
 
 import com.intellibucket.company.service.domain.core.root.CompanyRoot;
-import com.intellibucket.event.DomainEvent;
+import com.intellibucket.domain.event.DomainEvent;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 

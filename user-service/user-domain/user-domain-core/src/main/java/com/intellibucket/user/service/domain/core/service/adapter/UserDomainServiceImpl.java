@@ -1,6 +1,7 @@
 package com.intellibucket.user.service.domain.core.service.adapter;
 
-import com.intellibucket.constants.DomainConstants;
+
+import com.intellibucket.domain.constants.DomainConstants;
 import com.intellibucket.user.service.domain.core.event.*;
 import com.intellibucket.user.service.domain.core.exception.UserDomainException;
 import com.intellibucket.user.service.domain.core.root.UserRoot;

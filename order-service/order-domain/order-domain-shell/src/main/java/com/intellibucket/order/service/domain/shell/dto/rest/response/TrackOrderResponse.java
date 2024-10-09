@@ -5,15 +5,18 @@ import com.intellibucket.order.service.domain.core.valueobject.OrderStatus;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.ToString;
+
 import java.util.UUID;
 
 @Getter
 @Builder
 @AllArgsConstructor
+@ToString
 public class TrackOrderResponse {
 
-    @JsonProperty("tracking_id")
-    private final UUID trackingId;
+    @JsonProperty("order_id")
+    private final UUID orderId;
 
     private final OrderStatus status;
 }

@@ -1,7 +1,7 @@
 package com.intellibucket.order.service.domain.core.root;
 
+import com.intelliacademy.orizonroute.identity.customer.CustomerID;
 import com.intelliacademy.orizonroute.identity.order.ord.OrderID;
-import com.intelliacademy.orizonroute.identity.user.UserID;
 import com.intelliacademy.orizonroute.root.AggregateRoot;
 import com.intelliacademy.orizonroute.valueobjects.common.Money;
 import com.intelliacademy.orizonroute.valueobjects.order.OrderNumber;
@@ -10,25 +10,29 @@ import com.intellibucket.order.service.domain.core.valueobject.OrderAddress;
 import com.intellibucket.order.service.domain.core.valueobject.OrderCancelType;
 import com.intellibucket.order.service.domain.core.valueobject.OrderStatus;
 import lombok.Getter;
+import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 import lombok.extern.slf4j.Slf4j;
 
+import java.time.OffsetDateTime;
 import java.util.List;
 
+
+// FIXME error mesajlarini duzelt log mesajlari yaz
 @Slf4j
 @SuperBuilder
 @Getter
+@ToString
 public class OrderRoot extends AggregateRoot<OrderID> {
-
-
-    private final UserID userId;
+    private final CustomerID customerID;
     private final OrderAddress address;
     private final Money price;
     private final List<OrderItemRoot> items;
+    private final OffsetDateTime createdAt;
 
     private OrderNumber orderNumber;
     private OrderStatus status;
-    private String errorMessage;
+    private String failureMessage;
     private OrderCancelType cancelType;
 
 
@@ -38,21 +42,24 @@ public class OrderRoot extends AggregateRoot<OrderID> {
         return this;
     }
 
-    public OrderRoot initCancel(String failureMessages) throws OrderDomainException {
-        if (cancelType == null) {
-            log.error("Order is not valid cancel type with id: {}", this.getRootID());
-            throw new OrderDomainException("Order is not valid cancel type with id: " + this.getRootID());
+    public OrderRoot initCancel(String failureMessage) throws OrderDomainException {
+        if (status.isCancelling() || status.isCancelled() || status.isCompleted()) {
+            throw new OrderDomainException("Order is already in cancel state!");
         }
-        if (status.isDelivering() || status.isCompleted() || status.isCancelled()) {
+        if (cancelType.isCompany() && status.isApproved()) {
             throw new OrderDomainException("Order is not in correct state for the initCancel operation!");
         }
 
+        if (cancelType.isCustomer() && (status.isDelivering())) {
+            throw new OrderDomainException("Order is not in correct state for the initCancel operation!");
+        }
+        this.failureMessage = failureMessage;
         this.status = OrderStatus.CANCELLING;
         return this;
     }
 
     public OrderRoot cancel(String failureMessages) throws OrderDomainException {
-        if (status.isCancelling() || status.isCreated()) {
+        if (status.isCompleted()) {
             throw new OrderDomainException("Cannot cancel order");
         }
         this.status = OrderStatus.CANCELLED;
@@ -65,22 +72,24 @@ public class OrderRoot extends AggregateRoot<OrderID> {
         if (!status.isCreated()) {
             throw new OrderDomainException("Cannot pay order");
         }
+
         this.status = OrderStatus.PAID;
-
         return this;
     }
 
-    //when stock is ended return initCancel
-    public OrderRoot comfirm() throws OrderDomainException {
+    public OrderRoot approve() throws OrderDomainException {
+
         if (!status.isPaid()) {
-            throw new OrderDomainException("Cannot comfirm order");
+            throw new OrderDomainException("Cannot be approve order");
         }
-        this.status = OrderStatus.CONFIRMED;
+
+        this.status = OrderStatus.APPROVED;
         return this;
     }
+
 
     public OrderRoot prepared() throws OrderDomainException {
-        if (!status.isConfirmed()) {
+        if (!status.isApproved()) {
             throw new OrderDomainException("Cannot prepare order");
         }
         this.status = OrderStatus.PREPARED;
@@ -104,6 +113,7 @@ public class OrderRoot extends AggregateRoot<OrderID> {
     }
 
     public OrderRoot validateOrder() throws OrderDomainException {
+        validateItems();
         validateAddress();
         validatePrice();
         return this;
@@ -119,14 +129,27 @@ public class OrderRoot extends AggregateRoot<OrderID> {
         return this;
     }
 
+    public OrderRoot cancelByCompany() {
+        cancelType = OrderCancelType.COMPANY;
+        return this;
+    }
+
+    private void validateItems() throws OrderDomainException {
+        if (items == null || items.isEmpty()) {
+            throw new OrderDomainException("Order must have at least one and one more item");
+        }
+    }
+
     private void validatePrice() throws OrderDomainException {
         Money total = Money.ZERO;
         for (OrderItemRoot orderItem : items) {
-            Money orderItemRootPrice = orderItem.getPrice();
+            Money orderItemRootPrice = orderItem.getSubTotal();
             total = total.add(orderItemRootPrice);
         }
+        log.debug("Total price: {}", total);
+        log.debug("Root price: {}", price);
 
-        if (price.getAmount().compareTo(total.getAmount()) != 0) {
+        if (!price.isEqualTo(total)) {
             throw new OrderDomainException("Order price is greater than total price");
         }
     }

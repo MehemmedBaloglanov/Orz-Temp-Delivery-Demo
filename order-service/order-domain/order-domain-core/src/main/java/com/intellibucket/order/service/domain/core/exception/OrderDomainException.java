@@ -1,6 +1,6 @@
 package com.intellibucket.order.service.domain.core.exception;
 
-import com.intellibucket.exception.DomainException;
+import com.intellibucket.domain.exception.DomainException;
 
 public class OrderDomainException extends DomainException {
     public OrderDomainException(String message) {

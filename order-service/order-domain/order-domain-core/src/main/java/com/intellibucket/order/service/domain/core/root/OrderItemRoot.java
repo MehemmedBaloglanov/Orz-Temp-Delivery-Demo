@@ -8,8 +8,8 @@ import com.intelliacademy.orizonroute.root.AggregateRoot;
 import com.intelliacademy.orizonroute.valueobjects.common.Money;
 import com.intellibucket.order.service.domain.core.exception.OrderDomainException;
 import com.intellibucket.order.service.domain.core.valueobject.OrderItemStatus;
-import lombok.Builder;
 import lombok.Getter;
+import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 import lombok.extern.slf4j.Slf4j;
 
@@ -18,6 +18,7 @@ import java.math.BigDecimal;
 @Slf4j
 @Getter
 @SuperBuilder
+@ToString
 public class OrderItemRoot extends AggregateRoot<OrderItemID> {
     private OrderID orderId;
     private CompanyID companyID;
@@ -38,7 +39,7 @@ public class OrderItemRoot extends AggregateRoot<OrderItemID> {
     }
 
     public OrderItemRoot reject() throws OrderDomainException {
-        if (orderItemStatus != OrderItemStatus.DRAFT) {
+        if (! orderItemStatus.isDraft()) {
             log.error("Order item with id: {} status is not DRAFT To reject order with id: {}", this.getRootID(), this.orderId);
             throw new OrderDomainException("Order item with id: " + this.getRootID() + " status is not DRAFT To reject order with id: " + this.orderId);
         }
@@ -47,20 +48,10 @@ public class OrderItemRoot extends AggregateRoot<OrderItemID> {
         return this;
     }
 
-    public OrderItemRoot confirm() throws OrderDomainException {
-        if (orderItemStatus != OrderItemStatus.DRAFT) {
-            log.error("Order item with id: {} status is not DRAFT To confirm order with id: {}", this.getRootID(), this.orderId);
-            throw new OrderDomainException("Order item with id: " + this.getRootID() + " status is not DRAFT To confirm order with id:" + this.orderId);
-        }
-        log.info("Order with id: {}, item with id: {} is accepted", orderId, this.getRootID());
-        this.orderItemStatus = OrderItemStatus.CONFIRMED;
-        return this;
-    }
-
-    public OrderItemRoot prepare() throws OrderDomainException {
-        if (orderItemStatus != OrderItemStatus.CONFIRMED) {
-            log.error("Order item with id: {} status is not CONFIRMED To prepared order with id: {}", this.getRootID(), this.orderId);
-            throw new OrderDomainException("Order item with id: " + this.getRootID() + " status is not CONFIRMED To prepared order with id: " + this.orderId);
+    public OrderItemRoot prepared() throws OrderDomainException {
+        if (!orderItemStatus.isDraft()) {
+            log.error("Order item with id: {} status is not DRAFT To prepared order with id: {}", this.getRootID(), this.orderId);
+            throw new OrderDomainException("Order item with id: " + this.getRootID() + " status is not DRAFT To prepared order with id: " + this.orderId);
         }
         log.info("Order with id: {}, item with id: {} is prepared", orderId, this.getRootID());
         this.orderItemStatus = OrderItemStatus.PREPARED;

@@ -1,11 +1,12 @@
 package com.intellibucket.order.service.primary.message.listener.kafka;
 
 import com.intellibucket.kafka.config.consumer.KafkaConsumer;
-import com.intellibucket.kafka.order.avro.model.DeliveryResponseAvroModel;
+import com.intellibucket.kafka.order.avro.model.delivery.DeliveryResponseAvroModel;
 import com.intellibucket.order.service.domain.core.exception.OrderDomainException;
 import com.intellibucket.order.service.domain.core.exception.OrderNotFoundException;
+import com.intellibucket.order.service.domain.core.valueobject.DeliveryStatus;
 import com.intellibucket.order.service.domain.shell.dto.message.DeliveryResponse;
-import com.intellibucket.order.service.domain.shell.port.input.listener.abstracts.AbstractDeliveryMessageListener;
+import com.intellibucket.order.service.domain.shell.port.input.listener.abstracts.AbstractDeliveryResponseMessageListener;
 import com.intellibucket.order.service.primary.message.listener.mapper.OrderMessageListenerDataMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -23,10 +24,10 @@ import java.util.List;
 public class OrderDeliveredResponseKafkaListener implements KafkaConsumer<DeliveryResponseAvroModel> {
 
     private final OrderMessageListenerDataMapper orderMessageListenerDataMapper;
-    private final AbstractDeliveryMessageListener deliveryMessageListener;
+    private final AbstractDeliveryResponseMessageListener deliveryMessageListener;
 
     @Override
-    @KafkaListener(id = "${kafka-consumer-config.payment-consumer-group-id}", topics = "${order-service.order-delivered-response-topic-name}")
+    @KafkaListener(groupId = "${kafka-consumer-config.order-service-consumer-group-id}", topics = "${order-service.order-delivered-response-topic-name}")
     public void receive(@Payload List<DeliveryResponseAvroModel> messages,
                         @Header(KafkaHeaders.RECEIVED_KEY) List<String> keys,
                         @Header(KafkaHeaders.RECEIVED_PARTITION) List<Integer> partitions,
@@ -41,7 +42,11 @@ public class OrderDeliveredResponseKafkaListener implements KafkaConsumer<Delive
         messages.forEach(deliveryResponseAvroModel -> {
             DeliveryResponse deliveryResponse = orderMessageListenerDataMapper.deliveredResponseAvroModelToDeliveryResponse(deliveryResponseAvroModel);
             try {
-                deliveryMessageListener.orderDelivered(deliveryResponse);
+                if (deliveryResponse.getStatus() == DeliveryStatus.DELIVERED) {
+                    deliveryMessageListener.orderDelivered(deliveryResponse);
+                } else {
+                    deliveryMessageListener.orderCancelled(deliveryResponse);
+                }
             } catch (OrderNotFoundException e) {
                 //NO-OP for OrderNotFoundException
                 log.error("No order found for order id: {}", deliveryResponseAvroModel.getOrderId());
