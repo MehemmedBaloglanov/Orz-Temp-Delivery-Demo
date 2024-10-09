@@ -11,6 +11,7 @@ import com.intellibucket.kafka.order.avro.model.company.CompanyOrderRefundReques
 import com.intellibucket.kafka.order.avro.model.company.OrderCompletedRequestAvroModel;
 import org.springframework.stereotype.Component;
 
+import java.math.BigDecimal;
 import java.time.OffsetDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -41,7 +42,7 @@ public class CompanyMessageListenerDataMapper {
                 .map(companyRefundAvroProduct -> OrderRefundResponseProduct.builder()
                         .productId(companyRefundAvroProduct.getProductId())
                         .companyId(companyRefundAvroProduct.getCompanyId())
-//                        .price(companyRefundAvroProduct.getPrice())
+//                        .price(BigDecimal.valueOf(companyRefundAvroProduct.get))//todo
 //                        .subTotal(companyRefundAvroProduct.getSubTotal())
                         .build())
                 .toList();

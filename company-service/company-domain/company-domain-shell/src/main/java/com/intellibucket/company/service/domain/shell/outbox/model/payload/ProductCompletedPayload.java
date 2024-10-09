@@ -1,6 +1,5 @@
 package com.intellibucket.company.service.domain.shell.outbox.model.payload;
 
-import com.intellibucket.order.service.domain.core.valueobject.ApproveStatus;
 import lombok.*;
 
 import java.time.Instant;
