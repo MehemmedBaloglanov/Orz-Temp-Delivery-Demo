@@ -12,7 +12,9 @@ import java.util.UUID;
 @Getter
 @Builder
 public class OutboxMessage implements BaseMessageModel {
+
     private UUID id;
+
     private String sagaName;
 
     private String payload;
