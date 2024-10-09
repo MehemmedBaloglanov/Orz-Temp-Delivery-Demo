@@ -1,7 +1,7 @@
 package com.intellibucket.order.service.secondary.message.publisher.helper;
 
 import com.intellibucket.order.service.domain.shell.outbox.model.OutboxMessage;
-import com.intellibucket.order.service.domain.shell.outbox.model.payload.BaseEventPayload;
+import com.intellibucket.outbox.payload.BaseEventPayload;
 import com.intellibucket.outbox.OutboxStatus;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.avro.specific.SpecificRecordBase;

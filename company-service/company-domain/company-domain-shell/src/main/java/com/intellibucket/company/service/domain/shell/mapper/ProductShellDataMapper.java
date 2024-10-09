@@ -3,7 +3,9 @@ package com.intellibucket.company.service.domain.shell.mapper;
 import com.intellibucket.company.service.domain.core.root.ProductRoot;
 import com.intellibucket.company.service.domain.shell.dto.rest.command.product.ProductCreateCommand;
 import com.intellibucket.company.service.domain.shell.dto.rest.response.ProductResponse;
+import org.springframework.stereotype.Component;
 
+@Component
 public class ProductShellDataMapper {
     public ProductRoot productCreateCommandToProductRoot(ProductCreateCommand command) {
         return ProductRoot.builder()

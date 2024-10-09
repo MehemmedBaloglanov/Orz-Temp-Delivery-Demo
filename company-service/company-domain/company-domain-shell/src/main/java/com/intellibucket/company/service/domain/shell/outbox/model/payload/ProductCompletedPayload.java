@@ -1,5 +1,6 @@
 package com.intellibucket.company.service.domain.shell.outbox.model.payload;
 
+import com.intellibucket.outbox.payload.BaseEventPayload;
 import lombok.*;
 
 import java.time.Instant;

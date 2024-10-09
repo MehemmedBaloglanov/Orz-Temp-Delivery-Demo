@@ -8,6 +8,7 @@ import com.intellibucket.kafka.config.consumer.KafkaConsumer;
 import com.intellibucket.kafka.order.avro.model.company.OrderCompletedRequestAvroModel;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.kafka.support.KafkaHeaders;
 import org.springframework.messaging.handler.annotation.Header;
 import org.springframework.messaging.handler.annotation.Payload;
@@ -24,6 +25,7 @@ public class OrderCompleteKafkaListener implements KafkaConsumer<OrderCompletedR
     private final AbstractOrderCompletedResponseMessageListener  abstractOrderCompletedResponseMessageListener;
 
     @Override
+    @KafkaListener(groupId = "${company-service.company-service-group-id}", topics = "${company-service.order-completed-topic-name}")
     public void receive(@Payload List<OrderCompletedRequestAvroModel> messages,
                         @Header(KafkaHeaders.RECEIVED_KEY) List<String> keys,
                         @Header(KafkaHeaders.RECEIVED_PARTITION) List<Integer> partitions,

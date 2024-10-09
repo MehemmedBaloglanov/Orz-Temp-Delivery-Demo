@@ -9,7 +9,7 @@ import com.intellibucket.company.service.domain.core.root.ProductRoot;
 import com.intellibucket.company.service.domain.core.service.ProductDomainService;
 import com.intellibucket.company.service.domain.shell.dto.rest.command.product.ProductUpdateCommand;
 import com.intellibucket.company.service.domain.shell.port.output.repository.ProductRepositoryAdapter;
-import com.intellibucket.order.service.domain.shell.security.AbstractSecurityContextHolder;
+import com.intellibucket.company.service.domain.shell.security.AbstractSecurityContextHolder;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;

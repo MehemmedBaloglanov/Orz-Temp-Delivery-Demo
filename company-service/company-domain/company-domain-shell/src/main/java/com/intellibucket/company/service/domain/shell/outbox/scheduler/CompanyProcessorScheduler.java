@@ -31,7 +31,7 @@ public class CompanyProcessorScheduler implements OutboxScheduler {
 
     @Override
     @Transactional
-    @Scheduled(fixedDelayString = "${order-service.outbox-scheduler-fixed-rate}", initialDelayString = "${order-service.outbox-scheduler-initial-delay}")
+    @Scheduled(fixedDelayString = "${company-service.outbox-scheduler-fixed-rate}", initialDelayString = "${company-service.outbox-scheduler-initial-delay}")
     public void processOutboxMessage() throws DomainException {
         Optional<List<OutboxMessage>> outboxMessagesResponse = outboxRepository.findByOutboxStatus(OutboxStatus.STARTED);
         if (outboxMessagesResponse.isPresent()) {

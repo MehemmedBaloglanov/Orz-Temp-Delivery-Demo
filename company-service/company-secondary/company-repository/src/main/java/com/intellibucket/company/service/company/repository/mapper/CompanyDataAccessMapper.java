@@ -8,7 +8,6 @@ import com.intellibucket.company.service.company.repository.entity.ProductJpaEnt
 import com.intellibucket.company.service.domain.core.exception.CompanyDomainException;
 import com.intellibucket.company.service.domain.core.root.ProductRoot;
 import com.intellibucket.company.service.domain.shell.outbox.model.OutboxMessage;
-import com.intellibucket.order.service.domain.core.exception.OrderDomainException;
 import com.intellibucket.outbox.OutboxStatus;
 import org.springframework.stereotype.Component;
 

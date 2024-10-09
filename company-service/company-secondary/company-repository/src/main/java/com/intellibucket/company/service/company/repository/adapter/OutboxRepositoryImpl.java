@@ -9,10 +9,12 @@ import com.intellibucket.company.service.domain.shell.outbox.model.OutboxMessage
 import com.intellibucket.company.service.domain.shell.port.output.repository.OutboxRepository;
 import com.intellibucket.outbox.OutboxStatus;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.Optional;
 
+@Component
 @RequiredArgsConstructor
 public class OutboxRepositoryImpl implements OutboxRepository {
 

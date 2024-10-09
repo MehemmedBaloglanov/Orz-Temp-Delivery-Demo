@@ -23,10 +23,10 @@ order-service:
   start-delivery-request-topic-name: start-delivery-request
   order-delivered-response-topic-name: order-delivered-response
 
-  order-completed-TopicName: order-completed
-
+  order-completed-topic-name: order-completed
   outbox-scheduler-fixed-rate: 10000
   outbox-scheduler-initial-delay: 10000
+  company-order-refund-request-topic-name: company-order-refund-request-topic
 
 spring:
   jpa:

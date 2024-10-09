@@ -11,9 +11,19 @@ spring:
     hibernate:
       ddl-auto: update
   datasource:
-    url: jdbc:postgresql://localhost:9115  /postgres
+    url: jdbc:postgresql://localhost:9115/postgres
     username: postgres
     password: admin
+
+company-service:
+  company-service-group-id: company-service-group
+  outbox-scheduler-fixed-rate: 10000
+  outbox-scheduler-initial-delay: 10000
+  # topics
+  company-order-approve-request-topic-name: company-order-approve-request
+  company-order-approve-response-topic-name: company-order-approve-response
+  order-completed-topic-name: order-completed
+  company-order-refund-request-topic-name: company-order-refund-request-topic
 
 kafka-config:
   bootstrap-servers: localhost:19092
