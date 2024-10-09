@@ -12,22 +12,20 @@ import com.intellibucket.user.service.domain.core.valueObject.Status;
 import com.intellibucket.user.service.domain.shell.dto.request.*;
 
 public class UserCommandMapper {
-    // CompanyRegisterCommand to UserRoot mapping
     public static UserRoot companyCreateCommandToUserRoot(CompanyCreateCommand command) {
         return UserRoot.builder()
                 .companyName(command.getCompanyName())
                 .userID(UserID.random())
                 .username(Username.generate(command.getCompanyName()))
                 .email(Email.of(command.getEmailType(), command.getEmail()))
-                .password(Password.of(command.getPassword()))
+                .password(Password.of(command.getPassword()).validate())
                 .roleAuthorithy(RoleAuthorithy.COMPANY)
                 .phoneNumber(PhoneNumber.of(command.getPhoneNumberType(), command.getCountryCode(), command.getPhoneNumber()).validate())
-                .address(Address.of(command.getState(), command.getCountry(), command.getCity(), command.getStreet(), command.getPostalCode()))
+                .address(Address.of(command.getState(), command.getCountry(), command.getCity(), command.getStreet(), command.getPostalCode()).validate())
                 .status(Status.ACTIVE)
                 .build();
     }
 
-    // CustomerRegisterCommand to UserRoot mapping
     public static UserRoot customerCreateCommandToUserRoot(CustomerCreateCommand command) {
         return UserRoot.builder()
                 .userID(UserID.random())
@@ -35,10 +33,10 @@ public class UserCommandMapper {
                 .lastName(command.getLastName())
                 .username(Username.generate(command.getFirstName(), command.getLastName()))
                 .email(Email.of(command.getEmailType(), command.getEmail()))
-                .password(Password.of(command.getPassword()))
+                .password(Password.of(command.getPassword()).validate())
                 .roleAuthorithy(RoleAuthorithy.CUSTOMER)
                 .phoneNumber(PhoneNumber.of(command.getPhoneNumberType(), command.getCountryCode(), command.getPhoneNumber()).validate())
-                .address(Address.of(command.getState(), command.getCountry(), command.getCity(), command.getStreet(), command.getPostalCode()))
+                .address(Address.of(command.getState(), command.getCountry(), command.getCity(), command.getStreet(), command.getPostalCode()).validate())
                 .status(Status.ACTIVE)
                 .build();
     }
@@ -51,7 +49,6 @@ public class UserCommandMapper {
     }
 
     public static UserRoot customerUpdateCommandToUserRoot(CustomerUpdateCommand command, UserRoot userRoot) {
-
         userRoot.setFirstName(command.getFirstName());
         userRoot.setLastName(command.getLastName());
         return userRoot;

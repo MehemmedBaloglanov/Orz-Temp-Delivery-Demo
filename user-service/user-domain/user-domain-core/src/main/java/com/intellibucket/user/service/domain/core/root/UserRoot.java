@@ -51,18 +51,17 @@ public class UserRoot extends AggregateRoot<UserID> {
         validateEmail();
     }
 
-
     private void validateEmail() throws UserDomainException {
         if (this.email == null || !email.isValid()) {
             throw new UserDomainException("E-mail is not valid");
         }
     }
 
-    private void validateAddress() throws UserDomainException {
-        if (this.address == null || !address.isAddressValid()) {
-            throw new UserDomainException("Address is not valid");
-        }
-    }
+//    public void validateAddress() throws UserDomainException {
+//        if (this.address == null || !address.isAddressValid()) {
+//            throw new UserDomainException("Address is not valid");
+//        }
+//    }
 
     private void validatePhoneNumber() throws UserDomainException {
         if (this.phoneNumber == null || !phoneNumber.isValid()) {

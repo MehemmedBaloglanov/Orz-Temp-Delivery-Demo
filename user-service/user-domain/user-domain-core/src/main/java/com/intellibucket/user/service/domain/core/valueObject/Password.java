@@ -21,7 +21,7 @@ public final class Password {
         return new Password(value);
     }
 
-    public boolean isPasswordValid(String password) {
+    public boolean isPasswordValid() {
         return value != null &&
                 !value.isEmpty() &&
                 containsUpperCase(value) &&
@@ -29,6 +29,13 @@ public final class Password {
                 containsDigit(value) &&
                 containsSpecialCharacter(value) &&
                 value.length() >= 8;
+    }
+
+    public Password validate() {
+        if (!isPasswordValid()) {
+            throw new IllegalArgumentException("Password fields must be valid, not blank or null! Try again.");
+        }
+        return this;
     }
 
     private boolean containsUpperCase(String value) {

@@ -8,6 +8,7 @@ import java.util.Random;
 public final class Username {
     private static final Random RANDOM = new Random();
     private final String value;
+
     public Username(String value) {
         this.value = value;
     }
@@ -29,6 +30,12 @@ public final class Username {
     }
 
     public static Username generate(String firstName, String lastName) {
+        if (firstName == null || firstName.trim().isEmpty()) {
+            throw new IllegalArgumentException("First name cannot be null or empty");
+        }
+        if (lastName == null || lastName.trim().isEmpty()) {
+            throw new IllegalArgumentException("Last name cannot be null or empty");
+        }
         return new Username(generate(new String[]{firstName, lastName}));
     }
 

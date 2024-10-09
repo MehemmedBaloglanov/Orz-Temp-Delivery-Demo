@@ -2,6 +2,7 @@ package com.intellibucket.user.service.domain.shell.handler.command;
 
 import com.intellibucket.user.service.domain.core.event.UserRegisteredEvent;
 import com.intellibucket.user.service.domain.core.exception.UserDomainException;
+import com.intellibucket.user.service.domain.core.exception.email.EmailAlreadyExistException;
 import com.intellibucket.user.service.domain.core.exception.user.UserSavedException;
 import com.intellibucket.user.service.domain.core.exception.user.UserValidationException;
 import com.intellibucket.user.service.domain.core.root.UserRoot;
@@ -29,7 +30,7 @@ public class CustomerRegisterCommandHandler {
         Optional<UserRoot> optionalUserRoot = userRepository.findByEmail(newUser.getEmail(), newUser);
 
         if (optionalUserRoot.isPresent()) {
-            throw new UserValidationException("User already exist with email..: " + command.getEmail());
+            throw new EmailAlreadyExistException("User already exist with email..: " + command.getEmail());
         }
 
         UserRoot savedUserRoot = userRepository.save(newUser);

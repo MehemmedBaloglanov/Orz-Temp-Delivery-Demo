@@ -35,4 +35,10 @@ public final class Address {
         );
     }
 
+    public Address validate() {
+        if (!isAddressValid()) {
+            throw new IllegalArgumentException("Address fields cannot be empty or null!");
+        }
+        return this;
+    }
 }

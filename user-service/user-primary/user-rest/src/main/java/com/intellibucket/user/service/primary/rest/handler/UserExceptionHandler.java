@@ -1,5 +1,6 @@
 package com.intellibucket.user.service.primary.rest.handler;
 
+import com.intellibucket.user.service.domain.core.exception.UserDomainException;
 import com.intellibucket.user.service.domain.core.exception.email.EmailAlreadyExistException;
 import com.intellibucket.user.service.domain.core.exception.password.PasswordValidationException;
 import com.intellibucket.user.service.domain.core.exception.user.UserNotFoundException;
@@ -20,7 +21,7 @@ public class UserExceptionHandler {
 
     @ExceptionHandler(EmailAlreadyExistException.class)
     public ResponseEntity<String> handleEmailValidationException(EmailAlreadyExistException ex, WebRequest request) {
-        return new ResponseEntity<>("User already exist with this email: " + ex.getMessage(), HttpStatus.CONFLICT); // 409
+        return new ResponseEntity<>("Duplicate e-mail! " + ex.getMessage(), HttpStatus.CONFLICT); // 409
     }
 
     @ExceptionHandler(UserNotFoundException.class)
@@ -30,7 +31,7 @@ public class UserExceptionHandler {
 
     @ExceptionHandler(PasswordValidationException.class)
     public ResponseEntity<String> handlePasswordValidationException(PasswordValidationException ex, WebRequest request) {
-        return new ResponseEntity<>("Invalid credentials!: " + ex.getMessage(), HttpStatus.BAD_REQUEST); // 400
+        return new ResponseEntity<>("Try again!: " + ex.getMessage(), HttpStatus.BAD_REQUEST); // 400
     }
 
     @ExceptionHandler(IllegalArgumentException.class)
@@ -43,9 +44,9 @@ public class UserExceptionHandler {
         return new ResponseEntity<>("Conflict: The user has been modified by another transaction. " + ex.getMessage(), HttpStatus.CONFLICT); // 409
     }
 
-    @ExceptionHandler(IllegalStateException.class)
-    public ResponseEntity<String> handleIllegalStateException(IllegalStateException ex, WebRequest request) {
-        return new ResponseEntity<>("Operation not allowed: " + ex.getMessage(), HttpStatus.CONFLICT); // 409
+    @ExceptionHandler(UserDomainException.class)
+    public ResponseEntity<String> userDomainException(UserDomainException ex, WebRequest request) {
+        return new ResponseEntity<>("User domain error: " + ex.getMessage(), HttpStatus.BAD_REQUEST); // 400
     }
 
     @ExceptionHandler(Exception.class)

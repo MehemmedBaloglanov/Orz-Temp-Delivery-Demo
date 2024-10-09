@@ -2,10 +2,10 @@ package com.intellibucket.user.service.repository.adapter;
 
 import com.intelliacademy.orizonroute.identity.user.UserID;
 import com.intelliacademy.orizonroute.valueobjects.common.Email;
-import com.intellibucket.user.service.domain.core.exception.user.UserNotFoundException;
 import com.intellibucket.user.service.domain.core.root.UserRoot;
 import com.intellibucket.user.service.domain.core.valueObject.RoleAuthorithy;
 import com.intellibucket.user.service.domain.core.valueObject.Status;
+import com.intellibucket.user.service.domain.shell.dto.response.UserAddressResponse;
 import com.intellibucket.user.service.domain.shell.port.output.repository.UserRepository;
 import com.intellibucket.user.service.repository.mapper.UserDataAccessMapper;
 import com.intellibucket.user.service.repository.model.CompanyRegistrationEntity;
@@ -42,24 +42,18 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
-    public Optional<UserRoot> findByEmail(Email email, UserRoot userRoot) throws UserNotFoundException {
+    public Optional<UserRoot> findByEmail(Email email, UserRoot userRoot) {
         if (userRoot.getRoleAuthorithy().isRoleCustomer()) {
-            System.out.println("inside findByEmail and check if-else!");
             Optional<CustomerRegistrationEntity> userEntityOptional = customerJpaRepository.findByEmail(email.getValue());
-            if (userEntityOptional.isEmpty()) {
-                return Optional.empty();
-            } else {
+            if (userEntityOptional.isPresent()) {
                 CustomerRegistrationEntity userEntity = userEntityOptional.get();
                 return Optional.of(userDataAccessMapper.customerEntityToUserRoot(userEntity));
             }
-        } else if (userRoot.getRoleAuthorithy().isRoleCompany()) {
-            Optional<CompanyRegistrationEntity> userEntityOptional = companyJpaRepository.findByEmail(email.getValue());
-            if (userEntityOptional.isEmpty()) {
-                return Optional.empty();
-            } else {
-                CompanyRegistrationEntity userEntity = userEntityOptional.get();
-                return Optional.of(userDataAccessMapper.companyEntityToUserRoot(userEntity));
-            }
+        }
+        Optional<CompanyRegistrationEntity> userEntityOptional = companyJpaRepository.findByEmail(email.getValue());
+        if (userEntityOptional.isPresent()) {
+            CompanyRegistrationEntity userEntity = userEntityOptional.get();
+            return Optional.of(userDataAccessMapper.companyEntityToUserRoot(userEntity));
         }
         return Optional.empty();
     }
@@ -82,16 +76,30 @@ public class UserRepositoryImpl implements UserRepository {
 
     @Override
     public Optional<UserRoot> findByUserId(UserID userId) {
-        if (RoleAuthorithy.CUSTOMER.isRoleCustomer()) {
-            Optional<CustomerRegistrationEntity> user = customerJpaRepository.findById(userId.getId());
-            if (user.isPresent()) {
-                CustomerRegistrationEntity userEntity = user.get();
-                return Optional.of(userDataAccessMapper.customerEntityToUserRoot(userEntity));
-            } else {
-                Optional<CompanyRegistrationEntity> user1 = companyJpaRepository.findById(userId.getId());
-                CompanyRegistrationEntity userEntity = user1.get();
-                return Optional.of(userDataAccessMapper.companyEntityToUserRoot(userEntity));
-            }
+        Optional<CustomerRegistrationEntity> customer = customerJpaRepository.findById(userId.getId());
+        if (customer.isPresent()) {
+            CustomerRegistrationEntity userEntity = customer.get();
+            return Optional.of(userDataAccessMapper.customerEntityToUserRoot(userEntity));
+        }
+        Optional<CompanyRegistrationEntity> company = companyJpaRepository.findById(userId.getId());
+        if (company.isPresent()) {
+            CompanyRegistrationEntity userEntity = company.get();
+            return Optional.of(userDataAccessMapper.companyEntityToUserRoot(userEntity));
+        }
+        return Optional.empty();
+    }
+
+    @Override
+    public Optional<UserAddressResponse> findAddressByUserId(UserID userId) {
+        Optional<CustomerRegistrationEntity> customer = customerJpaRepository.findById(userId.getId());
+        if (customer.isPresent()) {
+            CustomerRegistrationEntity userEntity = customer.get();
+            return Optional.of(userDataAccessMapper.customerAddressToUserAddressResponse(userEntity));
+        }
+        Optional<CompanyRegistrationEntity> company = companyJpaRepository.findById(userId.getId());
+        if (company.isPresent()) {
+            CompanyRegistrationEntity userEntity = company.get();
+            return Optional.of(userDataAccessMapper.companyAddressToUserAddressResponse(userEntity));
         }
         return Optional.empty();
     }
