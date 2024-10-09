@@ -6,6 +6,7 @@ import com.intellibucket.user.service.domain.core.exception.user.UserNotFoundExc
 import com.intellibucket.user.service.domain.core.exception.user.UserSavedException;
 import com.intellibucket.user.service.domain.core.root.UserRoot;
 import com.intellibucket.user.service.domain.core.service.port.UserDomainService;
+import com.intellibucket.user.service.domain.shell.dto.request.CompanyUpdateCommand;
 import com.intellibucket.user.service.domain.shell.dto.request.CustomerUpdateCommand;
 import com.intellibucket.user.service.domain.shell.mapper.UserCommandMapper;
 import com.intellibucket.user.service.domain.shell.port.output.publisher.EventPublisher;
@@ -13,15 +14,13 @@ import com.intellibucket.user.service.domain.shell.port.output.repository.UserRe
 import com.intellibucket.user.service.domain.shell.security.AbstractSecurityContextHolder;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 import java.util.Optional;
 
-@Slf4j
 @Component
 @RequiredArgsConstructor
-public class UserUpdateCommandHandler {
+public class CustomerUpdateCommandHandler {
     private final UserRepository userRepository;
     private final EventPublisher eventPublisher;
     private final UserDomainService userDomainService;
@@ -29,6 +28,7 @@ public class UserUpdateCommandHandler {
 
     @Transactional
     public void handle(CustomerUpdateCommand command) throws UserNotFoundException, UserSavedException {
+
         UserID userID = securityContextHolder.currentUserID();
 
         Optional<UserRoot> userRoot = userRepository.findByUserId(userID);

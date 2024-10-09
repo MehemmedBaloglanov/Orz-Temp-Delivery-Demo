@@ -34,7 +34,7 @@ public class UserChangePasswordCommandHandler {
             throw new UserNotFoundException("User not found with ID: " + userID);
         }
         UserRoot user = userRoot.get();
-        // ADD Change password method to check
+
         Password oldPassword = Password.builder().value(command.getOldPassword()).build();
         Password newPassword = Password.builder().value(command.getNewPassword()).build();
 
