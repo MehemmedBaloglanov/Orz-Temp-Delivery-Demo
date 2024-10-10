@@ -17,9 +17,10 @@ spring:
 #  datasource:
 #    hikari:
 #      connection-timeout: 30000
-#    url: jdbc:mysql://localhost:3306/delivery
+#    url: jdbc:postgres://localhost:9116/delivery
 #    username: root
 #    password: qwerty1212
+
 #  jpa:
 #    properties:
 #      hibernate:
@@ -28,8 +29,6 @@ spring:
 #      ddl-auto: update
 #    show-sql: true
 #    open-in-view: false
-#  main:
-#    allow-circular-references: true
 
   datasource:
     url: jdbc:postgresql://localhost:9116/postgres
@@ -42,12 +41,18 @@ spring:
     database-platform: org.hibernate.dialect.PostgreSQLDialect
     show-sql: true # To show SQL queries in logs
 
+
+
+
+
+
+  main:
+    allow-circular-references: true
 issue:
   key: WmFxYXRhbGExOTkwMjAxODIwMTkyMDIyTWFoaXJBeWxpbjkwT3g5NjJIYXlhbGxlckFtZXJpa2FIYXlhdGxhcg==
 security:
   jwt:
     expiration-time: 3600000
-
 
 
 env:
