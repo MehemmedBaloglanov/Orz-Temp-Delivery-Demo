@@ -10,6 +10,5 @@ import java.util.List;
 
 public interface ProductQueryServiceAdapter {
     ProductResponse getProductById(ProductGetByIdQuery id) throws ProductNotFoundException;
-
-    List<ProductResponseForOrder> listProduct(ProductListWithIdQuery productListWithIdQuery);
+    List<ProductResponse> getAllProduct();
 }

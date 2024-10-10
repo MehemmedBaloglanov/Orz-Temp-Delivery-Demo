@@ -3,6 +3,7 @@ package com.intellibucket.company.service.domain.shell.handler.product.query;
 import com.intelliacademy.orizonroute.identity.order.product.ProductID;
 import com.intellibucket.company.service.domain.core.exception.ProductNotFoundException;
 import com.intellibucket.company.service.domain.core.root.ProductRoot;
+import com.intellibucket.company.service.domain.core.valueobject.ProductStatus;
 import com.intellibucket.company.service.domain.shell.dto.rest.query.ProductGetByIdQuery;
 import com.intellibucket.company.service.domain.shell.dto.rest.response.ProductResponse;
 import com.intellibucket.company.service.domain.shell.mapper.ProductShellDataMapper;
@@ -21,10 +22,13 @@ public class ProductGetByIdQueryHandler {
     public ProductResponse handle(ProductGetByIdQuery id) throws ProductNotFoundException {
 
         log.info("Handle get product by id query: {}", id);
-
         ProductID productID = ProductID.of(id.getProductId());
 
         ProductRoot productRoot=productRepositoryAdapter.findById(productID).orElseThrow(()-> new  ProductNotFoundException("Product not found"));
+        if(productRoot.getStatus()== ProductStatus.DELETED||productRoot.getStatus()== ProductStatus.OUT_OF_STOCK){
+            throw new ProductNotFoundException("Product with id "+productID+" is deleted or out of stock");
+        }
+        log.info("Product with id "+productID);
         return productDataMapper.productRootToProductResponse(productRoot);
     }
 }

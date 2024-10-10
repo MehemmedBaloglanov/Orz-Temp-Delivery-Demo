@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/1.0/product")
+@RequestMapping("/api/1.0/products")
 @RequiredArgsConstructor
 public class ProductQueryController{
 
@@ -29,9 +29,9 @@ public class ProductQueryController{
         return  new ResponseEntity<>(productResponse, HttpStatus.OK);
     }
 
-    @GetMapping("/list")
-    public ResponseEntity<List<ProductResponseForOrder>> listProduct (@RequestBody ProductListWithIdQuery productListWithIdQuery) throws ProductNotFoundException{
-        List<ProductResponseForOrder> productResponse = productQueryServiceAdapter.listProduct(productListWithIdQuery);
+    @GetMapping("/all")
+    public ResponseEntity<List<ProductResponse>> getAllProduct () {
+        List<ProductResponse> productResponse = productQueryServiceAdapter.getAllProduct();
         return  new ResponseEntity<>(productResponse, HttpStatus.OK);
     }
 

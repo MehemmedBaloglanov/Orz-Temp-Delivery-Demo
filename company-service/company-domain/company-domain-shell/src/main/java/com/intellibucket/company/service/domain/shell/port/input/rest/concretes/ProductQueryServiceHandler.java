@@ -24,7 +24,9 @@ public class ProductQueryServiceHandler implements ProductQueryServiceAdapter {
     }
 
     @Override
-    public List<ProductResponseForOrder> listProduct(ProductListWithIdQuery productListWithIdQuery) {
-        return productListWithIdQueryHandler.handle(productListWithIdQuery);
+    public List<ProductResponse> getAllProduct() {
+        return productListWithIdQueryHandler.handle();
     }
+
+
 }

@@ -10,7 +10,9 @@ import com.intellibucket.company.service.domain.shell.port.output.repository.Pro
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Component
 @RequiredArgsConstructor
@@ -35,6 +37,13 @@ public class ProductRepositoryAdapterImpl implements ProductRepositoryAdapter {
             ProductJpaEntity productJpaEntity = product.get();
             return Optional.of(companyDataAccessMapper.mapProductJpaEntityToProductRoot(productJpaEntity));
         }
+    }
+
+    @Override
+    public List<ProductRoot> findAll() {
+        return productJpaRepository.findAll().stream().map(
+                companyDataAccessMapper::mapProductJpaEntityToProductRoot
+        ).toList();
     }
 
     @Override

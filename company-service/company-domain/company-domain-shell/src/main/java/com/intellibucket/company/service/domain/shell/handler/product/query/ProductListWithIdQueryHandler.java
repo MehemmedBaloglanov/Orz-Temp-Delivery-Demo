@@ -1,7 +1,11 @@
 package com.intellibucket.company.service.domain.shell.handler.product.query;
 
+import com.intellibucket.company.service.domain.core.exception.ProductNotFoundException;
+import com.intellibucket.company.service.domain.core.root.ProductRoot;
+import com.intellibucket.company.service.domain.core.valueobject.ProductStatus;
 import com.intellibucket.company.service.domain.shell.dto.rest.connector.ProductResponseForOrder;
 import com.intellibucket.company.service.domain.shell.dto.rest.query.ProductListWithIdQuery;
+import com.intellibucket.company.service.domain.shell.dto.rest.response.ProductResponse;
 import com.intellibucket.company.service.domain.shell.mapper.ProductShellDataMapper;
 import com.intellibucket.company.service.domain.shell.port.output.repository.ProductRepositoryAdapter;
 import lombok.AllArgsConstructor;
@@ -9,6 +13,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Component
@@ -17,31 +22,10 @@ public class ProductListWithIdQueryHandler {
     private final ProductRepositoryAdapter productRepositoryAdapter;
     private final ProductShellDataMapper productDataMapper;
 
-
-    //todo yazilmalidir
-    public List<ProductResponseForOrder> handle(ProductListWithIdQuery productListWithIdQuery) {
-//        List<ProductID> productIDList = productListWithIdQuery.getProductIDList();
-//        return productIDList.stream()
-//                .map(id -> {
-//                    Optional<ProductRoot> productRootOptional = productRepositoryAdapter.findById(id);
-//                    ProductResponseForOrder.ProductResponseForOrderBuilder productResponseBuilder = ProductResponseForOrder.builder();
-//                    productResponseBuilder.productID(id);
-//
-//                    if (productRootOptional.isEmpty()) {
-//                        productResponseBuilder.status(ProductConnectorStatus.NOT_FOUND);
-//                        return productResponseBuilder.build();
-//                    }
-//
-//                    ProductRoot productRoot = productRootOptional.get();
-//                    if (productRoot.isActive() && productRoot.getStockQuantity() > 0) {
-//
-//                        ProductRoot productRoot = productRootOptional.get();
-//                        productResponseBuilder.price(productRoot.getPrice());
-//                        productResponseBuilder.stockQuantity(productRoot.getStockQuantity());
-//                        productResponseBuilder.status(ProductConnectorStatus.ACTIVE);
-//                    }
-//                    return productResponseBuilder.build();
-//                }).toList();
-        return null;
+    public List<ProductResponse> handle(){
+        log.info("Handle product list with id query");
+       return productRepositoryAdapter.findAll().stream()
+               .map(productDataMapper::productRootToProductResponse).collect(Collectors.toList());
     }
+
 }
