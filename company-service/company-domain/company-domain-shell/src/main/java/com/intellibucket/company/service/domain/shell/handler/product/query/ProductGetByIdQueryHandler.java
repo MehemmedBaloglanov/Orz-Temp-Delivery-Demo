@@ -19,8 +19,11 @@ public class ProductGetByIdQueryHandler {
     private final ProductShellDataMapper productDataMapper;
 
     public ProductResponse handle(ProductGetByIdQuery id) throws ProductNotFoundException {
+
         log.info("Handle get product by id query: {}", id);
-        ProductID productID=ProductID.of(id.getProductId());
+
+        ProductID productID = ProductID.of(id.getProductId());
+
         ProductRoot productRoot=productRepositoryAdapter.findById(productID).orElseThrow(()-> new  ProductNotFoundException("Product not found"));
         return productDataMapper.productRootToProductResponse(productRoot);
     }

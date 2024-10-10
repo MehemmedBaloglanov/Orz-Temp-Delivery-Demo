@@ -28,7 +28,7 @@ public class ProductRepositoryAdapterImpl implements ProductRepositoryAdapter {
 
     @Override
     public Optional<ProductRoot> findById(ProductID productId) {
-        Optional<ProductJpaEntity> product= productJpaRepository.findById(productId.value());
+        Optional<ProductJpaEntity> product = productJpaRepository.findById(productId.value());
         if(product.isEmpty()){
             return Optional.empty();
         }else{

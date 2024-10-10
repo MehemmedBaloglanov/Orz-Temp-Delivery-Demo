@@ -41,9 +41,8 @@ public class ProductCommandController {
         productCommandServiceAdapter.changeStatus(command);
     }
 
-
     //PRODUCT SOFT DELETE
-    @DeleteMapping("/{id}")
+    @PutMapping()
     public void deleteProduct(@RequestBody ProductDeleteCommand command) throws CompanyDomainException {
         productCommandServiceAdapter.deleteProduct(command);
     }

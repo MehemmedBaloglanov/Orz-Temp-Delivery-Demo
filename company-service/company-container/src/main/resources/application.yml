@@ -1,11 +1,11 @@
 server:
   port: 8870
-logging:
-  level:
-    root: error
-    org:
-      apache:
-        kafka: off
+#logging:
+#  level:
+#    root: error
+#    org:
+#      apache:
+#        kafka: off
 
 
 spring:

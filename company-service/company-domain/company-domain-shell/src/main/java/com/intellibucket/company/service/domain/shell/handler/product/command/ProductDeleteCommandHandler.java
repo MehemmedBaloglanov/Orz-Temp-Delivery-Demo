@@ -21,7 +21,7 @@ public class ProductDeleteCommandHandler {
     public void handle(ProductDeleteCommand command) throws CompanyDomainException {
         ProductID productId = ProductID.of(command.getProductID());
         Optional<ProductRoot> productRoot = productRepository.findById(productId);
-        if (!productRoot.isPresent()) {
+        if (productRoot.isEmpty()) {
             throw new CompanyDomainException("Product not found by id: " + productId);
         }
         productDomainService.deleteProduct(productRoot.get());

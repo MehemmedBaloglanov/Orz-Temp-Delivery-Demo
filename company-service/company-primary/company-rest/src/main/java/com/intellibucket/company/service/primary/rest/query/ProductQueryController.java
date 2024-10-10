@@ -23,7 +23,7 @@ public class ProductQueryController{
 
     private final ProductQueryServiceAdapter productQueryServiceAdapter;
     //GET PRODUCT BY ID
-    @GetMapping("/id")
+    @GetMapping()
     public ResponseEntity<ProductResponse> getProductById(@RequestBody ProductGetByIdQuery productGetByIdQuery) throws ProductNotFoundException {
         ProductResponse productResponse = productQueryServiceAdapter.getProductById(productGetByIdQuery);
         return  new ResponseEntity<>(productResponse, HttpStatus.OK);
@@ -34,8 +34,5 @@ public class ProductQueryController{
         List<ProductResponseForOrder> productResponse = productQueryServiceAdapter.listProduct(productListWithIdQuery);
         return  new ResponseEntity<>(productResponse, HttpStatus.OK);
     }
-
-
-    //todo 1)AllProduct
 
 }
