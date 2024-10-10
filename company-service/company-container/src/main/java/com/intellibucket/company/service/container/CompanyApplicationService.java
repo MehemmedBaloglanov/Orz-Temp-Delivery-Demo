@@ -9,11 +9,13 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
         "com.intellibucket.company.service",
         "com.intellibucket.outbox",
         "com.intellibucket.kafka",
-        "com.intellibucket.domain"
+        "com.intellibucket.domain",
+        "com.intellibucket.company.service.primary.rest"
 
 })
-@EntityScan("com.intellibucket.company.service.company.repository")
+@EntityScan(basePackages = {"com.intellibucket.company.service.company.repository"})
 @EnableJpaRepositories("com.intellibucket.company.service.company.repository.repository")
+//@ComponentScan("com.intellibucket.company.service.container")
 public class CompanyApplicationService {
     public static void main(String[] args) {
         SpringApplication.run(CompanyApplicationService.class, args);

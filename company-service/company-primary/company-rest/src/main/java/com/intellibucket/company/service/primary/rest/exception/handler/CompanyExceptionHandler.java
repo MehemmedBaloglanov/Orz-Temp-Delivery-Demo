@@ -1,4 +1,4 @@
-package com.intellibucket.order.service.primary.rest.exception.handler;
+package com.intellibucket.company.service.primary.rest.exception.handler;
 
 //todo yazilmalidir
 public class CompanyExceptionHandler {

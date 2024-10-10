@@ -19,9 +19,9 @@ public class ProductRoot extends AggregateRoot<ProductID> {
     private ProductStatus status;
 
     public ProductRoot initialize() throws ValidateException {
+        validateProduct();
         super.setId(ProductID.random());
         status = ProductStatus.DRAFT;
-        validateProduct();
         return this;
     }
 
@@ -43,8 +43,9 @@ public class ProductRoot extends AggregateRoot<ProductID> {
     }
 
     private void validatePrice() throws ValidateException {
-        if (price == null || price.isNil()) {
-            throw new ValidateException("Price cannot be null or zero.");
+        System.out.println("validatePrice method called");
+        if (this.price.getAmount() == null) {
+            throw new ValidateException("Price cannot be null or empty.");
         }
     }
 

@@ -1,4 +1,4 @@
-package com.intellibucket.order.service.primary.rest.command;
+package com.intellibucket.company.service.primary.rest.command;
 
 import com.intellibucket.company.service.domain.core.exception.CompanyDomainException;
 import com.intellibucket.company.service.domain.shell.dto.rest.command.product.ProductCreateCommand;
@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 @Slf4j
 @RestController
-@RequestMapping("/api/1.0/product")
+@RequestMapping("/api/1.0/products")
 @RequiredArgsConstructor
 public class ProductCommandController {
 

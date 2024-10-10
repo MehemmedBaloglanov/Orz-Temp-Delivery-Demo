@@ -94,6 +94,7 @@ public class CompanyDataAccessMapper {
     //todo
     public ProductRoot mapProductJpaEntityToProductRoot(ProductJpaEntity entity) {
         return ProductRoot.builder()
+                .id(ProductID.of(entity.getProductId()))
                 .name(entity.getName())
 //                .companyID(CompanyID.of(entity.getCompanyId()))
                 .status(entity.getStatus())

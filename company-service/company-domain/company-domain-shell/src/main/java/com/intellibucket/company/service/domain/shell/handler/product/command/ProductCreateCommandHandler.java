@@ -12,6 +12,7 @@ import com.intellibucket.company.service.domain.shell.port.output.repository.Pro
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 
 @Slf4j
@@ -23,10 +24,9 @@ public class ProductCreateCommandHandler {
     private final ProductDomainService productDomainService;
 
     //todo burda hem id ni burdan random generate edirik hemdeki createProduct i cagiraraq gedib rootda bir id generate edirik
+    @Transactional
     public ProductResponse handle(ProductCreateCommand command) throws ValidateException {
-        ProductID productID = ProductID.random();
         ProductRoot productRoot = productShellDataMapper.productCreateCommandToProductRoot(command);
-        productRoot.setId(productID);
         ProductCreatedEvent product = productDomainService.createProduct(productRoot);
         ProductRoot productRootSave = productRepository.save(product.getProductRoot());
         if (productRootSave == null) {

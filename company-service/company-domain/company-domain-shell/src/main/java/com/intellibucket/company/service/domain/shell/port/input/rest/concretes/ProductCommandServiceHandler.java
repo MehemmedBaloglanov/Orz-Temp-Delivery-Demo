@@ -12,7 +12,9 @@ import com.intellibucket.company.service.domain.shell.handler.product.command.Pr
 import com.intellibucket.company.service.domain.shell.handler.product.command.ProductUpdateCommandHandler;
 import com.intellibucket.company.service.domain.shell.port.input.rest.abstracts.command.ProductCommandServiceAdapter;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Component;
 
+@Component
 @RequiredArgsConstructor
 public class ProductCommandServiceHandler implements ProductCommandServiceAdapter {
 

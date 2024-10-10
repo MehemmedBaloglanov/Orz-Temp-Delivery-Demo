@@ -9,9 +9,10 @@ import com.intellibucket.company.service.domain.shell.handler.product.query.Prod
 import com.intellibucket.company.service.domain.shell.handler.product.query.ProductListWithIdQueryHandler;
 import com.intellibucket.company.service.domain.shell.port.input.rest.abstracts.query.ProductQueryServiceAdapter;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
-
+@Component
 @RequiredArgsConstructor
 public class ProductQueryServiceHandler implements ProductQueryServiceAdapter {
     private final ProductGetByIdQueryHandler productGetByIdQueryHandler;

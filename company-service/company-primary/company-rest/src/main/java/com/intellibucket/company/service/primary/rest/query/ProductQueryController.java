@@ -1,4 +1,4 @@
-package com.intellibucket.order.service.primary.rest.query;
+package com.intellibucket.company.service.primary.rest.query;
 
 import com.intellibucket.company.service.domain.core.exception.ProductNotFoundException;
 import com.intellibucket.company.service.domain.shell.dto.rest.connector.ProductResponseForOrder;
