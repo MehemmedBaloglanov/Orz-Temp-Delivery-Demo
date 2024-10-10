@@ -10,7 +10,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-@Repository
 public interface CustomerJpaRepository extends JpaRepository<CustomerRegistrationEntity, UUID> {
     Optional<CustomerRegistrationEntity> findByEmail(String value);
 

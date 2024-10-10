@@ -11,10 +11,10 @@ import com.intellibucket.user.service.domain.shell.mapper.UserCommandMapper;
 import com.intellibucket.user.service.domain.shell.port.output.publisher.EventPublisher;
 import com.intellibucket.user.service.domain.shell.port.output.repository.UserRepository;
 import com.intellibucket.user.service.domain.shell.security.AbstractSecurityContextHolder;
-import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 

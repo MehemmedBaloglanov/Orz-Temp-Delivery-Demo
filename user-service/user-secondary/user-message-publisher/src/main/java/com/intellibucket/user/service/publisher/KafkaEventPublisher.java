@@ -1,4 +1,4 @@
-package publisher;
+package com.intellibucket.user.service.publisher;
 
 import com.intellibucket.user.service.domain.core.event.*;
 import com.intellibucket.user.service.domain.shell.port.output.publisher.EventPublisher;

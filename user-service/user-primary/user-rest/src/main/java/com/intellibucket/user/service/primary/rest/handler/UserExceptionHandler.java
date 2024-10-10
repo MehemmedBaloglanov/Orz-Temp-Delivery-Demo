@@ -8,7 +8,6 @@ import com.intellibucket.user.service.domain.core.exception.user.UserSavedExcept
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.orm.ObjectOptimisticLockingFailureException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
@@ -43,12 +42,6 @@ public class UserExceptionHandler {
     public ResponseEntity<String> handleIllegalArgumentException(IllegalArgumentException ex, WebRequest request) {
         log.error(ex.getMessage(), ex);
         return new ResponseEntity<>("Invalid input: " + ex.getMessage(), HttpStatus.BAD_REQUEST); // 400
-    }
-
-    @ExceptionHandler(ObjectOptimisticLockingFailureException.class)
-    public ResponseEntity<String> handleOptimisticLockingFailure(ObjectOptimisticLockingFailureException ex, WebRequest request) {
-        log.error(ex.getMessage(), ex);
-        return new ResponseEntity<>("Conflict: The user has been modified by another transaction. " + ex.getMessage(), HttpStatus.CONFLICT); // 409
     }
 
     @ExceptionHandler(UserDomainException.class)

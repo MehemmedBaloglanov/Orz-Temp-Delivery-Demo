@@ -1,6 +1,6 @@
-logging:
-  level:
-    root: error
+#logging:
+#  level:
+#    root: error
 #    com.intellibucket: error
 spring:
   mail:
@@ -30,24 +30,20 @@ spring:
 #    show-sql: true
 #    open-in-view: false
 
+  jpa:
+    show-sql: true
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: none
   datasource:
     url: jdbc:postgresql://localhost:9116/postgres
     username: postgres
     password: admin
-    driver-class-name: org.postgresql.Driver
-  jpa:
-    hibernate:
-      ddl-auto: update # Use 'create' for fresh schema, 'update' for updating schema, 'validate' for checking schema validity
-    database-platform: org.hibernate.dialect.PostgreSQLDialect
-    show-sql: true # To show SQL queries in logs
 
 
-
-
-
-
-  main:
-    allow-circular-references: true
 issue:
   key: WmFxYXRhbGExOTkwMjAxODIwMTkyMDIyTWFoaXJBeWxpbjkwT3g5NjJIYXlhbGxlckFtZXJpa2FIYXlhdGxhcg==
 security:
