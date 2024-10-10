@@ -1,4 +1,4 @@
-package com.intellibucket.company.service.domain.shell.handler;
+package com.intellibucket.company.service.domain.shell.handler.product.command;
 
 import com.intelliacademy.orizonroute.identity.company.CompanyID;
 import com.intelliacademy.orizonroute.identity.order.product.ProductID;
@@ -25,9 +25,9 @@ public class ProductUpdateCommandHandler {
     private final ProductRepositoryAdapter productRepository;
 
     public void handle(ProductUpdateCommand command) throws CompanyDomainException {
+        log.info("ProductUpdateCommandHandler");
         ProductID productId = ProductID.of(command.getProductId());
         Optional<ProductRoot> productRootOptional = productRepository.findById(productId);
-        CompanyID companyID = this.securityContextHolder.currentCompanyID();
 
         if (productRootOptional.isEmpty()) {
             throw new CompanyDomainException("Product not found by id: " + productId);
@@ -35,13 +35,14 @@ public class ProductUpdateCommandHandler {
 
         ProductRoot productRoot = productRootOptional.get();
         productRoot.updateName(command.getProductName());
-        productRoot.updateStockQuantity(command.getStockQuantity());
+        productRoot.updateStockQuantity(Integer.valueOf(command.getStockQuantity()));
         Money money = Money.of(command.getPrice());
         productRoot.updatePrice(money);
 
         ProductPriceUpdatedEvent productPriceUpdatedEvent = productDomainService.updateProduct(productRoot);
 
         productRepository.save(productRoot);
+        log.info("Product updated: {}", productRoot);
 
     }
 }

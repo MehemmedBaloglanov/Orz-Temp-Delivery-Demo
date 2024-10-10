@@ -18,4 +18,6 @@ public class ProductRefundPayload implements BaseEventPayload {
     private BigDecimal refundAmount;
     private String failureMessage;
     private Instant createdAt;
+
+    //todo bunun usage yoxdu silinmelidirmi?
 }

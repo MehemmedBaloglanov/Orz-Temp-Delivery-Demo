@@ -1,4 +1,4 @@
-package com.intellibucket.company.service.domain.shell.handler;
+package com.intellibucket.company.service.domain.shell.handler.product.command;
 
 import com.intelliacademy.orizonroute.identity.order.product.ProductID;
 import com.intellibucket.company.service.domain.core.exception.CompanyDomainException;
@@ -19,14 +19,16 @@ public class ProductDeleteCommandHandler {
     private final ProductRepositoryAdapter productRepository;
 
     public void handle(ProductDeleteCommand command) throws CompanyDomainException {
+        log.info("Deleting product started");
         ProductID productId = ProductID.of(command.getProductID());
         Optional<ProductRoot> productRoot = productRepository.findById(productId);
-        if (!productRoot.isPresent()) {
+        if (productRoot.isEmpty()) {
             throw new CompanyDomainException("Product not found by id: " + productId);
         }
         productDomainService.deleteProduct(productRoot.get());
 
         productRepository.save(productRoot.get());
+        log.info("Product deleted successfully");
 
     }
 }

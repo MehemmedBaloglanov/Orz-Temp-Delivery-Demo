@@ -79,6 +79,7 @@ public class CompanyDataAccessMapper {
                         .build()).collect(Collectors.toList());
     }
 
+    //todo
     public ProductJpaEntity mapProductRootToProductJpaEntity(ProductRoot root) {
         return ProductJpaEntity.builder()
                 .name(root.getName())
@@ -90,8 +91,10 @@ public class CompanyDataAccessMapper {
                 .build();
     }
 
+    //todo
     public ProductRoot mapProductJpaEntityToProductRoot(ProductJpaEntity entity) {
         return ProductRoot.builder()
+                .id(ProductID.of(entity.getProductId()))
                 .name(entity.getName())
 //                .companyID(CompanyID.of(entity.getCompanyId()))
                 .status(entity.getStatus())
@@ -113,7 +116,7 @@ public class CompanyDataAccessMapper {
     }
 
     //todo OutboxMessagede niye yene statusu gondermek olmur?
-    public OutboxMessage mapOutboxJapEntityToOutboxMessage(OutboxJpaEntity save) {
+    public OutboxMessage mapOutboxJapEntityToOutboxMessage(OutboxJpaEntity save){
         return OutboxMessage.builder()
                 .id(save.getId())
                 .sagaName(save.getSagaName())
@@ -132,4 +135,5 @@ public class CompanyDataAccessMapper {
             default -> throw new CompanyDomainException("Unsupported OutboxStatus: " + outboxStatus);
         };
     }
+
 }

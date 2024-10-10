@@ -1,5 +1,12 @@
 server:
   port: 8870
+#logging:
+#  level:
+#    root: error
+#    org:
+#      apache:
+#        kafka: off
+
 
 spring:
   jpa:
@@ -17,8 +24,8 @@ spring:
 
 company-service:
   company-service-group-id: company-service-group
-  outbox-scheduler-fixed-rate: 10000
-  outbox-scheduler-initial-delay: 10000
+  outbox-scheduler-fixed-rate: 100000
+  outbox-scheduler-initial-delay: 100000
   # topics
   company-order-approve-request-topic-name: company-order-approve-request
   company-order-approve-response-topic-name: company-order-approve-response

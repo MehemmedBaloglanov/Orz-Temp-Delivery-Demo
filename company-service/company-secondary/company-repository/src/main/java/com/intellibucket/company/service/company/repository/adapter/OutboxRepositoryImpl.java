@@ -2,6 +2,7 @@ package com.intellibucket.company.service.company.repository.adapter;
 
 import com.intellibucket.company.service.company.repository.entity.OutboxJpaEntity;
 import com.intellibucket.company.service.company.repository.entity.OutboxJpaStatus;
+import com.intellibucket.company.service.company.repository.helper.CompanyRepositoryDataHelper;
 import com.intellibucket.company.service.company.repository.mapper.CompanyDataAccessMapper;
 import com.intellibucket.company.service.company.repository.repository.CompanyOutboxRepository;
 import com.intellibucket.company.service.domain.core.exception.CompanyDomainException;
@@ -11,6 +12,7 @@ import com.intellibucket.outbox.OutboxStatus;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -20,11 +22,26 @@ public class OutboxRepositoryImpl implements OutboxRepository {
 
     private final CompanyDataAccessMapper companyDataAccessMapper;
     private final CompanyOutboxRepository companyJpaRepository;
-
+    private final CompanyRepositoryDataHelper companyRepositoryDataHelper;
 
     @Override
-    public Optional<List<OutboxMessage>> findByOutboxStatus(OutboxStatus outboxStatus) {
-        return Optional.empty();
+    public Optional<List<OutboxMessage>> findByOutboxStatus(OutboxStatus outboxStatus) throws CompanyDomainException {
+        OutboxJpaStatus outboxJpaStatus = companyRepositoryDataHelper.outboxStatusToOutboxJpaStatus(outboxStatus);
+        Optional<List<OutboxJpaEntity>> outboxJpaEntityOptional = companyJpaRepository.findByOutboxStatus(outboxJpaStatus);
+        if (outboxJpaEntityOptional.isPresent()) {
+            List<OutboxJpaEntity> outboxJpaEntityList = outboxJpaEntityOptional.get();
+            List<OutboxMessage> outboxMessages = new ArrayList<>();
+
+            for (OutboxJpaEntity item : outboxJpaEntityList) {
+                OutboxMessage outboxMessage = companyDataAccessMapper.mapOutboxJapEntityToOutboxMessage(item);
+                outboxMessages.add(outboxMessage);
+            }
+
+            return Optional.of(outboxMessages);
+
+        } else {
+            return Optional.empty();
+        }
     }
 
 

@@ -5,7 +5,4 @@ public class ValidateException extends CompanyDomainException{
         super(message);
     }
 
-    public ValidateException(String message, Throwable cause) {
-        super(message, cause);
-    }
 }

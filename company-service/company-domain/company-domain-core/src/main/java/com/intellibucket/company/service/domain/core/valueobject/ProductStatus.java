@@ -9,7 +9,6 @@ public enum ProductStatus {
     DELETED,
     OUT_OF_STOCK;
 
-
     public Boolean isDraft(){
         return this == DRAFT;
     }

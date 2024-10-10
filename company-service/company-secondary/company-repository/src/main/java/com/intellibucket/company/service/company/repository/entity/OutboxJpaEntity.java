@@ -20,7 +20,7 @@ public class OutboxJpaEntity {
 
     private String sagaName;
 
-    //    @Column(columnDefinition = "text")
+    //@Column(columnDefinition = "text")
     private String payload;
 
     @Enumerated(EnumType.STRING)
