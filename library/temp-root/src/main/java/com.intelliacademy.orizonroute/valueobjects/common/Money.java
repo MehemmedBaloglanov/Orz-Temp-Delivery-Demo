@@ -5,6 +5,7 @@ import lombok.Getter;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.Objects;
+
 @Getter
 @ValueObject
 public sealed class Money permits Money.Nil {
@@ -21,6 +22,13 @@ public sealed class Money permits Money.Nil {
 
     private Money(BigDecimal amount) {
         this.amount = amount;
+    }
+
+    public Money validatePrice() {
+        if (this.getAmount() == null) {
+            throw new RuntimeException("Price cannot be null or empty.");
+        }
+        return new Money(this.getAmount());
     }
 
     public Money add(Money other) {
@@ -73,23 +81,23 @@ public sealed class Money permits Money.Nil {
         return amount.toString();
     }
 
-    public static Money of(BigDecimal amount){
+    public static Money of(BigDecimal amount) {
         if (Objects.isNull(amount)) return Nil.of();
         return new Money(amount);
     }
 
-    public Boolean isNil(){
+    public Boolean isNil() {
         return false;
     }
 
 
-    public static final class Nil extends Money{
+    public static final class Nil extends Money {
 
         private Nil() {
             super(BigDecimal.ZERO);
         }
 
-        public static Nil of(){
+        public static Nil of() {
             return new Nil();
         }
 
