@@ -1,13 +1,12 @@
 package com.intellibucket.company.service.domain.shell.port.input.rest.concretes;
 
-import com.intellibucket.company.service.domain.core.exception.CompanyDomainException;
 import com.intellibucket.company.service.domain.core.exception.ProductNotFoundException;
 import com.intellibucket.company.service.domain.shell.dto.rest.connector.ProductResponseForOrder;
 import com.intellibucket.company.service.domain.shell.dto.rest.query.ProductGetByIdQuery;
 import com.intellibucket.company.service.domain.shell.dto.rest.query.ProductListWithIdQuery;
 import com.intellibucket.company.service.domain.shell.dto.rest.response.ProductResponse;
-import com.intellibucket.company.service.domain.shell.handler.ProductGetByIdQueryHandler;
-import com.intellibucket.company.service.domain.shell.handler.ProductListWithIdQueryHandler;
+import com.intellibucket.company.service.domain.shell.handler.product.query.ProductGetByIdQueryHandler;
+import com.intellibucket.company.service.domain.shell.handler.product.query.ProductListWithIdQueryHandler;
 import com.intellibucket.company.service.domain.shell.port.input.rest.abstracts.query.ProductQueryServiceAdapter;
 import lombok.RequiredArgsConstructor;
 

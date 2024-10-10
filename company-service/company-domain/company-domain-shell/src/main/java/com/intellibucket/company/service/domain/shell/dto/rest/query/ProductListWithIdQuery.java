@@ -11,7 +11,7 @@ import java.util.List;
 @Builder
 @AllArgsConstructor
 public class ProductListWithIdQuery {
+    //todo
     List<ProductID> productIDList;
-
 
 }

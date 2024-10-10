@@ -6,10 +6,10 @@ import com.intellibucket.company.service.domain.shell.dto.rest.command.product.P
 import com.intellibucket.company.service.domain.shell.dto.rest.command.product.ProductStatusCommand;
 import com.intellibucket.company.service.domain.shell.dto.rest.command.product.ProductUpdateCommand;
 import com.intellibucket.company.service.domain.shell.dto.rest.response.ProductResponse;
-import com.intellibucket.company.service.domain.shell.handler.ProductCreateCommandHandler;
-import com.intellibucket.company.service.domain.shell.handler.ProductDeleteCommandHandler;
-import com.intellibucket.company.service.domain.shell.handler.ProductStatusCommandHandler;
-import com.intellibucket.company.service.domain.shell.handler.ProductUpdateCommandHandler;
+import com.intellibucket.company.service.domain.shell.handler.product.command.ProductCreateCommandHandler;
+import com.intellibucket.company.service.domain.shell.handler.product.command.ProductDeleteCommandHandler;
+import com.intellibucket.company.service.domain.shell.handler.product.command.ProductStatusCommandHandler;
+import com.intellibucket.company.service.domain.shell.handler.product.command.ProductUpdateCommandHandler;
 import com.intellibucket.company.service.domain.shell.port.input.rest.abstracts.command.ProductCommandServiceAdapter;
 import lombok.RequiredArgsConstructor;
 

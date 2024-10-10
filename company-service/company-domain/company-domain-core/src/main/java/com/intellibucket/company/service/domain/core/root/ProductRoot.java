@@ -13,6 +13,7 @@ import lombok.experimental.SuperBuilder;
 public class ProductRoot extends AggregateRoot<ProductID> {
     private String name;
     private Money price;
+    //todo
 //    private CompanyID companyID;
     private Integer stockQuantity;
     private ProductStatus status;
@@ -31,6 +32,7 @@ public class ProductRoot extends AggregateRoot<ProductID> {
         validateName();
         validatePrice();
         validateStockQuantity();
+        //todo
 //        validateCompanyID();
     }
 
@@ -46,7 +48,7 @@ public class ProductRoot extends AggregateRoot<ProductID> {
         }
     }
 
-
+    //todo
 //    private void validateCompanyID() throws ValidateException {
 //        if (companyID == null) {
 //            throw new ValidateException("CompanyID cannot be null.");
@@ -60,7 +62,7 @@ public class ProductRoot extends AggregateRoot<ProductID> {
     }
 
 
-    //----------------------------------->UPDATE PRODUCT STATUS
+    //----------------------------------->CHANGE PRODUCT STATUS
 
     public ProductRoot activate() throws ValidateException {
         if (status.isActive()) {
@@ -112,6 +114,8 @@ public class ProductRoot extends AggregateRoot<ProductID> {
         return this;
     }
 
+
+    //-----------------------------> UPDATE PRODUCT FIELDS
     public ProductRoot updateName(String name) throws ValidateException {
         validateName();
         this.name=name;

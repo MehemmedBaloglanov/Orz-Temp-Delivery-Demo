@@ -5,6 +5,7 @@ public class ValidateException extends CompanyDomainException{
         super(message);
     }
 
+    //todo
     public ValidateException(String message, Throwable cause) {
         super(message, cause);
     }

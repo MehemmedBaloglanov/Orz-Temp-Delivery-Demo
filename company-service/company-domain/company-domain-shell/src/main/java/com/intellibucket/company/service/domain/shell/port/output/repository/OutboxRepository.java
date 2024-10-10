@@ -10,7 +10,7 @@ import java.util.Optional;
 public interface OutboxRepository {
     OutboxMessage save(OutboxMessage outboxMessage);
 
-    Optional<List<OutboxMessage>> findByOutboxStatus(OutboxStatus outboxStatus);
+    Optional<List<OutboxMessage>> findByOutboxStatus(OutboxStatus outboxStatus) throws CompanyDomainException;
 
     void deleteByOutboxStatus(OutboxStatus outboxStatus) throws CompanyDomainException;
 }
