@@ -12,59 +12,68 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import java.util.List;
 
-//todo yazilmalidir
 @Slf4j
 @RestControllerAdvice
 public class CompanyExceptionHandler {
+
     // Handle generic exceptions
     @ExceptionHandler(Exception.class)
-    public ResponseEntity<String> handleGenericException(Exception exception) {
+    public ResponseEntity<ErrorResponse> handleGenericException(Exception exception) {
         log.error(exception.getMessage(), exception);
-        return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        ErrorResponse errorResponse = new ErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR.value(),
+                "An internal server error occurred: " + exception.getMessage());
+        return new ResponseEntity<>(errorResponse, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     // Handle IllegalArgumentException (e.g., invalid input or status change)
     @ExceptionHandler(IllegalArgumentException.class)
-    public ResponseEntity<String> handleIllegalArgumentException(IllegalArgumentException exception) {
+    public ResponseEntity<ErrorResponse> handleIllegalArgumentException(IllegalArgumentException exception) {
         log.error(exception.getMessage(), exception);
-        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        ErrorResponse errorResponse = new ErrorResponse(HttpStatus.BAD_REQUEST.value(),
+                "Invalid argument: " + exception.getMessage());
+        return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
     }
 
     // Handle IllegalStateException (e.g., business rule violation)
     @ExceptionHandler(IllegalStateException.class)
-    public ResponseEntity<String> handleIllegalStateException(IllegalStateException exception) {
+    public ResponseEntity<ErrorResponse> handleIllegalStateException(IllegalStateException exception) {
         log.error(exception.getMessage(), exception);
-        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        ErrorResponse errorResponse = new ErrorResponse(HttpStatus.BAD_REQUEST.value(),
+                "Illegal state: " + exception.getMessage());
+        return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(ProductNotFoundException.class)
-    public ResponseEntity<String> handleProductNotFoundException(ProductNotFoundException exception) {
+    public ResponseEntity<ErrorResponse> handleProductNotFoundException(ProductNotFoundException exception) {
         log.error(exception.getMessage(), exception);
-        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        ErrorResponse errorResponse = new ErrorResponse(HttpStatus.NOT_FOUND.value(),
+                "Product not found: " + exception.getMessage());
+        return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler(CompanyDomainException.class)
-    public ResponseEntity<String> handleCompanyDomainException(CompanyDomainException exception) {
+    public ResponseEntity<ErrorResponse> handleCompanyDomainException(CompanyDomainException exception) {
         log.error(exception.getMessage(), exception);
-        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        ErrorResponse errorResponse = new ErrorResponse(HttpStatus.BAD_REQUEST.value(),
+                "Company domain exception: " + exception.getMessage());
+        return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(DomainException.class)
-    public ResponseEntity<String> handleDomainException(DomainException exception) {
+    public ResponseEntity<ErrorResponse> handleDomainException(DomainException exception) {
         log.error(exception.getMessage(), exception);
-        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        ErrorResponse errorResponse = new ErrorResponse(HttpStatus.BAD_REQUEST.value(),
+                "Domain exception: " + exception.getMessage());
+        return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<String> handleMethodArgumentNotValidException(MethodArgumentNotValidException exception) {
-
+    public ResponseEntity<ErrorResponse> handleMethodArgumentNotValidException(MethodArgumentNotValidException exception) {
         log.error(exception.getMessage(), exception);
         List<String> errors = exception.getBindingResult().getFieldErrors()
                 .stream().map(field -> field.getField() + " " + field.getDefaultMessage()).toList();
         String error = String.join(", ", errors);
-
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
+        ErrorResponse errorResponse = new ErrorResponse(HttpStatus.BAD_REQUEST.value(), "Validation errors: " + error);
+        return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
     }
-
-
 }
