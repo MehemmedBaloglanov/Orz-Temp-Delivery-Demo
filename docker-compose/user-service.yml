@@ -1,5 +1,5 @@
 services:
-  postgres-company:
+  postgres-user:
     container_name: postgres-user
     image: postgres:16
     ports:

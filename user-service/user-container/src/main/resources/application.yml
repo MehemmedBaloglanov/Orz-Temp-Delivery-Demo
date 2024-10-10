@@ -14,44 +14,41 @@ spring:
     port: 587
     username: orucmollaev@gmail.com
     password: xbuw ttoz ewxt jwgp
+#  datasource:
+#    hikari:
+#      connection-timeout: 30000
+#    url: jdbc:mysql://localhost:3306/delivery
+#    username: root
+#    password: qwerty1212
+#  jpa:
+#    properties:
+#      hibernate:
+#        dialect: org.hibernate.dialect.MySQLDialect
+#    hibernate:
+#      ddl-auto: update
+#    show-sql: true
+#    open-in-view: false
+#  main:
+#    allow-circular-references: true
+
   datasource:
-    hikari:
-      connection-timeout: 30000
-    url: jdbc:mysql://localhost:3306/delivery
-    username: root
-    password: qwerty1212
+    url: jdbc:postgresql://localhost:9116/postgres
+    username: postgres
+    password: admin
+    driver-class-name: org.postgresql.Driver
   jpa:
-    properties:
-      hibernate:
-        dialect: org.hibernate.dialect.MySQLDialect
     hibernate:
-      ddl-auto: update
-    show-sql: true
-    open-in-view: false
-  main:
-    allow-circular-references: true
+      ddl-auto: update # Use 'create' for fresh schema, 'update' for updating schema, 'validate' for checking schema validity
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    show-sql: true # To show SQL queries in logs
+
 issue:
   key: WmFxYXRhbGExOTkwMjAxODIwMTkyMDIyTWFoaXJBeWxpbjkwT3g5NjJIYXlhbGxlckFtZXJpa2FIYXlhdGxhcg==
 security:
   jwt:
     expiration-time: 3600000
 
-#spring:
-#  datasource:
-#    url: jdbc:postgresql://localhost:5432/delivery
-#    username: postgres
-#    password: qwerty1212
-#    driver-class-name: org.postgresql.Driver
-#  jpa:
-#    hibernate:
-#      ddl-auto: update # Use 'create' for fresh schema, 'update' for updating schema, 'validate' for checking schema validity
-#    database-platform: org.hibernate.dialect.PostgreSQLDialect
-#    show-sql: true # To show SQL queries in logs
-#    properties:
-#      hibernate:
-#        format_sql: true # To format SQL queries nicely in the logs
 
-#        open-in-view: false
 
 env:
   test:
