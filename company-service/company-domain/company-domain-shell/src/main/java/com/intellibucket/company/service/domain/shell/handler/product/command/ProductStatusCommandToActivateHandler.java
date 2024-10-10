@@ -1,6 +1,5 @@
 package com.intellibucket.company.service.domain.shell.handler.product.command;
 
-import com.intelliacademy.orizonroute.identity.company.CompanyID;
 import com.intelliacademy.orizonroute.identity.order.product.ProductID;
 import com.intellibucket.company.service.domain.core.event.product.ProductActivatedEvent;
 import com.intellibucket.company.service.domain.core.exception.CompanyDomainException;
@@ -18,26 +17,22 @@ import java.util.Optional;
 @Slf4j
 @Component
 @AllArgsConstructor
-public class ProductStatusCommandHandler {
+public class ProductStatusCommandToActivateHandler {
     private final AbstractSecurityContextHolder securityContextHolder;
     private final ProductDomainService productDomainService;
     private final ProductRepositoryAdapter productRepository;
 
-    //todo Burada biz statusu event ile deyisirik ama hemin eventi harasa yollamiriq
     public void handle(ProductStatusCommand command) throws CompanyDomainException {
+        log.info("Activate product status");
         ProductID productId = ProductID.of(command.getProductId());
         Optional<ProductRoot> productRootOptional = productRepository.findById(productId);
-
-        //todo
-        CompanyID companyID = this.securityContextHolder.currentCompanyID();
 
         if (productRootOptional.isEmpty()) {
             throw new CompanyDomainException("Product not found by id: " + productId);
         }
-
         ProductActivatedEvent productActivatedEvent = productDomainService.activateProduct(productRootOptional.get());
-
         productRepository.save(productRootOptional.get());
+        log.info("Product activated successfully");
 
     }
 }

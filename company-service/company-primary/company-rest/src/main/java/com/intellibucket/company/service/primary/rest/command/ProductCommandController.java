@@ -1,10 +1,8 @@
 package com.intellibucket.company.service.primary.rest.command;
 
 import com.intellibucket.company.service.domain.core.exception.CompanyDomainException;
-import com.intellibucket.company.service.domain.shell.dto.rest.command.product.ProductCreateCommand;
-import com.intellibucket.company.service.domain.shell.dto.rest.command.product.ProductDeleteCommand;
-import com.intellibucket.company.service.domain.shell.dto.rest.command.product.ProductStatusCommand;
-import com.intellibucket.company.service.domain.shell.dto.rest.command.product.ProductUpdateCommand;
+
+import com.intellibucket.company.service.domain.shell.dto.rest.command.product.*;
 import com.intellibucket.company.service.domain.shell.dto.rest.response.ProductResponse;
 import com.intellibucket.company.service.domain.shell.port.input.rest.abstracts.command.ProductCommandServiceAdapter;
 import lombok.RequiredArgsConstructor;
@@ -24,7 +22,7 @@ public class ProductCommandController {
     //PRODUCT CREATE
     @PostMapping
     public ResponseEntity<ProductResponse> createProduct(@RequestBody ProductCreateCommand command) throws CompanyDomainException {
-        log.info("Created product: {}", command);
+        log.info("Received product creation request: {}", command);
         ProductResponse productResponse = productCommandServiceAdapter.createProduct(command);
         log.info("Created product: {}", productResponse);
         return new ResponseEntity<>(productResponse, HttpStatus.CREATED);
@@ -33,18 +31,31 @@ public class ProductCommandController {
     //PRODUCT NAME STOCKQUANTITY PRICE  UPDATE
     @PutMapping("/update")
     public void updateProduct(@RequestBody ProductUpdateCommand command) throws CompanyDomainException {
+        log.info("Received product update request: {}", command);
         productCommandServiceAdapter.updateProduct(command);
+        log.info("Updated product: {}", command);
     }
 
-    @PutMapping ("/status")
-    public void changeStatus(@RequestBody ProductStatusCommand command) throws CompanyDomainException {
-        productCommandServiceAdapter.changeStatus(command);
+    @PutMapping("/activate")
+    public void changeStatusToActivate(@RequestBody ProductStatusCommand command) throws CompanyDomainException {
+        log.info("Received product status update request: {}", command);
+        productCommandServiceAdapter.changeStatusToActivate(command);
+        log.info("Updated product status: {}", command);
+    }
+
+    @PutMapping("/outofstock")
+    public void changeStatusToOutOfStock(@RequestBody ProductStatusOutOfStockCommand command) throws CompanyDomainException {
+        log.info("Received product status update request: {}", command);
+        productCommandServiceAdapter.changeStatusToOutOfStock(command);
+        log.info("Updated product status: {}", command);
     }
 
     //PRODUCT SOFT DELETE
-    @PutMapping()
+    @PutMapping("/delete")
     public void deleteProduct(@RequestBody ProductDeleteCommand command) throws CompanyDomainException {
+        log.info("Received product deletion request: {}", command);
         productCommandServiceAdapter.deleteProduct(command);
+        log.info("Deleted product: {}", command);
     }
 
 

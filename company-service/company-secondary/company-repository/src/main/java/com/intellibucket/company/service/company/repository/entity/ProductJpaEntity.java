@@ -29,7 +29,7 @@ public class ProductJpaEntity {
 
     private BigDecimal price;
 
-    private UUID companyId;
+//    private UUID companyId;
 
     private Integer stockQuantity;
 

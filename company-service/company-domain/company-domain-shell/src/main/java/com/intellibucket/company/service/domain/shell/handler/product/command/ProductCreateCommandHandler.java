@@ -1,8 +1,7 @@
 package com.intellibucket.company.service.domain.shell.handler.product.command;
 
-import com.intelliacademy.orizonroute.identity.order.product.ProductID;
 import com.intellibucket.company.service.domain.core.event.product.ProductCreatedEvent;
-import com.intellibucket.company.service.domain.core.exception.ValidateException;
+import com.intellibucket.company.service.domain.core.exception.CompanyDomainException;
 import com.intellibucket.company.service.domain.core.root.ProductRoot;
 import com.intellibucket.company.service.domain.core.service.ProductDomainService;
 import com.intellibucket.company.service.domain.shell.dto.rest.command.product.ProductCreateCommand;
@@ -23,14 +22,15 @@ public class ProductCreateCommandHandler {
     private  final ProductShellDataMapper productShellDataMapper;
     private final ProductDomainService productDomainService;
 
-    //todo burda hem id ni burdan random generate edirik hemdeki createProduct i cagiraraq gedib rootda bir id generate edirik
     @Transactional
-    public ProductResponse handle(ProductCreateCommand command) throws ValidateException {
+    public ProductResponse handle(ProductCreateCommand command) throws CompanyDomainException {
         ProductRoot productRoot = productShellDataMapper.productCreateCommandToProductRoot(command);
         ProductCreatedEvent product = productDomainService.createProduct(productRoot);
+        log.info("Product created");
         ProductRoot productRootSave = productRepository.save(product.getProductRoot());
+        log.info("Product saved");
         if (productRootSave == null) {
-            throw new RuntimeException("Error saving product");
+            throw new CompanyDomainException("Error saving product");
         }
         return productShellDataMapper.productRootToProductResponse(productRootSave);
     }

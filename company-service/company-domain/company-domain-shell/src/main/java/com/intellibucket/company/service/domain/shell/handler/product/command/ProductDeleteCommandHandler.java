@@ -19,6 +19,7 @@ public class ProductDeleteCommandHandler {
     private final ProductRepositoryAdapter productRepository;
 
     public void handle(ProductDeleteCommand command) throws CompanyDomainException {
+        log.info("Deleting product started");
         ProductID productId = ProductID.of(command.getProductID());
         Optional<ProductRoot> productRoot = productRepository.findById(productId);
         if (productRoot.isEmpty()) {
@@ -27,6 +28,7 @@ public class ProductDeleteCommandHandler {
         productDomainService.deleteProduct(productRoot.get());
 
         productRepository.save(productRoot.get());
+        log.info("Product deleted successfully");
 
     }
 }
