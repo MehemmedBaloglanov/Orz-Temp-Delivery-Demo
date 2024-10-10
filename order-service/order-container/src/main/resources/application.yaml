@@ -36,7 +36,7 @@ spring:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
     hibernate:
-      ddl-auto: update
+      ddl-auto: none
   datasource:
     url: jdbc:postgresql://localhost:9114/postgres
     username: postgres
@@ -82,9 +82,9 @@ kafka-consumer-config:
 test:
   current:
     company:
-      id: 01924d1f-a2f8-7825-9730-15ebaf6d4738
+      id: 01924d1f-a2f8-7825-9730-0015ef6d4738
     customer:
-      id: 01924d1f-a2f8-7bce-833e-d5ef9561d17a
+      id: 01927168-9410-7ea7-9da8-ce881a17d3e5
     courier:
       id: 01924d1f-a2f8-7630-b7a5-b5c2130e5053
 

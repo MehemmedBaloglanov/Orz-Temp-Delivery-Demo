@@ -33,7 +33,7 @@ import static com.intellibucket.domain.constants.DomainConstants.ZONE_ID;
 public class OrderShellDataMapper {
 
     public OrderResponse orderRootToOrderResponse(OrderRoot orderRoot) {
-        OrderResponse.builder()
+        return OrderResponse.builder()
                 .id(orderRoot.getRootID().value().toString())
                 .status(orderRoot.getStatus())
                 .trackingId(orderRoot.getOrderNumber().value())
@@ -41,7 +41,6 @@ public class OrderShellDataMapper {
                 .items(orderRoot.getItems().stream().map(this::orderItemToOrderItemResponse).toList())
                 .createdAt(orderRoot.getCreatedAt())
                 .build();
-        return null;
     }
 
     private OrderItemResponse orderItemToOrderItemResponse(OrderItemRoot orderItemRoot) {

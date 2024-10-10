@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 
-@Component
+//@Component
 @RequiredArgsConstructor
 public class CompanyServiceConnector implements AbstractCompanyServiceConnector {
     private final CompanyServiceClient companyServiceClient;
