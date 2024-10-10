@@ -1,7 +1,7 @@
 package com.intellibucket.order.service.domain.shell.outbox.model.payload.delivery;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.intellibucket.order.service.domain.shell.outbox.model.payload.BaseEventPayload;
+import com.intellibucket.outbox.payload.BaseEventPayload;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;

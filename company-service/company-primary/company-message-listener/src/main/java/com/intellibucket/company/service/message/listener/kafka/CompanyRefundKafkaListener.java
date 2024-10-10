@@ -7,6 +7,7 @@ import com.intellibucket.kafka.config.consumer.KafkaConsumer;
 import com.intellibucket.kafka.order.avro.model.company.CompanyOrderRefundRequestAvroModel;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.kafka.support.KafkaHeaders;
 import org.springframework.messaging.handler.annotation.Header;
 import org.springframework.messaging.handler.annotation.Payload;
@@ -17,11 +18,12 @@ import java.util.List;
 @Slf4j
 @Component
 @RequiredArgsConstructor
-public class ProductStockIncreaseKafkaListener implements KafkaConsumer<CompanyOrderRefundRequestAvroModel> {
+public class CompanyRefundKafkaListener implements KafkaConsumer<CompanyOrderRefundRequestAvroModel> {
     private final CompanyMessageListenerDataMapper companyMessageListenerDataMapper;
     private final AbstractOrderRefundResponseMessageListener orderRefundResponseMessageListener;
 
     @Override
+    @KafkaListener(groupId = "${company-service.company-service-group-id}", topics = "${company-service.company-order-refund-request-topic-name}")
     public void receive(@Payload List<CompanyOrderRefundRequestAvroModel> messages,
                         @Header(KafkaHeaders.RECEIVED_KEY) List<String> keys,
                         @Header(KafkaHeaders.RECEIVED_PARTITION) List<Integer> partitions,

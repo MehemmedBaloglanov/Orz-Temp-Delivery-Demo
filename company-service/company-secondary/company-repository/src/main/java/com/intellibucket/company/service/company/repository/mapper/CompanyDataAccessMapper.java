@@ -2,8 +2,13 @@ package com.intellibucket.company.service.company.repository.mapper;
 
 import com.intelliacademy.orizonroute.identity.order.product.ProductID;
 import com.intelliacademy.orizonroute.valueobjects.common.Money;
+import com.intellibucket.company.service.company.repository.entity.OutboxJpaEntity;
+import com.intellibucket.company.service.company.repository.entity.OutboxJpaStatus;
 import com.intellibucket.company.service.company.repository.entity.ProductJpaEntity;
+import com.intellibucket.company.service.domain.core.exception.CompanyDomainException;
 import com.intellibucket.company.service.domain.core.root.ProductRoot;
+import com.intellibucket.company.service.domain.shell.outbox.model.OutboxMessage;
+import com.intellibucket.outbox.OutboxStatus;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -93,5 +98,38 @@ public class CompanyDataAccessMapper {
                 .stockQuantity(entity.getStockQuantity())
                 .price(Money.of(entity.getPrice()))
                 .build();
+    }
+
+    //todo OutboxStatus nece gonderilmelidir
+    public OutboxJpaEntity mapOutboxMessageToOutboxJpaEntity(OutboxMessage outboxMessage) {
+        return OutboxJpaEntity.builder()
+                .id(outboxMessage.getId())
+                .sagaName(outboxMessage.getSagaName())
+                .payload(outboxMessage.getPayload())
+                .createdAt(outboxMessage.getCreatedAt())
+                .processedAt(outboxMessage.getProcessedAt())
+//                .outboxStatus()
+                .build();
+    }
+
+    //todo OutboxMessagede niye yene statusu gondermek olmur?
+    public OutboxMessage mapOutboxJapEntityToOutboxMessage(OutboxJpaEntity save) {
+        return OutboxMessage.builder()
+                .id(save.getId())
+                .sagaName(save.getSagaName())
+                .payload(save.getPayload())
+                .createdAt(save.getCreatedAt())
+                .processedAt(save.getProcessedAt())
+//                .outboxStatus(save.getOutboxStatus())
+                .build();
+    }
+
+    public OutboxJpaStatus mapOutboxStatusToOutboxJpaStatus(OutboxStatus outboxStatus) throws CompanyDomainException {
+        return switch (outboxStatus) {
+            case STARTED -> OutboxJpaStatus.STARTED;
+            case COMPLETED -> OutboxJpaStatus.COMPLETED;
+            case FAILED -> OutboxJpaStatus.FAILED;
+            default -> throw new CompanyDomainException("Unsupported OutboxStatus: " + outboxStatus);
+        };
     }
 }

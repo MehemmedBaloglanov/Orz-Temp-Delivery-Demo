@@ -1,15 +1,14 @@
 package com.intellibucket.order.service.domain.shell.port.output.connector;
 
-import com.intelliacademy.orizonroute.identity.order.product.ProductID;
-import com.intellibucket.order.service.domain.shell.dto.connectors.company.CompanyResponse;
+import com.intellibucket.domain.exception.DomainException;
 import com.intellibucket.order.service.domain.shell.dto.connectors.company.ProductResponse;
+import com.intellibucket.order.service.domain.shell.dto.connectors.company.request.CompanyRequest;
 
 import java.util.List;
 
 public interface AbstractCompanyServiceConnector {
-    ProductResponse getProductInformation(ProductID productID);
+    ProductResponse getProductInformation(CompanyRequest companyRequest) throws DomainException;
 
-    List<ProductResponse> getProductsInformation(List<ProductID> productIDs);
-    CompanyResponse getCompanyById(String companyId);
+    List<ProductResponse> getProductsInformation(List<CompanyRequest> productIDs);
 
 }

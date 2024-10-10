@@ -5,7 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.intelliacademy.orizonroute.identity.order.ord.OrderID;
 import com.intellibucket.order.service.domain.core.exception.OrderDomainException;
 import com.intellibucket.order.service.domain.shell.outbox.model.OutboxMessage;
-import com.intellibucket.order.service.domain.shell.outbox.model.payload.BaseEventPayload;
+import com.intellibucket.outbox.payload.BaseEventPayload;
 import com.intellibucket.order.service.domain.shell.port.output.repository.OutboxRepository;
 import com.intellibucket.outbox.OutboxStatus;
 import lombok.RequiredArgsConstructor;

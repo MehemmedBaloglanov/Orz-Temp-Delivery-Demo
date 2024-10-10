@@ -9,6 +9,7 @@ import com.intellibucket.order.service.domain.core.root.OrderItemRoot;
 import com.intellibucket.order.service.domain.core.root.OrderRoot;
 import com.intellibucket.order.service.domain.core.service.OrderDomainService;
 import com.intellibucket.order.service.domain.core.valueobject.OrderItemStatus;
+import com.intellibucket.order.service.domain.core.valueobject.OrderStatus;
 import com.intellibucket.order.service.domain.shell.dto.rest.command.OrderPrepareCommand;
 import com.intellibucket.order.service.domain.shell.helper.OrderOutboxHelper;
 import com.intellibucket.order.service.domain.shell.helper.OrderRepositoryHelper;
@@ -47,6 +48,10 @@ public class OrderPrepareCommandHandler {
             throw new OrderDomainException("Not Authorization to prepare Order with id: " + orderId + " OrderItem with id: " + orderItemId);
         }
 
+        if (!orderRoot.getStatus().isApproved()) {
+            throw new OrderDomainException("Order with id: " + orderId + " is not paid, cannot prepare OrderItem with id: " + orderItemId);
+        }
+
         OrderItemRoot orderItemRoot = orderShellHelper.findOrderItemRootInOrderRoot(orderRoot, orderItemId);
 
         if (!orderItemRoot.getCompanyID().equals(companyID)) {
@@ -55,7 +60,7 @@ public class OrderPrepareCommandHandler {
         }
 
         orderItemRoot.prepared();
-
+        log.debug("Order with id: {} OrderItem with id: {} prepared", orderId, orderItemId);
         if (orderRoot.getItems().stream().allMatch(orderItem -> orderItem.getOrderItemStatus().isPrepared())) {
             log.info("Order with id: {} is all items confirmed", orderId);
             orderDomainService.preparedOrder(orderRoot);

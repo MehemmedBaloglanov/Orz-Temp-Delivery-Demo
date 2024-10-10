@@ -6,5 +6,5 @@ import com.intellibucket.order.service.domain.shell.dto.connectors.cart.CartResp
 import java.util.List;
 
 public interface AbstractCartServiceConnector {
-    List<CartResponse> findUserCartItems(CustomerID customerID);
+    List<CartResponse> getUserCart(CustomerID customerID);
 }

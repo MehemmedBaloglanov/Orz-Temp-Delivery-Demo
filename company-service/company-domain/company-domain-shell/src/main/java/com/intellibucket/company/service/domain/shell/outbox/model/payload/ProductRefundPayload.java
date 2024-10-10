@@ -1,6 +1,7 @@
 package com.intellibucket.company.service.domain.shell.outbox.model.payload;
 
 import com.intellibucket.order.service.domain.core.valueobject.ApproveStatus;
+import com.intellibucket.outbox.payload.BaseEventPayload;
 import lombok.*;
 
 import java.math.BigDecimal;

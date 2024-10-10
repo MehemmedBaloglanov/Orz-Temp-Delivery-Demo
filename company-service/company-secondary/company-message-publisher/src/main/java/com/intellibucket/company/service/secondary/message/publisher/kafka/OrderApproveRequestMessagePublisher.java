@@ -12,13 +12,13 @@ import com.intellibucket.kafka.order.avro.model.company.CompanyOrderApproveReque
 import com.intellibucket.kafka.order.avro.model.company.CompanyOrderApproveResponseAvroModel;
 import com.intellibucket.outbox.OutboxStatus;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 import java.util.UUID;
 import java.util.function.BiConsumer;
 
-import static org.apache.kafka.common.requests.DeleteAclsResponse.log;
-
+@Slf4j
 @Component
 @RequiredArgsConstructor
 public class OrderApproveRequestMessagePublisher implements AbstractOrderApproveRequestMessagePublisher {

@@ -19,12 +19,12 @@ import java.util.List;
 @Slf4j
 @Component
 @RequiredArgsConstructor
-public class ProductStockUpdateKafkaListener implements KafkaConsumer<CompanyOrderApproveRequestAvroModel> {
+public class ProductApproveKafkaListener implements KafkaConsumer<CompanyOrderApproveRequestAvroModel> {
     private final CompanyMessageListenerDataMapper companyMessagePublisherDataMapper;
     private final AbstractOrderApproveResponseMessageListener abstractOrderApproveResponseMessageListener;
 
     @Override
-    @KafkaListener(groupId = "#product-service.product-service-group-id", topics = "#product-service.product-stock-update-topic")
+    @KafkaListener(groupId = "${company-service.company-service-group-id}", topics = "${company-service.company-order-approve-request-topic-name}")
     public void receive(
             @Payload List<CompanyOrderApproveRequestAvroModel> messages,
             @Header(KafkaHeaders.RECEIVED_KEY) List<String> keys,

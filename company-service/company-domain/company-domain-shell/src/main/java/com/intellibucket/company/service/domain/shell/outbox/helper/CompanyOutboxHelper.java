@@ -2,12 +2,11 @@ package com.intellibucket.company.service.domain.shell.outbox.helper;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.intelliacademy.orizonroute.identity.order.ord.OrderID;
 import com.intellibucket.company.service.domain.core.exception.CompanyDomainException;
 import com.intellibucket.company.service.domain.shell.outbox.model.OutboxMessage;
-import com.intellibucket.company.service.domain.shell.outbox.model.payload.BaseEventPayload;
 import com.intellibucket.company.service.domain.shell.port.output.repository.OutboxRepository;
 import com.intellibucket.outbox.OutboxStatus;
+import com.intellibucket.outbox.payload.BaseEventPayload;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;

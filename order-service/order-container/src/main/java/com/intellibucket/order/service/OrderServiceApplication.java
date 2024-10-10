@@ -19,7 +19,8 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 })
 @EnableJpaRepositories("com.intellibucket.order.service.repository.repository")
 @EntityScan("com.intellibucket.order.service.repository.model")
-@EnableFeignClients
+@EnableFeignClients(basePackages = {"com.intellibucket.company.service.connector"})
+
 public class OrderServiceApplication {
     public static void main(String[] args) {
         SpringApplication.run(OrderServiceApplication.class, args);

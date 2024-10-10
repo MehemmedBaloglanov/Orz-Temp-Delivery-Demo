@@ -1,9 +1,9 @@
 package com.intellibucket.company.service.secondary.message.publisher.helper;
 
 import com.intellibucket.company.service.domain.shell.outbox.model.OutboxMessage;
-import com.intellibucket.company.service.domain.shell.outbox.model.payload.BaseEventPayload;
 import com.intellibucket.company.service.domain.shell.outbox.model.payload.ProductApprovePayload;
 import com.intellibucket.outbox.OutboxStatus;
+import com.intellibucket.outbox.payload.BaseEventPayload;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.avro.specific.SpecificRecordBase;
 import org.apache.kafka.clients.producer.RecordMetadata;
