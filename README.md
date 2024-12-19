@@ -1,5 +1,3 @@
-Baxış
-
 Bu layihə Company, User və Order mikroservislərindən ibarətdir. Layihədə müasir texnologiyalar və arxitekturadan istifadə edilmişdir.
 
 Mikroservislərin Təsviri
