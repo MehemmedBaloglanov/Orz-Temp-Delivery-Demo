@@ -2,11 +2,12 @@ package com.intellibucket.company.service.company.repository.mapper;
 
 import com.intelliacademy.orizonroute.identity.order.product.ProductID;
 import com.intelliacademy.orizonroute.valueobjects.common.Money;
-import com.intellibucket.company.service.company.repository.entity.OutboxJpaEntity;
-import com.intellibucket.company.service.company.repository.entity.OutboxJpaStatus;
-import com.intellibucket.company.service.company.repository.entity.ProductJpaEntity;
+import com.intelliacademy.orizonroute.valueobjects.common.Username;
+import com.intellibucket.company.service.company.repository.entity.*;
 import com.intellibucket.company.service.domain.core.exception.CompanyDomainException;
+import com.intellibucket.company.service.domain.core.root.CompanyRoot;
 import com.intellibucket.company.service.domain.core.root.ProductRoot;
+import com.intellibucket.company.service.domain.core.valueobject.CompanyAddress;
 import com.intellibucket.company.service.domain.shell.outbox.model.OutboxMessage;
 import com.intellibucket.outbox.OutboxStatus;
 import org.springframework.stereotype.Component;
@@ -17,43 +18,43 @@ import java.util.stream.Collectors;
 @Component
 public class CompanyDataAccessMapper {
 
-//    public CompanyJpaEntity mapCompanyRootToCompanyJpaEntity(CompanyRoot root) {
-//        return CompanyJpaEntity.builder()
-//                .companyId(root.getRootID().value())
-//                .companyName(root.getCompanyName().value())
-//                .status(root.getStatus())
-//                .balance(root.getBalance().getAmount())
+    public CompanyJpaEntity mapCompanyRootToCompanyJpaEntity(CompanyRoot root) {
+        return CompanyJpaEntity.builder()
+                .companyId(root.getRootID().value())
+                .companyName(root.getCompanyName().value())
+                .status(root.getStatus())
+                .balance(root.getBalance().getAmount())
 //                .address(mapCompanyAddressToCompanyJpaAddress(root.getAddress()))
-//                .products(mapProductRootListToProductJpaEntityList(root.getProducts()))
-//                .build();
-//    }
-//
-//    public CompanyRoot mapCompanyJpaEntityToCompanyRoot(CompanyJpaEntity entity) {
-//        return CompanyRoot.builder()
+                .products(mapProductRootListToProductJpaEntityList(root.getProducts()))
+                .build();
+    }
+
+    public CompanyRoot mapCompanyJpaEntityToCompanyRoot(CompanyJpaEntity entity) {
+        return CompanyRoot.builder()
 //                .id(CompanyID.of(entity.getCompanyId()))
-//                .companyName(Username.of(entity.getCompanyName()))
-//                .address(mapCompanyJpaEntityToCompanyAddress(entity))
-//                .status(entity.getStatus())
-//                .products(mapProductJpaEntityListToProductRootList(entity.getProducts()))
-//                .balance(Money.of(entity.getBalance()))
-//                .build();
-//    }
-//
-//    private CompanyJpaAddress mapCompanyAddressToCompanyJpaAddress(CompanyAddress address) {
-//        return CompanyJpaAddress.builder()
-//                .city(address.getCity())
-//                .street(address.getStreet())
-//                .address(address.getAddress())
-//                .build();
-//    }
-//
-//    private CompanyAddress mapCompanyJpaEntityToCompanyAddress(CompanyJpaEntity entity) {
-//        return CompanyAddress.builder()
-//                .city(entity.getAddress().getCity())
-//                .street(entity.getAddress().getStreet())
-//                .address(entity.getAddress().getAddress())
-//                .build();
-//    }
+                .companyName(Username.of(entity.getCompanyName()))
+                .address(mapCompanyJpaEntityToCompanyAddress(entity))
+                .status(entity.getStatus())
+                .products(mapProductJpaEntityListToProductRootList(entity.getProducts()))
+                .balance(Money.of(entity.getBalance()))
+                .build();
+    }
+
+    private CompanyJpaAddress mapCompanyAddressToCompanyJpaAddress(CompanyAddress address) {
+        return CompanyJpaAddress.builder()
+                .city(address.getCity())
+                .street(address.getStreet())
+                .address(address.getAddress())
+                .build();
+    }
+
+    private CompanyAddress mapCompanyJpaEntityToCompanyAddress(CompanyJpaEntity entity) {
+        return CompanyAddress.builder()
+                .city(entity.getAddress().getCity())
+                .street(entity.getAddress().getStreet())
+                .address(entity.getAddress().getAddress())
+                .build();
+    }
 
 
     public List<ProductJpaEntity> mapProductRootListToProductJpaEntityList(List<ProductRoot> root) {
@@ -103,7 +104,6 @@ public class CompanyDataAccessMapper {
                 .build();
     }
 
-    //todo OutboxStatus nece gonderilmelidir
     public OutboxJpaEntity mapOutboxMessageToOutboxJpaEntity(OutboxMessage outboxMessage) {
         return OutboxJpaEntity.builder()
                 .id(outboxMessage.getId())
@@ -115,7 +115,6 @@ public class CompanyDataAccessMapper {
                 .build();
     }
 
-    //todo OutboxMessagede niye yene statusu gondermek olmur?
     public OutboxMessage mapOutboxJapEntityToOutboxMessage(OutboxJpaEntity save){
         return OutboxMessage.builder()
                 .id(save.getId())

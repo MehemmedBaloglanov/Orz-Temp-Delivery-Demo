@@ -7,6 +7,5 @@ public final class CompanyConstants {
     public static final String ORDER_COMPLETED_SAGA_NAME = "order_completed";
     public static final String ORDER_REFUND_SAGA_NAME = "order_refund";
 
-    //todo
     private CompanyConstants() {}
 }

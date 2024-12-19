@@ -4,11 +4,13 @@ import com.intellibucket.company.service.domain.core.event.product.*;
 import com.intellibucket.company.service.domain.core.exception.ValidateException;
 import com.intellibucket.company.service.domain.core.root.ProductRoot;
 import com.intellibucket.company.service.domain.core.service.ProductDomainService;
+import org.springframework.stereotype.Component;
 
 import java.time.OffsetDateTime;
 
 import static com.intellibucket.domain.constants.DomainConstants.ZONE_ID;
 
+@Component
 public class ProductDomainServiceImpl implements ProductDomainService {
 
     @Override

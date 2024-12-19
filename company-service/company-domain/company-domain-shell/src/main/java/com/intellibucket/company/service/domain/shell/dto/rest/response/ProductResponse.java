@@ -16,16 +16,14 @@ import java.time.OffsetDateTime;
 @AllArgsConstructor
 public class ProductResponse {
 
-    //todo Burda "ID" qaytarilmasi duzgundurmu?
     private final String id;
 
     private final String name;
 
     private final Money price;
 
-    //todo
-//    @JsonProperty("company_id")
-//    private final String companyId;
+    @JsonProperty("company_id")
+    private final String companyId;
 
     @JsonProperty("stock_quantity")
     private final Integer stockQuantity;

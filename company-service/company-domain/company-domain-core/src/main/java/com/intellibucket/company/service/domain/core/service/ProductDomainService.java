@@ -16,10 +16,8 @@ public interface ProductDomainService {
 
     ProductPriceUpdatedEvent updateProduct(ProductRoot productRoot) throws ValidateException;
 
-    //todo
     ProductStockQuantityIncreasedEvent increaseProductStockQuantity(ProductRoot productRoot,Integer newQuantity) throws ValidateException;
 
-    //todo
     ProductStockQuantityDecreaseEvent decreaseProductStockQuantity(ProductRoot productRoot,Integer newQuantity) throws ValidateException;
 
 

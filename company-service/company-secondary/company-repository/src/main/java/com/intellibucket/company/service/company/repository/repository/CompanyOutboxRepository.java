@@ -10,7 +10,6 @@ import java.util.Optional;
 import java.util.UUID;
 
 public interface CompanyOutboxRepository extends JpaRepository<OutboxJpaEntity, Long> {
-    //todo
     Optional<List<OutboxJpaEntity>> findByOutboxStatus(OutboxJpaStatus status) throws CompanyDomainException;
 
     void deleteByOutboxStatus(OutboxJpaStatus status);

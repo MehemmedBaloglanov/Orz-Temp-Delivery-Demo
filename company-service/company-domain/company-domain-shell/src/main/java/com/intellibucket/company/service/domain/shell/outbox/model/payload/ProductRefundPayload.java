@@ -19,5 +19,4 @@ public class ProductRefundPayload implements BaseEventPayload {
     private String failureMessage;
     private Instant createdAt;
 
-    //todo bunun usage yoxdu silinmelidirmi?
 }

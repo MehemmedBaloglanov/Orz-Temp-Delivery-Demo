@@ -1,5 +1,6 @@
 package com.intellibucket.company.service.domain.core.root;
 
+import com.intelliacademy.orizonroute.identity.company.CompanyID;
 import com.intelliacademy.orizonroute.identity.order.product.ProductID;
 import com.intelliacademy.orizonroute.root.AggregateRoot;
 import com.intelliacademy.orizonroute.valueobjects.common.Money;
@@ -13,8 +14,7 @@ import lombok.experimental.SuperBuilder;
 public class ProductRoot extends AggregateRoot<ProductID> {
     private String name;
     private Money price;
-    //todo
-//    private CompanyID companyID;
+    private CompanyID companyID;
     private Integer stockQuantity;
     private ProductStatus status;
 

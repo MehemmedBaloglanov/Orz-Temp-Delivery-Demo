@@ -36,13 +36,12 @@ public class CompanyMessageListenerDataMapper {
                 .build();
     }
 
-    //todo burda commentlediklerim niye islemir?
     public OrderCompanyRefundResponse companyOrderRefundRequestAvroModelToOrderRefundResponse(CompanyOrderRefundRequestAvroModel message) {
         List<OrderRefundResponseProduct> products = message.getProducts().stream()
                 .map(companyRefundAvroProduct -> OrderRefundResponseProduct.builder()
                         .productId(companyRefundAvroProduct.getProductId())
                         .companyId(companyRefundAvroProduct.getCompanyId())
-//                        .price(BigDecimal.valueOf(companyRefundAvroProduct.get))//todo
+//                        .price(BigDecimal.valueOf(companyRefundAvroProduct.get))
 //                        .subTotal(companyRefundAvroProduct.getSubTotal())
                         .build())
                 .toList();
